@@ -13,7 +13,8 @@ import {
 import { 
   Briefcase, Heart, Baby, Stethoscope, Calendar, 
   Gem, Circle, Sparkles, Flame, BookOpen, Sun, Shield, Clock,
-  ArrowRight, CheckCircle
+  ArrowRight, CheckCircle,
+  PenTool
 } from "lucide-react";
 
 const services = [
@@ -35,6 +36,19 @@ const services = [
     description: "Understand your child's potential from birth. Get insights on their education, health, talents, and future prospects through detailed birth chart analysis.",
     features: ["Birth chart reading", "Education guidance", "Talent identification", "Health predictions", "Career potential analysis"],
   },
+  {
+  icon: PenTool,
+  title: "Tattoo Guidance",
+  description:
+    "Receive personalized guidance before getting a tattoo, including ideal timing, placement considerations, and symbolic alignment to ensure the tattoo resonates positively with your life journey.",
+  features: [
+    "Auspicious timing guidance",
+    "Tattoo placement insights",
+    "Symbol & design alignment",
+    "Spiritual and energetic considerations",
+    "Long-term impact awareness",
+  ],
+},
   {
     icon: Stethoscope,
     title: "Medical Astrology",

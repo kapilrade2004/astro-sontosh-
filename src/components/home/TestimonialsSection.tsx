@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
+import { ChevronLeft, ChevronRight, Quote, Star, User } from "lucide-react";
 
 const testimonials = [
   {
     name: "Priya Sharma",
     location: "Mumbai, India",
     rating: 5,
+    image: "/path-to-priya.jpg", // Add your image path here
     text: "The career guidance I received was incredibly accurate. I was skeptical at first, but the prediction about my job change came true within the exact timeframe mentioned. The remedies suggested have brought immense positivity into my life.",
     service: "Career Astrology",
   },
@@ -14,6 +15,7 @@ const testimonials = [
     name: "Rajesh Kumar",
     location: "Delhi, India",
     rating: 5,
+    image: "/path-to-rajesh.jpg",
     text: "After struggling with business losses for years, the Vastu consultation transformed everything. Simple changes without any demolition brought a complete turnaround in my finances within 6 months.",
     service: "Vastu Consultation",
   },
@@ -21,6 +23,7 @@ const testimonials = [
     name: "Anita Patel",
     location: "Ahmedabad, India",
     rating: 5,
+    image: "/path-to-anita.jpg",
     text: "My marriage was predicted with remarkable accuracy. The matchmaking analysis helped us understand our compatibility deeply. We've been happily married for 5 years now. Forever grateful!",
     service: "Marriage Astrology",
   },
@@ -28,6 +31,7 @@ const testimonials = [
     name: "Vikram Singh",
     location: "Bangalore, India",
     rating: 5,
+    image: "/path-to-vikram.jpg",
     text: "The numerology session changed my perspective completely. The name correction and mobile number analysis have visibly improved my luck and business dealings. Highly recommend!",
     service: "Numerology",
   },
@@ -35,6 +39,7 @@ const testimonials = [
     name: "Meera Reddy",
     location: "Hyderabad, India",
     rating: 5,
+    image: "/path-to-meera.jpg",
     text: "The palm reading was eye-opening. Not only did it reveal my life path clearly, but the remedies for health concerns have been truly effective. A genuine and knowledgeable consultant.",
     service: "Palmistry",
   },
@@ -107,9 +112,30 @@ export const TestimonialsSection = () => {
                 transition={{ duration: 0.4 }}
                 className="w-full"
               >
-                <Quote className="w-12 h-12 text-primary/30 mb-6" />
+                <div className="flex flex-col items-center mb-6">
+                  {/* Profile Image */}
+                  <div className="relative w-40 h-40 rounded-full overflow-hidden mb-4 ring-2 ring-primary/20">
+                    {testimonials[currentIndex].image ? (
+                      <img
+                        src={testimonials[currentIndex].image}
+                        alt={testimonials[currentIndex].name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                          const fallback = e.currentTarget.parentElement?.querySelector('.fallback-icon');
+                          if (fallback) fallback.classList.remove('hidden');
+                        }}
+                      />
+                    ) : null}
+                    <div className={`absolute inset-0 flex items-center justify-center bg-primary/10 ${testimonials[currentIndex].image ? 'hidden' : ''} fallback-icon`}>
+                      <User className="w-10 h-10 text-primary/50" />
+                    </div>
+                  </div>
+                  
+                  {/* <Quote className="w-10 h-10 text-primary/30" /> */}
+                </div>
                 
-                <p className="text-lg md:text-xl text-foreground/90 leading-relaxed mb-8 italic">
+                <p className="text-lg md:text-xl text-foreground/90 leading-relaxed mb-8 italic text-center">
                   "{testimonials[currentIndex].text}"
                 </p>
 

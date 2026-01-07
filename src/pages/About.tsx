@@ -8,6 +8,7 @@ import {
   Award, Users, Globe, BookOpen, Heart, Star,
   ArrowRight, CheckCircle, Sparkles
 } from "lucide-react";
+import CertificationsShowcase  from "@/components/home/CertificationsShowcase";
 
 const achievements = [
   { value: "25+", label: "Years of Experience" },
@@ -260,6 +261,9 @@ const About = () => {
             </div>
           </div>
         </section>
+        <section>
+        <CertificationsShowcase />
+         </section>
 
         {/* CTA Section */}
         <section className="py-20 bg-background">
