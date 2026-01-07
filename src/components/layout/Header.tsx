@@ -50,7 +50,7 @@ export const Header = () => {
               <Sparkles className="h-8 w-8 text-primary" />
             </motion.div>
             <span className="font-serif text-xl md:text-2xl font-semibold text-gradient-gold">
-              Cosmic Guidance
+              Astro Santosh Pandey
             </span>
           </Link>
 
