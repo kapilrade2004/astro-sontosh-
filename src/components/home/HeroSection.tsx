@@ -15,7 +15,8 @@ export const HeroSection = () => {
         animate={{ rotate: 360 }}
         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
       >
-        <Sun className="w-16 h-16 md:w-24 md:h-24" />
+        {/* <Stars className="w-12 h-12" /> */}
+        {/* <Sun className="w-16 h-16 md:w-24 md:h-24" /> */}
       </motion.div>
       
       <motion.div
@@ -23,7 +24,8 @@ export const HeroSection = () => {
         animate={{ y: [-10, 10, -10] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       >
-        <Moon className="w-20 h-20 md:w-32 md:h-32" />
+        {/* <Stars className="w-12 h-12" /> */}
+        {/* <Moon className="w-20 h-20 md:w-32 md:h-32" /> */}
       </motion.div>
       
       <motion.div
