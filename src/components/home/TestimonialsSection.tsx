@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Quote, Star, User } from "lucide-react";
+import PANKAGPATEL from "@/assets/pankajpatel.jpeg";
+import NANCYJOSHI from "@/assets/Nancy Joshi.jpeg"; 
+import KUHELI from "@/assets/kuheli.jpeg";
 
 const testimonials = [
   {
@@ -12,11 +15,27 @@ const testimonials = [
     service: "Career Astrology",
   },
   {
-    name: "Rajesh Kumar",
+    name: "Pankaj Patel",
+    location: "Mumbai, India",
+    rating: 5,
+    image: PANKAGPATEL, // Add your image path here
+    text: "Pankaj Patel It’s my first consultation with Astro Santosh Pandeyji.It was nice elaborative, detailed and everything explained.I would recommend him to anyone.He has got good knowledge and deep expertise.Everything is explained by logic and science behind it.",
+    service: "Career Astrology",
+  },
+  {
+    name: "Nancy Joshi ",
+    location: "Mumbai, India",
+    rating: 5,
+    image: NANCYJOSHI, // Add your image path here
+    text: "I truly appreciated the depth and clarity of this astrologer Santosh Pandey.  He took the time to understand my concerns and explained everything in a calm, thoughtful manner. The insights felt accurate and meaningful, not rushed or generic. What stood out most was the practical guidance, which helped me see my situation from a more balanced and positive perspective. I left the session feeling reassured and more confident about my next steps. Highly recommended for anyone seeking genuine and mindful guidance.",
+    service: "Career Astrology",
+  },
+  {
+    name: "SONALDEVI ",
     location: "Delhi, India",
     rating: 5,
     image: "/path-to-rajesh.jpg",
-    text: "After struggling with business losses for years, the Vastu consultation transformed everything. Simple changes without any demolition brought a complete turnaround in my finances within 6 months.",
+    text: "Radhe Radhe!I consulted Astrologer Santosh Ji at a time when I was seeking clarity for both my health and career. His guidance regarding my diabetes and skin concerns was compassionate, practical, and spiritually uplifting. The remedies suggested were simple yet powerful, and I personally experienced positive results.As I continued my journey with him for career guidance, his insights brought clarity to real-life challenges and helped me take confident, well-aligned decisions. His wisdom and thoughtful approach created a deep sense of trust and inner balance.I express my sincere gratitude to Astrologer Santosh Ji for his divine guidance. I highly recommend him to anyone seeking authentic solutions, clarity, and direction to unlock the right path in life with divine blessings and astrological remedies.",
     service: "Vastu Consultation",
   },
   {
@@ -36,12 +55,20 @@ const testimonials = [
     service: "Numerology",
   },
   {
-    name: "Meera Reddy",
+    name: "Soumitra Bhattacharya",
     location: "Hyderabad, India",
     rating: 5,
     image: "/path-to-meera.jpg",
-    text: "The palm reading was eye-opening. Not only did it reveal my life path clearly, but the remedies for health concerns have been truly effective. A genuine and knowledgeable consultant.",
+    text: "I’m an ITSM professional working in MNC . My belief system is based on my experiences. I used to be disturbed at some point in time due to my personal life, affecting my professional commitment. I realised that I needed help.I consulted Astro Santosh Pandey, who performed a deep analysis of my birth chat aligned with recent planetary dynamics, to offer precise remedies that has healed me. I am greatful to his services.",
     service: "Palmistry",
+  },
+  {
+    name: "Kuheli Sinha Majumder",
+    location: "Hyderabad, India",
+    rating: 5,
+    image: KUHELI,
+    text: "2023 onwards I had been facing personal challenges related to my husband’s health/career and deterioration in my neuro diverse child. This in turn took a toll on my mental and physical wellbeing. Despite being a self-driven person and doing my best, I couldn’t get a hold of the situation.  That’s when Universe connected me to Santoshji. His precision on reading all our charts gave us clarity on ‘Whys’. Add on was his non-judgmental demeanor that made me feel completely supported and heard. Thereafter his intuitive approach and predictions helped me to navigate through the challenges. The remedies were customized to ensure that it wasn’t too overwhelming for a person like me with limited spiritual aptitude.  I will lifelong be indebted to him for the equivocal support extended at a time when I could see no ray of hope. I would highly recommend him to anyone who is unable to bowl the googly that life throws upon. Thanks to him, the science behind the stars feel accessible and real🙏",
+    service: "Child Astrology, Health Astrology, Career Astrology",
   },
 ];
 
@@ -94,7 +121,7 @@ export const TestimonialsSection = () => {
             Stories of <span className="text-gradient-gold">Transformation</span>
           </h2>
           <p className="text-muted-foreground text-lg">
-            Hear from our clients who experienced real changes in their lives 
+            Hear from our clients who experienced real changes in their lives
             through our guidance and remedies.
           </p>
         </motion.div>
@@ -131,10 +158,10 @@ export const TestimonialsSection = () => {
                       <User className="w-10 h-10 text-primary/50" />
                     </div>
                   </div>
-                  
+
                   {/* <Quote className="w-10 h-10 text-primary/30" /> */}
                 </div>
-                
+
                 <p className="text-lg md:text-xl text-foreground/90 leading-relaxed mb-8 italic text-center">
                   "{testimonials[currentIndex].text}"
                 </p>
@@ -148,7 +175,7 @@ export const TestimonialsSection = () => {
                       {testimonials[currentIndex].location}
                     </div>
                   </div>
-                  
+
                   <div className="text-right">
                     <div className="flex gap-1 mb-1 justify-end">
                       {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
@@ -173,7 +200,7 @@ export const TestimonialsSection = () => {
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
-            
+
             <div className="flex gap-2">
               {testimonials.map((_, index) => (
                 <button
@@ -182,9 +209,8 @@ export const TestimonialsSection = () => {
                     setDirection(index > currentIndex ? 1 : -1);
                     setCurrentIndex(index);
                   }}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    index === currentIndex ? "w-6 bg-primary" : "bg-muted-foreground/30"
-                  }`}
+                  className={`w-2 h-2 rounded-full transition-all ${index === currentIndex ? "w-6 bg-primary" : "bg-muted-foreground/30"
+                    }`}
                   aria-label={`Go to testimonial ${index + 1}`}
                 />
               ))}
