@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Sparkles, Mail, Phone, MapPin, Facebook, Instagram, Youtube, Twitter } from "lucide-react";
+import { Sparkles, Mail, Phone, MapPin, Facebook, Instagram, Youtube, Twitter, Linkedin, MessageCircle, Globe } from "lucide-react";
 
 const services = [
   { name: "Astrology", path: "/astrology" },
@@ -15,10 +15,13 @@ const quickLinks = [
 ];
 
 const socialLinks = [
-  { icon: Facebook, href: "#", label: "Facebook" },
-  { icon: Instagram, href: "#", label: "Instagram" },
-  { icon: Youtube, href: "#", label: "YouTube" },
-  { icon: Twitter, href: "#", label: "Twitter" },
+  { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61584980008249", label: "Facebook" },
+  { icon: Instagram, href: "https://www.instagram.com/astrosantoshpandey/", label: "Instagram" },
+  { icon: Youtube, href: "https://www.youtube.com/@astrosantoshpandey", label: "YouTube" },
+  { icon: Twitter, href: "https://x.com/astrosantoshrp", label: "Twitter" },
+  { icon: Linkedin, href: "https://www.linkedin.com/in/astro-santosh-pandey-5186793a0/", label: "LinkedIn" },
+  { icon: MessageCircle, href: "https://wa.me/+919152523752", label: "WhatsApp" },
+  { icon: Globe, href: "https://share.google/h4zhEpPG0x0vF57n3", label: "Google My Business" }
 ];
 
 export const Footer = () => {
@@ -38,7 +41,7 @@ export const Footer = () => {
               Transform your life with expert Astrology, Numerology, Vastu & Palmistry guidance. 
               Accurate predictions and personalized remedies for a better tomorrow.
             </p>
-            <div className="flex gap-4">
+            <div className="flex gap-4 flex-wrap">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
@@ -100,8 +103,8 @@ export const Footer = () => {
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-primary shrink-0" />
-                <a href="tel:+911234567890" className="text-muted-foreground hover:text-primary text-sm">
-                  +91 123 456 7890
+                <a href="tel:+919152523752" className="text-muted-foreground hover:text-primary text-sm">
+                  +91 915 252 3752
                 </a>
               </li>
               <li className="flex items-center gap-3">
