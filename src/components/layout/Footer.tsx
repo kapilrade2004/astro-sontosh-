@@ -15,11 +15,11 @@ const quickLinks = [
 ];
 
 const socialLinks = [
-  { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61584980008249", label: "Facebook" },
+  { icon: Facebook, href: " https://www.facebook.com/astrosantoshpandey", label: "Facebook" },
   { icon: Instagram, href: "https://www.instagram.com/astrosantoshpandey/", label: "Instagram" },
   { icon: Youtube, href: "https://www.youtube.com/@astrosantoshpandey", label: "YouTube" },
   { icon: Twitter, href: "https://x.com/astrosantoshrp", label: "Twitter" },
-  { icon: Linkedin, href: "https://www.linkedin.com/in/astro-santosh-pandey-5186793a0/", label: "LinkedIn" },
+  { icon: Linkedin, href: " https://www.linkedin.com/in/astrosantoshpandey", label: "LinkedIn" },
   { icon: MessageCircle, href: "https://wa.me/+919152523752", label: "WhatsApp" },
   { icon: Globe, href: "https://share.google/h4zhEpPG0x0vF57n3", label: "Google My Business" }
 ];
