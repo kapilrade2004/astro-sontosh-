@@ -24,12 +24,12 @@ const contactInfo = [
   {
     icon: MapPin,
     title: "Visit Us",
-    details: ["123 Cosmic Avenue", "Spiritual District", "Mumbai, India 400001"],
+    details: ["Address - 174 Gold Mohur CHS, Kalbadevi,Princess Street, Marine Lines, Mumbai - 400002"],
   },
   {
     icon: Phone,
     title: "Call Us",
-    details: ["+91 123 456 7890", "+91 987 654 3210"],
+    details: ["+91 88797 31174"],
   },
   {
     icon: Mail,
