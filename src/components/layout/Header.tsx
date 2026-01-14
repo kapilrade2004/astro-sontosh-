@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Sparkles, Phone } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logoImage from "@/assets/logo-removebg-preview (1).png";
+import nameLogoImage from "@/assets/namelogo-removebg-preview.png";
 
 const navItems = [
   { name: "Home", path: "/" },
@@ -44,16 +46,23 @@ export const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
             <motion.div
-              whileHover={{ rotate: 180 }}
-              transition={{ duration: 0.5 }}
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.3 }}
+              className="flex-shrink-0"
             >
-              <Sparkles className="h-8 w-8 text-primary" />
+              <img 
+                src={logoImage}
+                alt="Astro Santosh Pandey Logo" 
+                className="h-12 w-12 object-contain"
+              />
             </motion.div>
             <div className="flex flex-col">
-              <span className="font-serif text-xl md:text-2xl font-semibold text-gradient-gold">
-                Astro Santosh Pandey
-              </span>
-              <span className="text-xs text-primary/70 italic hidden sm:block">
+              <img 
+                src={nameLogoImage}
+                alt="Astro Santosh Pandey" 
+                className="h-20 w-48 md:w-56 object-contain object-left"
+              />
+              <span className="text-xs text-primary/70 italic mt-1">
                 ज्योतिषं ज्ञानम्, भविष्यं प्रकाशः
               </span>
             </div>

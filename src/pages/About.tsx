@@ -128,18 +128,17 @@ const About = () => {
 
                   </p>
                   <p>
-                    I am Santosh Radheshyam Pandey, a former corporate professional with decades of experience in Customer Service, Quality Control, Project & Program Management, ORM, Social Media Management, and Financial Operations across Payment Gateway and FinTech organizations.
-
-
+                    I am Santosh Radheshyam Pandey – have worked in the corporate world with in-depth experience in Customer Service, Quality Control and Management, Project and Program Management, ORM and Social Media Management, Financial Operations in multiple Payment Gateway and FinTech companies.
                   </p>
                   <p>
-                 Despite a successful corporate career, Astrology emerged as my true calling. Through years of study and self-realization, I understood how planetary movements shaped key life events and aligned my journey with dharma.
-
-
+                 Academically, I graduated in commerce and did my PGDCA and PGDM – BA thereafter.  Also, possess professional qualifications such as PMP and  SSMBB.  
                   </p>
                   <p>
-                    Today, with a Master’s in Astrology, Palmistry, and Vastu, I serve this sacred knowledge full-time — guiding individuals through ethical, responsible, and deeply researched consultations.
-
+                   After working for a couple of decades in the corporate world, I never imagined Astrology would become my true ultimate calling.  Got transformed into a passionate learner since last few years, and now I'm into the Astrology space as my full-time career.  I have done my Masters in Astrology, Palmistry and Vastu.
+                  </p>
+                  <p>During my journey in the Astrology field, have uncovered and understood all the events that I experienced over the years till date.  It made me understand the ‘WHY’ part of all the incidents and helped me to align my actions accordingly.</p>
+                  <p>
+                    As it’s being said, you cannot choose the Occult field as your career but it chooses you.  Fortunately, I am the chosen one to serve and guide, basis the best of my ever-growing knowledge in this space.
                   </p>
                 </div>
               </motion.div>

@@ -20,7 +20,7 @@ const socialLinks = [
   { icon: Youtube, href: "https://www.youtube.com/@astrosantoshpandey", label: "YouTube" },
   { icon: Twitter, href: "https://x.com/astrosantoshrp", label: "Twitter" },
   { icon: Linkedin, href: "https://www.linkedin.com/in/astrosantoshpandey", label: "LinkedIn" },
-  { icon: MessageCircle, href: "https://wa.me/+919152523752", label: "WhatsApp" },
+  { icon: MessageCircle, href: "https://wa.me/+918879731174", label: "WhatsApp" },
   { icon: Globe, href: "https://share.google/h4zhEpPG0x0vF57n3", label: "Google My Business" }
 ];
 
@@ -113,7 +113,7 @@ export const Footer = () => {
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-primary shrink-0" />
                 <a href="mailto:info@cosmicguidance.com" className="text-muted-foreground hover:text-primary text-sm">
-                  info@cosmicguidance.com
+                   astrosantoshpandey@gmail.com
                 </a>
               </li>
             </ul>

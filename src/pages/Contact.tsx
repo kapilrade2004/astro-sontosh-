@@ -34,7 +34,7 @@ const contactInfo = [
   {
     icon: Mail,
     title: "Email Us",
-    details: ["info@cosmicguidance.com", "consult@cosmicguidance.com"],
+    details: [" astrosantoshpandey@gmail.com"],
   },
   {
     icon: Clock,
