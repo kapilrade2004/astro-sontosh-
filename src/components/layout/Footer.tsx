@@ -15,11 +15,11 @@ const quickLinks = [
 ];
 
 const socialLinks = [
-  { icon: Facebook, href: " https://www.facebook.com/astrosantoshpandey", label: "Facebook" },
+  { icon: Facebook, href: "https://www.facebook.com/astrosantoshpandey", label: "Facebook" },
   { icon: Instagram, href: "https://www.instagram.com/astrosantoshpandey/", label: "Instagram" },
   { icon: Youtube, href: "https://www.youtube.com/@astrosantoshpandey", label: "YouTube" },
   { icon: Twitter, href: "https://x.com/astrosantoshrp", label: "Twitter" },
-  { icon: Linkedin, href: " https://www.linkedin.com/in/astrosantoshpandey", label: "LinkedIn" },
+  { icon: Linkedin, href: "https://www.linkedin.com/in/astrosantoshpandey", label: "LinkedIn" },
   { icon: MessageCircle, href: "https://wa.me/+919152523752", label: "WhatsApp" },
   { icon: Globe, href: "https://share.google/h4zhEpPG0x0vF57n3", label: "Google My Business" }
 ];
@@ -37,6 +37,9 @@ export const Footer = () => {
                 Cosmic Guidance
               </span>
             </Link>
+            <p className="text-primary/80 text-sm italic font-medium">
+              ज्योतिषं सर्वार्थ साधकं
+            </p>
             <p className="text-muted-foreground text-sm leading-relaxed">
               Transform your life with expert Astrology, Numerology, Vastu & Palmistry guidance. 
               Accurate predictions and personalized remedies for a better tomorrow.
@@ -98,12 +101,12 @@ export const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-primary shrink-0 mt-0.5" />
                 <span className="text-muted-foreground text-sm">
-                  123 Cosmic Avenue, Spiritual District, Mumbai, India
+                    Address - 174 Gold Mohur CHS, Kalbadevi,Princess Street, Marine Lines, Mumbai - 400002
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-primary shrink-0" />
-                <a href="tel:+919152523752" className="text-muted-foreground hover:text-primary text-sm">
+                <a href="tel:+918879731174" className="text-muted-foreground hover:text-primary text-sm">
                   +91 8879731174
                 </a>
               </li>

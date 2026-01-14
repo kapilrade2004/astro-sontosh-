@@ -110,13 +110,14 @@ const Numerology = () => {
               transition={{ duration: 0.6 }}
               className="max-w-4xl"
             >
-              <span className="text-primary font-medium text-sm uppercase tracking-wider">Numerology</span>
+              <span className="text-primary font-medium text-sm uppercase tracking-wider">Numerology –  The Science of Numbers
+</span>
               <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mt-4 mb-6">
                 Discover the <span className="text-gradient-gold">Power of Numbers</span> in Your Life
               </h1>
               <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mb-8">
-                Unlock the hidden meanings behind your birth date, name, and personal numbers. 
-                Transform your life through the science of numerology.
+                Numerology is a precise, data-driven occult science that uncovers personality traits, karmic strengths, and life cycles — using only your date of birth.
+
               </p>
               <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold" asChild>
                 <Link to="/contact">

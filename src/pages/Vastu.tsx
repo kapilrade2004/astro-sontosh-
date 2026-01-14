@@ -10,7 +10,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { 
+import {
   Scan, Wind, DoorOpen, Building2, Wrench,
   ArrowRight, CheckCircle, Droplets, Flame, Mountain, Cloud
 } from "lucide-react";
@@ -111,12 +111,19 @@ const Vastu = () => {
               transition={{ duration: 0.6 }}
               className="max-w-4xl"
             >
-              <span className="text-primary font-medium text-sm uppercase tracking-wider">Vastu Shastra</span>
+              <span className="text-primary font-medium text-sm uppercase tracking-wider">Vastu Shastra – Harmonizing Space & Energy
+              </span>
+              <div className="text-sm md:text-base text-muted-foreground italic mt-2 mb-4">
+                ॥ नमस्ते वास्तु पुरुष भूश्य्या भिरत प्रभो ।
+                <br />
+                मद्घृं धन धन्यादि समृद्धं कुरु सर्वदा ॥
+              </div>
+
               <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mt-4 mb-6">
                 Harmonize Your <span className="text-gradient-gold">Living Space</span> for Prosperity
               </h1>
               <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mb-8">
-                Transform your home and workplace with the ancient science of Vastu. 
+                Transform your home and workplace with the ancient science of Vastu.
                 Balance cosmic energies for health, wealth, and peace.
               </p>
               <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold" asChild>
@@ -268,7 +275,7 @@ const Vastu = () => {
                 Ready to <span className="text-gradient-gold">Transform Your Space</span>?
               </h2>
               <p className="text-muted-foreground text-lg mb-8">
-                Book your Vastu audit today and discover how simple changes can bring 
+                Book your Vastu audit today and discover how simple changes can bring
                 profound improvements to your life.
               </p>
               <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold" asChild>

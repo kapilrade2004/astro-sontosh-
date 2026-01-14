@@ -50,10 +50,21 @@ export const HeroSection = () => {
             </span>
           </motion.div>
 
-          <motion.h1
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
+            className="mb-2"
+          >
+            <p className="text-xl md:text-2xl text-primary/80 italic font-medium">
+              ॥ धर्मो रक्षति रक्षितः ॥
+            </p>
+          </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.15 }}
             className="font-serif text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-6"
           >
             Transform Your Life With Expert{" "}
@@ -65,7 +76,7 @@ export const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-6"
           >
             Accurate predictions, personalised remedies, and life-changing solutions 
             for career, marriage, finance, health & peace.
@@ -96,7 +107,7 @@ export const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8"
+            className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-8"
           >
             {[
               { value: "25+", label: "Years Experience" },
