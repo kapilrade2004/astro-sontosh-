@@ -42,16 +42,21 @@ export const Header = () => {
       <div className="container mx-auto px-4">
         <nav className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
+          <Link to="/" className="flex items-center gap-3 group">
             <motion.div
               whileHover={{ rotate: 180 }}
               transition={{ duration: 0.5 }}
             >
               <Sparkles className="h-8 w-8 text-primary" />
             </motion.div>
-            <span className="font-serif text-xl md:text-2xl font-semibold text-gradient-gold">
-              Astro Santosh Pandey
-            </span>
+            <div className="flex flex-col">
+              <span className="font-serif text-xl md:text-2xl font-semibold text-gradient-gold">
+                Astro Santosh Pandey
+              </span>
+              <span className="text-xs text-primary/70 italic hidden sm:block">
+                ज्योतिषं ज्ञानम्, भविष्यं प्रकाशः
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -80,7 +85,7 @@ export const Header = () => {
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center gap-4">
             <Button variant="ghost" size="sm" className="text-foreground/80 hover:text-primary" asChild>
-              <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
+              <a href="https://wa.me/+918879731174" target="_blank" rel="noopener noreferrer">
                 <Phone className="h-4 w-4 mr-2" />
                 WhatsApp
               </a>
@@ -134,7 +139,7 @@ export const Header = () => {
                   <Link to="/contact">Book Consultation</Link>
                 </Button>
                 <Button variant="outline" className="w-full border-primary text-primary" asChild>
-                  <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
+                  <a href="https://wa.me/+918879731174" target="_blank" rel="noopener noreferrer">
                     WhatsApp Now
                   </a>
                 </Button>

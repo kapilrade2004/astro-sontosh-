@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Button } from "@/components/ui/button";
-import { 
+import {
   Award, Users, Globe, BookOpen, Heart, Star,
   ArrowRight, CheckCircle, Sparkles
 } from "lucide-react";
-import CertificationsShowcase  from "@/components/home/CertificationsShowcase";
+import CertificationsShowcase from "@/components/home/CertificationsShowcase";
 
 const achievements = [
   { value: "25+", label: "Years of Experience" },
@@ -73,7 +73,7 @@ const About = () => {
                 Guiding Lives Through <span className="text-gradient-gold">Ancient Wisdom</span>
               </h1>
               <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mb-8">
-                For over 25 years, we've been dedicated to helping people navigate life's challenges 
+                For over 25 years, we've been dedicated to helping people navigate life's challenges
                 through the profound sciences of Astrology, Numerology, Vastu, and Palmistry.
               </p>
             </motion.div>
@@ -115,28 +115,31 @@ const About = () => {
                 <h2 className="font-serif text-3xl md:text-4xl font-bold mb-8 text-center">
                   Our <span className="text-gradient-gold">Story</span>
                 </h2>
-                
+
                 <div className="cosmic-card p-8 md:p-12 space-y-6 text-muted-foreground leading-relaxed">
                   <p>
-                    Our journey into the mystical world of Vedic sciences began over two decades ago, 
-                    driven by a deep curiosity about the cosmos and its influence on human destiny. 
-                    What started as a personal quest for knowledge transformed into a mission to help 
-                    others navigate their life's journey.
+                    ज्योतिषं ज्ञानम्, भविष्यं प्रकाशः
+                    ज्योतिषः विद्या प्रदाति मार्गम्
+                    ज्योतिषं सर्वार्थ साधकं
+
                   </p>
                   <p>
-                    Under the guidance of revered Gurus and through years of dedicated study, we mastered 
-                    the intricate arts of Astrology, Numerology, Vastu Shastra, and Palmistry. Each consultation 
-                    taught us something new, and every success story reinforced our belief in these ancient sciences.
+                  Hari Om,
+
                   </p>
                   <p>
-                    Today, we're proud to have guided over 10,000 individuals across 50+ countries. From career 
-                    decisions to marriage timing, from health guidance to property selection, we've been privileged 
-                    to be part of countless life-changing moments.
+                    I am Santosh Radheshyam Pandey, a former corporate professional with decades of experience in Customer Service, Quality Control, Project & Program Management, ORM, Social Media Management, and Financial Operations across Payment Gateway and FinTech organizations.
+
+
                   </p>
                   <p>
-                    Our approach combines traditional authenticity with modern understanding. We believe that 
-                    ancient wisdom, when applied with contemporary awareness, can provide remarkable clarity 
-                    and direction in today's complex world.
+                 Despite a successful corporate career, Astrology emerged as my true calling. Through years of study and self-realization, I understood how planetary movements shaped key life events and aligned my journey with dharma.
+
+
+                  </p>
+                  <p>
+                    Today, with a Master’s in Astrology, Palmistry, and Vastu, I serve this sacred knowledge full-time — guiding individuals through ethical, responsible, and deeply researched consultations.
+
                   </p>
                 </div>
               </motion.div>
@@ -158,8 +161,8 @@ const About = () => {
                 Our <span className="text-gradient-gold">Mission</span>
               </h2>
               <p className="text-xl text-foreground/90 leading-relaxed mb-8">
-                "To empower individuals with the wisdom of cosmic sciences, providing accurate guidance 
-                and effective remedies that transform challenges into opportunities and help people 
+                "To empower individuals with the wisdom of cosmic sciences, providing accurate guidance
+                and effective remedies that transform challenges into opportunities and help people
                 live their highest potential."
               </p>
               <div className="flex flex-wrap justify-center gap-4">
@@ -232,7 +235,7 @@ const About = () => {
             <div className="max-w-3xl mx-auto">
               <div className="relative">
                 <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-border md:-translate-x-0.5" />
-                
+
                 {milestones.map((milestone, index) => (
                   <motion.div
                     key={index}
@@ -240,9 +243,8 @@ const About = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className={`relative flex items-center gap-8 mb-8 ${
-                      index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                    }`}
+                    className={`relative flex items-center gap-8 mb-8 ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                      }`}
                   >
                     <div className={`flex-1 ${index % 2 === 0 ? "md:text-right" : "md:text-left"} pl-12 md:pl-0`}>
                       <div className="cosmic-card p-6">
@@ -251,9 +253,9 @@ const About = () => {
                         <p className="text-muted-foreground text-sm">{milestone.description}</p>
                       </div>
                     </div>
-                    
+
                     <div className="absolute left-4 md:left-1/2 w-3 h-3 rounded-full bg-primary -translate-x-1/2 md:-translate-x-1/2 ring-4 ring-background" />
-                    
+
                     <div className="flex-1 hidden md:block" />
                   </motion.div>
                 ))}
@@ -262,8 +264,8 @@ const About = () => {
           </div>
         </section>
         <section>
-        <CertificationsShowcase />
-         </section>
+          <CertificationsShowcase />
+        </section>
 
         {/* CTA Section */}
         <section className="py-20 bg-background">
@@ -278,7 +280,7 @@ const About = () => {
                 Ready to Begin <span className="text-gradient-gold">Your Journey</span>?
               </h2>
               <p className="text-muted-foreground text-lg mb-8">
-                Let us guide you towards clarity, success, and peace. 
+                Let us guide you towards clarity, success, and peace.
                 Book your consultation today.
               </p>
               <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold" asChild>

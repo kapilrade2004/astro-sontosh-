@@ -102,7 +102,7 @@ const Contact = () => {
             >
               <span className="text-primary font-medium text-sm uppercase tracking-wider">Contact Us</span>
               <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mt-4 mb-6">
-                Begin Your Journey to <span className="text-gradient-gold">Transformation</span>
+                Seek Clarity.<span className="text-gradient-gold"> Align with Dharma.</span>
               </h1>
               <p className="text-muted-foreground text-lg md:text-xl max-w-2xl">
                 Ready to unlock the secrets of your destiny? Reach out to us for a personalized 
@@ -270,7 +270,7 @@ const Contact = () => {
                     className="w-full bg-[#25D366] hover:bg-[#25D366]/90 text-white"
                     asChild
                   >
-                    <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
+                    <a href="https://wa.me/+918879731174" target="_blank" rel="noopener noreferrer">
                       <MessageCircle className="w-5 h-5 mr-2" />
                       WhatsApp Now
                     </a>
@@ -292,9 +292,9 @@ const Contact = () => {
                     className="w-full border-primary text-primary hover:bg-primary/10"
                     asChild
                   >
-                    <a href="tel:+911234567890">
+                    <a href="tel:+918879731174">
                       <Phone className="w-5 h-5 mr-2" />
-                      +91 123 456 7890
+                     +91 8879731174
                     </a>
                   </Button>
                 </div>
@@ -352,8 +352,7 @@ const Contact = () => {
                 <div className="text-center">
                   <MapPin className="w-12 h-12 text-primary mx-auto mb-4" />
                   <p className="text-muted-foreground">
-                    123 Cosmic Avenue, Spiritual District<br />
-                    Mumbai, India 400001
+                    Address - 174 Gold Mohur CHS, Kalbadevi,<br /> Princess Street, Marine Lines, Mumbai - 400002
                   </p>
                   <Button
                     variant="link"

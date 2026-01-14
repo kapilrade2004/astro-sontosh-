@@ -10,57 +10,116 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { 
-  Briefcase, Heart, Baby, Stethoscope, Calendar, 
+import {
+  Briefcase, Heart, Baby, Stethoscope, Calendar,
   Gem, Circle, Sparkles, Flame, BookOpen, Sun, Shield, Clock,
   ArrowRight, CheckCircle,
-  PenTool
+  PenTool, TrendingUp, Users, Building, Award
 } from "lucide-react";
 
 const services = [
   {
     icon: Briefcase,
     title: "Career Counselling",
-    description: "Get comprehensive guidance on your career path, job changes, promotions, and business ventures. Understand the best timing for major career decisions based on your planetary positions.",
-    features: ["Career direction analysis", "Job change timing", "Promotion insights", "Business venture guidance", "Entrepreneurship timing"],
+    description: "Detailed analysis to understand your professional path using divisional charts and planetary configurations.",
+    features: [
+      "Career growth, obstacles, and achievements",
+      "Power, authority, and leadership potential",
+      "Job vs Business suitability",
+      "Best profession or industry alignment",
+      "Stability, name, and recognition timing",
+      "Predictions and remedial measures for career phases"
+    ],
   },
   {
     icon: Heart,
     title: "Marriage & Matchmaking",
-    description: "Find your perfect match with detailed compatibility analysis. Know the ideal timing for marriage and strengthen your relationship through understanding planetary influences.",
-    features: ["Kundli matching", "Compatibility analysis", "Marriage timing prediction", "Relationship stability guidance", "Manglik dosha analysis"],
+    description: "In-depth marital analysis covering all aspects of partnership and compatibility for a harmonious relationship.",
+    features: [
+      "Partner characteristics analysis",
+      "Compatibility matching (Kundli Milan)",
+      "Timing of marriage prediction",
+      "Delay, denial, separation, or divorce factors",
+      "Manglik dosha analysis",
+      "Remedies for harmony and marital well-being"
+    ],
   },
   {
     icon: Baby,
     title: "Child Astrology",
-    description: "Understand your child's potential from birth. Get insights on their education, health, talents, and future prospects through detailed birth chart analysis.",
-    features: ["Birth chart reading", "Education guidance", "Talent identification", "Health predictions", "Career potential analysis"],
+    description: "Comprehensive guidance on childbirth and understanding your child's potential from birth chart analysis.",
+    features: [
+      "Promise of childbirth assessment",
+      "Timing of childbirth prediction",
+      "Reasons for delay or denial",
+      "Corrective and spiritual remedies",
+      "Child's education and talent identification",
+      "Health and career potential analysis"
+    ],
   },
-  {
-  icon: PenTool,
-  title: "Tattoo Guidance",
-  description:
-    "Receive personalized guidance before getting a tattoo, including ideal timing, placement considerations, and symbolic alignment to ensure the tattoo resonates positively with your life journey.",
-  features: [
-    "Auspicious timing guidance",
-    "Tattoo placement insights",
-    "Symbol & design alignment",
-    "Spiritual and energetic considerations",
-    "Long-term impact awareness",
-  ],
-},
   {
     icon: Stethoscope,
     title: "Medical Astrology",
-    description: "Identify sensitive health periods and understand planetary effects on your physical well-being. Get preventive guidance for chronic conditions.",
-    features: ["Health period predictions", "Chronic condition analysis", "Planetary health effects", "Preventive measures", "Recovery timing"],
+    description: "Understanding celestial influence on health and well-being through planetary positions and Dasha periods.",
+    features: [
+      "Planetary and house impact on body and mind",
+      "Disease timing via Dashas and Transits",
+      "Ayurvedic Dosha balance assessment",
+      "Preventive remedies and health guidance",
+      "Chronic condition analysis",
+      "Recovery timing predictions"
+    ],
+    note: "Not a substitute for medical treatment"
+  },
+  {
+    icon: PenTool,
+    title: "Tattoo Guidance",
+    description: "Astrologically aligned tattoo guidance based on birth chart to attract positivity and divine blessings.",
+    features: [
+      "Auspicious timing for tattooing",
+      "Placement considerations based on chart",
+      "Symbol and design alignment",
+      "Spiritual and energetic considerations",
+      "Planetary compatibility analysis",
+      "Long-term impact awareness"
+    ],
   },
   {
     icon: Calendar,
-    title: "Life Events Prediction",
-    description: "Know the timing of major life events including marriage, job changes, property purchases, childbirth, and more with remarkable accuracy.",
-    features: ["Marriage timing", "Career transitions", "Property purchase timing", "Childbirth predictions", "Shani Sade Sati & Dhaiya guidance"],
+    title: "Prediction of Key Life Events",
+    description: "Accurate timing and promise analysis for major life events using Dasha systems and transits.",
+    features: [
+      "Marriage timing prediction",
+      "Career change and transitions",
+      "Property purchase timing",
+      "Shani Sade Sati and Dhaiya guidance",
+      "Health challenges and recovery periods",
+      "Favourable and difficult phase identification"
+    ],
   },
+  {
+    icon: Shield,
+    title: "Customised Remedial Recommendations",
+    description: "Purpose-driven remedies to balance karma, correct doshas, and realign with dharma for a harmonious life.",
+    purpose: [
+      "Reduce malefic planetary effects",
+      "Strengthen benefic but weakly placed planets",
+      "Remove/subsidize difficult Dashas and Transits",
+      "Enhance spiritual awareness",
+      "Balance karma and correct doshas",
+      "Realign on the dharma path"
+    ],
+    features: [
+      "Gemstones, Rudraksha, and Crystals",
+      "Daily routine and lifestyle adjustments",
+      "Pooja, Havan, Mantra Jaap, and Yantra",
+      "Donations and charitable service",
+      "Vastu corrections and alignments",
+      "Fasting and dietary guidance",
+      "Right Tithi for right remedy",
+      "Suitable Nakshatra-based solutions"
+    ],
+  }
 ];
 
 const remedies = [
@@ -69,7 +128,7 @@ const remedies = [
   { icon: Sparkles, title: "Crystals", description: "Healing crystals for energy balance" },
   { icon: Flame, title: "Pooja & Havan", description: "Sacred rituals for planetary appeasement" },
   { icon: BookOpen, title: "Mantra Jaap", description: "Powerful mantras for specific benefits" },
-  { icon: Sun, title: "Daily Routine", description: "Personalized daily practices" },
+  { icon: Sun, title: "Daily Routine", description: "Personalized daily practices and lifestyle" },
   { icon: Shield, title: "Preventive Measures", description: "Protection from negative influences" },
   { icon: Clock, title: "Muhurta Selection", description: "Auspicious timing for important events" },
 ];
@@ -77,11 +136,11 @@ const remedies = [
 const faqs = [
   {
     question: "How accurate are astrological predictions?",
-    answer: "With over 25 years of experience and thousands of successful consultations, our predictions have maintained a 95% accuracy rate. We use authentic Vedic astrology methods combined with intuitive analysis.",
+    answer: "With over 25 years of experience and thousands of successful consultations, our predictions have maintained a 95% accuracy rate. We use authentic Vedic astrology methods including divisional charts, Dasha systems, and Nakshatra analysis combined with intuitive guidance.",
   },
   {
     question: "What information do I need for a consultation?",
-    answer: "For an accurate reading, we need your date of birth, exact time of birth, and place of birth. If you don't know your exact birth time, we can use alternative methods for analysis.",
+    answer: "For an accurate reading, we need your date of birth, exact time of birth, and place of birth. If you don't know your exact birth time, we can use alternative methods like palmistry or Prashna Kundali for analysis.",
   },
   {
     question: "How long does a consultation take?",
@@ -89,11 +148,15 @@ const faqs = [
   },
   {
     question: "Are remedies mandatory after consultation?",
-    answer: "Remedies are suggestions to enhance positive outcomes and minimize challenges. They are never mandatory, and we always explain why specific remedies are recommended for your situation.",
+    answer: "Remedies are suggestions to enhance positive outcomes and minimize challenges. They are never mandatory, and we always explain why specific remedies are recommended based on your unique birth chart and current planetary periods.",
   },
   {
     question: "Can you predict exact dates of events?",
-    answer: "Yes, Vedic astrology allows us to narrow down event timing to specific periods. For major events like marriage or job changes, we can often predict within a month or specific muhurta.",
+    answer: "Yes, Vedic astrology allows us to narrow down event timing to specific periods using Dasha systems and transits. For major events like marriage or job changes, we can often predict within a month or provide specific muhurta (auspicious timing).",
+  },
+  {
+    question: "What is the difference between Vedic and Western astrology?",
+    answer: "Vedic astrology (Jyotish) uses the sidereal zodiac and focuses on karma, dharma, and life purpose. It incorporates divisional charts, Nakshatra system, and Dasha periods for precise timing, making it more predictive and remedy-oriented than Western astrology.",
   },
 ];
 
@@ -114,8 +177,8 @@ const Astrology = () => {
   return (
     <>
       <Helmet>
-        <title>Astrology Services - Career, Marriage, Health Predictions | Cosmic Guidance</title>
-        <meta name="description" content="Expert astrology services including career counselling, marriage matchmaking, child astrology, medical astrology, and life events prediction with personalized remedies." />
+        <title>Astrology Services – Jyotish Vidya | Cosmic Guidance</title>
+        <meta name="description" content="Expert Vedic astrology services including career counselling, marriage matchmaking, child astrology, medical astrology, tattoo guidance, and customized remedial recommendations." />
         <link rel="canonical" href="https://cosmicguidance.com/astrology" />
       </Helmet>
       <Layout>
@@ -129,13 +192,18 @@ const Astrology = () => {
               transition={{ duration: 0.6 }}
               className="max-w-4xl"
             >
-              <span className="text-primary font-medium text-sm uppercase tracking-wider">Vedic Astrology</span>
+              <span className="text-primary font-medium text-sm uppercase tracking-wider">Astrology Services – Jyotish Vidya</span>
+              <div className="text-sm md:text-base text-muted-foreground italic mt-2 mb-4">
+              ज्योतिषं ज्ञानम्, भविष्यं प्रकाशः <br />
+              ज्योतिषः विद्या प्रदाति मार्गम् <br />
+              ज्योतिषं सर्वार्थ साधकं 
+
+              </div>
               <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mt-4 mb-6">
                 Unlock Your <span className="text-gradient-gold">Destiny</span> Through the Stars
               </h1>
               <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mb-8">
-                Comprehensive astrological analysis covering career, relationships, health, and life events 
-                with accurate predictions and powerful remedies.
+                Astrology is the science of light that helps decode karma, destiny, and free will. Using divisional charts, planetary Dashas, Nakshatra analysis, and transits, each consultation offers clarity, timing, and actionable guidance.
               </p>
               <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold" asChild>
                 <Link to="/contact">
@@ -160,7 +228,7 @@ const Astrology = () => {
                 Our <span className="text-gradient-gold">Astrology Services</span>
               </h2>
               <p className="text-muted-foreground text-lg">
-                Detailed analysis and guidance for every important area of your life.
+                Detailed analysis and guidance for every important area of your life using authentic Vedic astrology.
               </p>
             </motion.div>
 
@@ -185,9 +253,25 @@ const Astrology = () => {
                         </div>
                         <h3 className="font-serif text-2xl font-semibold">{service.title}</h3>
                       </div>
-                      <p className="text-muted-foreground leading-relaxed">{service.description}</p>
+                      <p className="text-muted-foreground leading-relaxed mb-4">{service.description}</p>
+                      {service.note && (
+                        <p className="text-xs text-muted-foreground italic">*{service.note}</p>
+                      )}
                     </div>
                     <div className="lg:w-2/3">
+                      {service.purpose && (
+                        <div className="mb-6">
+                          <h4 className="font-semibold text-sm text-primary mb-3">Purpose:</h4>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            {service.purpose.map((item, i) => (
+                              <div key={i} className="flex items-center gap-2">
+                                <CheckCircle className="w-4 h-4 text-primary shrink-0" />
+                                <span className="text-sm text-foreground/80">{item}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {service.features.map((feature, i) => (
                           <div key={i} className="flex items-center gap-3">
@@ -217,7 +301,7 @@ const Astrology = () => {
                 Customised <span className="text-gradient-gold">Remedies</span>
               </h2>
               <p className="text-muted-foreground text-lg">
-                Personalized solutions based on your unique birth chart for maximum effectiveness.
+                Personalized solutions based on your unique birth chart, right Tithi, and suitable Nakshatra for maximum effectiveness.
               </p>
             </motion.div>
 
@@ -286,8 +370,8 @@ const Astrology = () => {
                 Ready to Discover Your <span className="text-gradient-gold">Cosmic Path</span>?
               </h2>
               <p className="text-muted-foreground text-lg mb-8">
-                Book your personalized astrology consultation today and get accurate predictions 
-                with powerful remedies.
+                Book your personalized astrology consultation today and get accurate predictions
+                with powerful customized remedies aligned to your birth chart.
               </p>
               <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold" asChild>
                 <Link to="/contact">Get Your Personalised Prediction</Link>

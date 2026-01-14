@@ -10,9 +10,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { 
+import {
   Hand, Heart, Activity, TrendingUp, Brain, Fingerprint,
-  ArrowRight, CheckCircle, Shield, Sparkles, HeartPulse, Wallet
+  ArrowRight, CheckCircle, Shield, Sparkles, HeartPulse, Wallet,
+  Users, Sun, Calendar, Target
 } from "lucide-react";
 
 const palmLines = [
@@ -46,6 +47,51 @@ const palmLines = [
     description: "Reveals your intellectual capacity, thinking style, and mental approach to life. Indicates creativity vs analytical abilities.",
     features: ["Intellectual assessment", "Thinking patterns", "Learning style", "Decision-making ability", "Creative potential"],
   },
+  {
+    icon: Sun,
+    title: "Sun Line",
+    description: "Indicates fame, success, creativity, and public recognition. Shows your potential for achievement and how you shine in the world.",
+    features: ["Success potential", "Creative talents", "Public recognition", "Achievement timing", "Artistic abilities"],
+  },
+  {
+    icon: Users,
+    title: "Marriage Line",
+    description: "Reveals relationship patterns, marriage timing, and partnership dynamics. Provides insights into your romantic journey.",
+    features: ["Marriage timing", "Relationship patterns", "Partner compatibility", "Emotional bonds", "Union challenges"],
+  },
+];
+
+const palmistryBenefits = [
+  {
+    icon: Target,
+    title: "Character & Personality Analysis",
+    description: "Deep insights into your inherent nature, behavioral patterns, strengths, and areas for personal growth.",
+  },
+  {
+    icon: Calendar,
+    title: "Life Path & Event Timing",
+    description: "Detailed timeline of significant life events, transitions, and opportunities with precise timing indicators.",
+  },
+  {
+    icon: HeartPulse,
+    title: "Health & Well-being Indicators",
+    description: "Comprehensive health assessment revealing vulnerabilities, constitution, and preventive measures for wellness.",
+  },
+  {
+    icon: Wallet,
+    title: "Career & Financial Guidance",
+    description: "Professional path analysis, wealth indicators, financial potential, and prosperity timing.",
+  },
+  {
+    icon: Users,
+    title: "Relationship & Compatibility",
+    description: "Marriage timing, partner compatibility, relationship dynamics, and romantic journey insights.",
+  },
+  {
+    icon: CheckCircle,
+    title: "Validation When Birth Details Missing",
+    description: "Accurate readings when complete birth details are unavailable, providing essential astrological guidance.",
+  },
 ];
 
 const additionalServices = [
@@ -56,8 +102,8 @@ const additionalServices = [
   },
   {
     icon: Shield,
-    title: "Protective Remedies",
-    description: "Customized remedies to overcome challenges revealed in your palm and enhance positive aspects.",
+    title: "Astrological Remedies",
+    description: "Customized astrological remedies to overcome challenges revealed in your palm and enhance positive aspects.",
   },
   {
     icon: Sparkles,
@@ -99,6 +145,10 @@ const faqs = [
     question: "How accurate is palm reading?",
     answer: "When performed by an experienced palmist, readings are remarkably accurate for personality assessment, potential revelation, and tendency prediction. Combined with remedies, palmistry becomes a powerful tool for life improvement.",
   },
+  {
+    question: "Can palmistry help when birth details are missing?",
+    answer: "Absolutely! Palmistry serves as an excellent complementary tool when complete or accurate birth details are unavailable. Your palms provide reliable insights for astrological guidance and remedy suggestions.",
+  },
 ];
 
 const containerVariants = {
@@ -119,7 +169,7 @@ const Palmistry = () => {
     <>
       <Helmet>
         <title>Palmistry Services - Palm Reading, Life Line Analysis | Cosmic Guidance</title>
-        <meta name="description" content="Expert palmistry services including heart line, life line, fate line reading, palm structure analysis, and personalized remedies for life improvement." />
+        <meta name="description" content="Expert palmistry services including heart line, life line, fate line, marriage line, sun line reading, palm structure analysis, and personalized astrological remedies." />
         <link rel="canonical" href="https://cosmicguidance.com/palmistry" />
       </Helmet>
       <Layout>
@@ -133,13 +183,22 @@ const Palmistry = () => {
               transition={{ duration: 0.6 }}
               className="max-w-4xl"
             >
-              <span className="text-primary font-medium text-sm uppercase tracking-wider">Palmistry</span>
+              <span className="text-primary font-medium text-sm uppercase tracking-wider">Palmistry – The Mirror of Destiny
+</span>
+              <div className="text-sm md:text-base text-muted-foreground italic mt-2 mb-4">
+                कराग्रे वसते लक्ष्मीः करमध्ये सरस्वती ।<br />
+                करमूले तु गोविन्दः प्रभाते करदर्शनम् ॥
+              </div>
               <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mt-4 mb-6">
                 Your Palms Hold the <span className="text-gradient-gold">Map of Your Destiny</span>
               </h1>
+              <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mb-4">
+                Discover the secrets written in your hands. Get detailed readings of your life lines,
+                personality traits, and future potential with powerful astrological remedies.
+              </p>
               <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mb-8">
-                Discover the secrets written in your hands. Get detailed readings of your life lines, 
-                personality traits, and future potential with powerful remedies.
+                Palmistry serves as a complementary tool in astrology, especially when birth details are incomplete or unavailable. 
+                It provides essential guidance on character, life path, health, career, relationships, and astrological remedies.
               </p>
               <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold" asChild>
                 <Link to="/contact">
@@ -148,6 +207,44 @@ const Palmistry = () => {
                 </Link>
               </Button>
             </motion.div>
+          </div>
+        </section>
+
+        {/* Benefits Section */}
+        <section className="py-20 bg-gradient-cosmic">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center max-w-3xl mx-auto mb-12"
+            >
+              <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">
+                What <span className="text-gradient-gold">Palmistry</span> Reveals
+              </h2>
+              <p className="text-muted-foreground text-lg">
+                Comprehensive insights into every aspect of your life through palm analysis
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {palmistryBenefits.map((benefit, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="cosmic-card p-6 group hover:scale-105 transition-transform"
+                >
+                  <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                    <benefit.icon className="w-7 h-7 text-primary" />
+                  </div>
+                  <h3 className="font-serif text-xl font-semibold mb-3">{benefit.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{benefit.description}</p>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -164,7 +261,7 @@ const Palmistry = () => {
                 Major <span className="text-gradient-gold">Palm Lines</span> Reading
               </h2>
               <p className="text-muted-foreground text-lg">
-                Each line in your palm tells a unique story about different aspects of your life.
+                Comprehensive analysis of all seven major lines revealing your complete life story
               </p>
             </motion.div>
 
@@ -220,6 +317,9 @@ const Palmistry = () => {
               <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">
                 Additional <span className="text-gradient-gold">Palm Analysis</span>
               </h2>
+              <p className="text-muted-foreground text-lg">
+                Specialized services for complete palm structure and phalange analysis
+              </p>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -253,10 +353,10 @@ const Palmistry = () => {
               className="text-center max-w-3xl mx-auto mb-12"
             >
               <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">
-                Remedies for <span className="text-gradient-gold">Critical Events</span>
+                Astrological <span className="text-gradient-gold">Remedies</span>
               </h2>
               <p className="text-muted-foreground text-lg">
-                Personalized solutions to overcome challenges and enhance positive potential revealed in your palms.
+                Personalized astrological solutions to overcome challenges and enhance positive potential revealed in your palms
               </p>
             </motion.div>
 
@@ -327,8 +427,8 @@ const Palmistry = () => {
                 Ready to Read <span className="text-gradient-gold">Your Destiny</span>?
               </h2>
               <p className="text-muted-foreground text-lg mb-8">
-                Get your comprehensive palm reading today and discover what your hands 
-                reveal about your past, present, and future.
+                Get your comprehensive palm reading today and discover what your hands
+                reveal about your past, present, and future with personalized astrological remedies.
               </p>
               <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold" asChild>
                 <Link to="/contact">Get Palm Reading Now</Link>
