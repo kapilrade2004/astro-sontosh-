@@ -45,7 +45,7 @@ export const Header = () => {
         <nav className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <motion.div
+            {/* <motion.div
               whileHover={{ scale: 1.1 }}
               transition={{ duration: 0.3 }}
               className="flex-shrink-0"
@@ -53,10 +53,15 @@ export const Header = () => {
               <img 
                 src={logoImage}
                 alt="Astro Santosh Pandey Logo" 
-                className="h-12 w-12 object-contain"
+                className="h-36 w-48 object-contain"
               />
-            </motion.div>
+            </motion.div> */}
             <div className="flex flex-col">
+              <motion.div
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.3 }}
+              className="flex-shrink-0"
+            >
               <img 
                 src={nameLogoImage}
                 alt="Astro Santosh Pandey" 
@@ -65,6 +70,7 @@ export const Header = () => {
               <span className="text-xs text-primary/70 italic mt-1">
                 ज्योतिषं ज्ञानम्, भविष्यं प्रकाशः
               </span>
+              </motion.div>
             </div>
           </Link>
 

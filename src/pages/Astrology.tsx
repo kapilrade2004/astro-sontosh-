@@ -194,8 +194,7 @@ const Astrology = () => {
             >
               <span className="text-primary font-medium text-sm uppercase tracking-wider">Astrology Services – Jyotish Vidya</span>
               <div className="text-sm md:text-base text-muted-foreground italic mt-2 mb-4">
-              ज्योतिषं ज्ञानम्, भविष्यं प्रकाशः <br />
-              ज्योतिषः विद्या प्रदाति मार्गम् <br />
+             
               ज्योतिषं सर्वार्थ साधकं 
 
               </div>
