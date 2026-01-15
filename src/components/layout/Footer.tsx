@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Sparkles, Mail, Phone, MapPin, Facebook, Instagram, Youtube, Twitter, Linkedin, MessageCircle, Globe } from "lucide-react";
+import LOGO from "@/assets/namelogo-removebg-preview.png";
 
 const services = [
   { name: "Astrology", path: "/astrology" },
@@ -32,10 +33,7 @@ export const Footer = () => {
           {/* Brand */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center gap-2">
-              <Sparkles className="h-8 w-8 text-primary" />
-              <span className="font-serif text-2xl font-semibold text-gradient-gold">
-                Cosmic Guidance
-              </span>
+              <img src={LOGO} alt="astrosantoshpandey" className=" h-24 w-52" />
             </Link>
             <p className="text-primary/80 text-sm italic font-medium">
               ज्योतिषं सर्वार्थ साधकं
@@ -101,7 +99,7 @@ export const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-primary shrink-0 mt-0.5" />
                 <span className="text-muted-foreground text-sm">
-                    Address - 174 Gold Mohur CHS, Kalbadevi,Princess Street, Marine Lines, Mumbai - 400002
+                    Address - Kalbadevi,Princess Street, Marine Lines, Mumbai
                 </span>
               </li>
               <li className="flex items-center gap-3">

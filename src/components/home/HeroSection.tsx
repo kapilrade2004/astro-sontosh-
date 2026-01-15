@@ -31,7 +31,7 @@ export const HeroSection = () => {
         >
           <span className="inline-flex items-center gap-2 px-3 py-1.5 lg:px-4 lg:py-2 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs lg:text-sm">
             <Sparkles className="w-3 h-3 lg:w-4 lg:h-4" />
-            Trusted by 10,000+ Clients Worldwide
+             Trusted by Multiple Clients Worldwide
           </span>
         </motion.div>
 
@@ -85,14 +85,14 @@ export const HeroSection = () => {
                 className="border-primary text-primary hover:bg-primary/10 text-base lg:text-lg px-8 py-6 w-full sm:w-auto" 
                 asChild
               >
-                <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
+                <a href="https://wa.me/+918879731174" target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="w-5 h-5 mr-2" />
                   WhatsApp Now
                 </a>
               </Button>
             </motion.div>
 
-            {/* Stats */}
+            {/* Stats
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -113,7 +113,7 @@ export const HeroSection = () => {
                   <div className="text-muted-foreground text-xs sm:text-sm mt-1">{stat.label}</div>
                 </div>
               ))}
-            </motion.div>
+            </motion.div> */}
           </div>
 
           {/* Right Image with Sanskrit text below */}

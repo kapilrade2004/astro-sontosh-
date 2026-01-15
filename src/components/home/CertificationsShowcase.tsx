@@ -14,8 +14,8 @@ import C360ARB from "@/assets/certificate-360-astro-remedies-bootcamp-by-astro-a
 import AVS from "@/assets/Astro-Vastu-Shastra-1.png";
 import ATOETC from "@/assets/Advance-Timing-of-Events-Transit-Course-1.png";
 import SPOA10 from "@/assets/10-Sureshot-Prediction-of-Astrology-1.png";
-import CAG from"@/assets/Crystal-And-Gemstone-1.png"
-import RC from"@/assets/Rudraksha-Course-1.png"
+import CAG from "@/assets/Crystal-And-Gemstone-1.png"
+import RC from "@/assets/Rudraksha-Course-1.png"
 const certifications = [
   {
     id: 1,
@@ -61,7 +61,7 @@ const certifications = [
   },
   {
     id: 8,
-    title: "certificate basic nakshatra course by astro arun pandit", 
+    title: "certificate basic nakshatra course by astro arun pandit",
     image: CBNCBA,
     verified: true,
   },
@@ -70,7 +70,7 @@ const certifications = [
     title: "certificate 360 astro remedies bootcamp by astro arun pandit",
     image: C360ARB,
     verified: true,
-  },  
+  },
   {
     id: 10,
     title: "Astro Vastu Shastra",
@@ -107,13 +107,13 @@ const certifications = [
     image: RC,
     verified: true,
   },
-  
-  
 
-  
-  
-  
-  
+
+
+
+
+
+
 ];
 
 export default function CertificationsShowcase() {
@@ -165,8 +165,8 @@ export default function CertificationsShowcase() {
                 {/* Certificate Image */}
                 <div className="relative h-48 bg-gradient-to-br from-primary/5 to-primary/10 rounded-t-xl overflow-hidden">
                   {cert.image ? (
-                    <img 
-                      src={cert.image} 
+                    <img
+                      src={cert.image}
                       alt={cert.title}
                       className="w-full h-full object-cover"
                       onError={(e) => {
@@ -195,7 +195,7 @@ export default function CertificationsShowcase() {
                     {cert.title}
                   </h3>
 
-                  <button 
+                  <button
                     onClick={() => openCertificate(cert.id)}
                     className="flex items-center gap-2 text-primary text-sm font-medium hover:gap-3 transition-all"
                   >
@@ -228,29 +228,42 @@ export default function CertificationsShowcase() {
           )}
 
           {/* Stats Row */}
-          <motion.div
+          {/* Stats Row */}
+          {/* <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto"
           >
             <div className="text-center">
-              <div className="font-serif text-3xl font-bold text-gradient-gold">25+</div>
-              <div className="text-sm text-muted-foreground mt-1">Years Experience</div>
+              <div className="font-serif text-3xl font-bold text-gradient-gold"></div>
+              <div className="text-sm text-muted-foreground mt-1">
+                Years of Dedicated Practice
+              </div>
             </div>
+
             <div className="text-center">
-              <div className="font-serif text-3xl font-bold text-gradient-gold">6</div>
-              <div className="text-sm text-muted-foreground mt-1">Major Certifications</div>
+              <div className="font-serif text-3xl font-bold text-gradient-gold">Multiple</div>
+              <div className="text-sm text-muted-foreground mt-1">
+                Astrology Disciplines
+              </div>
             </div>
+
             <div className="text-center">
-              <div className="font-serif text-3xl font-bold text-gradient-gold">100%</div>
-              <div className="text-sm text-muted-foreground mt-1">Verified Credentials</div>
+              <div className="font-serif text-3xl font-bold text-gradient-gold">Trusted</div>
+              <div className="text-sm text-muted-foreground mt-1">
+                Guidance & Insights
+              </div>
             </div>
+
             <div className="text-center">
-              <div className="font-serif text-3xl font-bold text-gradient-gold">10k+</div>
-              <div className="text-sm text-muted-foreground mt-1">Consultations</div>
+              <div className="font-serif text-3xl font-bold text-gradient-gold">Hundreds</div>
+              <div className="text-sm text-muted-foreground mt-1">
+                Consultations Delivered
+              </div>
             </div>
-          </motion.div>
+          </motion.div> */}
+
         </div>
       </section>
 

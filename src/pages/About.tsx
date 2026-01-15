@@ -11,11 +11,12 @@ import {
 import CertificationsShowcase from "@/components/home/CertificationsShowcase";
 
 const achievements = [
-  { value: "25+", label: "Years of Experience" },
-  { value: "10,000+", label: "Happy Clients" },
-  { value: "50+", label: "Countries Served" },
-  { value: "95%", label: "Accuracy Rate" },
+  { value: "Years", label: "Dedicated Astrological Practice" },
+  { value: "Clients", label: "Guided with Care" },
+  { value: "Global", label: "Client Reach" },
+  { value: "Authentic", label: "Astrological Insights" },
 ];
+
 
 const values = [
   {
@@ -70,11 +71,14 @@ const About = () => {
             >
               <span className="text-primary font-medium text-sm uppercase tracking-wider">About Us</span>
               <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mt-4 mb-6">
-                Guiding Lives Through <span className="text-gradient-gold">Ancient Wisdom</span>
+                {/* Guiding Lives Through <span className="text-gradient-gold">Ancient Wisdom</span> */}
+                From Corporate Leader to
+                <span className="text-gradient-gold"> Aspiring Astropreneur</span>
               </h1>
               <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mb-8">
-                For over 25 years, we've been dedicated to helping people navigate life's challenges
-                through the profound sciences of Astrology, Numerology, Vastu, and Palmistry.
+                We provide trusted guidance through Astrology, Numerology, Vastu, and Palmistry to help people make confident life decisions.
+
+
               </p>
             </motion.div>
           </div>
@@ -118,28 +122,26 @@ const About = () => {
 
                 <div className="cosmic-card p-8 md:p-12 space-y-6 text-muted-foreground leading-relaxed">
                   <p>
-                    ज्योतिषं ज्ञानम्, भविष्यं प्रकाशः
-                    ज्योतिषः विद्या प्रदाति मार्गम्
+                    
                     ज्योतिषं सर्वार्थ साधकं
 
                   </p>
                   <p>
-                  Hari Om,
+                    Hari Om,
 
                   </p>
                   <p>
-                    I am Santosh Radheshyam Pandey – have worked in the corporate world with in-depth experience in Customer Service, Quality Control and Management, Project and Program Management, ORM and Social Media Management, Financial Operations in multiple Payment Gateway and FinTech companies.
+                  I am Santosh Radheshyam Pandey, a former corporate professional with decades of experience in Customer Service, Quality Control, Project & Program Management, ORM, Social Media Management, and Financial Operations across Payment Gateway and FinTech organizations.
+
                   </p>
                   <p>
-                 Academically, I graduated in commerce and did my PGDCA and PGDM – BA thereafter.  Also, possess professional qualifications such as PMP and  SSMBB.  
+                    Despite a successful corporate career, Astrology emerged as my true calling. Through years of study and self-realization, I understood how planetary movements shaped key life events and aligned my journey with dharma.
+
                   </p>
                   <p>
-                   After working for a couple of decades in the corporate world, I never imagined Astrology would become my true ultimate calling.  Got transformed into a passionate learner since last few years, and now I'm into the Astrology space as my full-time career.  I have done my Masters in Astrology, Palmistry and Vastu.
+                   Today, with a Master’s in Astrology, Palmistry, and Vastu, I serve this sacred knowledge full-time — guiding individuals through ethical, responsible, and deeply researched consultations.
                   </p>
-                  <p>During my journey in the Astrology field, have uncovered and understood all the events that I experienced over the years till date.  It made me understand the ‘WHY’ part of all the incidents and helped me to align my actions accordingly.</p>
-                  <p>
-                    As it’s being said, you cannot choose the Occult field as your career but it chooses you.  Fortunately, I am the chosen one to serve and guide, basis the best of my ever-growing knowledge in this space.
-                  </p>
+                 
                 </div>
               </motion.div>
             </div>

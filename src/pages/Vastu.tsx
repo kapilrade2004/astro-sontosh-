@@ -123,8 +123,8 @@ const Vastu = () => {
                 Harmonize Your <span className="text-gradient-gold">Living Space</span> for Prosperity
               </h1>
               <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mb-8">
-                Transform your home and workplace with the ancient science of Vastu.
-                Balance cosmic energies for health, wealth, and peace.
+               Vastu Shastra balances the five elements — Earth, Water, Fire, Air, and Space — to create harmony, prosperity, and peace.
+
               </p>
               <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold" asChild>
                 <Link to="/contact">

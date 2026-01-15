@@ -197,8 +197,7 @@ const Palmistry = () => {
                 personality traits, and future potential with powerful astrological remedies.
               </p>
               <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mb-8">
-                Palmistry serves as a complementary tool in astrology, especially when birth details are incomplete or unavailable. 
-                It provides essential guidance on character, life path, health, career, relationships, and astrological remedies.
+               Palmistry complements astrology, especially when birth details are unavailable. The palm reflects past karma, present actions, and future possibilities.
               </p>
               <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold" asChild>
                 <Link to="/contact">

@@ -21,55 +21,53 @@ const services = [
   {
     icon: Briefcase,
     title: "Career Counselling",
-    description: "Detailed analysis to understand your professional path using divisional charts and planetary configurations.",
+    description: "Detailed analysis to understand:",
     features: [
       "Career growth, obstacles, and achievements",
       "Power, authority, and leadership potential",
       "Job vs Business suitability",
-      "Best profession or industry alignment",
-      "Stability, name, and recognition timing",
-      "Predictions and remedial measures for career phases"
+      "Best profession or industry",
+      "Stability, name, and recognition"
     ],
+    bottomText: "Includes predictions and remedial measures for different career phases."
   },
   {
     icon: Heart,
     title: "Marriage & Matchmaking",
-    description: "In-depth marital analysis covering all aspects of partnership and compatibility for a harmonious relationship.",
+    description: "In-depth marital analysis covering:",
     features: [
-      "Partner characteristics analysis",
-      "Compatibility matching (Kundli Milan)",
-      "Timing of marriage prediction",
+      "Partner characteristics",
+      "Compatibility matching",
+      "Timing of marriage",
       "Delay, denial, separation, or divorce factors",
-      "Manglik dosha analysis",
-      "Remedies for harmony and marital well-being"
+      "Remedies for harmony and well-being"
     ],
+    bottomText: ""
   },
   {
     icon: Baby,
     title: "Child Astrology",
-    description: "Comprehensive guidance on childbirth and understanding your child's potential from birth chart analysis.",
+    description: "Guidance on:",
     features: [
-      "Promise of childbirth assessment",
-      "Timing of childbirth prediction",
+      "Promise of childbirth",
+      "Timing of childbirth",
       "Reasons for delay or denial",
-      "Corrective and spiritual remedies",
-      "Child's education and talent identification",
-      "Health and career potential analysis"
+      "Corrective and spiritual remedies"
     ],
+    bottomText: ""
   },
   {
     icon: Stethoscope,
     title: "Medical Astrology",
-    description: "Understanding celestial influence on health and well-being through planetary positions and Dasha periods.",
+    description: "Understanding celestial influence on health:",
     features: [
       "Planetary and house impact on body and mind",
       "Disease timing via Dashas and Transits",
-      "Ayurvedic Dosha balance assessment",
-      "Preventive remedies and health guidance",
-      "Chronic condition analysis",
-      "Recovery timing predictions"
+      "Ayurvedic Dosha balance",
+      "Preventive remedies"
     ],
-    note: "Not a substitute for medical treatment"
+    note: "Not a substitute for medical treatment",
+    bottomText: ""
   },
   {
     icon: PenTool,
@@ -79,47 +77,25 @@ const services = [
       "Auspicious timing for tattooing",
       "Placement considerations based on chart",
       "Symbol and design alignment",
-      "Spiritual and energetic considerations",
-      "Planetary compatibility analysis",
-      "Long-term impact awareness"
+      "Spiritual and energetic considerations"
     ],
+    bottomText: ""
   },
   {
     icon: Calendar,
     title: "Prediction of Key Life Events",
-    description: "Accurate timing and promise analysis for major life events using Dasha systems and transits.",
+    description: "Timing and promise analysis for: Marriage, career change, property, Shani Sade Sati, health challenges, favourable and difficult phases.",
     features: [
       "Marriage timing prediction",
       "Career change and transitions",
       "Property purchase timing",
-      "Shani Sade Sati and Dhaiya guidance",
-      "Health challenges and recovery periods",
+      "Shani Sade Sati guidance",
+      "Health challenges prediction",
       "Favourable and difficult phase identification"
     ],
+    bottomText: ""
   },
-  {
-    icon: Shield,
-    title: "Customised Remedial Recommendations",
-    description: "Purpose-driven remedies to balance karma, correct doshas, and realign with dharma for a harmonious life.",
-    purpose: [
-      "Reduce malefic planetary effects",
-      "Strengthen benefic but weakly placed planets",
-      "Remove/subsidize difficult Dashas and Transits",
-      "Enhance spiritual awareness",
-      "Balance karma and correct doshas",
-      "Realign on the dharma path"
-    ],
-    features: [
-      "Gemstones, Rudraksha, and Crystals",
-      "Daily routine and lifestyle adjustments",
-      "Pooja, Havan, Mantra Jaap, and Yantra",
-      "Donations and charitable service",
-      "Vastu corrections and alignments",
-      "Fasting and dietary guidance",
-      "Right Tithi for right remedy",
-      "Suitable Nakshatra-based solutions"
-    ],
-  }
+  
 ];
 
 const remedies = [
@@ -136,7 +112,7 @@ const remedies = [
 const faqs = [
   {
     question: "How accurate are astrological predictions?",
-    answer: "With over 25 years of experience and thousands of successful consultations, our predictions have maintained a 95% accuracy rate. We use authentic Vedic astrology methods including divisional charts, Dasha systems, and Nakshatra analysis combined with intuitive guidance.",
+    answer: "With over  years of experience , our predictions have maintained a 95% accuracy rate. We use authentic Vedic astrology methods including divisional charts, Dasha systems, and Nakshatra analysis combined with intuitive guidance.",
   },
   {
     question: "What information do I need for a consultation?",
@@ -279,6 +255,11 @@ const Astrology = () => {
                           </div>
                         ))}
                       </div>
+                      {service.bottomText && (
+                        <p className="text-sm text-muted-foreground mt-4 pt-4 border-t border-border/50">
+                          {service.bottomText}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </motion.div>

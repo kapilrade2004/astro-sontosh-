@@ -24,7 +24,7 @@ const contactInfo = [
   {
     icon: MapPin,
     title: "Visit Us",
-    details: ["Address - 174 Gold Mohur CHS, Kalbadevi,Princess Street, Marine Lines, Mumbai - 400002"],
+    details: ["Address -  Kalbadevi,Princess Street, Marine Lines, Mumbai"],
   },
   {
     icon: Phone,
@@ -352,7 +352,7 @@ const Contact = () => {
                 <div className="text-center">
                   <MapPin className="w-12 h-12 text-primary mx-auto mb-4" />
                   <p className="text-muted-foreground">
-                    Address - 174 Gold Mohur CHS, Kalbadevi,<br /> Princess Street, Marine Lines, Mumbai - 400002
+                    Address - Kalbadevi,Princess Street, Marine Lines, Mumbai 
                   </p>
                   <Button
                     variant="link"

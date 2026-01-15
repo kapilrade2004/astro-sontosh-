@@ -9,8 +9,8 @@ const features = [
   },
   {
     icon: Award,
-    title: "25+ Years Experience",
-    description: "Trusted expertise honed through thousands of consultations and life-changing guidance.",
+    title: "Years of Dedicated Astrological Practice",
+    description: "Trusted by clients for reliable horoscope analysis and meaningful astrological guidance.",
   },
   {
     icon: Heart,
