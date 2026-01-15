@@ -85,9 +85,9 @@ const Contact = () => {
   return (
     <>
       <Helmet>
-        <title>Contact Us - Book Your Consultation | Cosmic Guidance</title>
-        <meta name="description" content="Contact Cosmic Guidance for expert astrology, numerology, vastu, and palmistry consultations. Book your personalized session today." />
-        <link rel="canonical" href="https://cosmicguidance.com/contact" />
+        <title>Contact Us - Book Your Consultation | Astro Santosh Pandey</title>
+        <meta name="description" content="Contact Astro Santosh Pandey for expert astrology, numerology, vastu, and palmistry consultations. Book your personalized session today." />
+        <link rel="canonical" href="https://astrosantoshpandey.com/contact" />
       </Helmet>
       <Layout>
         {/* Hero Section */}

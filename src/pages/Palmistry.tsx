@@ -168,9 +168,9 @@ const Palmistry = () => {
   return (
     <>
       <Helmet>
-        <title>Palmistry Services - Palm Reading, Life Line Analysis | Cosmic Guidance</title>
+        <title>Palmistry Services - Palm Reading, Life Line Analysis | Astro Santosh Pandey</title>
         <meta name="description" content="Expert palmistry services including heart line, life line, fate line, marriage line, sun line reading, palm structure analysis, and personalized astrological remedies." />
-        <link rel="canonical" href="https://cosmicguidance.com/palmistry" />
+        <link rel="canonical" href="https://astrosantoshpandey.com/palmistry" />
       </Helmet>
       <Layout>
         {/* Hero Section */}

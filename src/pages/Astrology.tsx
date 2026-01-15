@@ -153,9 +153,9 @@ const Astrology = () => {
   return (
     <>
       <Helmet>
-        <title>Astrology Services – Jyotish Vidya | Cosmic Guidance</title>
+        <title>Astrology Services – Jyotish Vidya | Astro Santosh Pandey</title>
         <meta name="description" content="Expert Vedic astrology services including career counselling, marriage matchmaking, child astrology, medical astrology, tattoo guidance, and customized remedial recommendations." />
-        <link rel="canonical" href="https://cosmicguidance.com/astrology" />
+        <link rel="canonical" href="https://astrosantoshpandey.com/astrology" />
       </Helmet>
       <Layout>
         {/* Hero Section */}

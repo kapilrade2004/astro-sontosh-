@@ -12,10 +12,10 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Cosmic Guidance - Expert Astrology, Numerology, Vastu & Palmistry Consultant</title>
+        <title>Astro Santosh Pandey - Expert Astrology, Numerology, Vastu & Palmistry Consultant</title>
         <meta name="description" content="Transform your life with expert Astrology, Numerology, Vastu & Palmistry guidance. Accurate predictions, personalised remedies for career, marriage, finance & health." />
         <meta name="keywords" content="astrology, numerology, vastu, palmistry, horoscope, birth chart, kundli, predictions, remedies" />
-        <link rel="canonical" href="https://cosmicguidance.com" />
+        <link rel="canonical" href="https://astrosantoshpandey.com" />
       </Helmet>
       <Layout>
         <HeroSection />

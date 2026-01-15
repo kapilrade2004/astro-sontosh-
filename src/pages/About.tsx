@@ -54,9 +54,9 @@ const About = () => {
   return (
     <>
       <Helmet>
-        <title>About Us - Our Story, Mission & Values | Cosmic Guidance</title>
-        <meta name="description" content="Learn about Cosmic Guidance's 25+ years journey in providing expert astrology, numerology, vastu, and palmistry services. Our mission, values, and commitment to accuracy." />
-        <link rel="canonical" href="https://cosmicguidance.com/about" />
+        <title>About Us - Our Story, Mission & Values | Astro Santosh Pandey</title>
+        <meta name="description" content="Learn about Astro Santosh Pandey's  journey in providing expert astrology, numerology, vastu, and palmistry services. Our mission, values, and commitment to accuracy." />
+        <link rel="canonical" href="https://astrosantoshpandey.com/about" />
       </Helmet>
       <Layout>
         {/* Hero Section */}

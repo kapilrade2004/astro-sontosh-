@@ -32,20 +32,13 @@ const testimonials = [
   },
   {
     name: "SONALDEVI ",
-    location: "Delhi, India",
+    location: "Mumbai, India",
     rating: 5,
     image: "/path-to-rajesh.jpg",
     text: "Radhe Radhe!I consulted Astrologer Santosh Ji at a time when I was seeking clarity for both my health and career. His guidance regarding my diabetes and skin concerns was compassionate, practical, and spiritually uplifting. The remedies suggested were simple yet powerful, and I personally experienced positive results.As I continued my journey with him for career guidance, his insights brought clarity to real-life challenges and helped me take confident, well-aligned decisions. His wisdom and thoughtful approach created a deep sense of trust and inner balance.I express my sincere gratitude to Astrologer Santosh Ji for his divine guidance. I highly recommend him to anyone seeking authentic solutions, clarity, and direction to unlock the right path in life with divine blessings and astrological remedies.",
     service: "Vastu Consultation",
   },
-  {
-    name: "Anita Patel",
-    location: "Ahmedabad, India",
-    rating: 5,
-    image: "/path-to-anita.jpg",
-    text: "My marriage was predicted with remarkable accuracy. The matchmaking analysis helped us understand our compatibility deeply. We've been happily married for 5 years now. Forever grateful!",
-    service: "Marriage Astrology",
-  },
+  
   {
     name: "Vikram Singh",
     location: "Bangalore, India",
@@ -56,7 +49,7 @@ const testimonials = [
   },
   {
     name: "Soumitra Bhattacharya",
-    location: "Hyderabad, India",
+    location: "Kolkata, India",
     rating: 5,
     image: "/path-to-meera.jpg",
     text: "I’m an ITSM professional working in MNC . My belief system is based on my experiences. I used to be disturbed at some point in time due to my personal life, affecting my professional commitment. I realised that I needed help.I consulted Astro Santosh Pandey, who performed a deep analysis of my birth chat aligned with recent planetary dynamics, to offer precise remedies that has healed me. I am greatful to his services.",
@@ -64,7 +57,7 @@ const testimonials = [
   },
   {
     name: "Kuheli Sinha Majumder",
-    location: "Hyderabad, India",
+    location: "Bangalore, India",
     rating: 5,
     image: KUHELI,
     text: "2023 onwards I had been facing personal challenges related to my husband’s health/career and deterioration in my neuro diverse child. This in turn took a toll on my mental and physical wellbeing. Despite being a self-driven person and doing my best, I couldn’t get a hold of the situation.  That’s when Universe connected me to Santoshji. His precision on reading all our charts gave us clarity on ‘Whys’. Add on was his non-judgmental demeanor that made me feel completely supported and heard. Thereafter his intuitive approach and predictions helped me to navigate through the challenges. The remedies were customized to ensure that it wasn’t too overwhelming for a person like me with limited spiritual aptitude.  I will lifelong be indebted to him for the equivocal support extended at a time when I could see no ray of hope. I would highly recommend him to anyone who is unable to bowl the googly that life throws upon. Thanks to him, the science behind the stars feel accessible and real🙏",

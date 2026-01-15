@@ -95,9 +95,9 @@ const Numerology = () => {
   return (
     <>
       <Helmet>
-        <title>Numerology Services - Name Correction, Mobile Numerology | Cosmic Guidance</title>
+        <title>Numerology Services - Name Correction, Mobile Numerology | Astro Santosh Pandey</title>
         <meta name="description" content="Expert numerology services including mobile number analysis, name correction, lucky numbers, compatibility matching, and life predictions based on birth date." />
-        <link rel="canonical" href="https://cosmicguidance.com/numerology" />
+        <link rel="canonical" href="https://astrosantoshpandey.com/numerology" />
       </Helmet>
       <Layout>
         {/* Hero Section */}

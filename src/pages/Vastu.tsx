@@ -96,9 +96,9 @@ const Vastu = () => {
   return (
     <>
       <Helmet>
-        <title>Vastu Shastra Services - Property Energy Diagnosis, Five Element Balancing | Cosmic Guidance</title>
+        <title>Vastu Shastra Services - Property Energy Diagnosis, Five Element Balancing | Astro Santosh Pandey</title>
         <meta name="description" content="Expert Vastu Shastra services including property energy diagnosis, Panch Tatva balancing, direction corrections, business Vastu, and modern remedies without demolition." />
-        <link rel="canonical" href="https://cosmicguidance.com/vastu" />
+        <link rel="canonical" href="https://astrosantoshpandey.com/vastu" />
       </Helmet>
       <Layout>
         {/* Hero Section */}
