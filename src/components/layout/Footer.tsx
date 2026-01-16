@@ -39,7 +39,7 @@ export const Footer = () => {
               ज्योतिषं सर्वार्थ साधकं
             </p>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Transform your life with expert Astrology, Numerology, Vastu & Palmistry guidance. 
+              Transform your life with expert Astrology, Numerology, Vastu & Palmistry guidance.
               Accurate predictions and personalized remedies for a better tomorrow.
             </p>
             <div className="flex gap-4 flex-wrap">
@@ -99,7 +99,7 @@ export const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-primary shrink-0 mt-0.5" />
                 <span className="text-muted-foreground text-sm">
-                    Address - Kalbadevi,Princess Street, Marine Lines, Mumbai
+                  Address - Kalbadevi,Princess Street, Marine Lines, Mumbai
                 </span>
               </li>
               <li className="flex items-center gap-3">
@@ -111,7 +111,7 @@ export const Footer = () => {
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-primary shrink-0" />
                 <a href="mailto:info@cosmicguidance.com" className="text-muted-foreground hover:text-primary text-sm">
-                   astrosantoshpandey@gmail.com
+                  astrosantoshpandey@gmail.com
                 </a>
               </li>
             </ul>
@@ -120,7 +120,25 @@ export const Footer = () => {
 
         <div className="border-t border-border mt-12 pt-8 text-center">
           <p className="text-muted-foreground text-sm">
-            © {new Date().getFullYear()} Cosmic Guidance. All rights reserved. Empowering lives through ancient wisdom.
+            © {new Date().getFullYear()} Astro Santosh Pandey . All rights reserved. Empowering lives through ancient wisdom.
+            <br />
+            <Link
+              to="/terms#terms"
+              className="relative after:absolute after:left-0 after:-bottom-1 after:h-[1px] after:w-0 after:bg-current after:transition-all hover:after:w-full"
+            >
+              Terms & Conditions
+            </Link>
+
+            <span className="mx-2">|</span>
+
+            <Link
+              to="/terms#privacy"
+              className="relative after:absolute after:left-0 after:-bottom-1 after:h-[1px] after:w-0 after:bg-current after:transition-all hover:after:w-full"
+            >
+              Privacy Policy
+            </Link>
+
+
           </p>
         </div>
       </div>

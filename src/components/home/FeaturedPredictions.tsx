@@ -42,7 +42,7 @@ const predictions = [
   },
   {
     icon: Calendar,
-    title: "Shani Sade Sati & Dhaiya",
+    title: "Tiiming of Key Events",
     description: "Navigate challenging planetary periods with powerful remedies and protective measures.",
     color: "from-indigo-500/20 to-indigo-600/10",
   },
