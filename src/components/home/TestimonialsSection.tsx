@@ -7,14 +7,7 @@ import KUHELI from "@/assets/kuheli.jpeg";
 import sonaldevi from "@/assets/sonaldevi.jpeg";
 
 const testimonials = [
-  {
-    name: "Priya Sharma",
-    location: "Mumbai, India",
-    rating: 5,
-    image: "/path-to-priya.jpg", // Add your image path here
-    text: "The career guidance I received was incredibly accurate. I was skeptical at first, but the prediction about my job change came true within the exact timeframe mentioned. The remedies suggested have brought immense positivity into my life.",
-    service: "Career Astrology",
-  },
+  
   {
     name: "Pankaj Patel",
     location: "Mumbai, India",
@@ -40,14 +33,7 @@ const testimonials = [
     service: "Vastu Consultation",
   },
   
-  {
-    name: "Vikram Singh",
-    location: "Bangalore, India",
-    rating: 5,
-    image: "/path-to-vikram.jpg",
-    text: "The numerology session changed my perspective completely. The name correction and mobile number analysis have visibly improved my luck and business dealings. Highly recommend!",
-    service: "Numerology",
-  },
+  
   {
     name: "Soumitra Bhattacharya",
     location: "Kolkata, India",

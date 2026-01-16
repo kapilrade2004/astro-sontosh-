@@ -99,7 +99,8 @@ export const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-primary shrink-0 mt-0.5" />
                 <span className="text-muted-foreground text-sm">
-                  Address - Kalbadevi,Princess Street, Marine Lines, Mumbai
+                  Santosh R Pandey : <br />
+                  Address - Kalbadevi ,Princess Street ,Marine Lines ,Mumbai
                 </span>
               </li>
               <li className="flex items-center gap-3">
@@ -120,10 +121,10 @@ export const Footer = () => {
 
         <div className="border-t border-border mt-12 pt-8 text-center">
           <p className="text-muted-foreground text-sm">
-            © {new Date().getFullYear()} Astro Santosh Pandey . All rights reserved. Empowering lives through ancient wisdom.
+            © {new Date().getFullYear()} Astro Santosh Pandey. All rights reserved. Empowering lives through ancient wisdom.
             <br />
             <Link
-              to="/terms#terms"
+              to="/Terms#terms"
               className="relative after:absolute after:left-0 after:-bottom-1 after:h-[1px] after:w-0 after:bg-current after:transition-all hover:after:w-full"
             >
               Terms & Conditions
@@ -132,10 +133,10 @@ export const Footer = () => {
             <span className="mx-2">|</span>
 
             <Link
-              to="/terms#privacy"
+              to="/Terms#cancellation"
               className="relative after:absolute after:left-0 after:-bottom-1 after:h-[1px] after:w-0 after:bg-current after:transition-all hover:after:w-full"
             >
-              Privacy Policy
+              Cancellation & Refund Policy
             </Link>
 
 

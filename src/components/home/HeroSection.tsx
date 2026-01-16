@@ -11,7 +11,7 @@ export const HeroSection = () => {
     // Changed pt-20 to pt-32 pb-16 to give more breathing room on mobile
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero pt-32 pb-16 lg:pt-20 lg:pb-0">
       <CosmicBackground />
-      
+
       {/* Decorative elements - Adjusted position for mobile */}
       <motion.div
         className="absolute top-10 right-5 lg:top-1/4 lg:right-1/4 text-primary/20"
@@ -31,7 +31,7 @@ export const HeroSection = () => {
         >
           <span className="inline-flex items-center gap-2 px-3 py-1.5 lg:px-4 lg:py-2 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs lg:text-sm">
             <Sparkles className="w-3 h-3 lg:w-4 lg:h-4" />
-             Trusted by Multiple Clients Worldwide
+            Trusted by Multiple Clients Worldwide
           </span>
         </motion.div>
 
@@ -57,7 +57,7 @@ export const HeroSection = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 lg:mb-8 max-w-2xl lg:max-w-none"
             >
-              Accurate predictions, personalised remedies, and life-changing solutions 
+              Accurate predictions, personalised remedies, and life-changing solutions
               for career, marriage, finance, health & peace.
             </motion.p>
 
@@ -68,10 +68,10 @@ export const HeroSection = () => {
               // Added w-full to container for mobile stacking
               className="flex flex-col sm:flex-row gap-4 mb-8 lg:mb-12 w-full sm:w-auto"
             >
-              <Button 
-                size="lg" 
+              <Button
+                size="lg"
                 // Added w-full sm:w-auto for full width buttons on mobile
-                className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold text-base lg:text-lg px-8 py-6 w-full sm:w-auto" 
+                className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold text-base lg:text-lg px-8 py-6 w-full sm:w-auto"
                 asChild
               >
                 <Link to="/contact">
@@ -79,10 +79,10 @@ export const HeroSection = () => {
                   Book Consultation
                 </Link>
               </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="border-primary text-primary hover:bg-primary/10 text-base lg:text-lg px-8 py-6 w-full sm:w-auto" 
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-primary text-primary hover:bg-primary/10 text-base lg:text-lg px-8 py-6 w-full sm:w-auto"
                 asChild
               >
                 <a href="https://wa.me/+918879731174" target="_blank" rel="noopener noreferrer">
@@ -118,7 +118,7 @@ export const HeroSection = () => {
 
           {/* Right Image with Sanskrit text below */}
           {/* REMOVED 'hidden' class so it shows on mobile. Added mt-12 for spacing on mobile */}
-          <div className="relative flex flex-col items-center gap-6 mt-12 lg:mt-0">
+          <div className="relative flex flex-col items-center gap-1 mt-0 lg:mt-0 -translate-y-8 lg:-translate-y-12">
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -129,11 +129,11 @@ export const HeroSection = () => {
                 src={LOGO}
                 alt="Astrology Logo"
                 className="w-full h-auto object-contain drop-shadow-2xl"
-                animate={{ 
+                animate={{
                   y: [0, -20, 0],
                 }}
-                transition={{ 
-                  duration: 4, 
+                transition={{
+                  duration: 4,
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}

@@ -24,7 +24,10 @@ const contactInfo = [
   {
     icon: MapPin,
     title: "Visit Us",
-    details: ["Address -  Kalbadevi,Princess Street, Marine Lines, Mumbai"],
+    details:[
+      "Santosh R Pandey",
+      "Address - Kalbadevi, Princess Street, Marine Lines, Mumbai"
+    ],
   },
   {
     icon: Phone,
