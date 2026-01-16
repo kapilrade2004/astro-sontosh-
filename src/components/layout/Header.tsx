@@ -65,9 +65,9 @@ export const Header = () => {
               <img 
                 src={nameLogoImage}
                 alt="Astro Santosh Pandey" 
-                className="h-20 w-48 md:w-56 object-contain object-left"
+                className="h-14 w-48 md:w-56 object-contain object-left"
               />
-              <span className="text-xs text-primary/70 italic mt-1">
+              <span className="text-xs text-primary/70 italic mt-0">
                 ज्योतिषं ज्ञानम्, भविष्यं प्रकाशः
               </span>
               </motion.div>
