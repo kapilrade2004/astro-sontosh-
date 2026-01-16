@@ -99,8 +99,8 @@ export const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-primary shrink-0 mt-0.5" />
                 <span className="text-muted-foreground text-sm">
-                  Santosh R Pandey : <br />
-                  Address - Kalbadevi ,Princess Street ,Marine Lines ,Mumbai
+                  Santosh R Pandey <br />
+                  Address - Kalbadevi, Princess Street, Marine Lines, Mumbai
                 </span>
               </li>
               <li className="flex items-center gap-3">

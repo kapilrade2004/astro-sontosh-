@@ -5,6 +5,7 @@ import PANKAGPATEL from "@/assets/pankajpatel.jpeg";
 import NANCYJOSHI from "@/assets/Nancy Joshi.jpeg"; 
 import KUHELI from "@/assets/kuheli.jpeg";
 import sonaldevi from "@/assets/sonaldevi.jpeg";
+import SUMITRA from "@/assets/sumitra-bhattacharya.jpeg"
 
 const testimonials = [
   
@@ -38,7 +39,7 @@ const testimonials = [
     name: "Soumitra Bhattacharya",
     location: "Kolkata, India",
     rating: 5,
-    image: "/path-to-meera.jpg",
+    image: SUMITRA,
     text: "I’m an ITSM professional working in MNC . My belief system is based on my experiences. I used to be disturbed at some point in time due to my personal life, affecting my professional commitment. I realised that I needed help.I consulted Astro Santosh Pandey, who performed a deep analysis of my birth chat aligned with recent planetary dynamics, to offer precise remedies that has healed me. I am greatful to his services.",
     service: "Palmistry",
   },
@@ -50,6 +51,23 @@ const testimonials = [
     text: "2023 onwards I had been facing personal challenges related to my husband’s health/career and deterioration in my neuro diverse child. This in turn took a toll on my mental and physical wellbeing. Despite being a self-driven person and doing my best, I couldn’t get a hold of the situation.  That’s when Universe connected me to Santoshji. His precision on reading all our charts gave us clarity on ‘Whys’. Add on was his non-judgmental demeanor that made me feel completely supported and heard. Thereafter his intuitive approach and predictions helped me to navigate through the challenges. The remedies were customized to ensure that it wasn’t too overwhelming for a person like me with limited spiritual aptitude.  I will lifelong be indebted to him for the equivocal support extended at a time when I could see no ray of hope. I would highly recommend him to anyone who is unable to bowl the googly that life throws upon. Thanks to him, the science behind the stars feel accessible and real🙏",
     service: "Child Astrology, Health Astrology, Career Astrology",
   },
+  {
+  name: "Anisha Surve",
+  location: "India",
+  rating: 5,
+  image: "/path-to-anisha.jpg",
+  text: "Consulting with Astro Santosh Pandeyji has truly been a blessing in my life. I feel honoured to express my heartfelt gratitude for his invaluable guidance and insights. Understanding the details of my Kundli through a factual and logical approach has provided me with a profound perspective on life. His explanations guided me to tackle challenges with a positive mindset, and the remedies provided significantly mitigated these challenges, leading to an overall improvement in my life’s journey. I now consider his guidance as my lifetime go-to resource. Hari Om Namah Shivaay 🙏",
+  service: "Kundli Analysis",
+},
+{
+  name: "Laxmi Ghute",
+  location: "Chandrapur, Maharashtra",
+  rating: 5,
+  image: "/path-to-laxmi.jpg",
+  text: "I am deeply grateful to Santosh Pandey ji for the guidance and learning I received. This experience was not limited to a consultation; it was a genuine process of understanding and transformation. My horoscope was analyzed with exceptional depth, clarity, and accuracy, and the remedies suggested were practical and truly effective. What sets him apart is his ability to teach astrology logically, with clear reasoning behind every prediction and remedy. This guidance has helped me both personally and professionally, and I highly recommend him to anyone seeking authentic astrology and meaningful results.",
+  service: "Astrology & Horoscope Analysis",
+},
+
 ];
 
 export const TestimonialsSection = () => {

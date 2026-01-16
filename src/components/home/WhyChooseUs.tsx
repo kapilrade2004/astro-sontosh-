@@ -32,6 +32,22 @@ const features = [
     title: "Proven Results",
     description: "Thousands of testimonials from clients who experienced real transformation in their lives.",
   },
+  {
+  icon: Target,
+  title: "Solution-Focused Vedic Astrology",
+  description: "Expert Vedic astrology consultations focused on practical solutions, effective remedies, and positive life outcomes — not problem amplification.",
+},
+{
+  icon: Award,
+  title: "Wisdom-Based & Ethical Astrology",
+  description: "Authentic astrology guidance based on wisdom and logic, promoting clarity and confidence without fear-based predictions.",
+},
+{
+  icon: Heart,
+  title: "Trusted Astrologer with Integrity",
+  description: "Astrology services delivered with complete integrity, respect, and transparency, ensuring unbiased and ethical guidance for every client.",
+},
+
 ];
 
 const containerVariants = {
