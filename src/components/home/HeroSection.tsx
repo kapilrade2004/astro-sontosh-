@@ -31,7 +31,7 @@ export const HeroSection = () => {
         >
           <span className="inline-flex items-center gap-2 px-3 py-1.5 lg:px-4 lg:py-2 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs lg:text-sm">
             <Sparkles className="w-3 h-3 lg:w-4 lg:h-4" />
-            Trusted by Multiple Clients Worldwide
+            Trusted by Clients Worldwide
           </span>
         </motion.div>
 

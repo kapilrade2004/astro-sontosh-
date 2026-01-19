@@ -220,7 +220,7 @@ const About = () => {
         </section>
 
         {/* Timeline Section */}
-        <section className="py-20 bg-gradient-cosmic">
+        {/* <section className="py-20 bg-gradient-cosmic">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -263,7 +263,7 @@ const About = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
         <section>
           <CertificationsShowcase />
         </section>

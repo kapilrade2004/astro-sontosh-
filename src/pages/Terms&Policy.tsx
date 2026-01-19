@@ -215,7 +215,10 @@ const TermsAndConditions = () => {
                   </p>
 
                   <p className="text-muted-foreground leading-relaxed">
-                    While Astro Santosh Pandey shall try to ensure that all remedial recommendations and predictions are prepared meticulously and with utmost care, Astro Santosh Pandey does not rule out the possibility of any unexpected / human errors. In case of any such errors, Astro Santosh Pandey's liability is limited to the extent of providing revised consultation & suggestions thereafter. Astro Santosh Pandey is not liable to refund any consultation fee or any other charges considering the nature of service. Also, booked service will always be non-refundable and non-cancellable. However, revised consultation slot shall be provided if requested within 24 hours via email along with the appropriate reason.
+                    While Astro Santosh Pandey shall try to ensure that all remedial recommendations and predictions are prepared meticulously and with utmost care, Astro Santosh Pandey does not rule out the possibility of any unexpected / human errors. In case of any such errors, Astro Santosh Pandey's liability is limited to the extent of providing revised consultation & suggestions thereafter. 
+                  </p>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Astro Santosh Pandey is not liable to refund any consultation fee or any other charges considering the nature of service. Also, booked service will always be non-refundable and non-cancellable. However, revised consultation slot shall be provided if requested within 24 hours via email along with the appropriate reason.
                   </p>
                 </div>
               </motion.div>
