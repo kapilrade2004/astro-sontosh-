@@ -211,65 +211,12 @@ const TermsAndConditions = () => {
 
                 <div className="cosmic-card p-8 md:p-12 space-y-6">
                   <p className="text-muted-foreground leading-relaxed">
-                    Astro Santosh Pandey believes in helping its customers as far as possible, and has therefore a liberal cancellation policy. Under this policy:
+                    Astro Santosh Pandey's astrological consultations are purely based on the astrological sutras as per the shared birth chart details and other credentials from the respective client's end. All the predictive inputs and remedies are provided purely as an opinion based on the principles of Astrology. Astro Santosh Pandey shall not entertain any dispute on differences arising out of any comparisons with any other service. However, Astro Santosh Pandey shall reply to any customer complaints or feedback within a reasonable time period and clarify any point based on the predictions as made by Astro Santosh Pandey.
                   </p>
 
-                  <div className="space-y-4">
-                    <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                      <p className="text-muted-foreground text-sm leading-relaxed">
-                        Cancellations will be considered only if the request is made immediately after placing the order. However, the cancellation request may not be entertained if the orders have been communicated to the vendors/merchants and they have initiated the process of shipping them.
-                      </p>
-                    </div>
-
-                    <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                      <p className="text-muted-foreground text-sm leading-relaxed">
-                        Astro Santosh Pandey does not accept cancellation requests for perishable items like flowers, eatables etc. However, refund/replacement can be made if the customer establishes that the quality of product delivered is not good.
-                      </p>
-                    </div>
-
-                    <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                      <p className="text-muted-foreground text-sm leading-relaxed">
-                        In case of receipt of damaged or defective items please report the same to our Customer Service team. The request will, however, be entertained once the merchant has checked and determined the same at his own end. This should be reported within <strong>7 days</strong> of receipt of the products.
-                      </p>
-                    </div>
-
-                    <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                      <p className="text-muted-foreground text-sm leading-relaxed">
-                        In case you feel that the product received is not as shown on the site or as per your expectations, you must bring it to the notice of our customer service within <strong>7 days</strong> of receiving the product. The Customer Service Team after looking into your complaint will take an appropriate decision.
-                      </p>
-                    </div>
-
-                    <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                      <p className="text-muted-foreground text-sm leading-relaxed">
-                        In case of complaints regarding products that come with a warranty from manufacturers, please refer the issue to them.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="p-4 bg-primary/5 rounded-lg border border-primary/20 mt-6">
-                    <h4 className="font-semibold mb-2 flex items-center gap-2">
-                      <CheckCircle className="w-5 h-5 text-primary" />
-                      Refund Processing
-                    </h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      In case of any Refunds approved by Astro Santosh Pandey, it'll take <strong>3-5 days</strong> for the refund to be processed to the end customer.
-                    </p>
-                  </div>
-
-                  <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
-                    <h4 className="font-semibold mb-2 flex items-center gap-2">
-                      <AlertCircle className="w-5 h-5 text-primary" />
-                      Service Refunds
-                    </h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      You shall be entitled to claim a refund of the payment made by you in case we are not able to provide the Service. The timelines for such return and refund will be according to the specific Service you have availed or within the time period provided in our policies (as applicable). In case you do not raise a refund claim within the stipulated time, then this would make you ineligible for a refund.
-                    </p>
-                  </div>
+                  <p className="text-muted-foreground leading-relaxed">
+                    While Astro Santosh Pandey shall try to ensure that all remedial recommendations and predictions are prepared meticulously and with utmost care, Astro Santosh Pandey does not rule out the possibility of any unexpected / human errors. In case of any such errors, Astro Santosh Pandey's liability is limited to the extent of providing revised consultation & suggestions thereafter. Astro Santosh Pandey is not liable to refund any consultation fee or any other charges considering the nature of service. Also, booked service will always be non-refundable and non-cancellable. However, revised consultation slot shall be provided if requested within 24 hours via email along with the appropriate reason.
+                  </p>
                 </div>
               </motion.div>
             </div>
