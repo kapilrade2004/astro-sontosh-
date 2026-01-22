@@ -28,16 +28,21 @@ const socialLinks = [
 export const Footer = () => {
   return (
     <footer className="bg-gradient-cosmic border-t border-border">
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          {/* Brand */}
-          <div className="space-y-4">
-            <Link to="/" className="flex items-center gap-2">
-              <img src={LOGO} alt="astrosantoshpandey" className=" h-24 w-52" />
-            </Link>
-            <p className="text-primary/80 text-sm italic font-medium">
-              ज्योतिषं सर्वार्थ साधकं
-            </p>
+  <div className="container mx-auto px-4 py-16">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      {/* Brand */}
+      <div className="">
+        <Link to="/" className="flex items-center gap-0 -mb-4">
+          <img src={LOGO} alt="astrosantoshpandey" className="h-32 w-auto object-contain" />
+        </Link>
+        <p 
+          className="text-primary/80 text-sm italic font-medium" 
+          style={{ 
+            textShadow: '0 2px 8px rgba(218, 165, 32, 0.6), 0 0 20px rgba(218, 165, 32, 0.4), 0 0 30px rgba(218, 165, 32, 0.2)' 
+          }}
+        >
+          ज्योतिषं सर्वार्थ साधकं
+        </p>
             <p className="text-muted-foreground text-sm leading-relaxed">
               Transform your life with expert Astrology, Numerology, Vastu & Palmistry guidance.
               Accurate predictions and personalized remedies for a better tomorrow.
@@ -138,7 +143,7 @@ export const Footer = () => {
             >
               Cancellation & Refund Policy
             </Link>
-               <span className="mx-2">|</span>
+            <span className="mx-2">|</span>
 
             <Link
               to="/privacy"
