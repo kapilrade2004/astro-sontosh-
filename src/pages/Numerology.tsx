@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
@@ -10,10 +10,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { 
+import {
   Smartphone, PenTool, Calculator, Dice1, Users,
   ArrowRight, CheckCircle, Hash, TrendingUp, Heart
 } from "lucide-react";
+import { useState } from "react";
+import { X } from "lucide-react";
+
 
 const services = [
   {
@@ -92,6 +95,8 @@ const itemVariants = {
 };
 
 const Numerology = () => {
+  const [openForm, setOpenForm] = useState(false);
+
   return (
     <>
       <Helmet>
@@ -111,7 +116,7 @@ const Numerology = () => {
               className="max-w-4xl"
             >
               <span className="text-primary font-medium text-sm uppercase tracking-wider">Numerology –  The Science of Numbers
-</span>
+              </span>
               <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mt-4 mb-6">
                 Discover the <span className="text-gradient-gold">Power of Numbers</span> in Your Life
               </h1>
@@ -119,12 +124,15 @@ const Numerology = () => {
                 Numerology is a precise, data-driven occult science that uncovers personality traits, karmic strengths, and life cycles — using only your date of birth.
 
               </p>
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold" asChild>
-                <Link to="/contact">
-                  Check My Numbers
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Link>
-              </Button>
+             <Button
+  size="lg"
+  className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold"
+  onClick={() => setOpenForm(true)}
+>
+  Check My Numbers
+  <ArrowRight className="w-5 h-5 ml-2" />
+</Button>
+
             </motion.div>
           </div>
         </section>
@@ -254,15 +262,97 @@ const Numerology = () => {
                 Ready to Decode <span className="text-gradient-gold">Your Numbers</span>?
               </h2>
               <p className="text-muted-foreground text-lg mb-8">
-                Discover what your numbers reveal about your destiny and learn how to 
+                Discover what your numbers reveal about your destiny and learn how to
                 align them for success, prosperity, and happiness.
               </p>
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold" asChild>
-                <Link to="/contact">Check My Numbers</Link>
+              <Button
+                size="lg"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold"
+                onClick={() => setOpenForm(true)}
+              >
+                Check My Numbers
+                <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
+
             </motion.div>
           </div>
         </section>
+        <AnimatePresence>
+        {openForm && (
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+  >
+    <motion.div
+      initial={{ scale: 0.9, y: 30 }}
+      animate={{ scale: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      className="relative w-full max-w-md mx-4 cosmic-card p-8"
+    >
+      {/* Close Button */}
+      <button
+        onClick={() => setOpenForm(false)}
+        className="absolute top-4 right-4 text-muted-foreground hover:text-primary"
+      >
+        <X className="w-5 h-5" />
+      </button>
+
+      {/* Title */}
+      <h3 className="font-serif text-2xl font-bold mb-2 text-center">
+        Check <span className="text-gradient-gold">My Numbers</span>
+      </h3>
+      <p className="text-sm text-muted-foreground text-center mb-6">
+        Enter your details for accurate numerology analysis
+      </p>
+
+      {/* Form */}
+      <form className="space-y-4">
+        {/* Name */}
+        <div>
+          <label className="text-sm font-medium">Full Name</label>
+          <input
+            type="text"
+            placeholder="Enter your name"
+            className="mt-1 w-full rounded-lg bg-background border border-border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50"
+            required
+          />
+        </div>
+
+        {/* Mobile Number */}
+        <div>
+          <label className="text-sm font-medium">Mobile Number</label>
+          <input
+            type="tel"
+            placeholder="Enter mobile number"
+            className="mt-1 w-full rounded-lg bg-background border border-border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50"
+            required
+          />
+        </div>
+
+        {/* Date of Birth */}
+        <div>
+          <label className="text-sm font-medium">Date of Birth</label>
+          <input
+            type="date"
+            className="mt-1 w-full rounded-lg bg-background border border-border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50"
+            required
+          />
+        </div>
+
+        {/* Submit */}
+        <Button
+          type="submit"
+          className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-gold mt-4"
+        >
+          Check My Number
+        </Button>
+      </form>
+    </motion.div>
+  </motion.div>
+)}
+</AnimatePresence>
       </Layout>
     </>
   );

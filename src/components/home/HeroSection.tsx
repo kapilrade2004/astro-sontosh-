@@ -145,9 +145,21 @@ export const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <p className="text-xl md:text-2xl lg:text-3xl text-primary/80 italic font-medium text-center">
-                ॥ धर्मो रक्षति रक्षितः ॥
-              </p>
+             <p className="
+  text-3xl md:text-2xl lg:text-3xl
+  font-bold
+  italic
+  text-center
+  tracking-wider
+  leading-relaxed
+  py-1
+  bg-gradient-to-r from-yellow-200 via-yellow-400 to-amber-500
+  bg-clip-text text-transparent
+  drop-shadow-[0_0_12px_rgba(255,200,120,0.6)]
+">
+  ॥ धर्मो रक्षति रक्षितः ॥
+</p>
+
             </motion.div>
           </div>
         </div>

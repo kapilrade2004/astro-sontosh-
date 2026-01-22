@@ -138,6 +138,14 @@ export const Footer = () => {
             >
               Cancellation & Refund Policy
             </Link>
+               <span className="mx-2">|</span>
+
+            <Link
+              to="/privacy"
+              className="relative after:absolute after:left-0 after:-bottom-1 after:h-[1px] after:w-0 after:bg-current after:transition-all hover:after:w-full"
+            >
+              Privacy Policy
+            </Link>
 
 
           </p>
