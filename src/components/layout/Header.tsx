@@ -35,42 +35,30 @@ export const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? "bg-background/95 backdrop-blur-lg shadow-lg border-b border-border"
-          : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
+        ? "bg-background/95 backdrop-blur-lg shadow-lg border-b border-border"
+        : "bg-transparent"
+        }`}
     >
       <div className="container mx-auto px-4">
         <nav className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
-            {/* <motion.div
-              whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.3 }}
-              className="flex-shrink-0"
-            >
-              <img 
-                src={logoImage}
-                alt="Astro Santosh Pandey Logo" 
-                className="h-36 w-48 object-contain"
-              />
-            </motion.div> */}
-            <div className="flex flex-col">
+          <Link to="/" className="flex gap-0 group -ml-4 sm:-ml-2 ">
+  <div className="flex flex-col items-start">
               <motion.div
-              whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.3 }}
-              className="flex-shrink-0"
-            >
-              <img 
-                src={nameLogoImage}
-                alt="Astro Santosh Pandey" 
-                className="h-14 w-48 md:w-56 object-contain object-left"
-              />
+                whileHover={{ scale: 1.1 }}
+                transition={{ duration: 0.3 }}
+                className="flex-shrink-0"
+              >
+                <img
+                  src={nameLogoImage}
+                  alt="Astro Santosh Pandey"
+                  className="h-12  sm:h-6 md:h-10 w-auto object-cover object-left"
+                />
+              </motion.div>
               <span className="text-xs text-primary/70 italic mt-0">
                 ज्योतिषं ज्ञानम्, भविष्यं प्रकाशः
               </span>
-              </motion.div>
             </div>
           </Link>
 
@@ -80,11 +68,10 @@ export const Header = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`relative text-sm font-medium transition-colors hover:text-primary ${
-                  location.pathname === item.path
-                    ? "text-primary"
-                    : "text-foreground/80"
-                }`}
+                className={`relative text-sm font-medium transition-colors hover:text-primary ${location.pathname === item.path
+                  ? "text-primary"
+                  : "text-foreground/80"
+                  }`}
               >
                 {item.name}
                 {location.pathname === item.path && (
@@ -139,11 +126,10 @@ export const Header = () => {
                 >
                   <Link
                     to={item.path}
-                    className={`block py-2 text-lg font-medium ${
-                      location.pathname === item.path
-                        ? "text-primary"
-                        : "text-foreground/80"
-                    }`}
+                    className={`block py-2 text-lg font-medium ${location.pathname === item.path
+                      ? "text-primary"
+                      : "text-foreground/80"
+                      }`}
                   >
                     {item.name}
                   </Link>
