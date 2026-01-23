@@ -427,7 +427,9 @@ const Numerology = () => {
               type="date"
               value={formData.dob}
               onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
-              className="mt-1 w-full rounded-lg bg-background border border-border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="mt-1 w-full rounded-lg bg-background border border-border px-4 py-2 
+             focus:outline-none focus:ring-2 focus:ring-primary/50 text-white 
+             [&::-webkit-calendar-picker-indicator]:invert"
               required
             />
           </div>
