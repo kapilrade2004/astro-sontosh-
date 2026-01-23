@@ -362,31 +362,40 @@ const Contact = () => {
             </motion.div>
 
             <div className="cosmic-card p-4 overflow-hidden">
-              <div className="w-full h-[400px] bg-muted rounded-lg flex items-center justify-center">
-                <div className="text-center">
-                  <MapPin className="w-12 h-12 text-primary mx-auto mb-4" />
-                  <p className="text-muted-foreground">
-                    Address - Kalbadevi,Princess Street, Marine Lines, Mumbai
-                  </p>
-                  <Button
-                    variant="link"
-                    className="text-primary mt-4"
-                    asChild
-                  >
-                    <a
-                      href="https://maps.google.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Open in Google Maps
-                    </a>
-                  </Button>
-                </div>
+              <div className="w-full h-[400px] bg-muted rounded-lg overflow-hidden">
+                <iframe
+                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d255.8540385436492!2d72.82847882645552!3d18.94594651100226!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7cf8a16f0fdf1%3A0xee0367f86d8c755b!2sAstro%20Santosh%20Pandey!5e0!3m2!1sen!2sin!4v1769161595874!5m2!1sen!2sin"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Location Map"
+                ></iframe>
               </div>
+              <div className="text-center mt-4">
+                <p className="text-muted-foreground mb-2">
+                  Address - Kalbadevi, Princess Street, Marine Lines, Mumbai
+                </p>
+                <Button
+                  variant="link"
+                  className="text-primary"
+                  asChild
+                >
+                  <a
+                  href="https://www.google.com/maps/search/?api=1&query=Princess+Street+Marine+Lines+Mumbai"
+                  target="_blank"
+                  rel="noopener noreferrer"
+          >
+                  Open in Google Maps
+                </a>
+              </Button>
             </div>
           </div>
-        </section>
-      </Layout>
+        </div>
+      </section>
+    </Layout >
     </>
   );
 };
