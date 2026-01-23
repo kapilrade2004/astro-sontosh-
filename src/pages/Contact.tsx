@@ -15,8 +15,8 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
-import { 
-  MapPin, Phone, Mail, Clock, MessageCircle, 
+import {
+  MapPin, Phone, Mail, Clock, MessageCircle,
   Send, Sparkles
 } from "lucide-react";
 
@@ -24,7 +24,7 @@ const contactInfo = [
   {
     icon: MapPin,
     title: "Visit Us",
-    details:[
+    details: [
       "Santosh R Pandey",
       "Address - Kalbadevi, Princess Street, Marine Lines, Mumbai"
     ],
@@ -68,6 +68,13 @@ const Contact = () => {
     service: "",
     message: "",
   });
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, ""); // remove non-numeric
+    if (value.length <= 10) {
+      setFormData({ ...formData, phone: value });
+    }
+  };
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -108,7 +115,7 @@ const Contact = () => {
                 Seek Clarity.<span className="text-gradient-gold"> Align with Dharma.</span>
               </h1>
               <p className="text-muted-foreground text-lg md:text-xl max-w-2xl">
-                Ready to unlock the secrets of your destiny? Reach out to us for a personalized 
+                Ready to unlock the secrets of your destiny? Reach out to us for a personalized
                 consultation and take the first step towards clarity and success.
               </p>
             </motion.div>
@@ -156,7 +163,7 @@ const Contact = () => {
                   Book Your <span className="text-gradient-gold">Consultation</span>
                 </h2>
                 <p className="text-muted-foreground mb-8">
-                  Fill out the form below and we'll get back to you within 24 hours to schedule 
+                  Fill out the form below and we'll get back to you within 24 hours to schedule
                   your personalized consultation.
                 </p>
 
@@ -193,12 +200,16 @@ const Contact = () => {
                       <Input
                         id="phone"
                         type="tel"
-                        placeholder="+91 98765 43210"
+                        placeholder="9876543210"
                         value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        onChange={handlePhoneChange}
                         required
+                        inputMode="numeric"
+                        pattern="[0-9]{10}"
+                        maxLength={10}
                         className="bg-muted border-border"
                       />
+
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="service">Service Required *</Label>
@@ -265,7 +276,7 @@ const Contact = () => {
                   </div>
                   <h3 className="font-serif text-2xl font-semibold mb-3">Prefer WhatsApp?</h3>
                   <p className="text-muted-foreground mb-6">
-                    Get quick responses and instant consultation booking through WhatsApp. 
+                    Get quick responses and instant consultation booking through WhatsApp.
                     We're available 7 days a week.
                   </p>
                   <Button
@@ -297,7 +308,7 @@ const Contact = () => {
                   >
                     <a href="tel:+918879731174">
                       <Phone className="w-5 h-5 mr-2" />
-                     +91 8879731174
+                      +91 8879731174
                     </a>
                   </Button>
                 </div>
@@ -355,7 +366,7 @@ const Contact = () => {
                 <div className="text-center">
                   <MapPin className="w-12 h-12 text-primary mx-auto mb-4" />
                   <p className="text-muted-foreground">
-                    Address - Kalbadevi,Princess Street, Marine Lines, Mumbai 
+                    Address - Kalbadevi,Princess Street, Marine Lines, Mumbai
                   </p>
                   <Button
                     variant="link"

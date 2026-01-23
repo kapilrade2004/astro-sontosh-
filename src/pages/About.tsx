@@ -120,29 +120,64 @@ const About = () => {
                   Our <span className="text-gradient-gold">Story</span>
                 </h2>
 
-                <div className="cosmic-card p-8 md:p-12 space-y-6 text-muted-foreground leading-relaxed">
-                  <p>
+
+
+                <div className="cosmic-card p-8 md:p-12 space-y-8 text-muted-foreground leading-relaxed">
+
+                  <div className="text-center space-y-2">
+                    <p className="text-lg font-semibold text-primary">
+                     <span className="text-red-500"> ॥</span> हरि ॐ नमः शिवाय <span className="text-red-500"> ॥</span>
+                    </p>
                     
-                    ज्योतिषं सर्वार्थ साधकं
+                  </div>
 
-                  </p>
                   <p>
-                    Hari Om,
+                    I am <span className="font-semibold text-primary">
+                      Santosh Radheshyam Pandey
+                    </span>, a former corporate professional with decades of experience in
+                    Customer Service, Quality Control, Project & Program Management, ORM,
+                    Social Media Management, and Financial Operations across Payment Gateway
+                    and FinTech organizations.
+                  </p>
 
-                  </p>
                   <p>
-                  I am Santosh Radheshyam Pandey, a former corporate professional with decades of experience in Customer Service, Quality Control, Project & Program Management, ORM, Social Media Management, and Financial Operations across Payment Gateway and FinTech organizations.
+                    Despite a successful corporate career, Astrology emerged as my true calling.
+                    Through years of study and self-realization, I understood how planetary
+                    movements shaped key life events and aligned my journey with
+                    <span className="italic"> dharma</span>.
+                  </p>
 
-                  </p>
                   <p>
-                    Despite a successful corporate career, Astrology emerged as my true calling. Through years of study and self-realization, I understood how planetary movements shaped key life events and aligned my journey with dharma.
+                    Today, with a Master’s in Astrology, Palmistry, and Vastu, I serve this
+                    sacred knowledge full-time — guiding individuals through ethical,
+                    responsible, and deeply researched consultations.
+                  </p>
 
-                  </p>
-                  <p>
-                   Today, with a Master’s in Astrology, Palmistry, and Vastu, I serve this sacred knowledge full-time — guiding individuals through ethical, responsible, and deeply researched consultations.
-                  </p>
-                 
+                  <div className="space-y-4">
+                    <p className="font-medium text-primary">
+                      In my practice, I have always ensured that:
+                    </p>
+
+                    <ul className="space-y-3">
+                      <li className="flex items-start gap-3">
+                        <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
+                        <span>Focus is on solutions, not on problems</span>
+                      </li>
+
+                      <li className="flex items-start gap-3">
+                        <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
+                        <span>Wisdom-based astrology (not fear-based astrology)</span>
+                      </li>
+
+                      <li className="flex items-start gap-3">
+                        <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
+                        <span>100% integrity and respect, without any prejudice</span>
+                      </li>
+                    </ul>
+                  </div>
+
                 </div>
+
               </motion.div>
             </div>
           </div>
