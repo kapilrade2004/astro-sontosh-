@@ -81,6 +81,7 @@ const faqs = [
   },
 ];
 
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -96,6 +97,78 @@ const itemVariants = {
 
 const Numerology = () => {
   const [openForm, setOpenForm] = useState(false);
+  
+  const [formData, setFormData] = useState({
+    name: '',
+    mobile: '',
+    dob: ''
+  });
+  const [errors, setErrors] = useState({
+    name: '',
+    mobile: ''
+  });
+
+  const validateName = (name) => {
+    if (!name.trim()) {
+      return 'Name is required';
+    }
+    if (name.trim().length < 2) {
+      return 'Name must be at least 2 characters';
+    }
+    if (!/^[a-zA-Z\s]+$/.test(name)) {
+      return 'Name can only contain letters and spaces';
+    }
+    return '';
+  };
+
+  const validateMobile = (mobile) => {
+    if (!mobile) {
+      return 'Mobile number is required';
+    }
+    if (!/^\d{10}$/.test(mobile)) {
+      return 'Mobile number must be exactly 10 digits';
+    }
+    return '';
+  };
+
+  const handleNameChange = (e) => {
+    const value = e.target.value;
+    setFormData({ ...formData, name: value });
+    setErrors({ ...errors, name: validateName(value) });
+  };
+
+  const handleMobileChange = (e) => {
+    const value = e.target.value.replace(/\D/g, ''); // Only allow digits
+    if (value.length <= 10) {
+      setFormData({ ...formData, mobile: value });
+      setErrors({ ...errors, mobile: validateMobile(value) });
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    const nameError = validateName(formData.name);
+    const mobileError = validateMobile(formData.mobile);
+    
+    if (nameError || mobileError) {
+      setErrors({ name: nameError, mobile: mobileError });
+      return;
+    }
+
+    // Compose Gmail
+    const subject = encodeURIComponent('Numerology Analysis Request');
+    const body = encodeURIComponent(
+      `Hello Astro Santosh Pandey,\n\nI would like to request a numerology analysis.\n\nMy Details:\nFull Name: ${formData.name}\nMobile Number: ${formData.mobile}\nDate of Birth: ${formData.dob}\n\nThank you.`
+    );
+
+    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=connect@astrosantoshpandey.com&su=${subject}&body=${body}`, '_blank');
+
+    // Reset form and close
+    setFormData({ name: '', mobile: '', dob: '' });
+    setErrors({ name: '', mobile: '' });
+    setOpenForm(false);
+  };
 
   return (
     <>
@@ -278,80 +351,98 @@ const Numerology = () => {
           </div>
         </section>
         <AnimatePresence>
-        {openForm && (
-  <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-    className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
-  >
+  {openForm && (
     <motion.div
-      initial={{ scale: 0.9, y: 30 }}
-      animate={{ scale: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-      className="relative w-full max-w-md mx-4 cosmic-card p-8"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+      onClick={() => setOpenForm(false)}
     >
-      {/* Close Button */}
-      <button
-        onClick={() => setOpenForm(false)}
-        className="absolute top-4 right-4 text-muted-foreground hover:text-primary"
+      <motion.div
+        initial={{ scale: 0.9, y: 30 }}
+        animate={{ scale: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        className="relative w-full max-w-md mx-4 cosmic-card p-8"
+        onClick={(e) => e.stopPropagation()}
       >
-        <X className="w-5 h-5" />
-      </button>
-
-      {/* Title */}
-      <h3 className="font-serif text-2xl font-bold mb-2 text-center">
-        Check <span className="text-gradient-gold">My Numbers</span>
-      </h3>
-      <p className="text-sm text-muted-foreground text-center mb-6">
-        Enter your details for accurate numerology analysis
-      </p>
-
-      {/* Form */}
-      <form className="space-y-4">
-        {/* Name */}
-        <div>
-          <label className="text-sm font-medium">Full Name</label>
-          <input
-            type="text"
-            placeholder="Enter your name"
-            className="mt-1 w-full rounded-lg bg-background border border-border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50"
-            required
-          />
-        </div>
-
-        {/* Mobile Number */}
-        <div>
-          <label className="text-sm font-medium">Mobile Number</label>
-          <input
-            type="tel"
-            placeholder="Enter mobile number"
-            className="mt-1 w-full rounded-lg bg-background border border-border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50"
-            required
-          />
-        </div>
-
-        {/* Date of Birth */}
-        <div>
-          <label className="text-sm font-medium">Date of Birth</label>
-          <input
-            type="date"
-            className="mt-1 w-full rounded-lg bg-background border border-border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50"
-            required
-          />
-        </div>
-
-        {/* Submit */}
-        <Button
-          type="submit"
-          className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-gold mt-4"
+        {/* Close Button */}
+        <button
+          onClick={() => setOpenForm(false)}
+          className="absolute top-4 right-4 text-muted-foreground hover:text-primary"
         >
-          Check My Number
-        </Button>
-      </form>
+          <X className="w-5 h-5" />
+        </button>
+
+        {/* Title */}
+        <h3 className="font-serif text-2xl font-bold mb-2 text-center">
+          Check <span className="text-gradient-gold">My Numbers</span>
+        </h3>
+        <p className="text-sm text-muted-foreground text-center mb-6">
+          Enter your details for accurate numerology analysis
+        </p>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Name */}
+          <div>
+            <label className="text-sm font-medium">Full Name</label>
+            <input
+              type="text"
+              placeholder="Enter your name"
+              value={formData.name}
+              onChange={handleNameChange}
+              className={`mt-1 w-full rounded-lg bg-background border ${
+                errors.name ? 'border-red-500' : 'border-border'
+              } px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50`}
+              required
+            />
+            {errors.name && (
+              <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+            )}
+          </div>
+
+          {/* Mobile Number */}
+          <div>
+            <label className="text-sm font-medium">Mobile Number</label>
+            <input
+              type="tel"
+              placeholder="Enter 10-digit mobile number"
+              value={formData.mobile}
+              onChange={handleMobileChange}
+              className={`mt-1 w-full rounded-lg bg-background border ${
+                errors.mobile ? 'border-red-500' : 'border-border'
+              } px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50`}
+              required
+            />
+            {errors.mobile && (
+              <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>
+            )}
+          </div>
+
+          {/* Date of Birth */}
+          <div>
+            <label className="text-sm font-medium">Date of Birth</label>
+            <input
+              type="date"
+              value={formData.dob}
+              onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
+              className="mt-1 w-full rounded-lg bg-background border border-border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50"
+              required
+            />
+          </div>
+
+          {/* Submit */}
+          <Button
+            type="submit"
+            className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-gold mt-4"
+          >
+            Send Email Request
+          </Button>
+        </form>
+      </motion.div>
     </motion.div>
-  </motion.div>
-)}
+  )}
 </AnimatePresence>
       </Layout>
     </>

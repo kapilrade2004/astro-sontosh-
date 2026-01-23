@@ -37,7 +37,7 @@ const contactInfo = [
   {
     icon: Mail,
     title: "Email Us",
-    details: [" astrosantoshpandey@gmail.com"],
+    details: [" connect@astrosantoshpandey.com"],
   },
   {
     icon: Clock,

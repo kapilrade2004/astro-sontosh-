@@ -29,16 +29,19 @@ export const Footer = () => {
   return (
     <footer className="bg-gradient-cosmic border-t border-border">
   <div className="container mx-auto px-4 py-16">
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-14">
       {/* Brand */}
       <div className="">
-        <Link to="/" className="flex items-center gap-0 -mb-4">
-          <img src={LOGO} alt="astrosantoshpandey" className="h-32 w-auto object-contain" />
-        </Link>
+        <div className="">
+          <Link to="/" className="inline-block">
+            <img src={LOGO} alt="astrosantoshpandey" className="h-14 w-auto object-cover" />
+          </Link>
+        </div>
         <p 
-          className="text-primary/80 text-sm italic font-medium" 
+          className="text-primary text-base italic font-serif tracking-wide mb-4" 
           style={{ 
-            textShadow: '0 2px 8px rgba(218, 165, 32, 0.6), 0 0 20px rgba(218, 165, 32, 0.4), 0 0 30px rgba(218, 165, 32, 0.2)' 
+            textShadow: '0 2px 12px rgba(218, 165, 32, 0.7), 0 0 25px rgba(218, 165, 32, 0.5), 0 0 35px rgba(218, 165, 32, 0.3)',
+            letterSpacing: '0.05em'
           }}
         >
           ज्योतिषं सर्वार्थ साधकं
@@ -47,7 +50,7 @@ export const Footer = () => {
               Transform your life with expert Astrology, Numerology, Vastu & Palmistry guidance.
               Accurate predictions and personalized remedies for a better tomorrow.
             </p>
-            <div className="flex gap-4 flex-wrap">
+            <div className="flex gap-4 flex-wrap mt-4">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
@@ -116,9 +119,14 @@ export const Footer = () => {
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-primary shrink-0" />
-                <a href="mailto:info@cosmicguidance.com" className="text-muted-foreground hover:text-primary text-sm">
-                  astrosantoshpandey@gmail.com
-                </a>
+                <a 
+  href="https://mail.google.com/mail/?view=cm&fs=1&to=connect@astrosantoshpandey.com" 
+  target="_blank"
+  rel="noopener noreferrer"
+  className="text-muted-foreground hover:text-primary text-sm"
+>
+  connect@astrosantoshpandey.com
+</a>
               </li>
             </ul>
           </div>

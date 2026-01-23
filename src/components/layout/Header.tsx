@@ -44,7 +44,7 @@ export const Header = () => {
         <nav className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex gap-0 group -ml-4 sm:-ml-2 ">
-  <div className="flex flex-col items-start">
+            <div className="flex flex-col items-start">
               <motion.div
                 whileHover={{ scale: 1.1 }}
                 transition={{ duration: 0.3 }}
@@ -56,8 +56,14 @@ export const Header = () => {
                   className="h-12  sm:h-6 md:h-10 w-auto object-cover object-left"
                 />
               </motion.div>
-              <span className="text-xs text-primary/70 italic mt-0">
-                ज्योतिषं ज्ञानम्, भविष्यं प्रकाशः
+              <span
+                className="text-xs italic mt-0 text-[#FFD700]"
+                style={{
+                  textShadow:
+                    "0 0 3px rgba(255,215,0,0.4), 0 0 6px rgba(218,165,32,0.25)",
+                }}
+              >
+                ज्योतिषं सर्वार्थ साधकं
               </span>
             </div>
           </Link>

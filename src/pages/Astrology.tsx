@@ -95,7 +95,7 @@ const services = [
     ],
     bottomText: ""
   },
-  
+
 ];
 
 const remedies = [
@@ -169,9 +169,12 @@ const Astrology = () => {
               className="max-w-4xl"
             >
               <span className="text-primary font-medium text-sm uppercase tracking-wider">Astrology Services – Jyotish Vidya</span>
-              <div className="text-sm md:text-base text-muted-foreground italic mt-2 mb-4">
-             
-              ज्योतिषं सर्वार्थ साधकं 
+              <div className="text-xs italic mt-0 text-[#FFD700]"
+                style={{
+                  textShadow: "0 0 2px rgba(255,215,0,0.25)",
+                }}>
+
+                ज्योतिषं ज्ञानम्, भविष्यं प्रकाशः
 
               </div>
               <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mt-4 mb-6">

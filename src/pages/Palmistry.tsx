@@ -185,7 +185,11 @@ const Palmistry = () => {
             >
               <span className="text-primary font-medium text-sm uppercase tracking-wider">Palmistry – The Mirror of Destiny
 </span>
-              <div className="text-sm md:text-base text-muted-foreground italic mt-2 mb-4">
+              <div className="text-xs italic mt-0 text-[#FFD700]"
+                style={{
+                  textShadow: "0 0 2px rgba(255,215,0,0.25)",
+                }}>
+
                 कराग्रे वसते लक्ष्मीः करमध्ये सरस्वती ।<br />
                 करमूले तु गोविन्दः प्रभाते करदर्शनम् ॥
               </div>

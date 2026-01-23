@@ -113,7 +113,11 @@ const Vastu = () => {
             >
               <span className="text-primary font-medium text-sm uppercase tracking-wider">Vastu Shastra – Harmonizing Space & Energy
               </span>
-              <div className="text-sm md:text-base text-muted-foreground italic mt-2 mb-4">
+              <div className="text-xs italic mt-0 text-[#FFD700]"
+                style={{
+                  textShadow: "0 0 2px rgba(255,215,0,0.25)",
+                }}>
+
                 ॥ नमस्ते वास्तु पुरुष भूश्य्या भिरत प्रभो ।
                 <br />
                 मद्घृं धन धन्यादि समृद्धं कुरु सर्वदा ॥
