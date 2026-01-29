@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CosmicBackground } from "@/components/ui/CosmicBackground";
 import { Sparkles, MessageCircle, Stars } from "lucide-react";
-import LOGO from "@/assets/logo-removebg-preview (1).png";
+import LOGO from "@/assets/logo-bg-remove.png";
 
 export const HeroSection = () => {
   return (
@@ -128,13 +128,7 @@ export const HeroSection = () => {
               {/* Yellow Glow Background */}
               <div
                 className="
-    absolute
-    inset-3
-    -z-5
-    rounded-full
-    bg-yellow-400/35
-    blur-xl
-    scale-75
+   
   "
               />
 
