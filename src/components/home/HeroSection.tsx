@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CosmicBackground } from "@/components/ui/CosmicBackground";
 import { Sparkles, MessageCircle, Stars } from "lucide-react";
-import LOGO from "@/assets/logo-bg-remove.png";
+import LOGO from "@/assets/logo shine.png";
 
 export const HeroSection = () => {
   return (
