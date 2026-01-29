@@ -133,8 +133,8 @@ export const HeroSection = () => {
     -z-5
     rounded-full
     bg-yellow-400/35
-    blur-2xl
-    scale-50
+    blur-xl
+    scale-75
   "
               />
 
