@@ -123,19 +123,31 @@ export const HeroSection = () => {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative w-3/4 lg:w-full max-w-sm lg:max-w-lg"
+              className="relative w-3/4 lg:w-full max-w-sm lg:max-w-lg flex items-center justify-center"
             >
+              {/* Yellow Glow Background */}
+              <div
+                className="
+    absolute
+    inset-3
+    -z-5
+    rounded-full
+    bg-yellow-400/35
+    blur-2xl
+    scale-50
+  "
+              />
+
+              {/* Logo */}
               <motion.img
                 src={LOGO}
                 alt="Astrology Logo"
-                className="w-full h-auto object-contain drop-shadow-2xl"
-                animate={{
-                  y: [0, -20, 0],
-                }}
+                className="relative z-10 w-full h-auto object-contain drop-shadow-2xl"
+                animate={{ y: [0, -20, 0] }}
                 transition={{
                   duration: 4,
                   repeat: Infinity,
-                  ease: "easeInOut"
+                  ease: 'easeInOut',
                 }}
               />
             </motion.div>
@@ -145,7 +157,7 @@ export const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-             <p className="
+              <p className="
   text-3xl md:text-2xl lg:text-3xl
   font-bold
   italic
@@ -157,8 +169,8 @@ export const HeroSection = () => {
   bg-clip-text text-transparent
   drop-shadow-[0_0_12px_rgba(255,200,120,0.6)]
 ">
-  ॥ धर्मो रक्षति रक्षितः ॥
-</p>
+                ॥ धर्मो रक्षति रक्षितः ॥
+              </p>
 
             </motion.div>
           </div>
