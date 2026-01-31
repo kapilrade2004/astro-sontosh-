@@ -16,14 +16,13 @@ const CalendlyEmbed = ({ height = "800px" }: CalendlyEmbedProps) => {
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full overflow-hidden">
       <div
         className="calendly-inline-widget w-full"
         data-url="https://calendly.com/suyograute2/new-meeting"
         style={{
-          minWidth: "320px",
-          height: "100vh",       // full viewport height on mobile
-          maxHeight: height,     // respects custom height on desktop
+          minWidth: "100%",
+          height: height,
         }}
       />
     </div>

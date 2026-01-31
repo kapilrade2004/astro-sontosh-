@@ -63,7 +63,7 @@ const bookingServices = [
     price: 2100,
     icon: UserCheck,
   },
-  
+
 ];
 
 
@@ -120,11 +120,11 @@ const Contact = () => {
         </section>
 
         {/* Contact Info Cards */}
-        
+
 
         {/* Booking Section */}
-        <section className="py-20 bg-background relative" id="booking">
-          <div className="container mx-auto px-4 max-w-6xl">
+        <section className="py-12 md:py-16 bg-background relative" id="booking">
+          <div className="container mx-auto px-2 md:px-4 max-w-6xl">
             <div className="flex flex-col items-center mb-12">
               <h2 className="font-serif text-3xl md:text-5xl font-bold mb-4 text-center">
                 Book Your <span className="text-gradient-gold">Consultation</span>
@@ -154,7 +154,7 @@ const Contact = () => {
               </div>
             </div>
 
-            <div className="cosmic-card p-6 md:p-12 overflow-hidden bg-muted/30 backdrop-blur-sm">
+            <div className="cosmic-card p-2 md:p-12 overflow-hidden bg-muted/30 backdrop-blur-sm">
               {bookingStep === "details" && (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -324,8 +324,8 @@ const Contact = () => {
                         <Calendar className="w-5 h-5 text-primary" />
                         <h3 className="font-bold text-xl uppercase tracking-wider">Select Date & Time for booking</h3>
                       </div>
-                      <div className="bg-background rounded-2xl border border-primary/20 overflow-hidden min-h-[600px] w-full">
-                        <CalendlyEmbed height="w-full h-800px" />
+                      <div className="bg-background rounded-2xl border border-primary/20 overflow-hidden min-h-[650px] w-full">
+                        <CalendlyEmbed height="650px" />
                       </div>
                       <ServicePricingChart />
 
