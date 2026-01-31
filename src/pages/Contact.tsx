@@ -30,31 +30,7 @@ import {
 import CalendlyEmbed from "@/components/calendly";
 import ServicePricingChart from "@/components/booking/ServicePricingChart";
 
-const contactInfo = [
-  {
-    icon: MapPin,
-    title: "Visit Us",
-    details: [
-      "Santosh R Pandey",
-      "Address - Kalbadevi, Princess Street, Marine Lines, Mumbai"
-    ],
-  },
-  {
-    icon: Phone,
-    title: "Call Us",
-    details: ["+91 88797 31174"],
-  },
-  {
-    icon: Mail,
-    title: "Email Us",
-    details: [" connect@astrosantoshpandey.com"],
-  },
-  {
-    icon: Clock,
-    title: "Working Hours",
-    details: ["Monday - Saturday", "10:00 AM - 7:00 PM", "Sunday: By Appointment"],
-  },
-];
+
 
 // Services are now defined in bookingServices for the flow.
 
@@ -87,13 +63,7 @@ const bookingServices = [
     price: 2100,
     icon: UserCheck,
   },
-  {
-    id: "palmistry",
-    title: "Palmistry Consultation",
-    description: "Hand analysis and future possibilities.",
-    price: 0,
-    icon: Hand,
-  }
+  
 ];
 
 
@@ -150,30 +120,7 @@ const Contact = () => {
         </section>
 
         {/* Contact Info Cards */}
-        <section className="py-12 bg-background border-b border-border">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {contactInfo.map((info, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="cosmic-card p-6 text-center"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                    <info.icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <h3 className="font-semibold text-lg mb-2">{info.title}</h3>
-                  {info.details.map((detail, i) => (
-                    <p key={i} className="text-muted-foreground text-sm">{detail}</p>
-                  ))}
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
+        
 
         {/* Booking Section */}
         <section className="py-20 bg-background relative" id="booking">
@@ -377,8 +324,8 @@ const Contact = () => {
                         <Calendar className="w-5 h-5 text-primary" />
                         <h3 className="font-bold text-xl uppercase tracking-wider">Select Date & Time for booking</h3>
                       </div>
-                      <div className="bg-background rounded-2xl border border-primary/20 overflow-hidden min-h-[600px]">
-                        <CalendlyEmbed height="600px" />
+                      <div className="bg-background rounded-2xl border border-primary/20 overflow-hidden min-h-[600px] w-full">
+                        <CalendlyEmbed height="w-full h-800px" />
                       </div>
                       <ServicePricingChart />
 
@@ -483,7 +430,7 @@ const Contact = () => {
                             <p className="text-sm font-medium text-muted-foreground">Total Charges for {bookingServices.find(s => s.id === bookingData.serviceId)?.title}</p>
                             <p className="text-xs text-muted-foreground">as per selection</p>
                           </div>
-                          <div className="text-2xl font-bold text-primary">
+                          <div className="text-1xl font-bold text-primary">
                             {bookingData.serviceId === "palmistry" ? "NA" : `₹${bookingServices.find(s => s.id === bookingData.serviceId)?.price} rs`}
                           </div>
 
