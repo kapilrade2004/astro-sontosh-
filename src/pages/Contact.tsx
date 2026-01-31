@@ -430,7 +430,7 @@ const Contact = () => {
                             <p className="text-sm font-medium text-muted-foreground">Total Charges for {bookingServices.find(s => s.id === bookingData.serviceId)?.title}</p>
                             <p className="text-xs text-muted-foreground">as per selection</p>
                           </div>
-                          <div className="text-1xl font-bold text-primary">
+                          <div className="text-2xl sm:text-base font-bold text-primary">
                             {bookingData.serviceId === "palmistry" ? "NA" : `₹${bookingServices.find(s => s.id === bookingData.serviceId)?.price} rs`}
                           </div>
 
