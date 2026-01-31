@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CosmicBackground } from "@/components/ui/CosmicBackground";
 import { Sparkles, MessageCircle, Stars } from "lucide-react";
-import LOGO from "@/assets/logo shine.png";
+import LOGO from "@/assets/logo by yash.png";
 
 export const HeroSection = () => {
   return (
@@ -14,7 +14,7 @@ export const HeroSection = () => {
 
       {/* Decorative elements - Adjusted position for mobile */}
       <motion.div
-        className="absolute top-10 right-5 lg:top-1/4 lg:right-1/4 text-primary/20"
+        className="absolute top-10 right-1 lg:top-1/4 lg:right-2.5 text-primary/20"
         animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
         transition={{ duration: 3, repeat: Infinity }}
       >
