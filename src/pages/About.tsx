@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
-import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+
 import { Button } from "@/components/ui/button";
 import {
   Award, Users, Globe, BookOpen, Heart, Star,
@@ -10,12 +10,7 @@ import {
 } from "lucide-react";
 import CertificationsShowcase from "@/components/home/CertificationsShowcase";
 
-const achievements = [
-  { value: "Years", label: "Dedicated Astrological Practice" },
-  { value: "Clients", label: "Guided with Care" },
-  { value: "Global", label: "Client Reach" },
-  { value: "Authentic", label: "Astrological Insights" },
-];
+
 
 
 const values = [
@@ -62,7 +57,7 @@ const About = () => {
         {/* Hero Section */}
         <section className="pt-32 pb-16 bg-gradient-hero relative overflow-hidden">
           <div className="container mx-auto px-4 relative z-10">
-            <Breadcrumbs />
+
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -85,7 +80,7 @@ const About = () => {
         </section>
 
         {/* Stats */}
-        <section className="py-12 bg-background border-b border-border">
+        {/* <section className="py-12 bg-background border-b border-border">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {achievements.map((stat, index) => (
@@ -105,7 +100,7 @@ const About = () => {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Story Section */}
         <section className="py-20 bg-background">
@@ -126,9 +121,9 @@ const About = () => {
 
                   <div className="text-center space-y-2">
                     <p className="text-lg font-semibold text-primary">
-                     <span className="text-red-500"> ॥</span> हरि ॐ नमः शिवाय <span className="text-red-500"> ॥</span>
+                      <span className="text-red-500"> ॥</span> हरि ॐ नमः शिवाय <span className="text-red-500"> ॥</span>
                     </p>
-                    
+
                   </div>
 
                   <p>

@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -16,7 +15,7 @@ export const HeroSection = () => {
       <motion.div
         className="absolute top-10 right-1 lg:top-1/4 lg:right-2.5 text-primary/20"
         animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 3, repeat: Infinity }}
+        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
       >
         <Stars className="w-8 h-8 lg:w-12 lg:h-12" />
       </motion.div>
@@ -26,7 +25,7 @@ export const HeroSection = () => {
         <motion.div
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           className="mb-8 lg:mb-12 text-center"
         >
           <span className="inline-flex items-center gap-2 px-3 py-1.5 lg:px-4 lg:py-2 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs lg:text-sm">
@@ -42,7 +41,7 @@ export const HeroSection = () => {
             <motion.h1
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.15 }}
+              transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
               // Adjusted font sizes for mobile (text-3xl)
               className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 lg:mb-6"
             >
@@ -54,7 +53,7 @@ export const HeroSection = () => {
             <motion.p
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
               className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 lg:mb-8 max-w-2xl lg:max-w-none"
             >
               Accurate predictions, personalised remedies, and life-changing solutions
@@ -64,7 +63,7 @@ export const HeroSection = () => {
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
               // Added w-full to container for mobile stacking
               className="flex flex-col sm:flex-row gap-4 mb-8 lg:mb-12 w-full sm:w-auto"
             >
@@ -122,7 +121,7 @@ export const HeroSection = () => {
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
               className="relative w-3/4 lg:w-full max-w-sm lg:max-w-lg flex items-center justify-center"
             >
               {/* Yellow Glow Background */}
@@ -132,16 +131,17 @@ export const HeroSection = () => {
   "
               />
 
-              {/* Logo */}
+              {/* Logo with SMOOTHER animation */}
               <motion.img
                 src={LOGO}
                 alt="Astrology Logo"
-                className="relative z-10 w-full h-auto object-contain drop-shadow-2xl"
-                animate={{ y: [0, -20, 0] }}
+                className="relative z-10 w-full h-auto object-contain drop-shadow-2xl will-change-transform"
+                animate={{ y: [-20, 0, -20] }}
                 transition={{
                   duration: 4,
                   repeat: Infinity,
-                  ease: 'easeInOut',
+                  ease: "easeInOut",
+                  times: [0, 0.5, 1]
                 }}
               />
             </motion.div>
@@ -149,7 +149,7 @@ export const HeroSection = () => {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
             >
               <p className="
   text-3xl md:text-2xl lg:text-3xl
@@ -175,17 +175,16 @@ export const HeroSection = () => {
       <motion.div
         className="absolute bottom-4 lg:bottom-8 left-1/2 -translate-x-1/2 hidden md:flex"
         animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
       >
         <div className="w-6 h-10 rounded-full border-2 border-primary/50 flex items-start justify-center p-2">
           <motion.div
             className="w-1.5 h-3 bg-primary rounded-full"
             animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           />
         </div>
       </motion.div>
     </section>
   );
 };
-

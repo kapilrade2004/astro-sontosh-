@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
-import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -161,7 +161,7 @@ const Astrology = () => {
         {/* Hero Section */}
         <section className="pt-32 pb-16 bg-gradient-hero relative overflow-hidden">
           <div className="container mx-auto px-4 relative z-10">
-            <Breadcrumbs />
+
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -169,14 +169,49 @@ const Astrology = () => {
               className="max-w-4xl"
             >
               <span className="text-primary font-medium text-sm uppercase tracking-wider">Astrology Services – Jyotish Vidya</span>
-              <div className="text-xs italic mt-0 text-[#FFD700]"
-                style={{
-                  textShadow: "0 0 2px rgba(255,215,0,0.25)",
-                }}>
+              {/* Enhanced Sanskrit Shloka - Left Aligned */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="relative mt-3 mb-6"
+              >
+                {/* Sacred glow aura */}
+                <div className="absolute -inset-4 -left-2 bg-gradient-radial from-amber-400/20 via-yellow-400/10 to-transparent blur-2xl animate-pulse pointer-events-none" />
 
-                ज्योतिषं ज्ञानम्, भविष्यं प्रकाशः
-
-              </div>
+                {/* Sanskrit text with enhanced styling */}
+                <div
+                  className="text-sm md:text-base italic font-bold
+            tracking-[0.35em]
+            leading-loose
+            text-left
+            relative
+            bg-[length:200%_auto]
+            bg-gradient-to-r 
+            from-yellow-100 
+            via-amber-200
+            via-yellow-300 
+            via-amber-300
+            via-orange-300
+            to-yellow-100
+            bg-clip-text text-transparent
+            animate-[shimmer_5s_linear_infinite]
+            drop-shadow-[0_0_20px_rgba(251,191,36,0.95)]
+            drop-shadow-[0_0_35px_rgba(245,158,11,0.7)]"
+                  style={{
+                    textShadow: `
+              0 0 5px rgba(255,215,0,0.5),
+              0 0 12px rgba(251,191,36,0.4),
+              0 0 25px rgba(245,158,11,0.3),
+              0 3px 8px rgba(0,0,0,0.3)
+            `,
+                  }}
+                >
+                  <span className="inline-block mr-2 text-[#FFD700] animate-pulse">॥</span>
+                  ज्योतिषं ज्ञानम्, भविष्यं प्रकाशः
+                  <span className="inline-block ml-2 text-[#FFD700] animate-pulse">॥</span>
+                </div>
+              </motion.div>
               <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mt-4 mb-6">
                 Unlock Your <span className="text-gradient-gold">Destiny</span> Through the Stars
               </h1>
@@ -237,19 +272,7 @@ const Astrology = () => {
                       )}
                     </div>
                     <div className="lg:w-2/3">
-                      {service.purpose && (
-                        <div className="mb-6">
-                          <h4 className="font-semibold text-sm text-primary mb-3">Purpose:</h4>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                            {service.purpose.map((item, i) => (
-                              <div key={i} className="flex items-center gap-2">
-                                <CheckCircle className="w-4 h-4 text-primary shrink-0" />
-                                <span className="text-sm text-foreground/80">{item}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
+
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {service.features.map((feature, i) => (
                           <div key={i} className="flex items-center gap-3">

@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
-import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -97,7 +97,7 @@ const itemVariants = {
 
 const Numerology = () => {
   const [openForm, setOpenForm] = useState(false);
-  
+
   const [formData, setFormData] = useState({
     name: '',
     mobile: '',
@@ -147,10 +147,10 @@ const Numerology = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     const nameError = validateName(formData.name);
     const mobileError = validateMobile(formData.mobile);
-    
+
     if (nameError || mobileError) {
       setErrors({ name: nameError, mobile: mobileError });
       return;
@@ -181,7 +181,7 @@ const Numerology = () => {
         {/* Hero Section */}
         <section className="pt-32 pb-16 bg-gradient-hero relative overflow-hidden">
           <div className="container mx-auto px-4 relative z-10">
-            <Breadcrumbs />
+
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -197,14 +197,14 @@ const Numerology = () => {
                 Numerology is a precise, data-driven occult science that uncovers personality traits, karmic strengths, and life cycles — using only your date of birth.
 
               </p>
-             <Button
-  size="lg"
-  className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold"
-  onClick={() => setOpenForm(true)}
->
-  Check My Numbers
-  <ArrowRight className="w-5 h-5 ml-2" />
-</Button>
+              <Button
+                size="lg"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold"
+                onClick={() => setOpenForm(true)}
+              >
+                Check My Numbers
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
 
             </motion.div>
           </div>
@@ -351,101 +351,99 @@ const Numerology = () => {
           </div>
         </section>
         <AnimatePresence>
-  {openForm && (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
-      onClick={() => setOpenForm(false)}
-    >
-      <motion.div
-        initial={{ scale: 0.9, y: 30 }}
-        animate={{ scale: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        className="relative w-full max-w-md mx-4 cosmic-card p-8"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Close Button */}
-        <button
-          onClick={() => setOpenForm(false)}
-          className="absolute top-4 right-4 text-muted-foreground hover:text-primary"
-        >
-          <X className="w-5 h-5" />
-        </button>
+          {openForm && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+              onClick={() => setOpenForm(false)}
+            >
+              <motion.div
+                initial={{ scale: 0.9, y: 30 }}
+                animate={{ scale: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="relative w-full max-w-md mx-4 cosmic-card p-8"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Close Button */}
+                <button
+                  onClick={() => setOpenForm(false)}
+                  className="absolute top-4 right-4 text-muted-foreground hover:text-primary"
+                >
+                  <X className="w-5 h-5" />
+                </button>
 
-        {/* Title */}
-        <h3 className="font-serif text-2xl font-bold mb-2 text-center">
-          Check <span className="text-gradient-gold">My Numbers</span>
-        </h3>
-        <p className="text-sm text-muted-foreground text-center mb-6">
-          Enter your details for accurate numerology analysis
-        </p>
+                {/* Title */}
+                <h3 className="font-serif text-2xl font-bold mb-2 text-center">
+                  Check <span className="text-gradient-gold">My Numbers</span>
+                </h3>
+                <p className="text-sm text-muted-foreground text-center mb-6">
+                  Enter your details for accurate numerology analysis
+                </p>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Name */}
-          <div>
-            <label className="text-sm font-medium">Full Name</label>
-            <input
-              type="text"
-              placeholder="Enter your name"
-              value={formData.name}
-              onChange={handleNameChange}
-              className={`mt-1 w-full rounded-lg bg-background border ${
-                errors.name ? 'border-red-500' : 'border-border'
-              } px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50`}
-              required
-            />
-            {errors.name && (
-              <p className="text-red-500 text-xs mt-1">{errors.name}</p>
-            )}
-          </div>
+                {/* Form */}
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  {/* Name */}
+                  <div>
+                    <label className="text-sm font-medium">Full Name</label>
+                    <input
+                      type="text"
+                      placeholder="Enter your name"
+                      value={formData.name}
+                      onChange={handleNameChange}
+                      className={`mt-1 w-full rounded-lg bg-background border ${errors.name ? 'border-red-500' : 'border-border'
+                        } px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50`}
+                      required
+                    />
+                    {errors.name && (
+                      <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+                    )}
+                  </div>
 
-          {/* Mobile Number */}
-          <div>
-            <label className="text-sm font-medium">Mobile Number</label>
-            <input
-              type="tel"
-              placeholder="Enter 10-digit mobile number"
-              value={formData.mobile}
-              onChange={handleMobileChange}
-              className={`mt-1 w-full rounded-lg bg-background border ${
-                errors.mobile ? 'border-red-500' : 'border-border'
-              } px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50`}
-              required
-            />
-            {errors.mobile && (
-              <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>
-            )}
-          </div>
+                  {/* Mobile Number */}
+                  <div>
+                    <label className="text-sm font-medium">Mobile Number</label>
+                    <input
+                      type="tel"
+                      placeholder="Enter 10-digit mobile number"
+                      value={formData.mobile}
+                      onChange={handleMobileChange}
+                      className={`mt-1 w-full rounded-lg bg-background border ${errors.mobile ? 'border-red-500' : 'border-border'
+                        } px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50`}
+                      required
+                    />
+                    {errors.mobile && (
+                      <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>
+                    )}
+                  </div>
 
-          {/* Date of Birth */}
-          <div>
-            <label className="text-sm font-medium">Date of Birth</label>
-            <input
-              type="date"
-              value={formData.dob}
-              onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
-              className="mt-1 w-full rounded-lg bg-background border border-border px-4 py-2 
+                  {/* Date of Birth */}
+                  <div>
+                    <label className="text-sm font-medium">Date of Birth</label>
+                    <input
+                      type="date"
+                      value={formData.dob}
+                      onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
+                      className="mt-1 w-full rounded-lg bg-background border border-border px-4 py-2 
              focus:outline-none focus:ring-2 focus:ring-primary/50 text-white 
              [&::-webkit-calendar-picker-indicator]:invert"
-              required
-            />
-          </div>
+                      required
+                    />
+                  </div>
 
-          {/* Submit */}
-          <Button
-            type="submit"
-            className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-gold mt-4"
-          >
-            Send Email Request
-          </Button>
-        </form>
-      </motion.div>
-    </motion.div>
-  )}
-</AnimatePresence>
+                  {/* Submit */}
+                  <Button
+                    type="submit"
+                    className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-gold mt-4"
+                  >
+                    Send Email Request
+                  </Button>
+                </form>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </Layout>
     </>
   );

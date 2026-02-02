@@ -1,6 +1,16 @@
 import { Link } from "react-router-dom";
-import { Sparkles, Mail, Phone, MapPin, Facebook, Instagram, Youtube, Twitter, Linkedin, MessageCircle, Globe } from "lucide-react";
+import {
+  SiFacebook,
+  SiInstagram,
+  SiYoutube,
+  SiX,
+  SiLinkedin,
+  SiWhatsapp,
+  SiGoogle
+} from "react-icons/si";
+
 import LOGO from "@/assets/namelogo-removebg-preview.png";
+import { MapPin, Phone, Mail } from "lucide-react";
 
 const services = [
   { name: "Astrology", path: "/astrology" },
@@ -16,54 +26,91 @@ const quickLinks = [
 ];
 
 const socialLinks = [
-  { icon: Facebook, href: "https://www.facebook.com/astrosantoshpandey", label: "Facebook" },
-  { icon: Instagram, href: "https://www.instagram.com/astrosantoshpandey/", label: "Instagram" },
-  { icon: Youtube, href: "https://www.youtube.com/@astrosantoshpandey", label: "YouTube" },
-  { icon: Twitter, href: "https://x.com/astrosantoshrp", label: "Twitter" },
-  { icon: Linkedin, href: "https://www.linkedin.com/in/astrosantoshpandey", label: "LinkedIn" },
-  { icon: MessageCircle, href: "https://wa.me/+918879731174", label: "WhatsApp" },
-  { icon: Globe, href: "https://share.google/h4zhEpPG0x0vF57n3", label: "Google My Business" }
+  {
+    icon: SiFacebook,
+    href: "https://www.facebook.com/astrosantoshpandey",
+    label: "Facebook",
+    color: "text-[#1877F2]",
+  },
+  {
+    icon: SiInstagram,
+    href: "https://www.instagram.com/astrosantoshpandey/",
+    label: "Instagram",
+    color: "text-[#E4405F]",
+  },
+  {
+    icon: SiYoutube,
+    href: "https://www.youtube.com/@astrosantoshpandey",
+    label: "YouTube",
+    color: "text-[#FF0000]",
+  },
+  {
+    icon: SiX,
+    href: "https://x.com/astrosantoshrp",
+    label: "Twitter / X",
+    color: "text-black dark:text-white",
+  },
+  {
+    icon: SiLinkedin,
+    href: "https://www.linkedin.com/in/astrosantoshpandey",
+    label: "LinkedIn",
+    color: "text-[#0A66C2]",
+  },
+  {
+    icon: SiWhatsapp,
+    href: "https://wa.me/+918879731174",
+    label: "WhatsApp",
+    color: "text-[#25D366]",
+  },
+  {
+    icon: SiGoogle,
+    href: "https://share.google/h4zhEpPG0x0vF57n3",
+    label: "Google My Business",
+    color: "text-[#4285F4]",
+  },
 ];
+
 
 export const Footer = () => {
   return (
     <footer className="bg-gradient-cosmic border-t border-border">
-  <div className="container mx-auto px-4 py-16">
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-14">
-      {/* Brand */}
-      <div className="">
-        <div className="">
-          <Link to="/" className="inline-block">
-            <img src={LOGO} alt="astrosantoshpandey" className="h-14 w-auto object-cover" />
-          </Link>
-        </div>
-        <p 
-          className="text-primary text-base italic font-serif tracking-wide mb-4" 
-          style={{ 
-            textShadow: '0 2px 12px rgba(218, 165, 32, 0.7), 0 0 25px rgba(218, 165, 32, 0.5), 0 0 35px rgba(218, 165, 32, 0.3)',
-            letterSpacing: '0.05em'
-          }}
-        >
-          ज्योतिषं सर्वार्थ साधकं
-        </p>
+      <div className="container mx-auto px-4 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-14">
+          {/* Brand */}
+          <div className="">
+            <div className="">
+              <Link to="/" className="inline-block">
+                <img src={LOGO} alt="astrosantoshpandey" className="h-14 w-auto object-cover" />
+              </Link>
+            </div>
+            <p
+              className="text-primary text-base italic font-serif tracking-wide mb-4"
+              style={{
+                textShadow: '0 2px 12px rgba(218, 165, 32, 0.7), 0 0 25px rgba(218, 165, 32, 0.5), 0 0 35px rgba(218, 165, 32, 0.3)',
+                letterSpacing: '0.05em'
+              }}
+            >
+              ज्योतिषं सर्वार्थ साधकं
+            </p>
             <p className="text-muted-foreground text-sm leading-relaxed">
               Transform your life with expert Astrology, Numerology, Vastu & Palmistry guidance.
               Accurate predictions and personalized remedies for a better tomorrow.
             </p>
-            <div className="flex gap-4 flex-wrap mt-4">
+            <div className="flex gap-4 flex-wrap mt-4 ">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors"
                   aria-label={social.label}
+                  className="w-10 h-10 rounded-full border border-border flex items-center justify-center transition-all hover:scale-110 hover:border-primary bg-white"
                 >
-                  <social.icon className="h-4 w-4" />
+                  <social.icon className={`h-5 w-5 ${social.color}`} />
                 </a>
               ))}
             </div>
+
           </div>
 
           {/* Services */}
@@ -119,14 +166,14 @@ export const Footer = () => {
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-primary shrink-0" />
-                <a 
-  href="https://mail.google.com/mail/?view=cm&fs=1&to=connect@astrosantoshpandey.com" 
-  target="_blank"
-  rel="noopener noreferrer"
-  className="text-muted-foreground hover:text-primary text-sm"
->
-  connect@astrosantoshpandey.com
-</a>
+                <a
+                  href="https://mail.google.com/mail/?view=cm&fs=1&to=connect@astrosantoshpandey.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className=" hover:text-primary text-sm"
+                >
+                  connect@astrosantoshpandey.com
+                </a>
               </li>
             </ul>
           </div>

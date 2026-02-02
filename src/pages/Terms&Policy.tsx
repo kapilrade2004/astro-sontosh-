@@ -2,16 +2,16 @@ import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
-import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+
 import { Button } from "@/components/ui/button";
 import {
-  Shield, FileText, RefreshCw, AlertCircle, 
+  Shield, FileText, RefreshCw, AlertCircle,
   CheckCircle, ArrowRight, Scale, Lock
 } from "lucide-react";
 import { useEffect } from "react";
 
 const TermsAndConditions = () => {
-  
+
   const location = useLocation();
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const TermsAndConditions = () => {
         {/* Hero Section */}
         <section className="pt-32 pb-16 bg-gradient-hero relative overflow-hidden">
           <div className="container mx-auto px-4 relative z-10">
-            <Breadcrumbs />
+
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -215,7 +215,7 @@ const TermsAndConditions = () => {
                   </p>
 
                   <p className="text-muted-foreground leading-relaxed">
-                    While Astro Santosh Pandey shall try to ensure that all remedial recommendations and predictions are prepared meticulously and with utmost care, Astro Santosh Pandey does not rule out the possibility of any unexpected / human errors. In case of any such errors, Astro Santosh Pandey's liability is limited to the extent of providing revised consultation & suggestions thereafter. 
+                    While Astro Santosh Pandey shall try to ensure that all remedial recommendations and predictions are prepared meticulously and with utmost care, Astro Santosh Pandey does not rule out the possibility of any unexpected / human errors. In case of any such errors, Astro Santosh Pandey's liability is limited to the extent of providing revised consultation & suggestions thereafter.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
                     Astro Santosh Pandey is not liable to refund any consultation fee or any other charges considering the nature of service. Also, booked service will always be non-refundable and non-cancellable. However, revised consultation slot shall be provided if requested within 24 hours via email along with the appropriate reason.

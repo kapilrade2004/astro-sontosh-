@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
-import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -27,8 +27,8 @@ import {
   ArrowRight, ArrowLeft, ChevronRight, UserCircle, Hand
 } from "lucide-react";
 
-import CalendlyEmbed from "@/components/calendly";
 import ServicePricingChart from "@/components/booking/ServicePricingChart";
+import { BookingCalendar } from "@/components/booking/BookingCalendar";
 
 
 
@@ -85,9 +85,25 @@ const Contact = () => {
     floorPlan: "" as any,
     propertyLocation: "",
     timeOfBirth: "",
+    selectedDate: undefined as Date | undefined,
+    selectedTime: null as string | null,
   });
 
   const { toast } = useToast();
+
+  const scrollToBooking = () => {
+    const element = document.getElementById("booking");
+    if (element) {
+      const offset = 100; // Offset for sticky header
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+  };
 
   return (
     <>
@@ -100,7 +116,7 @@ const Contact = () => {
         {/* Hero Section */}
         <section className="pt-32 pb-16 bg-gradient-hero relative overflow-hidden">
           <div className="container mx-auto px-4 relative z-10">
-            <Breadcrumbs />
+
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -124,7 +140,7 @@ const Contact = () => {
 
         {/* Booking Section */}
         <section className="py-12 md:py-16 bg-background relative" id="booking">
-          <div className="container mx-auto px-2 md:px-4 max-w-6xl">
+          <div className="container mx-auto px-2 md:px-4 max-w-[1600px]"> {/* Increased from max-w-7xl to max-w-[1600px] */}
             <div className="flex flex-col items-center mb-12">
               <h2 className="font-serif text-3xl md:text-5xl font-bold mb-4 text-center">
                 Book Your <span className="text-gradient-gold">Consultation</span>
@@ -133,7 +149,7 @@ const Contact = () => {
 
               {/* Step Progress Bar */}
               <div className="flex items-center justify-center w-full max-w-md mx-auto relative mb-12">
-                <div className="absolute top-1/2 left-0 w-full h-0.5 bg-muted -translate-y-1/2" />
+                <div className="absolute top-20 left-0 w-full h-0.5 bg-muted -translate-y-1/2" />
                 {[
                   { id: "details", label: "Basic Info" },
                   { id: "slot", label: "Select Slot & Pay" }
@@ -154,7 +170,7 @@ const Contact = () => {
               </div>
             </div>
 
-            <div className="cosmic-card p-2 md:p-12 overflow-hidden bg-muted/30 backdrop-blur-sm">
+            <div className="cosmic-card p-4 md:p-10 lg:p-16 bg-muted/30 backdrop-blur-sm">
               {bookingStep === "details" && (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -175,7 +191,7 @@ const Contact = () => {
                       className={`rounded-full px-6 py-2 transition-all ${bookingData.consultationType === "repeat" ? "glow-gold" : ""}`}
                       onClick={() => setBookingData(prev => ({ ...prev, consultationType: "repeat" }))}
                     >
-                      Repeat Consultation
+                      Follow-up Consultation
                     </Button>
                   </div>
 
@@ -207,8 +223,8 @@ const Contact = () => {
                         id="dob"
                         type="date"
                         className="bg-background border-primary/20 focus:border-primary h-12 text-white
-    [&::-webkit-calendar-picker-indicator]:invert
-    [&::-webkit-calendar-picker-indicator]:opacity-100"
+[&::-webkit-calendar-picker-indicator]:invert
+[&::-webkit-calendar-picker-indicator]:opacity-100"
                         value={bookingData.dob}
                         onChange={(e) => setBookingData(prev => ({ ...prev, dob: e.target.value }))}
                       />
@@ -266,7 +282,7 @@ const Contact = () => {
                           <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${bookingData.btr === "with" ? "border-primary" : "border-muted-foreground"}`}>
                             {bookingData.btr === "with" && <div className="w-2.5 h-2.5 rounded-full bg-primary" />}
                           </div>
-                          <span className="font-bold text-primary">With BTR</span>
+                          <span className="font-bold text-primary">With BTR(Birth Time Rectification)</span>
                         </div>
                         <p className="text-[11px] text-muted-foreground leading-relaxed">
                           Consultation within 24 hours. Select this service only if you know your exact birth time.
@@ -284,7 +300,7 @@ const Contact = () => {
                           <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${bookingData.btr === "without" ? "border-primary" : "border-muted-foreground"}`}>
                             {bookingData.btr === "without" && <div className="w-2.5 h-2.5 rounded-full bg-primary" />}
                           </div>
-                          <span className="font-bold text-primary">Without BTR</span>
+                          <span className="font-bold text-primary">Without BTR(Birth Time Rectification)</span>
                         </div>
                         <p className="text-[11px] text-muted-foreground leading-relaxed">
                           Consultation within 24 hours. Select this service if you do not know the exact birth time for eg - birth time could be btw 1 pm to 2 pm. ( Time range should not be greater then 1 hours )
@@ -300,6 +316,7 @@ const Contact = () => {
                       onClick={() => {
                         if (bookingData.name && bookingData.dob && bookingData.phone) {
                           setBookingStep("slot");
+                          setTimeout(scrollToBooking, 100);
                         } else {
                           toast({ title: "Required Fields", description: "Please fill in all mandatory fields.", variant: "destructive" });
                         }
@@ -317,23 +334,27 @@ const Contact = () => {
                   animate={{ opacity: 1, y: 0 }}
                   className="space-y-12"
                 >
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                    {/* Left Side: Calendly */}
+                  <div className="grid grid-cols-1 xl:grid-cols-[1.2fr_0.8fr] gap-8 lg:gap-12"> {/* Adjusted grid ratio to give more space to calendar */}
+                    {/* Left Side: Booking Calendar - Wider */}
                     <div className="space-y-6">
                       <div className="flex items-center gap-2 mb-2">
                         <Calendar className="w-5 h-5 text-primary" />
-                        <h3 className="font-bold text-xl uppercase tracking-wider">Select Date & Time for booking</h3>
+                        <h3 className="font-bold text-lg sm:text-xl uppercase tracking-wider">Select Date & Time for booking</h3>
                       </div>
-                      <div className="bg-background rounded-2xl border border-primary/20 overflow-hidden min-h-[650px] w-full">
-                        <CalendlyEmbed height="650px" />
+                      <div className="bg-background/20 rounded-2xl border border-primary/20 w-full overflow-hidden">
+                        {/* Calendar component will now take full width of this wider column */}
+                        <BookingCalendar
+                          selectedDate={bookingData.selectedDate}
+                          selectedTime={bookingData.selectedTime}
+                          onSelect={(date, time) => setBookingData(prev => ({ ...prev, selectedDate: date, selectedTime: time }))}
+                        />
                       </div>
                       <ServicePricingChart />
-
                     </div>
 
                     {/* Right Side: Additional Details */}
                     <div className="space-y-6">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="grid grid-cols-1 gap-6"> {/* Changed from md:grid-cols-2 to single column for better spacing */}
                         <div className="space-y-2">
                           <Label className="text-primary font-medium">Gender</Label>
                           <Select
@@ -368,8 +389,8 @@ const Contact = () => {
                           <Input
                             type="time"
                             className="bg-background border-primary/20 h-12 text-white
-    [&::-webkit-calendar-picker-indicator]:invert
-    [&::-webkit-calendar-picker-indicator]:opacity-100"
+[&::-webkit-calendar-picker-indicator]:invert
+[&::-webkit-calendar-picker-indicator]:opacity-100"
                             value={bookingData.timeOfBirth}
                             onChange={(e) => setBookingData(prev => ({ ...prev, timeOfBirth: e.target.value }))}
                           />
@@ -433,7 +454,6 @@ const Contact = () => {
                           <div className="text-base sm:text-base font-bold text-primary">
                             {bookingData.serviceId === "palmistry" ? "NA" : `₹${bookingServices.find(s => s.id === bookingData.serviceId)?.price}`}
                           </div>
-
                         </div>
 
                         <div className="text-center space-y-4">
@@ -444,16 +464,23 @@ const Contact = () => {
                           <Button
                             className="w-full h-16 text-xl bg-primary hover:bg-primary/90 glow-gold font-bold shadow-lg"
                             onClick={() => {
+                              if (!bookingData.selectedDate || !bookingData.selectedTime) {
+                                toast({
+                                  title: "Selection Required",
+                                  description: "Please select a booking date and time slot first.",
+                                  variant: "destructive"
+                                });
+                                return;
+                              }
                               toast({
-                                title: "Payment Initiated",
-                                description: "Redirecting to payment gateway...",
+                                title: "Booking Confirmation",
+                                description: `Booking session for ${bookingData.selectedTime} on ${bookingData.selectedDate.toLocaleDateString()}...`,
                               });
                             }}
                           >
-                            Pay Now to Confirm booking
+                            Confirm Booking & Pay ₹{bookingServices.find(s => s.id === bookingData.serviceId)?.price}
                           </Button>
                           <p className="text-[10px] text-muted-foreground uppercase tracking-widest">
-
                           </p>
                         </div>
                       </div>
@@ -461,7 +488,10 @@ const Contact = () => {
                   </div>
 
                   <div className="flex justify-start">
-                    <Button variant="ghost" onClick={() => setBookingStep("details")} className="gap-2">
+                    <Button variant="ghost" onClick={() => {
+                      setBookingStep("details");
+                      setTimeout(scrollToBooking, 100);
+                    }} className="gap-2">
                       <ArrowLeft className="w-4 h-4" /> Back to Basic Info
                     </Button>
                   </div>
@@ -471,7 +501,7 @@ const Contact = () => {
           </div>
         </section>
 
-        {/* Map Section */}
+        {/* Map Section */}S
         <section className="py-12 bg-gradient-cosmic">
           <div className="container mx-auto px-4">
             <motion.div
