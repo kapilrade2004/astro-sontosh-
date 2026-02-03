@@ -197,8 +197,8 @@ const Palmistry = () => {
 
                 {/* Sanskrit text with enhanced styling */}
                 <div
-                  className="text-sm md:text-base italic font-bold
-            tracking-[0.35em]
+                  className="text-sm md:text-lg italic font-bold
+            tracking-normal
             leading-loose
             text-left
             relative

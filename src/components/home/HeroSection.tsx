@@ -156,7 +156,7 @@ export const HeroSection = () => {
   font-bold
   italic
   text-center
-  tracking-wider
+  tracking-normal
   leading-relaxed
   py-1
   bg-gradient-to-r from-yellow-200 via-yellow-400 to-amber-500

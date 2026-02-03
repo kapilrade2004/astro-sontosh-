@@ -181,8 +181,8 @@ const Astrology = () => {
 
                 {/* Sanskrit text with enhanced styling */}
                 <div
-                  className="text-sm md:text-base italic font-bold
-            tracking-[0.35em]
+                  className="text-sm md:text-lg italic font-bold
+            tracking-normal
             leading-loose
             text-left
             relative
@@ -208,7 +208,7 @@ const Astrology = () => {
                   }}
                 >
                   <span className="inline-block mr-2 text-[#FFD700] animate-pulse">॥</span>
-                  ज्योतिषं ज्ञानम्, भविष्यं प्रकाशः
+                  ज्योतिषं ज्ञानम्,भविष्यं प्रकाशः
                   <span className="inline-block ml-2 text-[#FFD700] animate-pulse">॥</span>
                 </div>
               </motion.div>

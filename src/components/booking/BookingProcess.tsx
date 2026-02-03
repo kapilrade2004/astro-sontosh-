@@ -257,10 +257,10 @@ export const BookingProcess = () => {
                                         <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${bookingData.btr === "with" ? "border-primary" : "border-muted-foreground"}`}>
                                             {bookingData.btr === "with" && <div className="w-2.5 h-2.5 rounded-full bg-primary" />}
                                         </div>
-                                        <span className="font-bold text-primary">With BTR(Birth Time Rectification)</span>
+                                        <span className="font-bold text-primary">With BTR (Birth Time Rectification)</span>
                                     </div>
                                     <p className="text-[11px] text-muted-foreground leading-relaxed">
-                                        Consultation within 24 hours. Select this service only if you know your exact birth time.
+                                        Consultation within 24 hours. Select this service if you do not know the exact birth time for eg - birth time could be btw 1 pm to 2 pm. ( Time range should not be greater then 1 hours )
                                     </p>
                                 </div>
 
@@ -275,10 +275,10 @@ export const BookingProcess = () => {
                                         <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${bookingData.btr === "without" ? "border-primary" : "border-muted-foreground"}`}>
                                             {bookingData.btr === "without" && <div className="w-2.5 h-2.5 rounded-full bg-primary" />}
                                         </div>
-                                        <span className="font-bold text-primary">Without BTR(Birth Time Rectification)</span>
+                                        <span className="font-bold text-primary">Without BTR (Birth Time Rectification)</span>
                                     </div>
                                     <p className="text-[11px] text-muted-foreground leading-relaxed">
-                                        Consultation within 24 hours. Select this service if you do not know the exact birth time for eg - birth time could be btw 1 pm to 2 pm. ( Time range should not be greater then 1 hours )
+                                        Consultation within 24 hours. Select this service only if you know your exact birth time.
                                     </p>
                                 </div>
                             </motion.div>
@@ -463,7 +463,7 @@ export const BookingProcess = () => {
                                 <div className="pt-8 space-y-6 border-t border-primary/20">
                                     <div className="flex items-center justify-between p-5 bg-primary/10 rounded-2xl border-2 border-primary/20 shadow-inner">
                                         <div className="flex flex-col gap-2">
-                                            <p className="text-sm font-medium text-muted-foreground">Total Charges for {selectedService?.title}</p>
+                                            <p className="text-sm font-medium text-muted-foreground">Booking Charges for {selectedService?.title}</p>
                                             <div className="flex flex-wrap items-center gap-2">
                                                 <span className="text-[10px] bg-primary/20 text-primary px-2 py-1 rounded-full font-bold uppercase tracking-wider">
                                                     {bookingData.duration} Mins Session
