@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { format } from "date-fns";
+import { useState, useMemo, useEffect } from "react";
+import { format, addMinutes, isBefore, startOfToday, setHours, setMinutes } from "date-fns";
 import { Calendar as CalendarIcon, Clock } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
@@ -9,21 +9,37 @@ interface BookingCalendarProps {
     onSelect: (date: Date | undefined, time: string | null) => void;
     selectedDate?: Date;
     selectedTime?: string | null;
+    duration?: string; // in minutes
 }
 
-const dummyTimeSlots = [
-    "10:00 AM",
-    "11:30 AM",
-    "01:00 PM",
-    "02:30 PM",
-    "04:00 PM",
-    "05:30 PM",
-    "07:00 PM",
-];
-
-export const BookingCalendar = ({ onSelect, selectedDate: propDate, selectedTime: propTime }: BookingCalendarProps) => {
+export const BookingCalendar = ({ onSelect, selectedDate: propDate, selectedTime: propTime, duration = "30" }: BookingCalendarProps) => {
     const [date, setDate] = useState<Date | undefined>(propDate || new Date());
     const [selectedTime, setSelectedTime] = useState<string | null>(propTime || null);
+
+    const timeSlots = useMemo(() => {
+        const slots: string[] = [];
+        const startHour = 10;
+        const endHour = 19;
+        const slotDuration = parseInt(duration);
+
+        let currentTime = setMinutes(setHours(new Date(), startHour), 0);
+        const endTime = setMinutes(setHours(new Date(), endHour), 0);
+
+        while (isBefore(addMinutes(currentTime, slotDuration), endTime) || addMinutes(currentTime, slotDuration).getTime() === endTime.getTime()) {
+            slots.push(format(currentTime, "hh:mm a"));
+            currentTime = addMinutes(currentTime, slotDuration);
+        }
+
+        return slots;
+    }, [duration]);
+
+    // Reset selected time if duration changes and current selection is no longer valid
+    useEffect(() => {
+        if (selectedTime && !timeSlots.includes(selectedTime)) {
+            setSelectedTime(null);
+            onSelect(date, null);
+        }
+    }, [duration, timeSlots]);
 
     const handleDateSelect = (newDate: Date | undefined) => {
         setDate(newDate);
@@ -53,7 +69,7 @@ export const BookingCalendar = ({ onSelect, selectedDate: propDate, selectedTime
                             selected={date}
                             onSelect={handleDateSelect}
                             className="rounded-xl border border-primary/10 bg-background/40 shadow-inner w-full [&_.rdp-day]:text-xs sm:[&_.rdp-day]:text-sm"
-                            disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
+                            disabled={(date) => isBefore(date, startOfToday())}
                         />
                     </div>
                 </div>
@@ -71,6 +87,9 @@ export const BookingCalendar = ({ onSelect, selectedDate: propDate, selectedTime
                             <p className="text-lg sm:text-xl md:text-2xl font-bold text-gradient-gold mt-1">
                                 {selectedTime}
                             </p>
+                            <p className="text-[10px] text-primary/40 mt-1 italic">
+                                ({duration} minutes session)
+                            </p>
                         </div>
                     </div>
                 )}
@@ -86,7 +105,7 @@ export const BookingCalendar = ({ onSelect, selectedDate: propDate, selectedTime
                 </div>
 
                 <div className="grid grid-cols-2 lg:grid-cols-1 gap-2 sm:gap-3 max-h-[240px] sm:max-h-[280px] lg:max-h-[360px] overflow-y-auto px-1 custom-scrollbar">
-                    {dummyTimeSlots.map((time) => (
+                    {timeSlots.map((time) => (
                         <Button
                             key={time}
                             variant={selectedTime === time ? "default" : "outline"}
