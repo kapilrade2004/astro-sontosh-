@@ -78,6 +78,61 @@ export const BookingProcess = () => {
         selectedDate: undefined as Date | undefined,
         selectedTime: null as string | null,
     });
+    const [errors, setErrors] = useState<Record<string, string>>({});
+
+    const updateBookingData = (updates: Partial<typeof bookingData>) => {
+        setBookingData(prev => ({ ...prev, ...updates }));
+        // Clear error when field is updated
+        const updatedFields = Object.keys(updates);
+        if (updatedFields.length > 0) {
+            setErrors(prev => {
+                const newErrors = { ...prev };
+                updatedFields.forEach(field => delete newErrors[field]);
+                if (updatedFields.includes("selectedDate") || updatedFields.includes("selectedTime")) {
+                    delete newErrors.slot;
+                }
+                return newErrors;
+            });
+        }
+    };
+
+    const validateStep1 = () => {
+        const newErrors: Record<string, string> = {};
+        if (!bookingData.name.trim()) newErrors.name = "Full name is required";
+        else if (bookingData.name.trim().length < 3) newErrors.name = "Name must be at least 3 characters";
+
+        if (bookingData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(bookingData.email)) {
+            newErrors.email = "Invalid email format";
+        }
+
+        if (!bookingData.dob) newErrors.dob = "Date of birth is required";
+
+        if (!bookingData.phone) newErrors.phone = "Phone number is required";
+        else if (!/^\d{10}$/.test(bookingData.phone)) newErrors.phone = "Phone number must be 10 digits";
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const validateStep2 = () => {
+        const newErrors: Record<string, string> = {};
+        if (!bookingData.duration) newErrors.duration = "Consultation duration is required";
+        if (!bookingData.selectedDate || !bookingData.selectedTime) newErrors.slot = "Please select a date and time slot";
+        if (!bookingData.gender) newErrors.gender = "Please select gender";
+        if (!bookingData.place || !bookingData.place.trim()) newErrors.place = "Place of birth is required";
+
+        if ((bookingData.serviceId === "astrology" || bookingData.serviceId === "numerology" || bookingData.serviceId === "premium-kundli") && !bookingData.timeOfBirth) {
+            newErrors.timeOfBirth = "Time of birth is required";
+        }
+
+        if (bookingData.serviceId === "vastu") {
+            if (!bookingData.areaDimension.trim()) newErrors.areaDimension = "Area dimension is required";
+            if (!bookingData.propertyLocation.trim()) newErrors.propertyLocation = "Property location is required";
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
 
     const { toast } = useToast();
     const bookingRef = useRef<HTMLDivElement>(null);
@@ -96,13 +151,13 @@ export const BookingProcess = () => {
     };
 
     const handleNextStep = () => {
-        if (bookingData.name && bookingData.dob && bookingData.phone) {
+        if (validateStep1()) {
             setBookingStep("slot");
             setTimeout(scrollToBooking, 100);
         } else {
             toast({
-                title: "Required Fields",
-                description: "Please fill in all mandatory fields (Name, DOB, and Phone).",
+                title: "Validation Error",
+                description: "Please check the highlighted fields and try again.",
                 variant: "destructive"
             });
         }
@@ -110,6 +165,7 @@ export const BookingProcess = () => {
 
     const handleBackStep = () => {
         setBookingStep("details");
+        setErrors({});
         setTimeout(scrollToBooking, 100);
     };
 
@@ -176,10 +232,11 @@ export const BookingProcess = () => {
                                 <Input
                                     id="name"
                                     placeholder="Enter full name"
-                                    className="bg-background border-primary/20 focus:border-primary h-12"
+                                    className={`bg-background border-primary/20 focus:border-primary h-12 ${errors.name ? "border-red-500 focus:border-red-500" : ""}`}
                                     value={bookingData.name}
-                                    onChange={(e) => setBookingData(prev => ({ ...prev, name: e.target.value }))}
+                                    onChange={(e) => updateBookingData({ name: e.target.value })}
                                 />
+                                {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="email" className="text-primary font-medium">Email Address</Label>
@@ -187,22 +244,24 @@ export const BookingProcess = () => {
                                     id="email"
                                     type="email"
                                     placeholder="email@example.com"
-                                    className="bg-background border-primary/20 focus:border-primary h-12"
+                                    className={`bg-background border-primary/20 focus:border-primary h-12 ${errors.email ? "border-red-500 focus:border-red-500" : ""}`}
                                     value={bookingData.email}
-                                    onChange={(e) => setBookingData(prev => ({ ...prev, email: e.target.value }))}
+                                    onChange={(e) => updateBookingData({ email: e.target.value })}
                                 />
+                                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="dob" className="text-primary font-medium">Date of Birth *</Label>
                                 <Input
                                     id="dob"
                                     type="date"
-                                    className="bg-background border-primary/20 focus:border-primary h-12 text-white
+                                    className={`bg-background border-primary/20 focus:border-primary h-12 text-white
                     [&::-webkit-calendar-picker-indicator]:invert
-                    [&::-webkit-calendar-picker-indicator]:opacity-100"
+                    [&::-webkit-calendar-picker-indicator]:opacity-100 ${errors.dob ? "border-red-500 focus:border-red-500" : ""}`}
                                     value={bookingData.dob}
-                                    onChange={(e) => setBookingData(prev => ({ ...prev, dob: e.target.value }))}
+                                    onChange={(e) => updateBookingData({ dob: e.target.value })}
                                 />
+                                {errors.dob && <p className="text-red-500 text-xs mt-1">{errors.dob}</p>}
                             </div>
                         </div>
 
@@ -214,20 +273,21 @@ export const BookingProcess = () => {
                                     <Input
                                         id="phone"
                                         placeholder="Phone number"
-                                        className="bg-background border-primary/20 focus:border-primary h-12 rounded-l-none"
+                                        className={`bg-background border-primary/20 focus:border-primary h-12 rounded-l-none ${errors.phone ? "border-red-500 focus:border-red-500" : ""}`}
                                         maxLength={10}
                                         value={bookingData.phone}
-                                        onChange={(e) => setBookingData(prev => ({ ...prev, phone: e.target.value.replace(/\D/g, "") }))}
+                                        onChange={(e) => updateBookingData({ phone: e.target.value.replace(/\D/g, "") })}
                                     />
                                 </div>
+                                {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="service" className="text-primary font-medium">Service Request *</Label>
                                 <Select
                                     value={bookingData.serviceId}
-                                    onValueChange={(val) => setBookingData(prev => ({ ...prev, serviceId: val }))}
+                                    onValueChange={(val) => updateBookingData({ serviceId: val })}
                                 >
-                                    <SelectTrigger className="bg-background border-primary/20 h-12">
+                                    <SelectTrigger className={`bg-background border-primary/20 h-12 ${errors.serviceId ? "border-red-500 focus:border-red-500" : ""}`}>
                                         <SelectValue placeholder="Select service" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -257,10 +317,11 @@ export const BookingProcess = () => {
                                         <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${bookingData.btr === "with" ? "border-primary" : "border-muted-foreground"}`}>
                                             {bookingData.btr === "with" && <div className="w-2.5 h-2.5 rounded-full bg-primary" />}
                                         </div>
-                                        <span className="font-bold text-primary">With BTR (Birth Time Rectification)</span>
+                                        <span className="font-bold text-primary">Exact Birth Time NOT known (Birth Time Rectification)</span>
                                     </div>
                                     <p className="text-[11px] text-muted-foreground leading-relaxed">
-                                        Consultation within 24 hours. Select this service if you do not know the exact birth time for eg - birth time could be btw 1 pm to 2 pm. ( Time range should not be greater then 1 hours )
+                                        Consultation within 24 hours. Select this service if you do not know the exact birth time.
+                                        For eg - birth time could be between 1 pm to 2 pm. (Time range should not be greater than 1 hour)
                                     </p>
                                 </div>
 
@@ -275,7 +336,7 @@ export const BookingProcess = () => {
                                         <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${bookingData.btr === "without" ? "border-primary" : "border-muted-foreground"}`}>
                                             {bookingData.btr === "without" && <div className="w-2.5 h-2.5 rounded-full bg-primary" />}
                                         </div>
-                                        <span className="font-bold text-primary">Without BTR (Birth Time Rectification)</span>
+                                        <span className="font-bold text-primary">Exact Birth Time is Known</span>
                                     </div>
                                     <p className="text-[11px] text-muted-foreground leading-relaxed">
                                         Consultation within 24 hours. Select this service only if you know your exact birth time.
@@ -319,7 +380,7 @@ export const BookingProcess = () => {
                                                 {durations.map((d) => (
                                                     <button
                                                         key={d.value}
-                                                        onClick={() => setBookingData(prev => ({ ...prev, duration: d.value }))}
+                                                        onClick={() => updateBookingData({ duration: d.value })}
                                                         className={`text-xs px-2 py-1 rounded-md transition-all ${bookingData.duration === d.value
                                                             ? "bg-primary text-primary-foreground font-bold"
                                                             : "bg-background/50 text-muted-foreground hover:text-primary"
@@ -333,13 +394,16 @@ export const BookingProcess = () => {
                                     )}
                                 </div>
 
+                                {errors.duration && <p className="text-red-500 text-sm font-semibold mb-2">{errors.duration}</p>}
+                                {errors.slot && <p className="text-red-500 text-sm font-semibold mb-2">{errors.slot}</p>}
+
                                 {bookingData.duration ? (
                                     <div className="bg-background/20 rounded-2xl border border-primary/20 w-full overflow-hidden">
                                         <BookingCalendar
                                             selectedDate={bookingData.selectedDate}
                                             selectedTime={bookingData.selectedTime}
                                             duration={bookingData.duration}
-                                            onSelect={(date, time) => setBookingData(prev => ({ ...prev, selectedDate: date, selectedTime: time }))}
+                                            onSelect={(date, time) => updateBookingData({ selectedDate: date, selectedTime: time })}
                                         />
                                     </div>
                                 ) : (
@@ -358,8 +422,8 @@ export const BookingProcess = () => {
                                                     key={d.value}
                                                     variant="outline"
                                                     size="lg"
-                                                    className="min-w-[140px] h-14 text-sm font-bold border-primary/20 hover:border-primary hover:bg-primary/5 transition-all rounded-xl cosmic-card-minimal"
-                                                    onClick={() => setBookingData(prev => ({ ...prev, duration: d.value }))}
+                                                    className={`min-w-[140px] h-14 text-sm font-bold border-primary/20 hover:border-primary hover:bg-primary/5 transition-all rounded-xl cosmic-card-minimal ${errors.duration ? "border-red-500" : ""}`}
+                                                    onClick={() => updateBookingData({ duration: d.value })}
                                                 >
                                                     {d.label}
                                                 </Button>
@@ -376,9 +440,9 @@ export const BookingProcess = () => {
                                         <Label className="text-primary font-medium">Gender</Label>
                                         <Select
                                             value={bookingData.gender}
-                                            onValueChange={(val) => setBookingData(prev => ({ ...prev, gender: val }))}
+                                            onValueChange={(val) => updateBookingData({ gender: val })}
                                         >
-                                            <SelectTrigger className="bg-background border-primary/20 h-12">
+                                            <SelectTrigger className={`bg-background border-primary/20 h-12 ${errors.gender ? "border-red-500" : ""}`}>
                                                 <SelectValue placeholder="Select Gender" />
                                             </SelectTrigger>
                                             <SelectContent>
@@ -387,15 +451,17 @@ export const BookingProcess = () => {
                                                 <SelectItem value="other">Other</SelectItem>
                                             </SelectContent>
                                         </Select>
+                                        {errors.gender && <p className="text-red-500 text-xs mt-1">{errors.gender}</p>}
                                     </div>
                                     <div className="space-y-2">
                                         <Label className="text-primary font-medium">Place of Birth</Label>
                                         <Input
                                             placeholder="Enter Place of Birth"
-                                            className="bg-background border-primary/20 h-12"
+                                            className={`bg-background border-primary/20 h-12 ${errors.place ? "border-red-500" : ""}`}
                                             value={bookingData.place}
-                                            onChange={(e) => setBookingData(prev => ({ ...prev, place: e.target.value }))}
+                                            onChange={(e) => updateBookingData({ place: e.target.value })}
                                         />
+                                        {errors.place && <p className="text-red-500 text-xs mt-1">{errors.place}</p>}
                                     </div>
                                 </div>
 
@@ -404,12 +470,13 @@ export const BookingProcess = () => {
                                         <Label className="text-primary font-medium">Time of Birth</Label>
                                         <Input
                                             type="time"
-                                            className="bg-background border-primary/20 h-12 text-white
+                                            className={`bg-background border-primary/20 h-12 text-white
                         [&::-webkit-calendar-picker-indicator]:invert
-                        [&::-webkit-calendar-picker-indicator]:opacity-100"
+                        [&::-webkit-calendar-picker-indicator]:opacity-100 ${errors.timeOfBirth ? "border-red-500" : ""}`}
                                             value={bookingData.timeOfBirth}
-                                            onChange={(e) => setBookingData(prev => ({ ...prev, timeOfBirth: e.target.value }))}
+                                            onChange={(e) => updateBookingData({ timeOfBirth: e.target.value })}
                                         />
+                                        {errors.timeOfBirth && <p className="text-red-500 text-xs mt-1">{errors.timeOfBirth}</p>}
                                     </div>
                                 )}
 
@@ -423,26 +490,28 @@ export const BookingProcess = () => {
                                             <Label className="text-primary font-medium">Area Dimension (Length and Width)</Label>
                                             <Input
                                                 placeholder="e.g. 20x40 ft"
-                                                className="bg-background border-primary/20 h-12"
+                                                className={`bg-background border-primary/20 h-12 ${errors.areaDimension ? "border-red-500" : ""}`}
                                                 value={bookingData.areaDimension}
-                                                onChange={(e) => setBookingData(prev => ({ ...prev, areaDimension: e.target.value }))}
+                                                onChange={(e) => updateBookingData({ areaDimension: e.target.value })}
                                             />
+                                            {errors.areaDimension && <p className="text-red-500 text-xs mt-1">{errors.areaDimension}</p>}
                                         </div>
                                         <div className="space-y-2">
                                             <Label className="text-primary font-medium">Property Location</Label>
                                             <Input
                                                 placeholder="Nearest City / Area"
-                                                className="bg-background border-primary/20 h-12"
+                                                className={`bg-background border-primary/20 h-12 ${errors.propertyLocation ? "border-red-500" : ""}`}
                                                 value={bookingData.propertyLocation}
-                                                onChange={(e) => setBookingData(prev => ({ ...prev, propertyLocation: e.target.value }))}
+                                                onChange={(e) => updateBookingData({ propertyLocation: e.target.value })}
                                             />
+                                            {errors.propertyLocation && <p className="text-red-500 text-xs mt-1">{errors.propertyLocation}</p>}
                                         </div>
                                         <div className="space-y-2">
                                             <Label className="text-primary font-medium">Upload Floor Plan / House Map</Label>
                                             <Input
                                                 type="file"
                                                 className="bg-background border-primary/20 h-12 py-2"
-                                                onChange={(e) => setBookingData(prev => ({ ...prev, floorPlan: e.target.files?.[0] }))}
+                                                onChange={(e) => updateBookingData({ floorPlan: e.target.files?.[0] })}
                                             />
                                         </div>
                                     </motion.div>
@@ -455,7 +524,7 @@ export const BookingProcess = () => {
                                         rows={4}
                                         className="bg-background border-primary/20 resize-none py-3"
                                         value={bookingData.concern}
-                                        onChange={(e) => setBookingData(prev => ({ ...prev, concern: e.target.value }))}
+                                        onChange={(e) => updateBookingData({ concern: e.target.value })}
                                     />
                                 </div>
 
@@ -487,17 +556,17 @@ export const BookingProcess = () => {
                                         <Button
                                             className="w-full h-16 text-xl bg-primary hover:bg-primary/90 glow-gold font-bold shadow-lg"
                                             onClick={() => {
-                                                if (!bookingData.selectedDate || !bookingData.selectedTime) {
+                                                if (!validateStep2()) {
                                                     toast({
-                                                        title: "Selection Required",
-                                                        description: "Please select a booking date and time slot first.",
+                                                        title: "Missing Information",
+                                                        description: "Please complete all required fields and select a slot.",
                                                         variant: "destructive"
                                                     });
                                                     return;
                                                 }
                                                 toast({
                                                     title: "Booking Confirmation",
-                                                    description: `Booking ${bookingData.duration} min session for ${bookingData.selectedTime} on ${bookingData.selectedDate.toLocaleDateString()}...`,
+                                                    description: `Booking ${bookingData.duration} min session for ${bookingData.selectedTime} on ${bookingData.selectedDate?.toLocaleDateString()}...`,
                                                 });
                                             }}
                                         >
