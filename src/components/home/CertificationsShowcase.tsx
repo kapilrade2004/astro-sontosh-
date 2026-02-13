@@ -1,11 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Award, ChevronRight, Turtle, X } from "lucide-react";
+import { Award, ChevronRight, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import TUVV from "@/assets/The-Ultimate-Vishwakarma-Vastu-Course-1.png";
-import SRPD from "@/assets/Santosh Radheshyam Pandey_Diploma_Palmistry - Certificate -1.png";
-import SRPDA from "@/assets/Santosh Radheshyam Pandey_Diploma_Astrology-1.png";
-import CTUAC from "@/assets/certificate-the-ultimate-astrology-course-659d0b0f793ea1f49f00fe4d-1.png"
+import CTUAC from "@/assets/certificate-the-ultimate-astrology-course-659d0b0f793ea1f49f00fe4d-1.png";
 import CRPBA from "@/assets/certificate-retrograde-planets-by-astro-arun-pandit-674476f971f0653e20048e85-1.png";
 import CMPM from "@/assets/certificate-marriage-prediction-mastery-crash-course-678a3165f1f2ad27a3004247-1.png";
 import CKMCBA from "@/assets/certificate-kundli-mastery-course-by-astro-arun-pandit-687647f35bca75814702c115-1.png";
@@ -14,8 +12,13 @@ import C360ARB from "@/assets/certificate-360-astro-remedies-bootcamp-by-astro-a
 import AVS from "@/assets/Astro-Vastu-Shastra-1.png";
 import ATOETC from "@/assets/Advance-Timing-of-Events-Transit-Course-1.png";
 import SPOA10 from "@/assets/10-Sureshot-Prediction-of-Astrology-1.png";
-import CAG from "@/assets/Crystal-And-Gemstone-1.png"
-import RC from "@/assets/Rudraksha-Course-1.png"
+import CAG from "@/assets/Crystal-And-Gemstone-1.png";
+import RC from "@/assets/Rudraksha-Course-1.png";
+import SRPD from "@/assets/Certificate_Diploma_Palmistry_page-0001.jpg";
+import SRPDA from "@/assets/Certificate_Diploma_Astrology_page-0001.jpg";
+import CCA from "@/assets/Certificate_Certificate_Astrology_page-0001.jpg";
+import AEC from "@/assets/img3.jpeg";
+
 const certifications = [
   {
     id: 1,
@@ -25,95 +28,95 @@ const certifications = [
   },
   {
     id: 2,
-    title: "Certificate of Completion in Diploma in Palmistry",
-    image: SRPD,
-    verified: true,
-  },
-  {
-    id: 3,
-    title: "Certificate of Completion in Diploma in Astrology",
-    image: SRPDA,
-    verified: true,
-  },
-  {
-    id: 4,
-    title: "certificate of the ultimate astrology course",
+    title: "Certificate of the Ultimate Astrology Course",
     image: CTUAC,
     verified: true,
   },
   {
-    id: 5,
-    title: "certificate retrograde planets by astro arun pandit",
+    id: 3,
+    title: "Certificate Retrograde Planets by Astro Arun Pandit",
     image: CRPBA,
     verified: true,
   },
   {
-    id: 6,
-    title: "certificate marriage prediction mastery crash course",
+    id: 4,
+    title: "Certificate Marriage Prediction Mastery Crash Course",
     image: CMPM,
     verified: true,
   },
   {
-    id: 7,
-    title: "certificate kundli matching comprehensive by astro arun pandit",
+    id: 5,
+    title: "Certificate Kundli Matching Comprehensive by Astro Arun Pandit",
     image: CKMCBA,
     verified: true,
   },
   {
-    id: 8,
-    title: "certificate basic nakshatra course by astro arun pandit",
+    id: 6,
+    title: "Certificate Basic Nakshatra Course by Astro Arun Pandit",
     image: CBNCBA,
     verified: true,
   },
   {
-    id: 9,
-    title: "certificate 360 astro remedies bootcamp by astro arun pandit",
+    id: 7,
+    title: "Certificate 360 Astro Remedies Bootcamp by Astro Arun Pandit",
     image: C360ARB,
     verified: true,
   },
   {
-    id: 10,
+    id: 8,
     title: "Astro Vastu Shastra",
     image: AVS,
     verified: true,
   },
   {
-    id: 11,
+    id: 9,
     title: "Advance Timing of Events Transit Course",
     image: ATOETC,
     verified: true,
   },
   {
-    id: 12,
-    title: "10-Sureshot-Prediction-of-Astrology",
+    id: 10,
+    title: "10 Sureshot Prediction of Astrology",
     image: SPOA10,
     verified: true,
   },
   {
-    id: 13,
-    title: "Advance Timing of Events Transit Course",
-    image: ATOETC,
-    verified: true,
-  },
-  {
-    id: 14,
-    title: "Crystal-And-Gemstone",
+    id: 11,
+    title: "Crystal and Gemstone",
     image: CAG,
     verified: true,
   },
   {
-    id: 15,
-    title: "Rudraksha-Course",
+    id: 12,
+    title: "Rudraksha Course",
     image: RC,
     verified: true,
   },
-
-
-
-
-
-
-
+   {
+    id: 13,
+    title: "Certificate of Completion in Diploma in Astrology",
+    image: SRPDA,
+    verified: true,
+  },
+  {
+    id: 14,
+    title: "Certificate of Completion in Diploma in Palmistry",
+    image: SRPD,
+    verified: true,
+  },
+   {
+    id: 15,
+    title: "Astro Expertise Course - Astro Expert",
+    image: AEC,
+    verified: true,
+  },
+  {
+    id: 16,
+    title: "Certificate in Astrology",
+    image: CCA,
+    verified: true,
+  },
+ 
 ];
 
 export default function CertificationsShowcase() {
@@ -123,12 +126,12 @@ export default function CertificationsShowcase() {
 
   const openCertificate = (certId: number) => {
     setSelectedCert(certId);
-    document.body.style.overflow = 'hidden'; // Prevent background scroll
+    document.body.style.overflow = 'hidden';
   };
 
   const closeCertificate = () => {
     setSelectedCert(null);
-    document.body.style.overflow = 'unset'; // Restore scroll
+    document.body.style.overflow = 'unset';
   };
 
   const selectedCertData = certifications.find(cert => cert.id === selectedCert);
@@ -162,7 +165,6 @@ export default function CertificationsShowcase() {
                 transition={{ delay: index * 0.1 }}
                 className="cosmic-card group hover:scale-105 transition-all duration-300"
               >
-                {/* Certificate Image */}
                 <div className="relative h-48 bg-gradient-to-br from-primary/5 to-primary/10 rounded-t-xl overflow-hidden">
                   {cert.image ? (
                     <img
@@ -189,7 +191,6 @@ export default function CertificationsShowcase() {
                   )}
                 </div>
 
-                {/* Certificate Details */}
                 <div className="p-6">
                   <h3 className="font-serif text-lg font-semibold leading-tight mb-4">
                     {cert.title}
@@ -207,7 +208,6 @@ export default function CertificationsShowcase() {
             ))}
           </div>
 
-          {/* Show More/Less Button */}
           {certifications.length > 3 && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -226,48 +226,9 @@ export default function CertificationsShowcase() {
               </Button>
             </motion.div>
           )}
-
-          {/* Stats Row */}
-          {/* Stats Row */}
-          {/* <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto"
-          >
-            <div className="text-center">
-              <div className="font-serif text-3xl font-bold text-gradient-gold"></div>
-              <div className="text-sm text-muted-foreground mt-1">
-                Years of Dedicated Practice
-              </div>
-            </div>
-
-            <div className="text-center">
-              <div className="font-serif text-3xl font-bold text-gradient-gold">Multiple</div>
-              <div className="text-sm text-muted-foreground mt-1">
-                Astrology Disciplines
-              </div>
-            </div>
-
-            <div className="text-center">
-              <div className="font-serif text-3xl font-bold text-gradient-gold">Trusted</div>
-              <div className="text-sm text-muted-foreground mt-1">
-                Guidance & Insights
-              </div>
-            </div>
-
-            <div className="text-center">
-              <div className="font-serif text-3xl font-bold text-gradient-gold">Hundreds</div>
-              <div className="text-sm text-muted-foreground mt-1">
-                Consultations Delivered
-              </div>
-            </div>
-          </motion.div> */}
-
         </div>
       </section>
 
-      {/* Certificate Modal */}
       <AnimatePresence>
         {selectedCertData && (
           <motion.div
@@ -287,7 +248,6 @@ export default function CertificationsShowcase() {
               className="relative max-w-5xl w-full bg-background rounded-2xl shadow-2xl overflow-hidden"
               style={{ cursor: 'default' }}
             >
-              {/* Close Button */}
               <button
                 onClick={closeCertificate}
                 className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-background/90 backdrop-blur-sm border border-border flex items-center justify-center hover:bg-destructive hover:text-destructive-foreground transition-colors shadow-lg"
@@ -295,7 +255,6 @@ export default function CertificationsShowcase() {
                 <X className="w-5 h-5" />
               </button>
 
-              {/* Certificate Image */}
               <div className="relative bg-gradient-to-br from-primary/5 to-primary/10 p-8">
                 <img
                   src={selectedCertData.image}
@@ -304,7 +263,6 @@ export default function CertificationsShowcase() {
                 />
               </div>
 
-              {/* Certificate Info */}
               <div className="p-6 border-t border-border bg-background">
                 <div className="flex items-center justify-center">
                   <h3 className="font-serif text-2xl font-bold">
