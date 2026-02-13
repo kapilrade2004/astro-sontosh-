@@ -53,6 +53,8 @@ const durations = [
     { label: "1 Hour", value: "60" },
 ];
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://cashfee-payment-integration-1.onrender.com";
+
 export const BookingProcess = () => {
     const [bookingStep, setBookingStep] = useState<"details" | "slot">("details");
     const [bookingData, setBookingData] = useState({
@@ -200,7 +202,7 @@ export const BookingProcess = () => {
 
         setIsProcessingPayment(true);
         try {
-            const res = await axios.post("http://localhost:8000/payment", {
+            const res = await axios.post(`${API_BASE_URL}/payment`, {
                 amount: Number(selectedService?.price),
                 customer_name: bookingData.name,
                 customer_phone: bookingData.phone,
@@ -215,11 +217,25 @@ export const BookingProcess = () => {
 
                 cashfree.checkout(checkoutOptions).then(async () => {
                     try {
-                        const verifyRes = await axios.post("http://localhost:8000/verify", {
+                        const verifyRes = await axios.post(`${API_BASE_URL}/verify`, {
                             orderId: res.data.order_id,
                         });
 
                         if (verifyRes.data && verifyRes.data.success) {
+                            // Send booking details to backend
+                            try {
+                                await axios.post(`${API_BASE_URL}/dataslotbooked`, {
+                                    ...bookingData,
+                                    orderId: res.data.order_id,
+                                    paymentSessionId: res.data.payment_session_id,
+                                    amount: Number(selectedService?.price),
+                                    serviceName: selectedService?.title
+                                });
+                            } catch (error) {
+                                console.error("Failed to save booking details:", error);
+                                // We don't block the UI here as payment was successful
+                            }
+
                             setPaymentResult(verifyRes.data);
                             // Reset booking-specific fields to "close" the form session
                             setBookingData(prev => ({
