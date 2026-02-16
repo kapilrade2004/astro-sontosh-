@@ -11,45 +11,56 @@ import { BookingStatusScreen } from "./steps/BookingStatusScreen";
 
 const bookingServices = [
     {
-        id: "astrology",
-        title: "Astrology Consultation",
-        description: "Personalized birth chart analysis. Consultation within 24 hours.",
-        price: 2100,
+        id: "astrology-exact-birth-time",
+        title: "Astrology - Exact Birth Time Known",
+        description: "Individual consultation (phone/video) - 30 minutes",
+        price: 5100,
+        duration: "30",
         icon: Sparkles,
+    },
+    {
+        id: "astrology-no-exact-birth-time",
+        title: "Astrology - Exact Birth Time NOT Known",
+        description: "Individual consultation (phone/video) - 60 minutes",
+        price: 7500,
+        duration: "60",
+        icon: Sparkles,
+    },
+    {
+        id: "astrology-in-person",
+        title: "Astrology - In-Person (Mumbai Only)",
+        description: "Individual consultation (in-person) - 60 minutes",
+        price: 7500,
+        duration: "60",
+        icon: Sparkles,
+    },
+    {
+        id: "premium-kundli",
+        title: "Premium Kundli",
+        description: "Detailed life analysis and comprehensive horoscope report",
+        price: 2100,
+        icon: UserCheck,
     },
     {
         id: "numerology",
         title: "Numerology Analysis",
-        description: "Discover the hidden meaning of numbers in your life.",
-        price: 2100,
+        description: "Individual consultation (phone/video) - 30 minutes",
+        price: 3100,
+        duration: "30",
         icon: User,
     },
     {
         id: "vastu",
         title: "Vastu Consultation",
-        description: "Align your living or workspace with cosmic energy.",
+        description: "Home Vastu (Online Inquiry + Recommendations) - 30 minutes",
         price: 5100,
+        duration: "30",
         icon: MapPin,
-    },
-    {
-        id: "premium-kundli",
-        title: "Premium Kundli",
-        description: "Detailed life analysis and comprehensive horoscope report.",
-        price: 2100,
-        icon: UserCheck,
-    },
-    {
-        id: "palmistry",
-        title: "Palmistry",
-        description: "Hand analysis and future predictions.",
-        price: 0,
-        icon: User,
     }
 ];
 
 const durations = [
     { label: "30 Minutes", value: "30" },
-    { label: "45 Minutes", value: "45" },
     { label: "1 Hour", value: "60" },
 ];
 
@@ -63,14 +74,13 @@ export const BookingProcess = () => {
         email: "",
         dob: "",
         phone: "",
-        serviceId: "astrology",
-        duration: "" as string,
-        btr: "without" as "with" | "without",
+        serviceId: "astrology-exact-birth-time",
+        duration: "30" as string,
         gender: "",
         place: "Mumbai",
         concern: "",
         areaDimension: "",
-        floorPlan: null as any,
+        floorPlan: null as File | null,
         propertyLocation: "",
         timeOfBirth: "",
         selectedDate: undefined as Date | undefined,
@@ -78,9 +88,20 @@ export const BookingProcess = () => {
     });
     const [errors, setErrors] = useState<Record<string, string>>({});
 
-    const [cashfree, setCashfree] = useState<any>(null);
+    const [cashfree, setCashfree] = useState<{
+        checkout: (options: {
+            paymentSessionId: string;
+            redirectTarget: string;
+        }) => Promise<unknown>;
+    } | null>(null);
     const [isProcessingPayment, setIsProcessingPayment] = useState(false);
-    const [paymentResult, setPaymentResult] = useState<any>(null);
+    const [paymentResult, setPaymentResult] = useState<{
+        success: boolean;
+        order_id?: string;
+        amount?: number;
+        message?: string;
+        [key: string]: unknown;
+    } | null>(null);
 
     const { toast } = useToast();
     const bookingRef = useRef<HTMLDivElement>(null);
@@ -110,6 +131,14 @@ export const BookingProcess = () => {
     };
 
     const updateBookingData = (updates: Partial<typeof bookingData>) => {
+        // If serviceId is being updated, check if the service has a predefined duration
+        if (updates.serviceId) {
+            const service = bookingServices.find(s => s.id === updates.serviceId);
+            if (service && 'duration' in service && service.duration) {
+                updates.duration = service.duration;
+            }
+        }
+
         setBookingData(prev => ({ ...prev, ...updates }));
         const updatedFields = Object.keys(updates);
         if (updatedFields.length > 0) {
@@ -149,7 +178,8 @@ export const BookingProcess = () => {
         if (!bookingData.gender) newErrors.gender = "Please select gender";
         if (!bookingData.place || !bookingData.place.trim()) newErrors.place = "Place of birth is required";
 
-        if ((bookingData.serviceId === "astrology" || bookingData.serviceId === "numerology" || bookingData.serviceId === "premium-kundli") && !bookingData.timeOfBirth) {
+        const astrologyServices = ["astrology-exact-birth-time", "astrology-no-exact-birth-time", "astrology-in-person"];
+        if ((astrologyServices.includes(bookingData.serviceId) || bookingData.serviceId === "numerology" || bookingData.serviceId === "premium-kundli") && !bookingData.timeOfBirth) {
             newErrors.timeOfBirth = "Time of birth is required";
         }
 
@@ -283,28 +313,28 @@ export const BookingProcess = () => {
     const selectedService = bookingServices.find(s => s.id === bookingData.serviceId);
 
     return (
-        <div ref={bookingRef} className="w-full">
-            <div className="flex flex-col items-center mb-12">
-                <h2 className="font-serif text-3xl md:text-5xl font-bold mb-4 text-center">
+        <div ref={bookingRef} className="w-full max-w-5xl mx-auto">
+            <div className="flex flex-col items-center mb-1 md:mb-2">
+                <h2 className="font-serif text-2xl md:text-4xl font-bold mb-3 text-center">
                     Book Your <span className="text-gradient-gold">Consultation</span>
                 </h2>
-                <div className="w-24 h-1 bg-primary rounded-full mb-8" />
+                <div className="w-16 h-1 bg-primary rounded-full mb-2 md:mb-4" />
 
                 {/* Step Progress Bar */}
-                <div className="flex items-center justify-center w-full max-w-md mx-auto relative mb-12">
-                    <div className="absolute top-5 left-0 w-full h-0.5 bg-muted -translate-y-1/2" />
+                <div className="flex items-center justify-center w-full max-w-sm mx-auto relative mb-8 md:mb-10">
+                    <div className="absolute top-4 left-0 w-full h-0.5 bg-muted -translate-y-1/2" />
                     {[
                         { id: "details", label: "Basic Info" },
                         { id: "slot", label: "Select Slot & Pay" }
                     ].map((step, i) => (
                         <div key={step.id} className="flex-1 flex flex-col items-center relative z-10">
-                            <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold transition-all duration-300 border-2 ${bookingStep === step.id || (bookingStep === "slot" && i === 0)
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold transition-all duration-300 border-2 ${bookingStep === step.id || (bookingStep === "slot" && i === 0)
                                 ? "bg-primary border-primary text-primary-foreground shadow-glow-primary scale-110"
                                 : "bg-background border-muted text-muted-foreground"
                                 }`}>
-                                {bookingStep === "slot" && i === 0 ? <CheckCircle2 className="w-6 h-6" /> : i + 1}
+                                {bookingStep === "slot" && i === 0 ? <CheckCircle2 className="w-4 h-4" /> : i + 1}
                             </div>
-                            <span className={`text-sm mt-3 font-semibold transition-colors duration-300 ${bookingStep === step.id ? "text-primary" : "text-muted-foreground"}`}>
+                            <span className={`text-[10px] sm:text-xs mt-2 font-semibold transition-colors duration-300 ${bookingStep === step.id ? "text-primary" : "text-muted-foreground"}`}>
                                 {step.label}
                             </span>
                         </div>
@@ -312,7 +342,7 @@ export const BookingProcess = () => {
                 </div>
             </div>
 
-            <div className="cosmic-card p-4 md:p-10 lg:p-16 bg-muted/30 backdrop-blur-sm">
+            <div className="cosmic-card p-2 md:p-6 lg:p-6 bg-muted/30 backdrop-blur-sm">
                 {paymentResult ? (
                     <BookingStatusScreen
                         paymentResult={paymentResult}

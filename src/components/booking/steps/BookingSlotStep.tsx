@@ -39,26 +39,34 @@ export const BookingSlotStep = ({
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="space-y-12"
+            className="space-y-6 md:space-y-8"
         >
-            <div className="grid grid-cols-1 xl:grid-cols-[1.2fr_0.8fr] gap-8 lg:gap-12">
-                <div className="space-y-6">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-2">
+            <div className="grid grid-cols-1 xl:grid-cols-[1.3fr_0.7fr] gap-4 lg:gap-5 max-w-full xl:max-w-5xl">
+                <div className="space-y-3 max-w-full lg:max-w-xl">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-1">
                         <div className="flex items-center gap-2">
-                            <Calendar className="w-5 h-5 text-primary" />
-                            <h3 className="font-bold text-lg sm:text-xl uppercase tracking-wider">Select Date & Time</h3>
+                            <Calendar className="w-4 h-4 text-primary" />
+                            <h3 className="font-bold text-base sm:text-lg uppercase tracking-wider">Select Date & Time</h3>
                         </div>
 
-                        {bookingData.duration && (
-                            <div className="flex items-center gap-3 bg-primary/5 px-4 py-2 rounded-xl border border-primary/10">
-                                <Clock className="w-4 h-4 text-primary" />
-                                <span className="text-sm font-medium text-primary/80">Duration:</span>
-                                <div className="flex gap-2">
+                        {bookingData.duration && selectedService && 'duration' in selectedService && selectedService.duration && (
+                            <div className="flex items-center gap-2 bg-primary/5 px-3 py-1.5 rounded-xl border border-primary/10">
+                                <Clock className="w-3.5 h-3.5 text-primary" />
+                                <span className="text-xs font-medium text-primary/80">Duration:</span>
+                                <span className="text-xs font-bold text-primary">{selectedService.duration === "30" ? "30 Minutes" : "60 Minutes"}</span>
+                            </div>
+                        )}
+
+                        {bookingData.duration && selectedService && !('duration' in selectedService && selectedService.duration) && (
+                            <div className="flex items-center gap-2 bg-primary/5 px-3 py-1.5 rounded-xl border border-primary/10">
+                                <Clock className="w-3.5 h-3.5 text-primary" />
+                                <span className="text-xs font-medium text-primary/80">Duration:</span>
+                                <div className="flex gap-1.5">
                                     {durations.map((d) => (
                                         <button
                                             key={d.value}
                                             onClick={() => updateBookingData({ duration: d.value })}
-                                            className={`text-xs px-2 py-1 rounded-md transition-all ${bookingData.duration === d.value
+                                            className={`text-[10px] px-2 py-0.5 rounded-md transition-all ${bookingData.duration === d.value
                                                 ? "bg-primary text-primary-foreground font-bold"
                                                 : "bg-background/50 text-muted-foreground hover:text-primary"
                                                 }`}
@@ -75,7 +83,7 @@ export const BookingSlotStep = ({
                     {errors.slot && <p className="text-red-500 text-sm font-semibold mb-2">{errors.slot}</p>}
 
                     {bookingData.duration ? (
-                        <div className="bg-background/20 rounded-2xl border border-primary/20 w-full overflow-hidden">
+                        <div className="w-full">
                             <BookingCalendar
                                 selectedDate={bookingData.selectedDate}
                                 selectedTime={bookingData.selectedTime}
@@ -83,23 +91,23 @@ export const BookingSlotStep = ({
                                 onSelect={(date, time) => updateBookingData({ selectedDate: date, selectedTime: time })}
                             />
                         </div>
-                    ) : (
-                        <div className="bg-background/20 rounded-2xl border border-primary/20 w-full p-12 flex flex-col items-center justify-center text-center space-y-6">
-                            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
-                                <Clock className="w-8 h-8 text-primary animate-pulse" />
+                    ) : selectedService && !('duration' in selectedService && selectedService.duration) ? (
+                        <div className="bg-background/20 rounded-2xl border border-primary/20 w-full p-8 flex flex-col items-center justify-center text-center space-y-4">
+                            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                                <Clock className="w-6 h-6 text-primary animate-pulse" />
                             </div>
-                            <div className="space-y-2">
-                                <h4 className="text-2xl font-bold text-primary font-serif">Select Session Duration</h4>
-                                <p className="text-muted-foreground max-w-xs mx-auto">Please choose your preferred consultation time below to see available slots.</p>
+                            <div className="space-y-1">
+                                <h4 className="text-xl font-bold text-primary font-serif">Select Session Duration</h4>
+                                <p className="text-xs text-muted-foreground max-w-xs mx-auto">Please choose your preferred consultation time below.</p>
                             </div>
 
-                            <div className="flex flex-wrap justify-center gap-4 mt-4">
+                            <div className="flex flex-wrap justify-center gap-3 mt-2">
                                 {durations.map((d) => (
                                     <Button
                                         key={d.value}
                                         variant="outline"
-                                        size="lg"
-                                        className={`min-w-[140px] h-14 text-sm font-bold border-primary/20 hover:border-primary hover:bg-primary/5 transition-all rounded-xl cosmic-card-minimal ${errors.duration ? "border-red-500" : ""}`}
+                                        size="sm"
+                                        className={`min-w-[110px] h-10 text-xs font-bold border-primary/20 hover:border-primary hover:bg-primary/5 transition-all rounded-xl cosmic-card-minimal ${errors.duration ? "border-red-500" : ""}`}
                                         onClick={() => updateBookingData({ duration: d.value })}
                                     >
                                         {d.label}
@@ -107,20 +115,21 @@ export const BookingSlotStep = ({
                                 ))}
                             </div>
                         </div>
-                    )}
+                    ) : null}
                     <ServicePricingChart />
                 </div>
 
-                <div className="space-y-6">
-                    <div className="grid grid-cols-1 gap-6">
-                        <div className="space-y-2">
-                            <Label className="text-primary font-medium">Gender</Label>
+                <div className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-1.5">
+                            <Label className="text-primary font-medium text-xs">Gender</Label>
+                            <span className="sr-only">Select Gender</span>
                             <Select
                                 value={bookingData.gender}
                                 onValueChange={(val) => updateBookingData({ gender: val })}
                             >
-                                <SelectTrigger className={`bg-background border-primary/20 h-12 ${errors.gender ? "border-red-500" : ""}`}>
-                                    <SelectValue placeholder="Select Gender" />
+                                <SelectTrigger className={`bg-background border-primary/20 h-10 text-sm ${errors.gender ? "border-red-500" : ""}`}>
+                                    <SelectValue placeholder="Gender" />
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value="male">Male</SelectItem>
@@ -128,32 +137,32 @@ export const BookingSlotStep = ({
                                     <SelectItem value="other">Other</SelectItem>
                                 </SelectContent>
                             </Select>
-                            {errors.gender && <p className="text-red-500 text-xs mt-1">{errors.gender}</p>}
+                            {errors.gender && <p className="text-red-500 text-[10px] mt-1">{errors.gender}</p>}
                         </div>
-                        <div className="space-y-2">
-                            <Label className="text-primary font-medium">Place of Birth</Label>
+                        <div className="space-y-1.5">
+                            <Label className="text-primary font-medium text-xs">Place of Birth</Label>
                             <Input
-                                placeholder="Enter Place of Birth"
-                                className={`bg-background border-primary/20 h-12 ${errors.place ? "border-red-500" : ""}`}
+                                placeholder="City"
+                                className={`bg-background border-primary/20 h-10 text-sm ${errors.place ? "border-red-500" : ""}`}
                                 value={bookingData.place}
                                 onChange={(e) => updateBookingData({ place: e.target.value })}
                             />
-                            {errors.place && <p className="text-red-500 text-xs mt-1">{errors.place}</p>}
+                            {errors.place && <p className="text-red-500 text-[10px] mt-1">{errors.place}</p>}
                         </div>
                     </div>
 
-                    {(bookingData.serviceId === "astrology" || bookingData.serviceId === "numerology" || bookingData.serviceId === "premium-kundli") && (
-                        <div className="space-y-2">
-                            <Label className="text-primary font-medium">Time of Birth</Label>
+                    {(["astrology-exact-birth-time", "astrology-no-exact-birth-time", "astrology-in-person"].includes(bookingData.serviceId) || bookingData.serviceId === "numerology" || bookingData.serviceId === "premium-kundli") && (
+                        <div className="space-y-1.5">
+                            <Label className="text-primary font-medium text-xs">Time of Birth</Label>
                             <Input
                                 type="time"
-                                className={`bg-background border-primary/20 h-12 text-white
+                                className={`bg-background border-primary/20 h-10 text-sm text-white
                                 [&::-webkit-calendar-picker-indicator]:invert
                                 [&::-webkit-calendar-picker-indicator]:opacity-100 ${errors.timeOfBirth ? "border-red-500" : ""}`}
                                 value={bookingData.timeOfBirth}
                                 onChange={(e) => updateBookingData({ timeOfBirth: e.target.value })}
                             />
-                            {errors.timeOfBirth && <p className="text-red-500 text-xs mt-1">{errors.timeOfBirth}</p>}
+                            {errors.timeOfBirth && <p className="text-red-500 text-[10px] mt-1">{errors.timeOfBirth}</p>}
                         </div>
                     )}
 
@@ -161,88 +170,84 @@ export const BookingSlotStep = ({
                         <motion.div
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: "auto" }}
-                            className="space-y-6"
+                            className="space-y-4"
                         >
-                            <div className="space-y-2">
-                                <Label className="text-primary font-medium">Area Dimension (Length and Width)</Label>
+                            <div className="space-y-1.5">
+                                <Label className="text-primary font-medium text-xs">Area Dimension</Label>
                                 <Input
                                     placeholder="e.g. 20x40 ft"
-                                    className={`bg-background border-primary/20 h-12 ${errors.areaDimension ? "border-red-500" : ""}`}
+                                    className={`bg-background border-primary/20 h-10 text-sm ${errors.areaDimension ? "border-red-500" : ""}`}
                                     value={bookingData.areaDimension}
                                     onChange={(e) => updateBookingData({ areaDimension: e.target.value })}
                                 />
-                                {errors.areaDimension && <p className="text-red-500 text-xs mt-1">{errors.areaDimension}</p>}
+                                {errors.areaDimension && <p className="text-red-500 text-[10px] mt-1">{errors.areaDimension}</p>}
                             </div>
-                            <div className="space-y-2">
-                                <Label className="text-primary font-medium">Property Location</Label>
+                            <div className="space-y-1.5">
+                                <Label className="text-primary font-medium text-xs">Property Location</Label>
                                 <Input
                                     placeholder="Nearest City / Area"
-                                    className={`bg-background border-primary/20 h-12 ${errors.propertyLocation ? "border-red-500" : ""}`}
+                                    className={`bg-background border-primary/20 h-10 text-sm ${errors.propertyLocation ? "border-red-500" : ""}`}
                                     value={bookingData.propertyLocation}
                                     onChange={(e) => updateBookingData({ propertyLocation: e.target.value })}
                                 />
-                                {errors.propertyLocation && <p className="text-red-500 text-xs mt-1">{errors.propertyLocation}</p>}
+                                {errors.propertyLocation && <p className="text-red-500 text-[10px] mt-1">{errors.propertyLocation}</p>}
                             </div>
-                            <div className="space-y-2">
-                                <Label className="text-primary font-medium">Upload Floor Plan / House Map</Label>
+                            <div className="space-y-1.5">
+                                <Label className="text-primary font-medium text-xs">Upload Floor Plan</Label>
                                 <Input
                                     type="file"
-                                    className="bg-background border-primary/20 h-12 py-2"
+                                    className="bg-background border-primary/20 h-10 py-1 text-xs"
                                     onChange={(e) => updateBookingData({ floorPlan: e.target.files?.[0] })}
                                 />
                             </div>
                         </motion.div>
                     )}
 
-                    <div className="space-y-2">
-                        <Label className="text-primary font-medium">Please write your Detail Concern</Label>
+                    <div className="space-y-1.5">
+                        <Label className="text-primary font-medium text-xs">Detailed Concern</Label>
                         <Textarea
                             placeholder="Your questions or details..."
-                            rows={4}
-                            className="bg-background border-primary/20 resize-none py-3"
+                            rows={3}
+                            className="bg-background border-primary/20 resize-none py-2 text-sm"
                             value={bookingData.concern}
                             onChange={(e) => updateBookingData({ concern: e.target.value })}
                         />
                     </div>
 
-                    <div className="pt-8 space-y-6 border-t border-primary/20">
-                        <div className="flex items-center justify-between p-5 bg-primary/10 rounded-2xl border-2 border-primary/20 shadow-inner">
-                            <div className="flex flex-col gap-2">
-                                <p className="text-sm font-medium text-muted-foreground">Booking Charges for {selectedService?.title}</p>
+                    <div className="pt-4 space-y-4 border-t border-primary/20">
+                        <div className="flex items-center justify-between p-3.5 bg-primary/10 rounded-2xl border border-primary/20 shadow-inner">
+                            <div className="flex flex-col gap-1">
+                                <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-tight">Booking Amount</p>
                                 <div className="flex flex-wrap items-center gap-2">
-                                    <span className="text-[10px] bg-primary/20 text-primary px-2 py-1 rounded-full font-bold uppercase tracking-wider">
-                                        {bookingData.duration} Mins Session
+                                    <span className="text-[9px] bg-primary/20 text-primary px-1.5 py-0.5 rounded-full font-bold uppercase">
+                                        {bookingData.duration} Mins
                                     </span>
-                                    <div className="flex items-center gap-1.5 px-2 py-1 bg-primary/5 rounded-lg border border-primary/10">
-                                        <span className="text-[10px] text-muted-foreground font-bold uppercase">UPI:</span>
-                                        <span className="text-xs font-bold text-primary font-mono tracking-tight">pandeysantoshr@okaxis</span>
-                                    </div>
                                 </div>
                             </div>
-                            <div className="text-2xl font-bold text-primary drop-shadow-sm">
-                                {bookingData.serviceId === "palmistry" ? "NA" : `₹${selectedService?.price}`}
+                            <div className="text-xl font-bold text-primary drop-shadow-sm font-serif">
+                                ₹{selectedService?.price}
                             </div>
                         </div>
 
-                        <div className="text-center space-y-4">
-                            <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground mb-2">
-                                <Info className="w-3 h-3 text-primary/60" />
-                                <span>Secure transaction via Cashfree</span>
-                            </div>
+                        <div className="text-center space-y-3">
                             <Button
-                                className="w-full h-16 text-xl bg-primary hover:bg-primary/90 glow-gold font-bold shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="w-full h-12 text-base bg-primary hover:bg-primary/90 glow-gold font-bold shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                                 disabled={isProcessingPayment}
                                 onClick={onPay}
                             >
                                 {isProcessingPayment ? (
                                     <div className="flex items-center gap-2">
-                                        <div className="w-5 h-5 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
+                                        <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
                                         Processing...
                                     </div>
                                 ) : (
                                     `Confirm Booking & Pay ₹${selectedService?.price}`
                                 )}
                             </Button>
+                            <div className="flex items-center justify-center gap-2 text-[10px] text-muted-foreground">
+                                <Info className="w-2.5 h-2.5 text-primary/60" />
+                                <span>Secure transaction via Cashfree</span>
+                            </div>
                         </div>
                     </div>
                 </div>

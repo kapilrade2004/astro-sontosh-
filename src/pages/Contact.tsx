@@ -14,7 +14,7 @@ const Contact = () => {
       </Helmet>
       <Layout>
         {/* Hero Section */}
-        <section className="pt-32 pb-16 bg-gradient-hero relative overflow-hidden">
+        <section className="pt-32 pb-8 bg-gradient-hero relative overflow-hidden">
           <div className="container mx-auto px-4 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -35,14 +35,14 @@ const Contact = () => {
         </section>
 
         {/* Booking Section */}
-        <section className="py-12 md:py-16 bg-background relative" id="booking">
+        <section className="py-6 md:py-8 bg-background relative" id="booking">
           <div className="container mx-auto px-2 md:px-4 max-w-[1600px]">
             <BookingProcess />
           </div>
         </section>
 
         {/* Map Section */}
-        <section className="py-12 bg-gradient-cosmic">
+        <section className="py-6 bg-gradient-cosmic">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 30 }}

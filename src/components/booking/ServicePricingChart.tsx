@@ -1,12 +1,13 @@
 import React from 'react';
-import { Sparkles, Hash, Home, Scroll, Hand } from 'lucide-react';
+import { Sparkles, Hash, Home, Scroll } from 'lucide-react';
 
 const pricingData = [
-    { service: "Astrology", price: "2100", icon: Sparkles, note: "Consultation within 24 hours" },
-    { service: "Numerology", price: "2100", icon: Hash },
-    { service: "Vastu", price: "5100", icon: Home },
-    { service: "Palmistry", price: "NA*", icon: Hand, note: "*In-person only" },
+    { service: "Astrology (Exact Birth Time Known)", price: "5100", duration: "30 min", icon: Sparkles },
+    { service: "Astrology (Exact Birth Time NOT Known)", price: "7500", duration: "60 min", icon: Sparkles },
+    { service: "Astrology (In-Person Mumbai)", price: "7500", duration: "60 min", icon: Sparkles },
     { service: "Premium Kundli", price: "2100", icon: Scroll },
+    { service: "Numerology", price: "3100", duration: "30 min", icon: Hash },
+    { service: "Vastu", price: "5100", duration: "30 min", icon: Home },
 ];
 
 const ServicePricingChart = () => {
@@ -24,12 +25,12 @@ const ServicePricingChart = () => {
                             </div>
                             <div>
                                 <span className="font-semibold text-foreground text-xs">{item.service}</span>
-                                {item.note && <p className="text-[9px] text-muted-foreground leading-none">{item.note}</p>}
+                                {item.duration && <p className="text-[9px] text-muted-foreground leading-none">{item.duration}</p>}
                             </div>
                         </div>
                         <div className="flex flex-col items-end">
                             <span className="text-sm font-bold text-primary">
-                                {item.price !== "NA*" ? `₹${item.price}` : "NA"}
+                                ₹{item.price}
                             </span>
                             <span className="text-[8px] text-muted-foreground uppercase tracking-tighter leading-none">Booking Amount</span>
                         </div>

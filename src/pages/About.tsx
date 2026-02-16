@@ -55,7 +55,7 @@ const About = () => {
       </Helmet>
       <Layout>
         {/* Hero Section */}
-        <section className="pt-32 pb-16 bg-gradient-hero relative overflow-hidden">
+        <section className="pt-32 pb-8 bg-gradient-hero relative overflow-hidden">
           <div className="container mx-auto px-4 relative z-10">
 
             <motion.div
@@ -103,7 +103,7 @@ const About = () => {
         </section> */}
 
         {/* Story Section */}
-        <section className="py-20 bg-background">
+        <section className="py-8 bg-background">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <motion.div
