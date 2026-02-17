@@ -189,7 +189,7 @@ export const Footer = () => {
                   href="https://mail.google.com/mail/?view=cm&fs=1&to=connect@astrosantoshpandey.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className=" hover:text-primary text-sm"
+                  className=" hover:text-primary text-sm text-muted-foreground"
                 >
                   connect@astrosantoshpandey.com
                 </a>
