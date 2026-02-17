@@ -9,6 +9,8 @@ import {
   SiGoogle
 } from "react-icons/si";
 
+import { FcGoogle } from "react-icons/fc";
+
 import LOGO from "@/assets/namelogo-removebg-preview.png";
 import { MapPin, Phone, Mail } from "lucide-react";
 
@@ -75,12 +77,12 @@ const socialLinks = [
     hoverBg: "hover:bg-[#25D366]/90",
   },
   {
-    icon: SiGoogle,
+    icon: FcGoogle,
     href: "https://share.google/h4zhEpPG0x0vF57n3",
     label: "Google My Business",
-    color: "text-white",
-    bgColor: "bg-[#4285F4]",
-    hoverBg: "hover:bg-[#4285F4]/90",
+    color: "",
+    bgColor: "bg-white",
+    hoverBg: "hover:bg-white/90",
   },
 ];
 
@@ -101,7 +103,7 @@ export const Footer = () => {
                 />
               </Link>
               <p
-                className="text-primary text-sm italic font-serif tracking-wide"
+                className="text-primary text-sm italic font-serif tracking-wide ml-2"
                 style={{
                   textShadow: '0 2px 12px rgba(218, 165, 32, 0.7), 0 0 25px rgba(218, 165, 32, 0.5), 0 0 35px rgba(218, 165, 32, 0.3)',
                   letterSpacing: '0.05em'

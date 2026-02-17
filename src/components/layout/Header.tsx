@@ -43,6 +43,7 @@ export const Header = () => {
       <div className="container mx-auto px-4">
         <nav className="flex items-center justify-between h-20">
           {/* Logo */}
+          {/* Logo */}
           <Link to="/" className="flex items-center gap-0 group">
             <div className="flex flex-col items-start justify-center">
               <motion.div
@@ -57,7 +58,7 @@ export const Header = () => {
                 />
               </motion.div>
               <span
-                className="text-[10px] sm:text-xs italic mt-0.5 text-[#FFD700] leading-tight"
+                className="text-[10px] sm:text-xs italic mt-0.5 text-[#FFD700] leading-tight ml-2 md:ml-3"
                 style={{
                   textShadow:
                     "0 0 3px rgba(255,215,0,0.4), 0 0 6px rgba(218,165,32,0.25)",
