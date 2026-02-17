@@ -5,7 +5,7 @@ const features = [
   {
     icon: Target,
     title: "Pinpoint Accuracy",
-    description: "Over 95% prediction accuracy backed by decades of research and practice in Vedic sciences.",
+    description: "Over 95% prediction accuracy backed by years of research and practice in Vedic sciences.",
   },
   {
     icon: Award,
@@ -30,23 +30,23 @@ const features = [
   {
     icon: Zap,
     title: "Proven Results",
-    description: "Thousands of testimonials from clients who experienced real transformation in their lives.",
+    description: "Multiple testimonials from clients who experienced real transformation in their lives.",
   },
   {
-  icon: Target,
-  title: "Solution-Focused Vedic Astrology",
-  description: "Expert Vedic astrology consultations focused on practical solutions, effective remedies, and positive life outcomes — not problem amplification.",
-},
-{
-  icon: Award,
-  title: "Wisdom-Based & Ethical Astrology",
-  description: "Authentic astrology guidance based on wisdom and logic, promoting clarity and confidence without fear-based predictions.",
-},
-{
-  icon: Heart,
-  title: "Trusted Astrologer with Integrity",
-  description: "Astrology services delivered with complete integrity, respect, and transparency, ensuring unbiased and ethical guidance for every client.",
-},
+    icon: Target,
+    title: "Solution-Focused Vedic Astrology",
+    description: "Expert Vedic astrology consultations focused on practical solutions, effective remedies, and positive life outcomes — not problem amplification.",
+  },
+  {
+    icon: Award,
+    title: "Wisdom-Based & Ethical Astrology",
+    description: "Authentic astrology guidance based on wisdom and logic, promoting clarity and confidence without fear-based predictions.",
+  },
+  {
+    icon: Heart,
+    title: "Trusted Astrologer with Integrity",
+    description: "Astrology services delivered with complete integrity, respect, and transparency, ensuring unbiased and ethical guidance for every client.",
+  },
 
 ];
 
@@ -70,7 +70,7 @@ export const WhyChooseUs = () => {
     <section className="py-24 bg-background relative overflow-hidden">
       {/* Decorative gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-secondary/10 to-transparent pointer-events-none" />
-      
+
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -84,7 +84,7 @@ export const WhyChooseUs = () => {
             Your Journey to <span className="text-gradient-gold">Clarity & Success</span> Starts Here
           </h2>
           <p className="text-muted-foreground text-lg">
-            We combine ancient wisdom with modern understanding to provide you with 
+            We combine ancient wisdom with modern understanding to provide you with
             the most accurate and actionable guidance for your life path.
           </p>
         </motion.div>

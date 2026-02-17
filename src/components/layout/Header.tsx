@@ -43,21 +43,21 @@ export const Header = () => {
       <div className="container mx-auto px-4">
         <nav className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex gap-0 group -ml-4 sm:-ml-2 ">
-            <div className="flex flex-col items-start">
+          <Link to="/" className="flex items-center gap-0 group">
+            <div className="flex flex-col items-start justify-center">
               <motion.div
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
                 className="flex-shrink-0"
               >
                 <img
                   src={nameLogoImage}
                   alt="Astro Santosh Pandey"
-                  className="h-12  sm:h-6 md:h-10 w-auto object-cover object-left"
+                  className="h-10 sm:h-8 md:h-10 lg:h-12 w-auto object-contain"
                 />
               </motion.div>
               <span
-                className="text-xs italic mt-0 text-[#FFD700]"
+                className="text-[10px] sm:text-xs italic mt-0.5 text-[#FFD700] leading-tight"
                 style={{
                   textShadow:
                     "0 0 3px rgba(255,215,0,0.4), 0 0 6px rgba(218,165,32,0.25)",

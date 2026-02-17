@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Award, ChevronRight, Turtle, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import TUVV from "@/assets/The-Ultimate-Vishwakarma-Vastu-Course-1.png";
 import SRPD from "@/assets/Santosh Radheshyam Pandey_Diploma_Palmistry - Certificate -1.png";
@@ -119,7 +119,16 @@ const certifications = [
 export default function CertificationsShowcase() {
   const [showAll, setShowAll] = useState(false);
   const [selectedCert, setSelectedCert] = useState<number | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const displayedCerts = showAll ? certifications : certifications.slice(0, 3);
+
+  const handleToggleShowAll = () => {
+    if (showAll && sectionRef.current) {
+      // When collapsing, scroll to the section smoothly
+      sectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    setShowAll(!showAll);
+  };
 
   const openCertificate = (certId: number) => {
     setSelectedCert(certId);
@@ -135,7 +144,7 @@ export default function CertificationsShowcase() {
 
   return (
     <>
-      <section className="py-20 bg-gradient-cosmic">
+      <section ref={sectionRef} className="py-20 bg-gradient-cosmic">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -218,7 +227,7 @@ export default function CertificationsShowcase() {
               <Button
                 variant="outline"
                 size="lg"
-                onClick={() => setShowAll(!showAll)}
+                onClick={handleToggleShowAll}
                 className="group"
               >
                 {showAll ? "Show Less" : `View All ${certifications.length} Certifications`}

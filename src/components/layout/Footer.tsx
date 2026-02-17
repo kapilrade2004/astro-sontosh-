@@ -30,43 +30,57 @@ const socialLinks = [
     icon: SiFacebook,
     href: "https://www.facebook.com/astrosantoshpandey",
     label: "Facebook",
-    color: "text-[#1877F2]",
+    color: "text-white",
+    bgColor: "bg-[#1877F2]",
+    hoverBg: "hover:bg-[#1877F2]/90",
   },
   {
     icon: SiInstagram,
     href: "https://www.instagram.com/astrosantoshpandey/",
     label: "Instagram",
-    color: "text-[#E4405F]",
+    color: "text-white",
+    bgColor: "bg-gradient-to-br from-[#833AB4] via-[#E1306C] to-[#F77737]",
+    hoverBg: "hover:opacity-90",
   },
   {
     icon: SiYoutube,
     href: "https://www.youtube.com/@astrosantoshpandey",
     label: "YouTube",
-    color: "text-[#FF0000]",
+    color: "text-white",
+    bgColor: "bg-[#FF0000]",
+    hoverBg: "hover:bg-[#FF0000]/90",
   },
   {
     icon: SiX,
     href: "https://x.com/astrosantoshrp",
     label: "Twitter / X",
-    color: "text-black dark:text-white",
+    color: "text-white",
+    bgColor: "bg-black",
+    hoverBg: "hover:bg-black/90",
   },
   {
     icon: SiLinkedin,
     href: "https://www.linkedin.com/in/astrosantoshpandey",
     label: "LinkedIn",
-    color: "text-[#0A66C2]",
+    color: "text-white",
+    bgColor: "bg-[#0A66C2]",
+    hoverBg: "hover:bg-[#0A66C2]/90",
   },
   {
     icon: SiWhatsapp,
     href: "https://wa.me/+918879731174",
     label: "WhatsApp",
-    color: "text-[#25D366]",
+    color: "text-white",
+    bgColor: "bg-[#25D366]",
+    hoverBg: "hover:bg-[#25D366]/90",
   },
   {
     icon: SiGoogle,
     href: "https://share.google/h4zhEpPG0x0vF57n3",
     label: "Google My Business",
-    color: "text-[#4285F4]",
+    color: "text-white",
+    bgColor: "bg-[#4285F4]",
+    hoverBg: "hover:bg-[#4285F4]/90",
   },
 ];
 
@@ -77,26 +91,30 @@ export const Footer = () => {
       <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-14">
           {/* Brand */}
-          <div className="">
-            <div className="">
+          <div>
+            <div className="flex flex-col items-start gap-1 mb-4">
               <Link to="/" className="inline-block">
-                <img src={LOGO} alt="astrosantoshpandey" className="h-14 w-auto object-cover" />
+                <img
+                  src={LOGO}
+                  alt="astrosantoshpandey"
+                  className="h-12 w-auto object-contain"
+                />
               </Link>
+              <p
+                className="text-primary text-sm italic font-serif tracking-wide"
+                style={{
+                  textShadow: '0 2px 12px rgba(218, 165, 32, 0.7), 0 0 25px rgba(218, 165, 32, 0.5), 0 0 35px rgba(218, 165, 32, 0.3)',
+                  letterSpacing: '0.05em'
+                }}
+              >
+                ज्योतिषं सर्वार्थ साधकं
+              </p>
             </div>
-            <p
-              className="text-primary text-base italic font-serif tracking-wide mb-4"
-              style={{
-                textShadow: '0 2px 12px rgba(218, 165, 32, 0.7), 0 0 25px rgba(218, 165, 32, 0.5), 0 0 35px rgba(218, 165, 32, 0.3)',
-                letterSpacing: '0.05em'
-              }}
-            >
-              ज्योतिषं सर्वार्थ साधकं
-            </p>
-            <p className="text-muted-foreground text-sm leading-relaxed">
+            <p className="text-muted-foreground text-sm leading-relaxed mb-4">
               Transform your life with expert Astrology, Numerology, Vastu & Palmistry guidance.
               Accurate predictions and personalized remedies for a better tomorrow.
             </p>
-            <div className="flex gap-4 flex-wrap mt-4 ">
+            <div className="flex gap-4 flex-wrap">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
@@ -104,13 +122,12 @@ export const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className="w-10 h-10 rounded-full border border-border flex items-center justify-center transition-all hover:scale-110 hover:border-primary bg-white"
+                  className={`w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110 ${social.bgColor} ${social.hoverBg} shadow-md`}
                 >
                   <social.icon className={`h-5 w-5 ${social.color}`} />
                 </a>
               ))}
             </div>
-
           </div>
 
           {/* Services */}
@@ -211,6 +228,6 @@ export const Footer = () => {
           </p>
         </div>
       </div>
-    </footer>
+    </footer >
   );
 };

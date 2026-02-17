@@ -14,7 +14,7 @@ import {
   Briefcase, Heart, Baby, Stethoscope, Calendar,
   Gem, Circle, Sparkles, Flame, BookOpen, Sun, Shield, Clock,
   ArrowRight, CheckCircle,
-  PenTool, TrendingUp, Users, Building, Award
+  PenTool, TrendingUp, Users, Building, Award, Badge
 } from "lucide-react";
 
 const services = [
@@ -100,7 +100,7 @@ const services = [
 
 const remedies = [
   { icon: Gem, title: "Gemstones", description: "Planetary gemstones for protection and prosperity" },
-  { icon: Circle, title: "Rudraksha", description: "Sacred beads for spiritual growth and peace" },
+  { icon: Badge, title: "Rudraksha", description: "Sacred beads for spiritual growth and peace" },
   { icon: Sparkles, title: "Crystals", description: "Healing crystals for energy balance" },
   { icon: Flame, title: "Pooja & Havan", description: "Sacred rituals for planetary appeasement" },
   { icon: BookOpen, title: "Mantra Jaap", description: "Powerful mantras for specific benefits" },

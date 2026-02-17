@@ -12,8 +12,13 @@ import {
 } from "@/components/ui/accordion";
 import {
   Scan, Wind, DoorOpen, Building2, Wrench,
-  ArrowRight, CheckCircle, Droplets, Flame, Mountain, Cloud
+  ArrowRight, CheckCircle
 } from "lucide-react";
+import earthImg from "../assets/earth.jpeg";
+import waterImg from "../assets/water.jpeg";
+import fireImg from "../assets/fire.jpeg";
+import airImg from "../assets/air.jpeg";
+import spaceImg from "../assets/space.jpeg";
 
 const services = [
   {
@@ -49,11 +54,11 @@ const services = [
 ];
 
 const elements = [
-  { icon: Mountain, title: "Earth (Prithvi)", description: "Stability, strength, and grounding energy", color: "from-amber-600/20 to-amber-700/10" },
-  { icon: Droplets, title: "Water (Jal)", description: "Flow, prosperity, and emotional balance", color: "from-blue-500/20 to-blue-600/10" },
-  { icon: Flame, title: "Fire (Agni)", description: "Energy, transformation, and vitality", color: "from-red-500/20 to-red-600/10" },
-  { icon: Cloud, title: "Air (Vayu)", description: "Movement, growth, and fresh opportunities", color: "from-cyan-500/20 to-cyan-600/10" },
-  { icon: Wind, title: "Space (Akash)", description: "Expansion, clarity, and cosmic connection", color: "from-purple-500/20 to-purple-600/10" },
+  { image: earthImg, title: "Earth (Prithvi)", description: "Stability, strength, and grounding energy", color: "from-amber-600/20 to-amber-700/10" },
+  { image: waterImg, title: "Water (Jal)", description: "Flow, prosperity, and emotional balance", color: "from-blue-500/20 to-blue-600/10" },
+  { image: fireImg, title: "Fire (Agni)", description: "Energy, transformation, and vitality", color: "from-red-500/20 to-red-600/10" },
+  { image: airImg, title: "Air (Vayu)", description: "Movement, growth, and fresh opportunities", color: "from-cyan-500/20 to-cyan-600/10" },
+  { image: spaceImg, title: "Space (Akash)", description: "Expansion, clarity, and cosmic connection", color: "from-purple-500/20 to-purple-600/10" },
 ];
 
 const faqs = [
@@ -183,13 +188,13 @@ const Vastu = () => {
         </section>
 
         {/* Five Elements */}
-        <section className="py-16 bg-background border-b border-border">
+        <section className="py-20 bg-background border-b border-border">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center max-w-3xl mx-auto mb-12"
+              className="text-center max-w-3xl mx-auto mb-16"
             >
               <h2 className="font-serif text-2xl md:text-3xl font-bold mb-4">
                 The <span className="text-gradient-gold">Panch Tatva</span> (Five Elements)
@@ -199,7 +204,7 @@ const Vastu = () => {
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
               {elements.map((element, index) => (
                 <motion.div
                   key={index}
@@ -207,13 +212,17 @@ const Vastu = () => {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="cosmic-card p-5 text-center group hover:scale-105 transition-transform"
+                  className="cosmic-card p-4 text-center group hover:scale-105 transition-transform"
                 >
-                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${element.color} flex items-center justify-center mx-auto mb-3`}>
-                    <element.icon className="w-6 h-6 text-primary" />
+                  <div className={`w-24 h-24 rounded-full overflow-hidden mx-auto mb-4 border-4 border-primary/20 group-hover:border-primary/50 transition-colors shadow-lg`}>
+                    <img
+                      src={element.image}
+                      alt={element.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
                   </div>
-                  <h3 className="font-semibold text-sm mb-1">{element.title}</h3>
-                  <p className="text-muted-foreground text-xs">{element.description}</p>
+                  <h3 className="font-semibold text-sm md:text-base mb-2">{element.title}</h3>
+                  <p className="text-muted-foreground text-xs md:text-sm">{element.description}</p>
                 </motion.div>
               ))}
             </div>
@@ -330,7 +339,7 @@ const Vastu = () => {
             </motion.div>
           </div>
         </section>
-      </Layout>
+      </Layout >
     </>
   );
 };

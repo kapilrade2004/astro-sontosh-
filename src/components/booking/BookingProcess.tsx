@@ -221,6 +221,8 @@ export const BookingProcess = () => {
             return;
         }
 
+        // Cashfree integration temporarily disabled
+        /*
         if (!cashfree) {
             toast({
                 title: "System Error",
@@ -308,6 +310,27 @@ export const BookingProcess = () => {
             });
             setIsProcessingPayment(false);
         }
+        */
+
+        // Direct success message for now
+        setIsProcessingPayment(true);
+        setTimeout(() => {
+            toast({
+                title: "Slot Booked Successfully!",
+                description: "Your consultation slot has been confirmed.",
+                variant: "default",
+                className: "bg-green-500 text-white border-none"
+            });
+
+            // setPaymentResult({
+            //     success: true,
+            //     order_id: "DEMO-" + Math.floor(Math.random() * 100000),
+            //     amount: Number(selectedService?.price),
+            //     message: "Slot booked successfully (Demo Mode)"
+            // });
+
+            setIsProcessingPayment(false);
+        }, 1500);
     };
 
     const selectedService = bookingServices.find(s => s.id === bookingData.serviceId);
