@@ -91,7 +91,7 @@ export const Footer = () => {
   return (
     <footer className="bg-gradient-cosmic border-t border-border">
       <div className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-14">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-14">
           {/* Brand */}
           <div>
             <div className="flex flex-col items-start gap-1 mb-4">
@@ -134,7 +134,7 @@ export const Footer = () => {
 
           {/* Services */}
           <div>
-            <h3 className="font-serif text-lg font-semibold text-foreground mb-4">Our Services</h3>
+            <h3 className="font-serif text-lg font-semibold text-foreground mb-4 pt-2">Our Services</h3>
             <ul className="space-y-3">
               {services.map((service) => (
                 <li key={service.path}>
@@ -151,7 +151,7 @@ export const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-serif text-lg font-semibold text-foreground mb-4">Quick Links</h3>
+            <h3 className="font-serif text-lg font-semibold text-foreground mb-4 pt-2">Quick Links</h3>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.name}>
@@ -168,7 +168,7 @@ export const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h3 className="font-serif text-lg font-semibold text-foreground mb-4">Contact Us</h3>
+            <h3 className="font-serif text-lg font-semibold text-foreground mb-4 pt-2">Contact Us</h3>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-primary shrink-0 mt-0.5" />
