@@ -73,7 +73,7 @@ export const HeroSection = () => {
                 className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold text-base lg:text-lg px-8 py-6 w-full sm:w-auto"
                 asChild
               >
-                <Link to="/contact">
+                <Link to="/contact#booking">
                   <Sparkles className="w-5 h-5 mr-2" />
                   Book Consultation
                 </Link>

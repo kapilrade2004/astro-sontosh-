@@ -178,7 +178,7 @@ const Vastu = () => {
 
               {/* CTA Button */}
               <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold" asChild>
-                <Link to="/contact">
+                <Link to="/contact#booking">
                   Book Vastu Audit
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Link>

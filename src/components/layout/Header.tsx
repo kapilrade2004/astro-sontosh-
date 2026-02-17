@@ -100,7 +100,7 @@ export const Header = () => {
               </a>
             </Button>
             <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold" asChild>
-              <Link to="/contact">Book Consultation</Link>
+              <Link to="/contact#booking">Book Consultation</Link>
             </Button>
           </div>
 

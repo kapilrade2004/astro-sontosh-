@@ -35,7 +35,7 @@ const Contact = () => {
         </section>
 
         {/* Booking Section */}
-        <section className="py-6 md:py-8 bg-background relative" id="booking">
+        <section className="py-6 md:py-8 bg-background relative scroll-mt-32" id="booking">
           <div className="container mx-auto px-2 md:px-4 max-w-[1600px]">
             <BookingProcess />
           </div>

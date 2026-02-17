@@ -70,7 +70,7 @@ export const FeaturedPredictions = () => {
             Insights for <span className="text-gradient-gold">Every Aspect</span> of Life
           </h2>
           <p className="text-muted-foreground text-lg">
-            From career decisions to family matters, get precise guidance on all 
+            From career decisions to family matters, get precise guidance on all
             the important areas that shape your destiny.
           </p>
         </motion.div>
@@ -102,7 +102,7 @@ export const FeaturedPredictions = () => {
           className="text-center mt-12"
         >
           <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold" asChild>
-            <Link to="/contact">Get Your Personalised Prediction</Link>
+            <Link to="/contact#booking">Get Your Personalised Prediction</Link>
           </Button>
         </motion.div>
       </div>

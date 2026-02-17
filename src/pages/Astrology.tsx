@@ -219,7 +219,7 @@ const Astrology = () => {
                 Astrology is the science of light that helps decode karma, destiny, and free will. Using divisional charts, planetary Dashas, Nakshatra analysis, and transits, each consultation offers clarity, timing, and actionable guidance.
               </p>
               <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold" asChild>
-                <Link to="/contact">
+                <Link to="/contact#booking">
                   Get Your Personalised Prediction
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Link>

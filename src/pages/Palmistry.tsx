@@ -241,7 +241,7 @@ const Palmistry = () => {
                 Palmistry complements astrology, especially when birth details are unavailable. The palm reflects past karma, present actions, and future possibilities.
               </p>
               <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold" asChild>
-                <Link to="/contact">
+                <Link to="/contact#booking">
                   Get Palm Reading Now
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Link>

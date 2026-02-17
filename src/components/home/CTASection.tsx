@@ -33,15 +33,15 @@ export const CTASection = () => {
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
             Ready to <span className="text-gradient-gold">Transform</span> Your Life?
           </h2>
-          
+
           <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-10">
-            Take the first step towards clarity, success, and peace. Book your personalized 
+            Take the first step towards clarity, success, and peace. Book your personalized
             consultation today and unlock the cosmic secrets of your destiny.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold text-lg px-8 py-6" asChild>
-              <Link to="/contact">
+              <Link to="/contact#booking">
                 Book Consultation
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>

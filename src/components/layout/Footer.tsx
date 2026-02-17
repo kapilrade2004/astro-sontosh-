@@ -24,7 +24,7 @@ const services = [
 const quickLinks = [
   { name: "About Us", path: "/about" },
   { name: "Contact", path: "/contact" },
-  { name: "Book Consultation", path: "/contact" },
+  { name: "Book Consultation", path: "/contact#booking" },
 ];
 
 const socialLinks = [
