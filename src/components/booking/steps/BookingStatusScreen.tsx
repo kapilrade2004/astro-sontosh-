@@ -80,12 +80,7 @@ export const BookingStatusScreen = ({
                     </div>
 
                     <div className="pt-4 flex flex-col sm:flex-row gap-3 justify-center">
-                        <Button
-                            onClick={onReset}
-                            className="px-6 py-2.5 h-auto rounded-xl bg-primary hover:bg-primary/90 glow-gold font-bold text-sm"
-                        >
-                            Book Another
-                        </Button>
+
                         <Button
                             variant="outline"
                             onClick={() => window.location.href = "/"}

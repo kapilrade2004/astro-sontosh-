@@ -312,8 +312,6 @@ export const BookingProcess = () => {
         }
 
 
-        // Direct success message for now
-        setIsProcessingPayment(true);
 
     };
 
