@@ -11,7 +11,8 @@ import {
 
 import { FcGoogle } from "react-icons/fc";
 
-import LOGO from "@/assets/namelogo-removebg-preview.png";
+import LOGO from "@/assets/name_logo.png";
+import hanumanGaneshaLogo from "@/assets/hanuman-ganesha_logo.png";
 import { MapPin, Phone, Mail } from "lucide-react";
 
 const services = [
@@ -95,22 +96,36 @@ export const Footer = () => {
           {/* Brand */}
           <div>
             <div className="flex flex-col items-start gap-1 mb-4">
-              <Link to="/" className="inline-block">
-                <img
-                  src={LOGO}
-                  alt="astrosantoshpandey"
-                  className="h-12 w-auto object-contain"
-                />
+              <Link to="/" className="flex items-center gap-1 group">
+                {/* Hanuman Ganesha Logo */}
+                <div className="flex-shrink-0">
+                  <img
+                    src={hanumanGaneshaLogo}
+                    alt="Hanuman Ganesha"
+                    className="h-16 w-auto object-contain"
+                  />
+                </div>
+
+                {/* Name Logo & Shloka */}
+                <div className="flex flex-col items-start justify-center">
+                  <div className="flex-shrink-0">
+                    <img
+                      src={LOGO}
+                      alt="astrosantoshpandey"
+                      className="h-12 w-auto object-contain"
+                    />
+                  </div>
+                  <p
+                    className="text-primary text-sm italic font-serif tracking-wide ml-2"
+                    style={{
+                      textShadow: '0 2px 12px rgba(218, 165, 32, 0.7), 0 0 25px rgba(218, 165, 32, 0.5), 0 0 35px rgba(218, 165, 32, 0.3)',
+                      letterSpacing: '0.05em'
+                    }}
+                  >
+                    ज्योतिषं सर्वार्थ साधकं
+                  </p>
+                </div>
               </Link>
-              <p
-                className="text-primary text-sm italic font-serif tracking-wide ml-2"
-                style={{
-                  textShadow: '0 2px 12px rgba(218, 165, 32, 0.7), 0 0 25px rgba(218, 165, 32, 0.5), 0 0 35px rgba(218, 165, 32, 0.3)',
-                  letterSpacing: '0.05em'
-                }}
-              >
-                ज्योतिषं सर्वार्थ साधकं
-              </p>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed mb-4">
               Transform your life with expert Astrology, Numerology, Vastu & Palmistry guidance.

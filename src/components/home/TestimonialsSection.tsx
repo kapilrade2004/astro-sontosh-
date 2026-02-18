@@ -15,7 +15,7 @@ const testimonials = [
     location: "Mumbai, India",
     rating: 5,
     image: PANKAGPATEL, // Add your image path here
-    text: "Pankaj Patel It’s my first consultation with Astro Santosh Pandeyji.It was nice elaborative, detailed and everything explained.I would recommend him to anyone.He has got good knowledge and deep expertise.Everything is explained by logic and science behind it.",
+    text: "It’s my first consultation with Astro Santosh Pandeyji.It was nice elaborative, detailed and everything explained.I would recommend him to anyone.He has got good knowledge and deep expertise.Everything is explained by logic and science behind it.",
     service: "Career Astrology",
   },
   {

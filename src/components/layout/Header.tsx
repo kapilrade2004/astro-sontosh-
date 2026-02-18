@@ -4,7 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logoImage from "@/assets/logo-removebg-preview (1).png";
-import nameLogoImage from "@/assets/namelogo-removebg-preview.png";
+import nameLogoImage from "@/assets/name_logo.png";
+import hanumanGaneshaLogo from "@/assets/hanuman-ganesha_logo.png";
 
 const navItems = [
   { name: "Home", path: "/" },
@@ -43,8 +44,21 @@ export const Header = () => {
       <div className="container mx-auto px-4">
         <nav className="flex items-center justify-between h-20">
           {/* Logo */}
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-0 group">
+          <Link to="/" className="flex items-center gap-1 group">
+            {/* Hanuman Ganesha Logo */}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
+              className="flex-shrink-0"
+            >
+              <img
+                src={hanumanGaneshaLogo}
+                alt="Hanuman Ganesha"
+                className="h-12 sm:h-14 md:h-16 w-auto object-contain"
+              />
+            </motion.div>
+
+            {/* Name Logo & Shloka */}
             <div className="flex flex-col items-start justify-center">
               <motion.div
                 whileHover={{ scale: 1.05 }}
@@ -54,11 +68,11 @@ export const Header = () => {
                 <img
                   src={nameLogoImage}
                   alt="Astro Santosh Pandey"
-                  className="h-10 sm:h-8 md:h-10 lg:h-12 w-auto object-contain"
+                  className="h-8 sm:h-10 md:h-12 w-auto object-contain"
                 />
               </motion.div>
               <span
-                className="text-[10px] sm:text-xs italic mt-0.5 text-[#FFD700] leading-tight ml-2 md:ml-3"
+                className="text-[10px] sm:text-xs italic mt-0.5 text-[#FFD700] leading-tight pl-1"
                 style={{
                   textShadow:
                     "0 0 3px rgba(255,215,0,0.4), 0 0 6px rgba(218,165,32,0.25)",
