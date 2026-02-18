@@ -14,8 +14,13 @@ import {
   Briefcase, Heart, Baby, Stethoscope, Calendar,
   Gem, Circle, Sparkles, Flame, BookOpen, Sun, Shield, Clock,
   ArrowRight, CheckCircle,
-  PenTool, TrendingUp, Users, Building, Award, Badge
+  PenTool, TrendingUp, Users, Building, Award
 } from "lucide-react";
+import RudrakshaImg from "@/assets/Rudraksha-icon-PNG.png";
+
+const RudrakshaIcon = ({ className }: { className?: string }) => (
+  <img src={RudrakshaImg} className={className} alt="Rudraksha" style={{ objectFit: "contain" }} />
+);
 
 const services = [
   {
@@ -100,7 +105,7 @@ const services = [
 
 const remedies = [
   { icon: Gem, title: "Gemstones", description: "Planetary gemstones for protection and prosperity" },
-  { icon: Badge, title: "Rudraksha", description: "Sacred beads for spiritual growth and peace" },
+  { icon: RudrakshaIcon, title: "Rudraksha", description: "Sacred beads for spiritual growth and peace" },
   { icon: Sparkles, title: "Crystals", description: "Healing crystals for energy balance" },
   { icon: Flame, title: "Pooja & Havan", description: "Sacred rituals for planetary appeasement" },
   { icon: BookOpen, title: "Mantra Jaap", description: "Powerful mantras for specific benefits" },
