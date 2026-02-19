@@ -18,27 +18,27 @@ import CAG from "@/assets/Crystal-And-Gemstone-1.png"
 import RC from "@/assets/Rudraksha-Course-1.png"
 const certifications = [
   {
-    id: 1,
-    title: "The Ultimate Vishwakarma Vastu Course",
-    image: TUVV,
-    verified: true,
-  },
-  {
     id: 2,
     title: "Certificate of Completion in Diploma in Palmistry",
     image: SRPD,
     verified: true,
   },
   {
-    id: 3,
+    id: 1,
     title: "Certificate of Completion in Diploma in Astrology",
     image: SRPDA,
     verified: true,
   },
   {
-    id: 4,
+    id: 3,
     title: "certificate of the ultimate astrology course",
     image: CTUAC,
+    verified: true,
+  },
+  {
+    id: 5,
+    title: "The Ultimate Vishwakarma Vastu Course",
+    image: TUVV,
     verified: true,
   },
   {
@@ -89,20 +89,15 @@ const certifications = [
     image: SPOA10,
     verified: true,
   },
+
   {
     id: 13,
-    title: "Advance Timing of Events Transit Course",
-    image: ATOETC,
-    verified: true,
-  },
-  {
-    id: 14,
     title: "Crystal-And-Gemstone",
     image: CAG,
     verified: true,
   },
   {
-    id: 15,
+    id: 14,
     title: "Rudraksha-Course",
     image: RC,
     verified: true,

@@ -9,10 +9,10 @@ import { BookingDetailsStep } from "./steps/BookingDetailsStep";
 import { BookingSlotStep } from "./steps/BookingSlotStep";
 import { BookingStatusScreen } from "./steps/BookingStatusScreen";
 
-const bookingServices = [
+const newBookingServices = [
     {
         id: "astrology-exact-birth-time",
-        title: "Astrology - Exact Birth Time Known",
+        title: "Astrology - (Exact Birth Time Known)",
         description: "Individual consultation (phone/video) - 30 minutes",
         price: 5100,
         duration: "30",
@@ -20,7 +20,7 @@ const bookingServices = [
     },
     {
         id: "astrology-no-exact-birth-time",
-        title: "Astrology - Exact Birth Time NOT Known",
+        title: "Astrology - (Exact Birth Time NOT Known)",
         description: "Individual consultation (phone/video) - 60 minutes",
         price: 7500,
         duration: "60",
@@ -56,6 +56,49 @@ const bookingServices = [
         price: 5100,
         duration: "30",
         icon: MapPin,
+    }
+];
+
+const repeatBookingServices = [
+    {
+        id: "astrology-repeat-within-10",
+        title: "Astrology - Follow-up (within 10 days)",
+        description: "Follow-up consultation (within 10 days) - 30 Minutes",
+        price: 2100,
+        duration: "30",
+        icon: Sparkles,
+    },
+    {
+        id: "astrology-repeat-10-to-30",
+        title: "Astrology - Follow-up (10-30 days)",
+        description: "Follow-up consultation (after 10 days till 30 days) - 30 Minutes",
+        price: 3100,
+        duration: "30",
+        icon: Sparkles,
+    },
+    {
+        id: "astrology-repeat-post-30",
+        title: "Astrology - Follow-up (post 30 days)",
+        description: "Follow-up consultation (post 30 days) - 30 Minutes",
+        price: 5100,
+        duration: "30",
+        icon: Sparkles,
+    },
+    {
+        id: "numerology-repeat-within-10",
+        title: "Numerology - Follow-up (within 10 days)",
+        description: "Individual consultation (phone/video) - (within 10 days) - 30 minutes",
+        price: 1100,
+        duration: "30",
+        icon: User,
+    },
+    {
+        id: "numerology-repeat-11-to-30",
+        title: "Numerology - Follow-up (11-30 days)",
+        description: "Individual consultation (phone/video) - (between 11 to 30 days) - 30 minutes",
+        price: 2100,
+        duration: "30",
+        icon: User,
     }
 ];
 
@@ -130,10 +173,20 @@ export const BookingProcess = () => {
         }
     };
 
+    const activeServices = bookingData.consultationType === "repeat" ? repeatBookingServices : newBookingServices;
+    const allServices = [...newBookingServices, ...repeatBookingServices];
+    const selectedService = allServices.find(s => s.id === bookingData.serviceId);
+
     const updateBookingData = (updates: Partial<typeof bookingData>) => {
+        // If switching consultation type, reset serviceId
+        if (updates.consultationType && updates.consultationType !== bookingData.consultationType) {
+            updates.serviceId = ""; // or set to first service of new type
+            updates.duration = "";
+        }
+
         // If serviceId is being updated, check if the service has a predefined duration
         if (updates.serviceId) {
-            const service = bookingServices.find(s => s.id === updates.serviceId);
+            const service = allServices.find(s => s.id === updates.serviceId);
             if (service && 'duration' in service && service.duration) {
                 updates.duration = service.duration;
             }
@@ -315,8 +368,6 @@ export const BookingProcess = () => {
 
     };
 
-    const selectedService = bookingServices.find(s => s.id === bookingData.serviceId);
-
     return (
         <div ref={bookingRef} className="w-full max-w-5xl mx-auto">
             <div className="flex flex-col items-center mb-1 md:mb-2">
@@ -366,7 +417,7 @@ export const BookingProcess = () => {
                                 bookingData={bookingData}
                                 updateBookingData={updateBookingData}
                                 errors={errors}
-                                bookingServices={bookingServices}
+                                bookingServices={activeServices}
                                 onNext={handleNextStep}
                             />
                         ) : (
