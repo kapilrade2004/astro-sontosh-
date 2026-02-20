@@ -2,22 +2,29 @@ import { useState, useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
     format,
-    addMinutes,
     isBefore,
     startOfToday,
-    setHours,
-    setMinutes,
+    parse,
+    addMinutes
 } from "date-fns";
-import { Calendar as CalendarIcon, Clock } from "lucide-react";
+import { Calendar as CalendarIcon, Clock, Loader2 } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
 
 interface BookingCalendarProps {
     onSelect: (date: Date | undefined, time: string | null) => void;
     selectedDate?: Date;
     selectedTime?: string | null;
     duration?: string;
+}
+
+interface Slot {
+    time: string;
+    available: boolean;
 }
 
 export const BookingCalendar = ({
@@ -30,37 +37,83 @@ export const BookingCalendar = ({
     const [selectedTime, setSelectedTime] = useState<string | null>(
         propTime || null
     );
-
-    const timeSlots = useMemo(() => {
-        const slots: string[] = [];
-        const startHour = 10;
-        const endHour = 19;
-        const slotDuration = parseInt(duration);
-
-        let currentTime = setMinutes(setHours(new Date(), startHour), 0);
-        const endTime = setMinutes(setHours(new Date(), endHour), 0);
-
-        while (
-            isBefore(addMinutes(currentTime, slotDuration), endTime) ||
-            addMinutes(currentTime, slotDuration).getTime() === endTime.getTime()
-        ) {
-            slots.push(format(currentTime, "hh:mm a"));
-            currentTime = addMinutes(currentTime, slotDuration);
-        }
-
-        return slots;
-    }, [duration]);
+    const [slots, setSlots] = useState<Slot[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        if (selectedTime && !timeSlots.includes(selectedTime)) {
+        const fetchSlots = async () => {
+            if (date) {
+                setIsLoading(true);
+                try {
+                    const formattedDate = format(date, "yyyy-MM-dd");
+                    const res = await axios.get(`${API_BASE_URL}/slots/${formattedDate}`);
+                    if (res.data && res.data.success) {
+                        setSlots(res.data.slots);
+                    } else {
+                        setSlots([]);
+                    }
+                } catch (error) {
+                    console.error("Failed to fetch slots:", error);
+                    setSlots([]);
+                } finally {
+                    setIsLoading(false);
+                }
+            } else {
+                setSlots([]);
+                setIsLoading(false);
+            }
+        };
+
+        fetchSlots();
+    }, [date]);
+
+    // Recalculate available time slots based on duration
+    const timeSlots = useMemo(() => {
+        if (!slots.length) return [];
+
+        if (duration === "30") {
+            return slots.filter(s => s.available).map(s => s.time);
+        } else {
+            // Logic for 60 minutes or other durations
+            // Assuming slots are ordered.
+            // We need to find if current slot AND next slot (30 mins later) are available.
+            const availableTimes: string[] = [];
+
+            // Map slots for easy lookup
+            const slotMap = new Map<string, boolean>();
+            slots.forEach(s => slotMap.set(s.time, s.available));
+
+            slots.forEach(slot => {
+                if (!slot.available) return;
+
+                // For 60 mins, we need the slot at time + 30 mins to be available too
+                // Assuming slots are in "HH:mm" format.
+                const slotTime = parse(slot.time, "HH:mm", new Date());
+                const nextSlotTime = addMinutes(slotTime, 30);
+                const nextSlotStr = format(nextSlotTime, "HH:mm");
+
+                // Special handling: backend time format might vary, assuming HH:mm or HH:mm:ss
+                // The snippet used substring(0, 5) so it's HH:mm
+
+                if (slotMap.get(nextSlotStr)) {
+                    availableTimes.push(slot.time);
+                }
+            });
+            return availableTimes;
+        }
+    }, [slots, duration]);
+
+    useEffect(() => {
+        if (selectedTime && !timeSlots.includes(selectedTime) && !isLoading) {
             setSelectedTime(null);
             onSelect(date, null);
         }
-    }, [duration, timeSlots]);
+    }, [duration, timeSlots, isLoading]);
 
     const handleDateSelect = (newDate: Date | undefined) => {
         setDate(newDate);
-        onSelect(newDate, selectedTime);
+        setSelectedTime(null);
+        onSelect(newDate, null);
     };
 
     const handleTimeSelect = (time: string) => {
@@ -126,10 +179,13 @@ export const BookingCalendar = ({
             {/* TIME SECTION */}
             <div className="w-full lg:w-48 xl:w-56 flex flex-col space-y-2.5 lg:space-y-2.5 border-t lg:border-t-0 lg:border-l border-primary/10 pt-3 lg:pt-0 lg:pl-3 xl:pl-4">
                 <div className="flex items-center gap-2 text-primary px-1">
-                    <Clock className="w-4 h-4 lg:w-5 lg:h-5" />
-                    <h3 className="font-bold text-xs lg:text-sm uppercase tracking-wider">
-                        Select Time
-                    </h3>
+                    <div className="flex items-center gap-2 flex-1">
+                        <Clock className="w-4 h-4 lg:w-5 lg:h-5" />
+                        <h3 className="font-bold text-xs lg:text-sm uppercase tracking-wider">
+                            Select Time
+                        </h3>
+                    </div>
+                    {isLoading && <Loader2 className="w-3.5 h-3.5 animate-spin text-primary/60" />}
                 </div>
 
                 {/* Responsive grid: 2 cols on mobile, 3 on small, 1 on large desktop, 2 on wide screens */}
@@ -141,25 +197,31 @@ export const BookingCalendar = ({
                         "overflow-y-auto custom-scrollbar"
                     )}
                 >
-                    {timeSlots.map((time) => (
-                        <Button
-                            key={time}
-                            variant={selectedTime === time ? "default" : "outline"}
-                            onClick={() => handleTimeSelect(time)}
-                            className={cn(
-                                "h-10 sm:h-11 text-xs font-semibold rounded-lg",
-                                "transition-all duration-300 border-primary/10",
-                                selectedTime === time
-                                    ? "bg-primary text-primary-foreground shadow-lg scale-[1.03] border-primary"
-                                    : "hover:border-primary/50 hover:bg-primary/5 active:scale-95 bg-background/20"
-                            )}
-                        >
-                            {time}
-                        </Button>
-                    ))}
+                    {!isLoading && timeSlots.length > 0 ? (
+                        timeSlots.map((time) => (
+                            <Button
+                                key={time}
+                                variant={selectedTime === time ? "default" : "outline"}
+                                onClick={() => handleTimeSelect(time)}
+                                className={cn(
+                                    "h-10 sm:h-11 text-xs font-semibold rounded-lg",
+                                    "transition-all duration-300 border-primary/10",
+                                    selectedTime === time
+                                        ? "bg-primary text-primary-foreground shadow-lg scale-[1.03] border-primary"
+                                        : "hover:border-primary/50 hover:bg-primary/5 active:scale-95 bg-background/20"
+                                )}
+                            >
+                                {time}
+                            </Button>
+                        ))
+                    ) : (
+                        <div className="col-span-full py-8 text-center text-xs text-muted-foreground italic">
+                            {isLoading ? "Checking availability..." : "No slots available for this date"}
+                        </div>
+                    )}
                 </div>
 
-                {!date && (
+                {!date && !isLoading && (
                     <p className="text-xs text-muted-foreground text-center italic py-2">
                         Please select a date first
                     </p>

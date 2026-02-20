@@ -3,6 +3,7 @@ import axios from "axios";
 import { load } from "@cashfreepayments/cashfree-js";
 import { Sparkles, User, MapPin, UserCheck, CheckCircle2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { format } from "date-fns";
 
 // Sub-components
 import { BookingDetailsStep } from "./steps/BookingDetailsStep";
@@ -107,7 +108,7 @@ const durations = [
     { label: "1 Hour", value: "60" },
 ];
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://cashfee-payment-integration-1.onrender.com";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
 
 export const BookingProcess = () => {
     const [bookingStep, setBookingStep] = useState<"details" | "slot">("details");
@@ -309,8 +310,17 @@ export const BookingProcess = () => {
                         if (verifyRes.data && verifyRes.data.success) {
                             // Send booking details to backend
                             try {
+                                const formattedDate = bookingData.selectedDate
+                                    ? format(bookingData.selectedDate, "yyyy-MM-dd")
+                                    : null;
+
+                                // Create a clean payload object
+                                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                                const { floorPlan, ...cleanBookingData } = bookingData;
+
                                 await axios.post(`${API_BASE_URL}/dataslotbooked`, {
-                                    ...bookingData,
+                                    ...cleanBookingData,
+                                    selectedDate: formattedDate,
                                     orderId: res.data.order_id,
                                     paymentSessionId: res.data.payment_session_id,
                                     amount: Number(selectedService?.price),
