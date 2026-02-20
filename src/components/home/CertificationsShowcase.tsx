@@ -11,6 +11,7 @@ import CMPM from "@/assets/certificate-marriage-prediction-mastery-crash-course-
 import CKMCBA from "@/assets/certificate-kundli-mastery-course-by-astro-arun-pandit-687647f35bca75814702c115-1.png";
 import CBNCBA from "@/assets/certificate-basic-nakshatra-course-by-astro-arun-pandit-67178ad1c2832854f70c8694-1.png";
 import C360ARB from "@/assets/certificate-360-astro-remedies-bootcamp-by-astro-arun-pandit-68511d95bfdcfa48780f5238-1.png";
+import CAEC from "@/assets/astroexpertcursecertificate.jpeg";
 import AVS from "@/assets/Astro-Vastu-Shastra-1.png";
 import ATOETC from "@/assets/Advance-Timing-of-Events-Transit-Course-1.png";
 import SPOA10 from "@/assets/10-Sureshot-Prediction-of-Astrology-1.png";
@@ -18,88 +19,95 @@ import CAG from "@/assets/Crystal-And-Gemstone-1.png"
 import RC from "@/assets/Rudraksha-Course-1.png"
 const certifications = [
   {
+    id: 1,
+    title: "Astro Expertise Course",
+    image: SRPDA,
+    verified: true,
+  },
+  {
     id: 2,
     title: "Certificate of Completion in Diploma in Palmistry",
     image: SRPD,
     verified: true,
   },
   {
-    id: 1,
+    id: 3,
     title: "Certificate of Completion in Diploma in Astrology",
     image: SRPDA,
     verified: true,
   },
   {
-    id: 3,
+    id: 4,
     title: "certificate of the ultimate astrology course",
-    image: CTUAC,
-    verified: true,
-  },
-  {
-    id: 5,
-    title: "The Ultimate Vishwakarma Vastu Course",
-    image: TUVV,
-    verified: true,
-  },
-  {
-    id: 5,
-    title: "certificate retrograde planets by astro arun pandit",
-    image: CRPBA,
+    image: CAEC,
     verified: true,
   },
   {
     id: 6,
+    title: "certificate retrograde planets by astro arun pandit",
+    image: CRPBA,
+    verified: true,
+  },
+
+  {
+    id: 7,
     title: "certificate marriage prediction mastery crash course",
     image: CMPM,
     verified: true,
   },
   {
-    id: 7,
+    id: 8,
     title: "certificate kundli matching comprehensive by astro arun pandit",
     image: CKMCBA,
     verified: true,
   },
   {
-    id: 8,
+    id: 9,
     title: "certificate basic nakshatra course by astro arun pandit",
     image: CBNCBA,
     verified: true,
   },
   {
-    id: 9,
+    id: 10,
     title: "certificate 360 astro remedies bootcamp by astro arun pandit",
     image: C360ARB,
     verified: true,
   },
   {
-    id: 10,
+    id: 11,
     title: "Astro Vastu Shastra",
     image: AVS,
     verified: true,
   },
   {
-    id: 11,
+    id: 12,
     title: "Advance Timing of Events Transit Course",
     image: ATOETC,
     verified: true,
   },
   {
-    id: 12,
+    id: 13,
     title: "10-Sureshot-Prediction-of-Astrology",
     image: SPOA10,
     verified: true,
   },
 
   {
-    id: 13,
+    id: 14,
     title: "Crystal-And-Gemstone",
     image: CAG,
     verified: true,
   },
   {
-    id: 14,
+    id: 15,
     title: "Rudraksha-Course",
     image: RC,
+    verified: true,
+  },
+  {
+    id: 16,
+    title: "The Ultimate Vishwakarma Vastu Course",
+    image: TUVV,
     verified: true,
   },
 

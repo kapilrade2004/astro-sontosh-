@@ -165,11 +165,38 @@ const About = () => {
 
                 <div className="cosmic-card p-8 md:p-12 space-y-8 text-muted-foreground leading-relaxed">
 
-                  <div className="text-center space-y-2">
-                    <p className="text-lg font-semibold text-primary">
-                      <span className="text-red-500"> ॥</span> हरि ॐ नमः शिवाय <span className="text-red-500"> ॥</span>
-                    </p>
-
+                  {/* Opening Shloka */}
+                  <div className="text-center space-y-2 relative">
+                    {/* Sacred glow aura */}
+                    <div className="absolute inset-0 bg-gradient-radial from-amber-400/15 via-yellow-400/8 to-transparent blur-2xl animate-pulse pointer-events-none" />
+                    <div
+                      className="text-sm md:text-lg italic font-bold
+                        tracking-normal leading-loose text-center relative
+                        bg-[length:200%_auto]
+                        bg-gradient-to-r
+                        from-yellow-100
+                        via-amber-200
+                        via-yellow-300
+                        via-amber-300
+                        via-orange-300
+                        to-yellow-100
+                        bg-clip-text text-transparent
+                        animate-[shimmer_5s_linear_infinite]
+                        drop-shadow-[0_0_20px_rgba(251,191,36,0.95)]
+                        drop-shadow-[0_0_35px_rgba(245,158,11,0.7)]"
+                      style={{
+                        textShadow: `
+                          0 0 5px rgba(255,215,0,0.5),
+                          0 0 12px rgba(251,191,36,0.4),
+                          0 0 25px rgba(245,158,11,0.3),
+                          0 3px 8px rgba(0,0,0,0.3)
+                        `,
+                      }}
+                    >
+                      <span className="inline-block mr-2 text-red-600 animate-pulse">॥</span>
+                      हरि ॐ नमः शिवाय
+                      <span className="inline-block ml-2 text-red-600 animate-pulse">॥</span>
+                    </div>
                   </div>
 
                   <p>
@@ -215,6 +242,40 @@ const About = () => {
                         <span>100% integrity and respect, without any prejudice</span>
                       </li>
                     </ul>
+                  </div>
+
+                  {/* Closing Shloka */}
+                  <div className="text-center space-y-2 relative pt-2">
+                    {/* Sacred glow aura */}
+                    <div className="absolute inset-0 bg-gradient-radial from-amber-400/15 via-yellow-400/8 to-transparent blur-2xl animate-pulse pointer-events-none" />
+                    <div
+                      className="text-sm md:text-lg italic font-bold
+                        tracking-normal leading-loose text-center relative
+                        bg-[length:200%_auto]
+                        bg-gradient-to-r
+                        from-yellow-100
+                        via-amber-200
+                        via-yellow-300
+                        via-amber-300
+                        via-orange-300
+                        to-yellow-100
+                        bg-clip-text text-transparent
+                        animate-[shimmer_5s_linear_infinite]
+                        drop-shadow-[0_0_20px_rgba(251,191,36,0.95)]
+                        drop-shadow-[0_0_35px_rgba(245,158,11,0.7)]"
+                      style={{
+                        textShadow: `
+                          0 0 5px rgba(255,215,0,0.5),
+                          0 0 12px rgba(251,191,36,0.4),
+                          0 0 25px rgba(245,158,11,0.3),
+                          0 3px 8px rgba(0,0,0,0.3)
+                        `,
+                      }}
+                    >
+                      <span className="inline-block mr-2 text-red-600 animate-pulse">॥</span>
+                      हरि हर महादेव
+                      <span className="inline-block ml-2 text-red-600 animate-pulse">॥</span>
+                    </div>
                   </div>
 
                 </div>
