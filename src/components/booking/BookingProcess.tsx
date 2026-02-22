@@ -153,7 +153,7 @@ export const BookingProcess = () => {
     useEffect(() => {
         const initSDK = async () => {
             try {
-                const cf = await load({ mode: "sandbox" }); // Replace with "production" when ready
+                const cf = await load({ mode: "production" }); // Replace with "production" when ready
                 setCashfree(cf);
             } catch (error) {
                 console.error("Failed to initialize Cashfree SDK", error);
