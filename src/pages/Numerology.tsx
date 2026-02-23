@@ -467,6 +467,7 @@ const Numerology = () => {
                     <label className="text-sm font-medium">Date of Birth</label>
                     <input
                       type="date"
+                      max={new Date().toISOString().split('T')[0]}
                       value={formData.dob}
                       onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
                       className="mt-1 w-full rounded-lg bg-background border border-border px-4 py-2 

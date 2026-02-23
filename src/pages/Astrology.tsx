@@ -54,7 +54,7 @@ const services = [
     title: "Child Astrology",
     description: "Guidance on:",
     features: [
-      "Promise of childbirth",
+      "Possibility of childbirth",
       "Timing of childbirth",
       "Reasons for delay or denial",
       "Corrective and spiritual remedies"

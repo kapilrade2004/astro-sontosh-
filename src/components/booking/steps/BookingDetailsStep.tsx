@@ -79,6 +79,7 @@ export const BookingDetailsStep = ({
                     <Input
                         id="dob"
                         type="date"
+                        max={new Date().toISOString().split('T')[0]}
                         className={`bg-background border-primary/20 focus:border-primary h-10 text-sm text-white
                             [&::-webkit-calendar-picker-indicator]:invert
                             [&::-webkit-calendar-picker-indicator]:opacity-100 ${errors.dob ? "border-red-500 focus:border-red-500" : ""}`}

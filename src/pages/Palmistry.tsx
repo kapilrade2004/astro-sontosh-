@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 
@@ -13,7 +14,7 @@ import {
 import {
   Hand, Heart, Activity, TrendingUp, Brain, Fingerprint,
   ArrowRight, CheckCircle, Shield, Sparkles, HeartPulse, Wallet,
-  Users, Sun, Calendar, Target
+  Users, Sun, Calendar, Target, MapPin, Phone, X
 } from "lucide-react";
 
 const palmLines = [
@@ -165,6 +166,8 @@ const itemVariants = {
 };
 
 const Palmistry = () => {
+  const [showPopup, setShowPopup] = useState(false);
+
   return (
     <>
       <Helmet>
@@ -240,11 +243,13 @@ const Palmistry = () => {
               <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mb-8">
                 Palmistry complements astrology, especially when birth details are unavailable. The palm reflects past karma, present actions, and future possibilities.
               </p>
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold" asChild>
-                <Link to="/contact#booking">
-                  Get Palm Reading Now
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Link>
+              <Button
+                size="lg"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold"
+                onClick={() => setShowPopup(true)}
+              >
+                Get Palm Reading Now
+                <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             </motion.div>
           </div>
@@ -470,13 +475,139 @@ const Palmistry = () => {
                 Get your comprehensive palm reading today and discover what your hands
                 reveal about your past, present, and future with personalized astrological remedies.
               </p>
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold" asChild>
-                <Link to="/contact">Get Palm Reading Now</Link>
+              <Button
+                size="lg"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold"
+                onClick={() => setShowPopup(true)}
+              >
+                Get Palm Reading Now
               </Button>
             </motion.div>
           </div>
         </section>
       </Layout>
+
+      {/* Palm Reading Info Popup */}
+      <AnimatePresence>
+        {showPopup && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            style={{ backgroundColor: "rgba(0, 0, 0, 0.7)", backdropFilter: "blur(6px)" }}
+            onClick={() => setShowPopup(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.85, y: 30 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              className="relative max-w-md w-full rounded-2xl overflow-hidden shadow-2xl"
+              style={{
+                background: "linear-gradient(135deg, #1a0f2e 0%, #2d1b4e 50%, #1a0f2e 100%)",
+                border: "1px solid rgba(212, 175, 55, 0.35)",
+                boxShadow: "0 0 60px rgba(212, 175, 55, 0.2), 0 25px 60px rgba(0,0,0,0.6)",
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Gold top accent bar */}
+              <div className="h-1 w-full" style={{ background: "linear-gradient(90deg, transparent, #D4AF37, transparent)" }} />
+
+              {/* Close button */}
+              <button
+                onClick={() => setShowPopup(false)}
+                className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center transition-colors"
+                style={{ background: "rgba(212,175,55,0.1)", color: "#D4AF37" }}
+                onMouseEnter={e => (e.currentTarget.style.background = "rgba(212,175,55,0.25)")}
+                onMouseLeave={e => (e.currentTarget.style.background = "rgba(212,175,55,0.1)")}
+              >
+                <X className="w-4 h-4" />
+              </button>
+
+              <div className="p-8">
+                {/* Icon */}
+                <div
+                  className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5 mx-auto"
+                  style={{ background: "rgba(212,175,55,0.12)", border: "1px solid rgba(212,175,55,0.3)" }}
+                >
+                  <Hand className="w-8 h-8" style={{ color: "#D4AF37" }} />
+                </div>
+
+                {/* Title */}
+                <h3
+                  className="font-serif text-2xl font-bold text-center mb-2"
+                  style={{ color: "#D4AF37" }}
+                >
+                  Palm Reading Service
+                </h3>
+
+                <div
+                  className="w-16 h-0.5 mx-auto mb-5"
+                  style={{ background: "linear-gradient(90deg, transparent, #D4AF37, transparent)" }}
+                />
+
+                {/* Message */}
+                <div
+                  className="rounded-xl p-4 mb-6 text-center"
+                  style={{ background: "rgba(212,175,55,0.08)", border: "1px solid rgba(212,175,55,0.2)" }}
+                >
+                  <p className="text-white/90 leading-relaxed text-base">
+                    This is{" "}
+                    <span className="font-semibold" style={{ color: "#D4AF37" }}>
+                      'In Person Service by Appointment'
+                    </span>{" "}
+                    only for{" "}
+                    <span className="inline-flex items-center gap-1 font-semibold" style={{ color: "#D4AF37" }}>
+                      <MapPin className="w-4 h-4" />
+                      Mumbai
+                    </span>{" "}
+                    location.
+                  </p>
+                </div>
+
+                {/* Contact info */}
+                <p className="text-white/70 text-sm text-center mb-5">
+                  For more details, please reach us at
+                </p>
+                <a
+                  href="tel:+918879731174"
+                  className="flex items-center justify-center gap-2 w-full py-3 px-5 rounded-xl font-semibold text-base transition-all"
+                  style={{
+                    background: "linear-gradient(135deg, #D4AF37, #F5D06A)",
+                    color: "#1a0f2e",
+                    boxShadow: "0 4px 20px rgba(212,175,55,0.4)",
+                  }}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 6px 28px rgba(212,175,55,0.6)";
+                    (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-1px)";
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 4px 20px rgba(212,175,55,0.4)";
+                    (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)";
+                  }}
+                >
+                  <Phone className="w-5 h-5" />
+                  +91 8879731174
+                </a>
+
+                <button
+                  onClick={() => setShowPopup(false)}
+                  className="mt-4 w-full py-2 text-sm transition-colors rounded-lg"
+                  style={{ color: "rgba(255,255,255,0.45)" }}
+                  onMouseEnter={e => ((e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.75)")}
+                  onMouseLeave={e => ((e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.45)")}
+                >
+                  Close
+                </button>
+              </div>
+
+              {/* Gold bottom accent bar */}
+              <div className="h-1 w-full" style={{ background: "linear-gradient(90deg, transparent, #D4AF37, transparent)" }} />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };
