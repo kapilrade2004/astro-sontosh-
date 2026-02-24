@@ -153,7 +153,7 @@ export const BookingProcess = () => {
     useEffect(() => {
         const initSDK = async () => {
             try {
-                const cf = await load({ mode: "production" }); // Replace with "production" when ready
+                const cf = await load({ mode: "production" });
                 setCashfree(cf);
             } catch (error) {
                 console.error("Failed to initialize Cashfree SDK", error);
@@ -181,7 +181,7 @@ export const BookingProcess = () => {
     const updateBookingData = (updates: Partial<typeof bookingData>) => {
         // If switching consultation type, reset serviceId
         if (updates.consultationType && updates.consultationType !== bookingData.consultationType) {
-            updates.serviceId = ""; // or set to first service of new type
+            updates.serviceId = "";
             updates.duration = "";
         }
 
@@ -265,6 +265,32 @@ export const BookingProcess = () => {
         setTimeout(scrollToBooking, 100);
     };
 
+    // ─── Retry helper: retries verify up to `retries` times with `delay` ms gap ───
+    const verifyWithRetry = async (
+        orderId: string,
+        retries = 5,
+        delay = 2500
+    ): Promise<{ data: { success: boolean; [key: string]: unknown } } | null> => {
+        for (let i = 0; i < retries; i++) {
+            try {
+                console.log(`Verify attempt ${i + 1} for order: ${orderId}`);
+                const verifyRes = await axios.post(`${API_BASE_URL}/verify`, { orderId });
+                if (verifyRes.data?.success) {
+                    console.log(`Verification succeeded on attempt ${i + 1}`);
+                    return verifyRes;
+                }
+                console.log(`Attempt ${i + 1} status not SUCCESS yet, statuses:`, verifyRes.data?.statuses);
+            } catch (err) {
+                console.error(`Verify attempt ${i + 1} threw error:`, err);
+            }
+            // Wait before next retry (except after last attempt)
+            if (i < retries - 1) {
+                await new Promise(resolve => setTimeout(resolve, delay));
+            }
+        }
+        return null;
+    };
+
     const handlePay = async () => {
         if (!validateStep2()) {
             toast({
@@ -274,8 +300,6 @@ export const BookingProcess = () => {
             });
             return;
         }
-
-        // Cashfree integration temporarily disabled
 
         if (!cashfree) {
             toast({
@@ -287,7 +311,9 @@ export const BookingProcess = () => {
         }
 
         setIsProcessingPayment(true);
+
         try {
+            // Step 1: Create order on backend
             const res = await axios.post(`${API_BASE_URL}/payment`, {
                 amount: Number(selectedService?.price),
                 customer_name: bookingData.name,
@@ -295,87 +321,92 @@ export const BookingProcess = () => {
                 customer_email: bookingData.email || "customer@example.com",
             });
 
-            if (res.data && res.data.payment_session_id) {
-                const checkoutOptions = {
-                    paymentSessionId: res.data.payment_session_id,
-                    redirectTarget: "_modal",
-                };
-
-                cashfree.checkout(checkoutOptions).then(async () => {
-                    try {
-                        const verifyRes = await axios.post(`${API_BASE_URL}/verify`, {
-                            orderId: res.data.order_id,
-                        });
-
-                        if (verifyRes.data && verifyRes.data.success) {
-                            // Send booking details to backend
-                            try {
-                                const formattedDate = bookingData.selectedDate
-                                    ? format(bookingData.selectedDate, "yyyy-MM-dd")
-                                    : null;
-
-                                // Create a clean payload object
-                                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                                const { floorPlan, ...cleanBookingData } = bookingData;
-
-                                await axios.post(`${API_BASE_URL}/dataslotbooked`, {
-                                    ...cleanBookingData,
-                                    selectedDate: formattedDate,
-                                    orderId: res.data.order_id,
-                                    paymentSessionId: res.data.payment_session_id,
-                                    amount: Number(selectedService?.price),
-                                    serviceName: selectedService?.title
-                                });
-                            } catch (error) {
-                                console.error("Failed to save booking details:", error);
-                                // We don't block the UI here as payment was successful
-                            }
-
-                            setPaymentResult(verifyRes.data);
-                            // Reset booking-specific fields to "close" the form session
-                            setBookingData(prev => ({
-                                ...prev,
-                                selectedDate: undefined,
-                                selectedTime: null,
-                                concern: "",
-                                duration: ""
-                            }));
-                        } else {
-                            setPaymentResult({
-                                success: false,
-                                message: verifyRes.data.message || "Payment verification failed."
-                            });
-                        }
-                    } catch (error) {
-                        console.error("Verification error:", error);
-                        setPaymentResult({
-                            success: false,
-                            message: "Something went wrong while verifying your payment."
-                        });
-                    } finally {
-                        setIsProcessingPayment(false);
-                    }
-                });
-            } else {
+            if (!res.data || !res.data.payment_session_id) {
                 toast({
                     title: "Error",
                     description: "Failed to initialize payment session.",
                     variant: "destructive"
                 });
                 setIsProcessingPayment(false);
+                return;
             }
+
+            // Step 2: Open Cashfree checkout modal
+            const checkoutOptions = {
+                paymentSessionId: res.data.payment_session_id,
+                redirectTarget: "_modal",
+            };
+
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const checkoutResult: any = await cashfree.checkout(checkoutOptions);
+
+            // Step 3: Check if Cashfree SDK itself reported an error (user cancelled, etc.)
+            if (checkoutResult?.error) {
+                console.error("Cashfree checkout error:", checkoutResult.error);
+                setPaymentResult({
+                    success: false,
+                    message: checkoutResult.error.message || "Payment was not completed. Please try again."
+                });
+                setIsProcessingPayment(false);
+                return;
+            }
+
+            // Step 4: Verify payment with retry logic
+            // Cashfree may take a moment to update status after modal closes
+            const verifyRes = await verifyWithRetry(res.data.order_id, 5, 2500);
+
+            if (verifyRes && verifyRes.data?.success) {
+                // Step 5: Save booking details to backend
+                try {
+                    const formattedDate = bookingData.selectedDate
+                        ? format(bookingData.selectedDate, "yyyy-MM-dd")
+                        : null;
+
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                    const { floorPlan, ...cleanBookingData } = bookingData;
+
+                    await axios.post(`${API_BASE_URL}/dataslotbooked`, {
+                        ...cleanBookingData,
+                        selectedDate: formattedDate,
+                        orderId: res.data.order_id,
+                        paymentSessionId: res.data.payment_session_id,
+                        amount: Number(selectedService?.price),
+                        serviceName: selectedService?.title
+                    });
+                } catch (bookingError) {
+                    // Payment was successful — don't block UI, just log
+                    console.error("Failed to save booking details:", bookingError);
+                }
+
+                // Step 6: Show success screen
+                setPaymentResult(verifyRes.data);
+                setBookingData(prev => ({
+                    ...prev,
+                    selectedDate: undefined,
+                    selectedTime: null,
+                    concern: "",
+                    duration: ""
+                }));
+
+            } else {
+                // All retries exhausted and payment still not verified
+                // Payment may have gone through — tell user to contact support
+                setPaymentResult({
+                    success: false,
+                    message: `We couldn't verify your payment automatically. If your money was deducted, please contact support with Order ID: ${res.data.order_id}`
+                });
+            }
+
         } catch (error) {
-            console.error("Payment error:", error);
+            console.error("Payment flow error:", error);
             toast({
                 title: "Payment Error",
-                description: "An error occurred while processing your payment.",
+                description: "An error occurred while processing your payment. Please try again.",
                 variant: "destructive"
             });
+        } finally {
             setIsProcessingPayment(false);
         }
-
-
-
     };
 
     return (
