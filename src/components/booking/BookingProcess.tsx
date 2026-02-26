@@ -121,7 +121,7 @@ export const BookingProcess = () => {
         serviceId: "astrology-exact-birth-time",
         duration: "30" as string,
         gender: "",
-        place: "Mumbai",
+        place: "",
         concern: "",
         areaDimension: "",
         floorPlan: null as File | null,

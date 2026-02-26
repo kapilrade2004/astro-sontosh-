@@ -17,6 +17,8 @@ import ATOETC from "@/assets/Advance-Timing-of-Events-Transit-Course-1.png";
 import SPOA10 from "@/assets/10-Sureshot-Prediction-of-Astrology-1.png";
 import CAG from "@/assets/Crystal-And-Gemstone-1.png"
 import RC from "@/assets/Rudraksha-Course-1.png"
+import CA from "@/assets/4. Certificate_Certificate_Astrology _page-0001.jpg"
+import MCP from "@/assets/certificate-d10-chart-bootcamp-course-by-astro-arun-pandit-67c8194a8ed4440b570f0c07_page-0001.jpg"
 const certifications = [
   {
     id: 1,
@@ -108,6 +110,18 @@ const certifications = [
     id: 16,
     title: "The Ultimate Vishwakarma Vastu",
     image: TUVV,
+    verified: true,
+  },
+  {
+    id: 17,
+    title: "Certification in Astrology",
+    image: CA,
+    verified: true,
+  },
+  {
+    id: 18,
+    title: "Mastery - Career Prediction",
+    image: MCP,
     verified: true,
   },
 
