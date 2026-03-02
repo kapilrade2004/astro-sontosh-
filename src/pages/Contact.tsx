@@ -1,3 +1,7 @@
+
+
+
+
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
@@ -14,7 +18,7 @@ const Contact = () => {
       </Helmet>
       <Layout>
         {/* Hero Section */}
-        <section className="pt-32 pb-8 bg-gradient-hero relative overflow-hidden">
+        <section className="pt-20 pb-8 bg-gradient-hero relative overflow-hidden">
           <div className="container mx-auto px-4 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 30 }}

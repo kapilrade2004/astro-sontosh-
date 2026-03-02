@@ -26,6 +26,7 @@ const quickLinks = [
   { name: "About Us", path: "/about" },
   { name: "Contact", path: "/contact" },
   { name: "Book Consultation", path: "/contact#booking" },
+   { name: "Inquiry", path: "/inquiry" },  // ← add this line
 ];
 
 const socialLinks = [
