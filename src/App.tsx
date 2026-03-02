@@ -16,6 +16,7 @@ import { Scroll } from "lucide-react";
 import ScrolltoTop from "./components/ScrolltoTop";
 import TermsAndPolicy from "./pages/Terms&Policy";
 import PrivacyPolicy from "./pages/Privacypolicypage";
+import Inquiry from "./pages/Inquiry";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ const App = () => (
             <Route path="/contact" element={<Contact />} />
             <Route path="/terms" element={<TermsAndPolicy />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/inquiry" element={<Inquiry />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
