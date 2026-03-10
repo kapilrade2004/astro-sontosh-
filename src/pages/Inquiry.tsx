@@ -1,817 +1,9 @@
-// import { Helmet } from "react-helmet-async";
-// import { motion, AnimatePresence } from "framer-motion";
-// import { Layout } from "@/components/layout/Layout";
-// import { Button } from "@/components/ui/button";
-// import { useState, useRef, useEffect, useCallback } from "react";
-
-// // ─── Types ───────────────────────────────────────────────────────────────────
-
-// type Service = "Astrology" | "Numerology" | "Vastu" | "Palmistry";
-
-// type Step =
-//   | "welcome"
-//   | "selectService"
-//   | "enterMobile"
-//   | "enterDOB"
-//   | "enterTOB"
-//   | "enterPOB"
-//   | "enterDimensions"
-//   | "selectDateTime"
-//   | "palmistryInfo"
-//   | "summary";
-
-// interface FormData {
-//   mobile: string;
-//   dob: string;
-//   tob: string;
-//   pob: string;
-//   length: string;
-//   width: string;
-//   consultDate: string;
-//   consultTime: string;
-// }
-
-// // ─── Bot Bubble ───────────────────────────────────────────────────────────────
-
-// const BotBubble = ({ text, delay = 0 }: { text: string; delay?: number }) => (
-//   <motion.div
-//     initial={{ opacity: 0, x: -16, scale: 0.95 }}
-//     animate={{ opacity: 1, x: 0, scale: 1 }}
-//     transition={{ duration: 0.32, delay, ease: "easeOut" }}
-//     className="flex items-end gap-2 mb-3"
-//   >
-//     <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-xs font-bold text-white shrink-0 mb-1 shadow-lg shadow-amber-900/30">
-//       🔮
-//     </div>
-//     <div
-//       className="max-w-[88%] md:max-w-[82%] px-3 md:px-4 py-2.5 md:py-3 rounded-2xl rounded-bl-sm text-xs md:text-sm leading-relaxed shadow-md"
-//       style={{
-//         background: "linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--card)/0.8) 100%)",
-//         border: "1px solid hsl(var(--border)/0.5)",
-//         color: "hsl(var(--card-foreground))",
-//       }}
-//       dangerouslySetInnerHTML={{ __html: text }}
-//     />
-//   </motion.div>
-// );
-
-// const UserBubble = ({ text }: { text: string }) => (
-//   <motion.div
-//     initial={{ opacity: 0, x: 16, scale: 0.95 }}
-//     animate={{ opacity: 1, x: 0, scale: 1 }}
-//     transition={{ duration: 0.28, ease: "easeOut" }}
-//     className="flex justify-end mb-3"
-//   >
-//     <div
-//       className="max-w-[75%] md:max-w-[68%] px-3 md:px-4 py-2.5 md:py-3 rounded-2xl rounded-br-sm text-xs md:text-sm font-medium shadow-md"
-//       style={{
-//         background: "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(35 80% 45%) 100%)",
-//         color: "hsl(var(--primary-foreground))",
-//       }}
-//     >
-//       {text}
-//     </div>
-//   </motion.div>
-// );
-
-// // ─── Service Option Button ────────────────────────────────────────────────────
-
-// const ServiceOption = ({
-//   label,
-//   emoji,
-//   onClick,
-//   delay = 0,
-// }: {
-//   label: string;
-//   emoji: string;
-//   onClick: () => void;
-//   delay?: number;
-// }) => (
-//   <motion.button
-//     initial={{ opacity: 0, y: 8 }}
-//     animate={{ opacity: 1, y: 0 }}
-//     transition={{ duration: 0.28, delay }}
-//     whileHover={{ scale: 1.02 }}
-//     whileTap={{ scale: 0.97 }}
-//     onClick={onClick}
-//     className="w-full text-left px-3 md:px-4 py-2.5 md:py-3 rounded-xl text-xs md:text-sm font-medium transition-all duration-200 border flex items-center gap-3"
-//     style={{
-//       background: "hsl(var(--card)/0.6)",
-//       borderColor: "hsl(var(--border))",
-//       color: "hsl(var(--card-foreground))",
-//     }}
-//     onMouseEnter={(e) => {
-//       (e.currentTarget as HTMLButtonElement).style.borderColor = "hsl(var(--primary))";
-//       (e.currentTarget as HTMLButtonElement).style.background = "hsl(var(--primary)/0.1)";
-//     }}
-//     onMouseLeave={(e) => {
-//       (e.currentTarget as HTMLButtonElement).style.borderColor = "hsl(var(--border))";
-//       (e.currentTarget as HTMLButtonElement).style.background = "hsl(var(--card)/0.6)";
-//     }}
-//   >
-//     <span className="text-base md:text-lg">{emoji}</span>
-//     {label}
-//   </motion.button>
-// );
-
-// // ─── Chat Input Field ─────────────────────────────────────────────────────────
-
-// const ChatInput = ({
-//   value,
-//   onChange,
-//   onSubmit,
-//   placeholder,
-//   type = "text",
-//   error,
-//   delay = 0,
-//   maxLength,
-// }: {
-//   value: string;
-//   onChange: (v: string) => void;
-//   onSubmit: () => void;
-//   placeholder: string;
-//   type?: string;
-//   error?: string;
-//   delay?: number;
-//   maxLength?: number;
-// }) => (
-//   <motion.div
-//     initial={{ opacity: 0, y: 8 }}
-//     animate={{ opacity: 1, y: 0 }}
-//     transition={{ delay }}
-//     className="ml-9 md:ml-10 mt-1 mb-2"
-//   >
-//     <div className="flex gap-2">
-//       <input
-//         type={type}
-//         value={value}
-//         maxLength={maxLength}
-//         onChange={(e) => onChange(e.target.value)}
-//         onKeyDown={(e) => e.key === "Enter" && onSubmit()}
-//         placeholder={placeholder}
-//         // No autoFocus — prevents keyboard pop & scroll on mobile
-//         className="flex-1 px-3 md:px-4 py-2 md:py-2.5 rounded-xl text-xs md:text-sm outline-none transition-all"
-//         style={{
-//           background: "hsl(var(--card))",
-//           border: `1px solid ${error ? "hsl(0 72% 51%)" : "hsl(var(--border))"}`,
-//           color: "hsl(var(--card-foreground))",
-//         }}
-//       />
-//       <Button
-//         size="sm"
-//         onClick={onSubmit}
-//         className="shrink-0 rounded-xl px-3 md:px-4 text-xs md:text-sm"
-//         style={{
-//           background: "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(35 80% 45%) 100%)",
-//         }}
-//       >
-//         ✓
-//       </Button>
-//     </div>
-//     {error && (
-//       <motion.p
-//         initial={{ opacity: 0 }}
-//         animate={{ opacity: 1 }}
-//         className="text-xs mt-1.5"
-//         style={{ color: "hsl(0 72% 51%)" }}
-//       >
-//         {error}
-//       </motion.p>
-//     )}
-//   </motion.div>
-// );
-
-// // ─── Time Slots ───────────────────────────────────────────────────────────────
-
-// const TIME_SLOTS = [
-//   "09:00 AM", "10:00 AM", "11:00 AM",
-//   "12:00 PM", "02:00 PM", "03:00 PM",
-//   "04:00 PM", "05:00 PM", "06:00 PM",
-// ];
-
-// // ─── Main InquiryProcess Component ───────────────────────────────────────────
-
-// const InquiryProcess = () => {
-//   const [step, setStep] = useState<Step>("welcome");
-//   const [selectedService, setSelectedService] = useState<Service | null>(null);
-//   const [form, setForm] = useState<FormData>({
-//     mobile: "", dob: "", tob: "", pob: "",
-//     length: "", width: "", consultDate: "", consultTime: "",
-//   });
-//   const [errors, setErrors] = useState<Partial<FormData>>({});
-
-//   // Ref to the chat container — we scroll INSIDE it, not the page
-//   const chatBodyRef = useRef<HTMLDivElement>(null);
-//   const bottomRef = useRef<HTMLDivElement>(null);
-
-//   // Scroll only inside the chat box (no page jump)
-//   const scrollToBottom = useCallback(() => {
-//     if (bottomRef.current && chatBodyRef.current) {
-//       chatBodyRef.current.scrollTo({
-//         top: chatBodyRef.current.scrollHeight,
-//         behavior: "smooth",
-//       });
-//     }
-//   }, []);
-
-//   useEffect(() => {
-//     // Small delay so new content renders before we scroll
-//     const t = setTimeout(scrollToBottom, 150);
-//     return () => clearTimeout(t);
-//   }, [step, scrollToBottom]);
-
-//   const setField = (key: keyof FormData, value: string) => {
-//     setForm((f) => ({ ...f, [key]: value }));
-//     setErrors((e) => ({ ...e, [key]: "" }));
-//   };
-
-//   const validate = (key: keyof FormData, value: string, label: string): boolean => {
-//     if (!value.trim()) {
-//       setErrors((e) => ({ ...e, [key]: `⚠️ Please enter your ${label}.` }));
-//       return false;
-//     }
-//     if (key === "mobile" && !/^\d{10}$/.test(value.trim())) {
-//       setErrors((e) => ({ ...e, mobile: "⚠️ Enter a valid 10-digit mobile number." }));
-//       return false;
-//     }
-//     if (key === "dob" && !/^\d{2}-\d{2}-\d{4}$/.test(value.trim())) {
-//       setErrors((e) => ({ ...e, dob: "⚠️ Use format DD-MM-YYYY (e.g. 12-08-1999)." }));
-//       return false;
-//     }
-//     return true;
-//   };
-
-//   const handleServiceSelect = (service: Service) => {
-//     setSelectedService(service);
-//     if (service === "Palmistry") setStep("palmistryInfo");
-//     else setStep("enterMobile");
-//   };
-
-//   const submitMobile = () => {
-//     if (!validate("mobile", form.mobile, "mobile number")) return;
-//     setStep("enterDOB");
-//   };
-
-//   const submitDOB = () => {
-//     if (!validate("dob", form.dob, "date of birth")) return;
-//     if (selectedService === "Astrology") setStep("enterTOB");
-//     else if (selectedService === "Vastu") setStep("enterDimensions");
-//     else setStep("selectDateTime");
-//   };
-
-//   const submitTOB = () => {
-//     if (!validate("tob", form.tob, "time of birth")) return;
-//     setStep("enterPOB");
-//   };
-
-//   const submitPOB = () => {
-//     if (!validate("pob", form.pob, "place of birth")) return;
-//     setStep("selectDateTime");
-//   };
-
-//   const submitDimensions = () => {
-//     if (!validate("length", form.length, "property length")) return;
-//     if (!validate("width", form.width, "property width")) return;
-//     setStep("selectDateTime");
-//   };
-
-//   const submitDateTime = () => {
-//     if (!form.consultDate) {
-//       setErrors((e) => ({ ...e, consultDate: "⚠️ Please select a preferred date." }));
-//       return;
-//     }
-//     if (!form.consultTime) {
-//       setErrors((e) => ({ ...e, consultTime: "⚠️ Please select a preferred time slot." }));
-//       return;
-//     }
-//     setStep("summary");
-//   };
-
-//   const handleReset = () => {
-//     setStep("welcome");
-//     setSelectedService(null);
-//     setForm({ mobile: "", dob: "", tob: "", pob: "", length: "", width: "", consultDate: "", consultTime: "" });
-//     setErrors({});
-//     // Scroll back to top inside chat
-//     setTimeout(() => chatBodyRef.current?.scrollTo({ top: 0, behavior: "smooth" }), 100);
-//   };
-
-//   const todayStr = new Date().toISOString().split("T")[0];
-
-//   const serviceEmojis: Record<Service, string> = {
-//     Astrology: "🪐", Numerology: "🔢", Vastu: "🏠", Palmistry: "✋",
-//   };
-
-//   const pastSteps: Step[] = (() => {
-//     const order: Step[] = [
-//       "welcome", "selectService", "enterMobile", "enterDOB",
-//       "enterTOB", "enterPOB", "enterDimensions", "selectDateTime", "summary",
-//     ];
-//     return order.slice(0, order.indexOf(step));
-//   })();
-
-//   const isPast = (s: Step) => pastSteps.includes(s);
-
-//   const progressSteps: Step[] = ["welcome", "selectService", "enterMobile", "enterDOB", "selectDateTime", "summary"];
-//   const progressIndex = progressSteps.indexOf(step);
-
-//   return (
-//     <div className="w-full max-w-xl mx-auto px-0 md:px-0">
-//       {/* ── Chat Card ── */}
-//       <motion.div
-//         initial={{ opacity: 0, y: 20 }}
-//         animate={{ opacity: 1, y: 0 }}
-//         transition={{ duration: 0.5 }}
-//         className="cosmic-card rounded-2xl overflow-hidden mb-4 shadow-xl"
-//       >
-//         {/* ── Header ── */}
-//         <div
-//           className="px-4 md:px-6 py-3 md:py-4 flex items-center gap-3"
-//           style={{
-//             background: "linear-gradient(90deg, hsl(var(--primary)/0.15) 0%, hsl(35 80% 45%/0.1) 100%)",
-//             borderBottom: "1px solid hsl(var(--border)/0.5)",
-//           }}
-//         >
-//           <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-base md:text-lg shadow-lg shadow-amber-900/30 shrink-0">
-//             🔮
-//           </div>
-//           <div className="min-w-0">
-//             <p className="font-semibold text-xs md:text-sm truncate" style={{ color: "hsl(var(--card-foreground))" }}>
-//               Astro Santosh Pandey
-//             </p>
-//             <p className="text-xs flex items-center gap-1" style={{ color: "hsl(var(--primary))" }}>
-//               <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-green-500 inline-block animate-pulse shrink-0" />
-//               <span className="truncate">Online · Typically replies instantly</span>
-//             </p>
-//           </div>
-//         </div>
-
-//         {/* ── Chat Body — scrollable internally, page does NOT jump ── */}
-//         <div
-//           ref={chatBodyRef}
-//           className="px-3 md:px-4 py-4 md:py-6 flex flex-col overflow-y-auto"
-//           style={{
-//             height: "clamp(380px, 55vh, 540px)",
-//             background: "radial-gradient(ellipse at top left, hsl(var(--card)/0.4) 0%, transparent 70%), hsl(var(--background)/0.6)",
-//             scrollBehavior: "smooth",
-//           }}
-//         >
-//           {/* WELCOME */}
-//           <BotBubble text="👋 Hello! Welcome to <strong>Astro Santosh Pandey</strong> ✨" delay={0.1} />
-//           <BotBubble text="I'm here to help you find cosmic clarity. Please select a service to get started 👇" delay={0.3} />
-
-//           {step === "welcome" && (
-//             <motion.div
-//               initial={{ opacity: 0, y: 8 }}
-//               animate={{ opacity: 1, y: 0 }}
-//               transition={{ delay: 0.6 }}
-//               className="ml-9 md:ml-10 mt-1"
-//             >
-//               <Button
-//                 size="sm"
-//                 onClick={() => setStep("selectService")}
-//                 style={{ background: "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(35 80% 45%) 100%)" }}
-//                 className="rounded-xl text-xs md:text-sm font-medium"
-//               >
-//                 Get Started ✨
-//               </Button>
-//             </motion.div>
-//           )}
-
-//           {/* SELECT SERVICE */}
-//           {step !== "welcome" && (
-//             <>
-//               <BotBubble text="<strong>Select a Service</strong>" delay={0} />
-//               <AnimatePresence>
-//                 {step === "selectService" && (
-//                   <motion.div
-//                     key="service-opts"
-//                     initial={{ opacity: 0 }}
-//                     animate={{ opacity: 1 }}
-//                     exit={{ opacity: 0 }}
-//                     className="ml-9 md:ml-10 flex flex-col gap-2 mb-3"
-//                   >
-//                     {(["Astrology", "Numerology", "Vastu", "Palmistry"] as Service[]).map((s, i) => (
-//                       <ServiceOption
-//                         key={s}
-//                         label={s}
-//                         emoji={serviceEmojis[s]}
-//                         delay={i * 0.07}
-//                         onClick={() => handleServiceSelect(s)}
-//                       />
-//                     ))}
-//                   </motion.div>
-//                 )}
-//               </AnimatePresence>
-//             </>
-//           )}
-
-//           {/* User selected service */}
-//           {selectedService && step !== "selectService" && (
-//             <UserBubble text={`${serviceEmojis[selectedService]} ${selectedService}`} />
-//           )}
-
-//           {/* PALMISTRY INFO */}
-//           {step === "palmistryInfo" && (
-//             <>
-//               <BotBubble
-//                 text="✋ <strong>Palmistry — In-Person Consultation Only</strong><br/><br/>Our Palmistry readings are conducted <strong>in-person in Mumbai</strong>.<br/>Our team will reach out to schedule your appointment. Thank you 🙏"
-//                 delay={0.1}
-//               />
-//               <motion.div
-//                 initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-//                 transition={{ delay: 0.5 }} className="ml-9 md:ml-10 mt-2"
-//               >
-//                 <Button size="sm" variant="outline" onClick={handleReset} className="text-xs rounded-xl">
-//                   ← Start Over
-//                 </Button>
-//               </motion.div>
-//             </>
-//           )}
-
-//           {/* ENTER MOBILE */}
-//           {step !== "welcome" && step !== "selectService" && step !== "palmistryInfo" && (
-//             <>
-//               <BotBubble text="📱 Please enter your <strong>Mobile Number</strong>" delay={0.1} />
-//               {step === "enterMobile" ? (
-//                 <ChatInput
-//                   value={form.mobile}
-//                   onChange={(v) => setField("mobile", v.replace(/\D/g, ""))}
-//                   onSubmit={submitMobile}
-//                   placeholder="e.g. 9876543210"
-//                   type="tel"
-//                   maxLength={10}
-//                   error={errors.mobile}
-//                   delay={0.25}
-//                 />
-//               ) : (
-//                 <UserBubble text={`📱 ${form.mobile}`} />
-//               )}
-//             </>
-//           )}
-
-//           {/* ENTER DOB */}
-//           {(step === "enterDOB" || isPast("enterDOB") || step === "summary") &&
-//             !["welcome", "selectService", "palmistryInfo", "enterMobile"].includes(step) && (
-//               <>
-//                 <BotBubble
-//                   text={`📅 Please enter your <strong>Date of Birth</strong>${selectedService === "Astrology" ? " (we'll also need time &amp; place)" : ""}<br/><span style="opacity:0.65;font-size:0.7rem">Format: DD-MM-YYYY &nbsp;&nbsp; e.g. 12-08-1999</span>`}
-//                   delay={0.1}
-//                 />
-//                 {step === "enterDOB" ? (
-//                   <ChatInput
-//                     value={form.dob}
-//                     onChange={(v) => setField("dob", v)}
-//                     onSubmit={submitDOB}
-//                     placeholder="DD-MM-YYYY"
-//                     error={errors.dob}
-//                     delay={0.25}
-//                   />
-//                 ) : (
-//                   <UserBubble text={`📅 ${form.dob}`} />
-//                 )}
-//               </>
-//             )}
-
-//           {/* ENTER TOB — Astrology only */}
-//           {selectedService === "Astrology" &&
-//             (step === "enterTOB" || isPast("enterTOB") || step === "summary") &&
-//             !["welcome", "selectService", "palmistryInfo", "enterMobile", "enterDOB"].includes(step) && (
-//               <>
-//                 <BotBubble
-//                   text="🕐 Please enter your <strong>Time of Birth</strong><br/><span style='opacity:0.65;font-size:0.7rem'>e.g. 01:13 PM</span>"
-//                   delay={0.1}
-//                 />
-//                 {step === "enterTOB" ? (
-//                   <ChatInput
-//                     value={form.tob}
-//                     onChange={(v) => setField("tob", v)}
-//                     onSubmit={submitTOB}
-//                     placeholder="e.g. 01:13 PM"
-//                     error={errors.tob}
-//                     delay={0.25}
-//                   />
-//                 ) : (
-//                   <UserBubble text={`🕐 ${form.tob}`} />
-//                 )}
-//               </>
-//             )}
-
-//           {/* ENTER POB — Astrology only */}
-//           {selectedService === "Astrology" &&
-//             (step === "enterPOB" || isPast("enterPOB") || step === "summary") &&
-//             !["welcome", "selectService", "palmistryInfo", "enterMobile", "enterDOB", "enterTOB"].includes(step) && (
-//               <>
-//                 <BotBubble
-//                   text="📍 Please enter your <strong>Place of Birth</strong><br/><span style='opacity:0.65;font-size:0.7rem'>City / Town &nbsp; e.g. Mumbai, Maharashtra</span>"
-//                   delay={0.1}
-//                 />
-//                 {step === "enterPOB" ? (
-//                   <ChatInput
-//                     value={form.pob}
-//                     onChange={(v) => setField("pob", v)}
-//                     onSubmit={submitPOB}
-//                     placeholder="e.g. Mumbai, Maharashtra"
-//                     error={errors.pob}
-//                     delay={0.25}
-//                   />
-//                 ) : (
-//                   <UserBubble text={`📍 ${form.pob}`} />
-//                 )}
-//               </>
-//             )}
-
-//           {/* ENTER DIMENSIONS — Vastu only */}
-//           {selectedService === "Vastu" &&
-//             (step === "enterDimensions" || isPast("enterDimensions") || step === "summary") &&
-//             !["welcome", "selectService", "palmistryInfo", "enterMobile", "enterDOB"].includes(step) && (
-//               <>
-//                 <BotBubble
-//                   text="📐 Please enter your <strong>Property Dimensions</strong><br/><span style='opacity:0.65;font-size:0.7rem'>Length and Width in feet</span>"
-//                   delay={0.1}
-//                 />
-//                 {step === "enterDimensions" ? (
-//                   <motion.div
-//                     initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-//                     transition={{ delay: 0.25 }} className="ml-9 md:ml-10 mt-1 mb-2"
-//                   >
-//                     <div className="flex gap-2 mb-2">
-//                       <input
-//                         type="number"
-//                         value={form.length}
-//                         onChange={(e) => setField("length", e.target.value)}
-//                         placeholder="Length (ft)"
-//                         className="flex-1 px-3 py-2 md:py-2.5 rounded-xl text-xs md:text-sm outline-none"
-//                         style={{
-//                           background: "hsl(var(--card))",
-//                           border: `1px solid ${errors.length ? "hsl(0 72% 51%)" : "hsl(var(--border))"}`,
-//                           color: "hsl(var(--card-foreground))",
-//                         }}
-//                       />
-//                       <input
-//                         type="number"
-//                         value={form.width}
-//                         onChange={(e) => setField("width", e.target.value)}
-//                         placeholder="Width (ft)"
-//                         className="flex-1 px-3 py-2 md:py-2.5 rounded-xl text-xs md:text-sm outline-none"
-//                         style={{
-//                           background: "hsl(var(--card))",
-//                           border: `1px solid ${errors.width ? "hsl(0 72% 51%)" : "hsl(var(--border))"}`,
-//                           color: "hsl(var(--card-foreground))",
-//                         }}
-//                       />
-//                       <Button
-//                         size="sm" onClick={submitDimensions}
-//                         className="shrink-0 rounded-xl px-3 md:px-4 text-xs md:text-sm"
-//                         style={{ background: "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(35 80% 45%) 100%)" }}
-//                       >✓</Button>
-//                     </div>
-//                     {(errors.length || errors.width) && (
-//                       <p className="text-xs mt-1" style={{ color: "hsl(0 72% 51%)" }}>
-//                         {errors.length || errors.width}
-//                       </p>
-//                     )}
-//                   </motion.div>
-//                 ) : (
-//                   <UserBubble text={`📐 ${form.length}ft (L) × ${form.width}ft (W)`} />
-//                 )}
-//               </>
-//             )}
-
-//           {/* SELECT DATE & TIME */}
-//           {(step === "selectDateTime" || step === "summary") && (
-//             <>
-//               <BotBubble
-//                 text="🗓️ Almost done! Please select your <strong>Preferred Consultation Date &amp; Time</strong>"
-//                 delay={0.1}
-//               />
-
-//               {step === "selectDateTime" ? (
-//                 <motion.div
-//                   initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-//                   transition={{ delay: 0.25 }}
-//                   className="ml-9 md:ml-10 mt-1 mb-2 space-y-3"
-//                 >
-//                   {/* Date Picker */}
-//                   <div>
-//                     <label className="text-xs font-medium mb-1.5 block" style={{ color: "hsl(var(--muted-foreground))" }}>
-//                       Preferred Date
-//                     </label>
-//                     <input
-//                       type="date"
-//                       min={todayStr}
-//                       value={form.consultDate}
-//                       onChange={(e) => setField("consultDate", e.target.value)}
-//                       className="w-full px-3 md:px-4 py-2 md:py-2.5 rounded-xl text-xs md:text-sm outline-none"
-//                       style={{
-//                         background: "hsl(var(--card))",
-//                         border: `1px solid ${errors.consultDate ? "hsl(0 72% 51%)" : "hsl(var(--border))"}`,
-//                         color: "hsl(var(--card-foreground))",
-//                         colorScheme: "dark",
-//                       }}
-//                     />
-//                     {errors.consultDate && (
-//                       <p className="text-xs mt-1" style={{ color: "hsl(0 72% 51%)" }}>{errors.consultDate}</p>
-//                     )}
-//                   </div>
-
-//                   {/* Time Slot Grid — 3 cols mobile, same desktop */}
-//                   <div>
-//                     <label className="text-xs font-medium mb-1.5 block" style={{ color: "hsl(var(--muted-foreground))" }}>
-//                       Preferred Time Slot
-//                     </label>
-//                     <div className="grid grid-cols-3 gap-1.5 md:gap-2">
-//                       {TIME_SLOTS.map((slot) => (
-//                         <button
-//                           key={slot}
-//                           onClick={() => setField("consultTime", slot)}
-//                           className="px-1 py-2 md:py-2.5 rounded-xl text-[10px] md:text-xs font-medium transition-all duration-200 border"
-//                           style={{
-//                             background: form.consultTime === slot ? "hsl(var(--primary)/0.15)" : "hsl(var(--card)/0.6)",
-//                             borderColor: form.consultTime === slot ? "hsl(var(--primary))" : "hsl(var(--border))",
-//                             color: form.consultTime === slot ? "hsl(var(--primary))" : "hsl(var(--card-foreground))",
-//                           }}
-//                         >
-//                           {slot}
-//                         </button>
-//                       ))}
-//                     </div>
-//                     {errors.consultTime && (
-//                       <p className="text-xs mt-1" style={{ color: "hsl(0 72% 51%)" }}>{errors.consultTime}</p>
-//                     )}
-//                   </div>
-
-//                   <Button
-//                     onClick={submitDateTime}
-//                     className="w-full rounded-xl font-medium text-xs md:text-sm"
-//                     style={{ background: "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(35 80% 45%) 100%)" }}
-//                   >
-//                     Confirm Inquiry →
-//                   </Button>
-//                 </motion.div>
-//               ) : (
-//                 <UserBubble
-//                   text={`🗓️ ${new Date(form.consultDate).toLocaleDateString("en-IN", {
-//                     day: "2-digit", month: "short", year: "numeric",
-//                   })} at ${form.consultTime}`}
-//                 />
-//               )}
-//             </>
-//           )}
-
-//           {/* SUMMARY */}
-//           {step === "summary" && (
-//             <>
-//               <BotBubble text="🎉 <strong>Thank You!</strong> Your inquiry has been received successfully. 🎉" delay={0.2} />
-//               <BotBubble
-//                 text={`<strong>Here's a summary of your inquiry:</strong><br/><br/>
-// ${serviceEmojis[selectedService!]} <strong>Service:</strong>&nbsp;<span style="color:hsl(var(--primary))">${selectedService}</span><br/>
-// 📱 <strong>Mobile:</strong>&nbsp;<span style="color:hsl(var(--primary))">+91 ${form.mobile}</span><br/>
-// ${form.dob ? `📅 <strong>DOB:</strong>&nbsp;<span style="color:hsl(var(--primary))">${form.dob}</span><br/>` : ""}${form.tob ? `🕐 <strong>TOB:</strong>&nbsp;<span style="color:hsl(var(--primary))">${form.tob}</span><br/>` : ""}${form.pob ? `📍 <strong>POB:</strong>&nbsp;<span style="color:hsl(var(--primary))">${form.pob}</span><br/>` : ""}${form.length ? `📐 <strong>Dimensions:</strong>&nbsp;<span style="color:hsl(var(--primary))">${form.length}ft × ${form.width}ft</span><br/>` : ""}🗓️ <strong>Date:</strong>&nbsp;<span style="color:hsl(var(--primary))">${new Date(form.consultDate).toLocaleDateString("en-IN", { day: "2-digit", month: "long", year: "numeric" })}</span><br/>
-// ⏰ <strong>Time:</strong>&nbsp;<span style="color:hsl(var(--primary))">${form.consultTime}</span><br/><br/>
-// Our <strong><span style="color:hsl(var(--primary))">team</span></strong> will contact you on <strong>+91 ${form.mobile}</strong> shortly. 🙏`}
-//                 delay={0.4}
-//               />
-//               <motion.div
-//                 initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-//                 transition={{ delay: 0.8 }} className="ml-9 md:ml-10 mt-2"
-//               >
-//                 <Button size="sm" variant="outline" onClick={handleReset} className="text-xs rounded-xl">
-//                   ← New Inquiry
-//                 </Button>
-//               </motion.div>
-//             </>
-//           )}
-
-//           {/* Scroll anchor — inside chat box */}
-//           <div ref={bottomRef} className="h-1 shrink-0" />
-//         </div>
-//       </motion.div>
-
-//       {/* Progress Dots */}
-//       <div className="flex justify-center items-center gap-1.5 pb-2">
-//         {progressSteps.map((s, i) => (
-//           <div
-//             key={s}
-//             className="rounded-full transition-all duration-300"
-//             style={{
-//               width: progressIndex === i ? "20px" : "7px",
-//               height: "7px",
-//               background: progressIndex >= i ? "hsl(var(--primary))" : "hsl(var(--border))",
-//             }}
-//           />
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// // ─── Page ─────────────────────────────────────────────────────────────────────
-
-// const Inquiry = () => {
-//   return (
-//     <>
-//       <Helmet>
-//         <title>Inquiry - Ask Your Question | Astro Santosh Pandey</title>
-//         <meta
-//           name="description"
-//           content="Send an inquiry to Astro Santosh Pandey. Get personalized guidance on astrology, numerology, vastu, and palmistry."
-//         />
-//         <link rel="canonical" href="https://astrosantoshpandey.com/inquiry" />
-//       </Helmet>
-//       <Layout>
-//         {/* Hero */}
-//         <section className="pt-28 md:pt-32 pb-6 md:pb-8 bg-gradient-hero relative overflow-hidden">
-//           <div className="container mx-auto px-4 relative z-10">
-//             <motion.div
-//               initial={{ opacity: 0, y: 30 }}
-//               animate={{ opacity: 1, y: 0 }}
-//               transition={{ duration: 0.6 }}
-//               className="max-w-4xl"
-//             >
-//               <span className="text-primary font-medium text-xs md:text-sm uppercase tracking-wider">
-//                 Send an Inquiry
-//               </span>
-//               <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mt-3 md:mt-4 mb-4 md:mb-6 leading-tight">
-//                 Ask Your Question.
-//                 <span className="text-gradient-gold"> Find Your Path.</span>
-//               </h1>
-//               <p className="text-muted-foreground text-base md:text-lg lg:text-xl max-w-2xl">
-//                 Have a question about your stars, numbers, or space? Send us an inquiry
-//                 and our experts will guide you towards clarity and cosmic alignment.
-//               </p>
-//             </motion.div>
-//           </div>
-//         </section>
-
-//         {/* Chat Section */}
-//         <section className="py-6 md:py-12 bg-background relative scroll-mt-32" id="inquiry">
-//           <div className="container mx-auto px-3 sm:px-4 max-w-xl md:max-w-2xl lg:max-w-3xl">
-//             <motion.div
-//               initial={{ opacity: 0, y: 20 }}
-//               animate={{ opacity: 1, y: 0 }}
-//               transition={{ duration: 0.5, delay: 0.2 }}
-//               className="text-center mb-6 md:mb-8"
-//             >
-//               <h2 className="font-serif text-xl md:text-2xl lg:text-3xl font-bold mb-2 md:mb-3">
-//                 Chat With <span className="text-gradient-gold">Our Team</span>
-//               </h2>
-//               <p className="text-muted-foreground text-xs md:text-sm lg:text-base max-w-lg mx-auto">
-//                 Select your area of interest, share your details, and we'll reach out to you personally.
-//               </p>
-//             </motion.div>
-//             <InquiryProcess />
-//           </div>
-//         </section>
-
-//         {/* Info Cards */}
-//         <section className="py-8 md:py-10 bg-gradient-cosmic">
-//           <div className="container mx-auto px-4">
-//             <motion.div
-//               initial={{ opacity: 0, y: 30 }}
-//               whileInView={{ opacity: 1, y: 0 }}
-//               viewport={{ once: true }}
-//               className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 max-w-5xl mx-auto"
-//             >
-//               {[
-//                 { icon: "🪐", title: "Astrology", desc: "Birth chart analysis, transit readings & life predictions." },
-//                 { icon: "🔢", title: "Numerology", desc: "Unlock your life path, destiny & soul urge through numbers." },
-//                 { icon: "🏠", title: "Vastu", desc: "Harmonize your living and work spaces with cosmic energies." },
-//                 { icon: "✋", title: "Palmistry", desc: "Read the lines of destiny on your palm — in-person in Mumbai." },
-//               ].map((card, i) => (
-//                 <motion.div
-//                   key={card.title}
-//                   initial={{ opacity: 0, y: 20 }}
-//                   whileInView={{ opacity: 1, y: 0 }}
-//                   viewport={{ once: true }}
-//                   transition={{ delay: i * 0.1 }}
-//                   className="cosmic-card p-4 md:p-6 rounded-2xl text-center"
-//                 >
-//                   <div className="text-2xl md:text-4xl mb-2 md:mb-3">{card.icon}</div>
-//                   <h3 className="font-serif font-bold text-sm md:text-lg mb-1 md:mb-2">{card.title}</h3>
-//                   <p className="text-muted-foreground text-[11px] md:text-sm leading-relaxed">{card.desc}</p>
-//                 </motion.div>
-//               ))}
-//             </motion.div>
-//           </div>
-//         </section>
-//       </Layout>
-//     </>
-//   );
-// };
-
-// export default Inquiry;
-
-
-//testing
-
-
-
 import { Helmet } from "react-helmet-async";
 import { motion, AnimatePresence } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import axios from "axios";
 import {
   ChevronRight, ChevronLeft, CheckCircle2,
   Star, Phone, Calendar, Clock, MapPin, Ruler,
@@ -858,6 +50,8 @@ const HOURS   = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, "
 const MINUTES = ["00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"];
 const todayStr = new Date().toISOString().split("T")[0];
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+
 const formatDisplayDate = (iso: string) => {
   if (!iso) return "";
   const [y, m, d] = iso.split("-");
@@ -877,9 +71,7 @@ const StepBar = ({ current }: { current: number }) => (
         <div key={label} className="flex items-center">
           <div className="flex flex-col items-center gap-1.5">
             <motion.div
-              animate={{
-                scale: active ? 1.1 : 1,
-              }}
+              animate={{ scale: active ? 1.1 : 1 }}
               transition={{ duration: 0.25 }}
               className="w-8 h-8 md:w-9 md:h-9 rounded-full flex items-center justify-center border-2 shadow-sm transition-all duration-300"
               style={{
@@ -1023,7 +215,8 @@ const Step2 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof
       </Field>
 
       {/* Mobile */}
-      <Field label="Mobile Number" icon={<Phone size={13} />} error={errors.mobile} required hint="We'll contact you on this number to confirm your appointment">
+      <Field label="Mobile Number" icon={<Phone size={13} />} error={errors.mobile} required
+        hint="You'll receive a WhatsApp confirmation on this number">
         <div className="flex gap-2">
           <div className="flex items-center px-3 rounded-xl text-sm font-medium shrink-0"
             style={{ background: "hsl(var(--card))", border: "1.5px solid hsl(var(--border))", color: "hsl(var(--muted-foreground))" }}>
@@ -1051,19 +244,16 @@ const Step2 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof
           error={errors.tob_hour || errors.tob_minute} required
           hint={form.tob_hour && form.tob_minute ? `Selected: ${form.tob_hour}:${form.tob_minute} ${form.tob_period}` : "Select hour, minute and AM/PM"}>
           <div className="grid grid-cols-3 gap-2">
-            {/* Hour dropdown */}
             <select value={form.tob_hour} onChange={(e) => setField("tob_hour", e.target.value)}
               className={iCls} style={{ ...iStyle(errors.tob_hour), colorScheme: "dark" }}>
               <option value="">Hour</option>
               {HOURS.map((h) => <option key={h} value={h}>{h}</option>)}
             </select>
-            {/* Minute dropdown */}
             <select value={form.tob_minute} onChange={(e) => setField("tob_minute", e.target.value)}
               className={iCls} style={{ ...iStyle(errors.tob_minute), colorScheme: "dark" }}>
               <option value="">Min</option>
               {MINUTES.map((m) => <option key={m} value={m}>{m}</option>)}
             </select>
-            {/* AM / PM toggle */}
             <div className="flex rounded-xl overflow-hidden" style={{ border: "1.5px solid hsl(var(--border))" }}>
               {(["AM", "PM"] as const).map((p) => (
                 <button key={p} type="button" onClick={() => setField("tob_period", p)}
@@ -1113,7 +303,7 @@ const Step2 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof
             <p className="text-sm font-semibold" style={{ color: "hsl(var(--primary))" }}>In-Person · Mumbai Only</p>
             <p className="text-xs mt-1 text-muted-foreground">
               Palmistry readings are conducted exclusively in-person at our Mumbai centre.
-              Our team will contact you to schedule your visit.
+              Our team will contact you on WhatsApp to schedule your visit.
             </p>
           </div>
         </motion.div>
@@ -1237,6 +427,7 @@ const SuccessScreen = ({ form, onReset }: { form: FormData; onReset: () => void 
       style={{ background: "linear-gradient(135deg, hsl(var(--primary)), hsl(35 80% 45%))" }}>
       🎉
     </motion.div>
+
     <div>
       <h3 className="font-serif text-xl md:text-2xl font-bold mb-2" style={{ color: "hsl(var(--card-foreground))" }}>
         Inquiry Submitted!
@@ -1246,25 +437,58 @@ const SuccessScreen = ({ form, onReset }: { form: FormData; onReset: () => void 
         Your inquiry has been received successfully.
       </p>
     </div>
-    <div className="rounded-2xl p-4 text-sm space-y-2 text-left"
+
+    <div className="rounded-2xl p-4 text-sm space-y-3 text-left"
       style={{ background: "hsl(var(--card))", border: "1.5px solid hsl(var(--border))" }}>
-      <p className="text-muted-foreground">
-        📱 We'll reach out on{" "}
-        <strong style={{ color: "hsl(var(--card-foreground))" }}>+91 {form.mobile}</strong> to confirm your appointment.
-      </p>
-      {form.consultDate && (
+      <div className="flex items-start gap-2">
+        <span className="text-base shrink-0">💬</span>
         <p className="text-muted-foreground">
-          🗓️ Preferred slot:{" "}
-          <strong style={{ color: "hsl(var(--primary))" }}>
-            {new Date(form.consultDate).toLocaleDateString("en-IN", { day: "2-digit", month: "long", year: "numeric" })}
-            {form.consultTime && ` at ${form.consultTime}`}
-          </strong>
+          A WhatsApp confirmation has been sent to{" "}
+          <strong style={{ color: "hsl(var(--card-foreground))" }}>+91 {form.mobile}</strong>.
+          Our team will reach out on the same number to confirm your appointment.
         </p>
+      </div>
+
+      {form.consultDate && (
+        <div className="flex items-start gap-2">
+          <span className="text-base shrink-0">🗓️</span>
+          <p className="text-muted-foreground">
+            Preferred slot:{" "}
+            <strong style={{ color: "hsl(var(--primary))" }}>
+              {new Date(form.consultDate).toLocaleDateString("en-IN", { day: "2-digit", month: "long", year: "numeric" })}
+              {form.consultTime && ` at ${form.consultTime}`}
+            </strong>
+          </p>
+        </div>
+      )}
+
+      {form.service === "Palmistry" && (
+        <div className="flex items-start gap-2">
+          <span className="text-base shrink-0">✋</span>
+          <p className="text-muted-foreground">
+            Your Palmistry reading is in-person at our Mumbai centre. We'll WhatsApp you to schedule your visit.
+          </p>
+        </div>
       )}
     </div>
-    <Button variant="outline" onClick={onReset} className="rounded-xl text-sm">
-      Submit Another Inquiry
-    </Button>
+
+    {/* Direct WhatsApp CTA */}
+    <a
+      href="https://wa.me/918879731174"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 hover:opacity-90"
+      style={{ background: "#25D366", color: "#fff" }}
+    >
+      <span className="text-base">💬</span>
+      Chat with us on WhatsApp
+    </a>
+
+    <div>
+      <Button variant="outline" onClick={onReset} className="rounded-xl text-sm">
+        Submit Another Inquiry
+      </Button>
+    </div>
   </motion.div>
 );
 
@@ -1277,10 +501,12 @@ const EMPTY: FormData = {
 };
 
 const InquiryForm = () => {
-  const [step, setStep]         = useState(0);
-  const [submitted, setSubmit]  = useState(false);
-  const [form, setForm]         = useState<FormData>(EMPTY);
-  const [errors, setErrors]     = useState<FieldErrors>({});
+  const [step, setStep]                 = useState(0);
+  const [submitted, setSubmit]          = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError]   = useState<string | null>(null);
+  const [form, setForm]                 = useState<FormData>(EMPTY);
+  const [errors, setErrors]             = useState<FieldErrors>({});
 
   const setField = (key: keyof FormData, value: string) => {
     setForm((f) => ({ ...f, [key]: value }));
@@ -1293,9 +519,9 @@ const InquiryForm = () => {
       if (!form.service) e.service = "Please select a service to continue.";
     }
     if (step === 1) {
-      if (!form.name.trim())                           e.name   = "Please enter your full name.";
+      if (!form.name.trim())                              e.name   = "Please enter your full name.";
       if (!form.mobile || !/^\d{10}$/.test(form.mobile)) e.mobile = "Enter a valid 10-digit number.";
-      if (form.service !== "Vastu" && !form.dob)       e.dob    = "Please select your date of birth.";
+      if (form.service !== "Vastu" && !form.dob)          e.dob    = "Please select your date of birth.";
       if (form.service === "Astrology") {
         if (!form.tob_hour)   e.tob_hour   = "Select hour.";
         if (!form.tob_minute) e.tob_minute = "Select minute.";
@@ -1326,12 +552,48 @@ const InquiryForm = () => {
     else setStep((s) => Math.max(s - 1, 0));
   };
 
-  const submit = () => {
+  const submit = async () => {
     if (!validate()) return;
-    setSubmit(true);
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const tob = form.service === "Astrology" && form.tob_hour && form.tob_minute
+        ? `${form.tob_hour}:${form.tob_minute} ${form.tob_period}`
+        : undefined;
+
+      const payload = {
+        service:     form.service,
+        name:        form.name,
+        mobile:      form.mobile,
+        dob:         form.service !== "Vastu" ? form.dob : undefined,
+        tob:         tob,
+        pob:         form.service === "Astrology" ? form.pob : undefined,
+        length:      form.service === "Vastu" ? form.length : undefined,
+        width:       form.service === "Vastu" ? form.width : undefined,
+        consultDate: form.consultDate || undefined,
+        consultTime: form.consultTime || undefined,
+        message:     form.message || undefined,
+      };
+
+      await axios.post(`${API_BASE_URL}/inquiry`, payload);
+      setSubmit(true);
+    } catch (err) {
+      console.error("Inquiry submission error:", err);
+      setSubmitError("Something went wrong. Please try again or WhatsApp us directly at +91 88797 31174.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const reset = () => { setForm(EMPTY); setErrors({}); setStep(0); setSubmit(false); };
+  const reset = () => {
+    setForm(EMPTY);
+    setErrors({});
+    setStep(0);
+    setSubmit(false);
+    setSubmitError(null);
+  };
 
   if (submitted) return <SuccessScreen form={form} onReset={reset} />;
 
@@ -1351,22 +613,44 @@ const InquiryForm = () => {
         </motion.div>
       </AnimatePresence>
 
+      {/* Submit error */}
+      {submitError && (
+        <motion.div initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
+          className="mt-4 p-3 rounded-xl text-xs text-center"
+          style={{ background: "hsl(0 72% 51%/0.1)", border: "1.5px solid hsl(0 72% 51%/0.4)", color: "hsl(0 72% 60%)" }}>
+          ⚠️ {submitError}
+        </motion.div>
+      )}
+
       {/* Navigation */}
       <div className={`flex mt-8 gap-3 ${step > 0 ? "justify-between" : "justify-end"}`}>
         {step > 0 && (
-          <Button variant="outline" onClick={back} className="rounded-xl flex items-center gap-1.5 text-sm">
+          <Button variant="outline" onClick={back} disabled={isSubmitting}
+            className="rounded-xl flex items-center gap-1.5 text-sm">
             <ChevronLeft size={15} /> Back
           </Button>
         )}
         {step < 3 ? (
-          <Button onClick={next} className="rounded-xl flex items-center gap-1.5 text-sm font-semibold px-6"
+          <Button onClick={next}
+            className="rounded-xl flex items-center gap-1.5 text-sm font-semibold px-6"
             style={{ background: "linear-gradient(135deg, hsl(var(--primary)), hsl(35 80% 45%))" }}>
             Continue <ChevronRight size={15} />
           </Button>
         ) : (
-          <Button onClick={submit} className="rounded-xl flex items-center gap-1.5 text-sm font-semibold px-6"
+          <Button onClick={submit} disabled={isSubmitting}
+            className="rounded-xl flex items-center gap-1.5 text-sm font-semibold px-6"
             style={{ background: "linear-gradient(135deg, hsl(var(--primary)), hsl(35 80% 45%))" }}>
-            Submit Inquiry <CheckCircle2 size={15} />
+            {isSubmitting ? (
+              <>
+                <svg className="animate-spin w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                </svg>
+                Submitting…
+              </>
+            ) : (
+              <>Submit Inquiry <CheckCircle2 size={15} /></>
+            )}
           </Button>
         )}
       </div>
