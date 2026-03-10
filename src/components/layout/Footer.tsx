@@ -4,11 +4,10 @@ import {
   SiInstagram,
   SiYoutube,
   SiX,
-  SiLinkedin,
   SiWhatsapp,
-  SiGoogle
 } from "react-icons/si";
 
+import { FaLinkedin } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
 import LOGO from "@/assets/name_logo.png";
@@ -26,7 +25,7 @@ const quickLinks = [
   { name: "About Us", path: "/about" },
   { name: "Contact", path: "/contact" },
   { name: "Book Consultation", path: "/contact#booking" },
-   { name: "Inquiry", path: "/inquiry" },  // ← add this line
+  { name: "Inquiry", path: "/inquiry" },
 ];
 
 const socialLinks = [
@@ -63,7 +62,7 @@ const socialLinks = [
     hoverBg: "hover:bg-black/90",
   },
   {
-    icon: SiLinkedin,
+    icon: FaLinkedin,
     href: "https://www.linkedin.com/in/astrosantoshpandey",
     label: "LinkedIn",
     color: "text-white",
@@ -88,17 +87,16 @@ const socialLinks = [
   },
 ];
 
-
 export const Footer = () => {
   return (
     <footer className="bg-gradient-cosmic border-t border-border">
       <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-14">
+
           {/* Brand */}
           <div>
             <div className="flex flex-col items-start gap-1 mb-4">
               <Link to="/" className="flex items-center gap-1 group">
-                {/* Hanuman Ganesha Logo */}
                 <div className="flex-shrink-0">
                   <img
                     src={hanumanGaneshaLogo}
@@ -106,8 +104,6 @@ export const Footer = () => {
                     className="h-16 w-auto object-contain"
                   />
                 </div>
-
-                {/* Name Logo & Shloka */}
                 <div className="flex flex-col items-start justify-center">
                   <div className="flex-shrink-0">
                     <img
@@ -119,8 +115,9 @@ export const Footer = () => {
                   <p
                     className="text-primary text-sm italic font-serif tracking-wide ml-2"
                     style={{
-                      textShadow: '0 2px 12px rgba(218, 165, 32, 0.7), 0 0 25px rgba(218, 165, 32, 0.5), 0 0 35px rgba(218, 165, 32, 0.3)',
-                      letterSpacing: '0.05em'
+                      textShadow:
+                        "0 2px 12px rgba(218, 165, 32, 0.7), 0 0 25px rgba(218, 165, 32, 0.5), 0 0 35px rgba(218, 165, 32, 0.3)",
+                      letterSpacing: "0.05em",
                     }}
                   >
                     ज्योतिषं सर्वार्थ साधकं
@@ -195,7 +192,10 @@ export const Footer = () => {
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-primary shrink-0" />
-                <a href="tel:+918879731174" className="text-muted-foreground hover:text-primary text-sm">
+                <a
+                  href="tel:+918879731174"
+                  className="text-muted-foreground hover:text-primary text-sm"
+                >
                   +91 8879731174
                 </a>
               </li>
@@ -205,7 +205,7 @@ export const Footer = () => {
                   href="https://mail.google.com/mail/?view=cm&fs=1&to=connect@astrosantoshpandey.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className=" hover:text-primary text-sm text-muted-foreground"
+                  className="hover:text-primary text-sm text-muted-foreground"
                 >
                   connect@astrosantoshpandey.com
                 </a>
@@ -224,9 +224,7 @@ export const Footer = () => {
             >
               Terms & Conditions
             </Link>
-
             <span className="mx-2">|</span>
-
             <Link
               to="/Terms#cancellation"
               className="relative after:absolute after:left-0 after:-bottom-1 after:h-[1px] after:w-0 after:bg-current after:transition-all hover:after:w-full"
@@ -234,18 +232,15 @@ export const Footer = () => {
               Cancellation & Refund Policy
             </Link>
             <span className="mx-2">|</span>
-
             <Link
               to="/privacy"
               className="relative after:absolute after:left-0 after:-bottom-1 after:h-[1px] after:w-0 after:bg-current after:transition-all hover:after:w-full"
             >
               Privacy Policy
             </Link>
-
-
           </p>
         </div>
       </div>
-    </footer >
+    </footer>
   );
 };
