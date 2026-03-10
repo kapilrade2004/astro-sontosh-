@@ -7,7 +7,6 @@ import { FeaturedPredictions } from "@/components/home/FeaturedPredictions";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { RemediesSection } from "@/components/home/RemediesSection";
 import { CTASection } from "@/components/home/CTASection";
-
 const Index = () => {
   return (
     <>
