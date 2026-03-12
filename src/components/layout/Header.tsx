@@ -13,6 +13,7 @@ const navItems = [
   { name: "Numerology", path: "/numerology" },
   { name: "Vastu", path: "/vastu" },
   { name: "Palmistry", path: "/palmistry" },
+  { name: "Courses", path: "/courses" },
   { name: "About", path: "/about" },
   { name: "Contact", path: "/contact" },
 ];

@@ -156,13 +156,12 @@ const Numerology = () => {
       return;
     }
 
-    // Compose Gmail
-    const subject = encodeURIComponent('Numerology Analysis Request');
-    const body = encodeURIComponent(
+    // Compose WhatsApp message
+    const message = encodeURIComponent(
       `Hello Astro Santosh Pandey,\n\nI would like to request a numerology analysis.\n\nMy Details:\nFull Name: ${formData.name}\nMobile Number: ${formData.mobile}\nDate of Birth: ${formData.dob}\n\nThank you.`
     );
 
-    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=connect@astrosantoshpandey.com&su=${subject}&body=${body}`, '_blank');
+    window.open(`https://wa.me/918879731174?text=${message}`, '_blank');
 
     // Reset form and close
     setFormData({ name: '', mobile: '', dob: '' });
@@ -482,7 +481,7 @@ const Numerology = () => {
                     type="submit"
                     className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-gold mt-4"
                   >
-                    Send Email Request
+                    Send WhatsApp Request
                   </Button>
                 </form>
               </motion.div>

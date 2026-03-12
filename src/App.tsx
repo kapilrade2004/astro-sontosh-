@@ -17,7 +17,8 @@ import ScrolltoTop from "./components/ScrolltoTop";
 import TermsAndPolicy from "./pages/Terms&Policy";
 import PrivacyPolicy from "./pages/Privacypolicypage";
 import Inquiry from "./pages/Inquiry";
-
+import Courses from "./pages/Courses";
+import Pricing from "./pages/Pricing";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -39,6 +40,8 @@ const App = () => (
             <Route path="/terms" element={<TermsAndPolicy />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/inquiry" element={<Inquiry />} />
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/pricing" element={<Pricing />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
