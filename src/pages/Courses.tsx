@@ -91,20 +91,77 @@ const Courses = () => {
       </Helmet>
 
       {/* Hero */}
-      <section className="relative min-h-[70vh] flex items-center overflow-hidden">
+      <section className="pt-32 pb-20 bg-gradient-hero relative overflow-hidden">
         <CosmicBackground />
-        <div className="container mx-auto px-4 pt-28 pb-16 relative z-10">
-          <Breadcrumbs />
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0} className="space-y-6">
-              <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                Learn the <span className="text-gradient-gold">Sacred Science</span> of Vedic Astrology
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-14 items-center">
+
+            {/* Left Content */}
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={fadeUp}
+              custom={0}
+              className="space-y-6"
+            >
+
+              {/* Badge */}
+              <span className="text-primary font-medium text-sm uppercase tracking-wider">
+                Vedic Astrology Courses – Vidya Dhanam
+              </span>
+
+              {/* Enhanced Sanskrit Shloka - Left Aligned */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="relative mt-3 mb-6"
+              >
+                {/* Sacred glow aura */}
+                <div className="absolute -inset-4 -left-2 bg-gradient-radial from-amber-400/20 via-yellow-400/10 to-transparent blur-2xl animate-pulse pointer-events-none" />
+
+                {/* Sanskrit text with enhanced styling */}
+                <div
+                  className="text-sm md:text-lg italic font-bold
+            tracking-normal
+            leading-loose
+            text-left
+            relative
+            bg-[length:200%_auto]
+            bg-gradient-to-r 
+            from-yellow-100 
+            via-amber-200
+            via-yellow-300 
+            via-amber-300
+            via-orange-300
+            to-yellow-100
+            bg-clip-text text-transparent
+            animate-[shimmer_5s_linear_infinite]
+            drop-shadow-[0_0_20px_rgba(251,191,36,0.95)]
+            drop-shadow-[0_0_35px_rgba(245,158,11,0.7)]"
+                  style={{
+                    textShadow: `
+              0 0 5px rgba(255,215,0,0.5),
+              0 0 12px rgba(251,191,36,0.4),
+              0 0 25px rgba(245,158,11,0.3),
+              0 3px 8px rgba(0,0,0,0.3)
+            `,
+                  }}
+                >
+                  <span className="inline-block mr-2 text-[#FFD700] animate-pulse">॥</span>
+                  विद्याधनं सर्वधनं प्रधानम्
+                  <span className="inline-block ml-2 text-[#FFD700] animate-pulse">॥</span>
+                </div>
+              </motion.div>
+
+              <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mt-4 mb-6 leading-tight max-w-2xl">
+                Learn the <span className="text-gradient-gold">Sacred Science </span>
+                <br className="hidden lg:block" />
+                of Vedic Astrology
               </h1>
               <p className="text-muted-foreground text-lg leading-relaxed max-w-xl">
                 Discover the timeless wisdom of astrology and learn how planetary movements influence human life. Our structured courses are designed to help beginners, enthusiasts, and aspiring astrologers understand horoscope analysis, planetary energies, and predictive techniques.
-              </p>
-              <p className="text-muted-foreground leading-relaxed max-w-xl">
-                Learn directly from traditional Vedic concepts and build the ability to interpret charts with clarity and confidence.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button size="lg" className="glow-gold" asChild>
