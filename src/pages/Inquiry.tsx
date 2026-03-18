@@ -50,7 +50,7 @@ const HOURS   = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, "
 const MINUTES = ["00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"];
 const todayStr = new Date().toISOString().split("T")[0];
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://backend.astrosantoshpandey.com";
 
 const formatDisplayDate = (iso: string) => {
   if (!iso) return "";
