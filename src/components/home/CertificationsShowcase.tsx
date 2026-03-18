@@ -19,6 +19,9 @@ import CAG from "@/assets/Crystal-And-Gemstone-1.png"
 import RC from "@/assets/Rudraksha-Course-1.png"
 import CA from "@/assets/4. Certificate_Certificate_Astrology _page-0001.jpg"
 import MCP from "@/assets/certificate-d10-chart-bootcamp-course-by-astro-arun-pandit-67c8194a8ed4440b570f0c07_page-0001.jpg"
+import MCA from "@/assets/Mastery - Medical Astrology_page-0001.jpg"
+import MDA from "@/assets/Mastery - Dasha Analysis.pdf_page-0001.jpg"
+import MCHA from "@/assets/Mastery - Child Astrology_page-0001.jpg"
 const certifications = [
   {
     id: 1,
@@ -125,7 +128,24 @@ const certifications = [
     verified: true,
   },
 
-
+{
+  id: 19,
+  title: "Mastery - Medical Astrology",
+  image: MCA,
+  verified: true,
+},
+{
+  id: 20,
+  title: "Mastery - Dasha Analysis",
+  image: MDA,
+  verified: true,
+},
+{
+  id: 21,
+  title: "Mastery - Child Astrology",
+  image: MCHA,
+  verified: true,
+},
 
 
 

@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
-import {
-  SiFacebook,
-  SiInstagram,
-  SiYoutube,
-  SiX,
-  SiWhatsapp,
-} from "react-icons/si";
+// import {
+//   SiFacebook,
+//   SiInstagram,
+//   SiYoutube,
+//   SiX,
+//   SiWhatsapp,
+// } from "react-icons/si";
 
-import { FaLinkedin } from "react-icons/fa";
+import { SiInstagram, SiX, SiWhatsapp } from "react-icons/si";
+import { FaFacebook, FaYoutube, FaLinkedin } from "react-icons/fa";
+// import { FaLinkedin } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
 import LOGO from "@/assets/name_logo.png";
@@ -29,14 +31,24 @@ const quickLinks = [
 ];
 
 const socialLinks = [
+  // {
+  //   // icon: SiFacebook,
+  //   icon: FaFacebook,
+  //   href: "https://www.facebook.com/astrosantoshpandey",
+  //   label: "Facebook",
+  //   color: "text-white",
+  //   bgColor: "bg-[#1877F2]",
+  //   hoverBg: "hover:bg-[#1877F2]/90",
+  // },
+
   {
-    icon: SiFacebook,
-    href: "https://www.facebook.com/astrosantoshpandey",
-    label: "Facebook",
-    color: "text-white",
-    bgColor: "bg-[#1877F2]",
-    hoverBg: "hover:bg-[#1877F2]/90",
-  },
+  icon: FaFacebook,
+  href: "https://www.facebook.com/astrosantoshpandey",
+  label: "Facebook",
+  color: "text-white",
+  bgColor: "bg-[#1877F2]",
+  hoverBg: "hover:bg-[#1877F2]/90",
+},
   {
     icon: SiInstagram,
     href: "https://www.instagram.com/astrosantoshpandey/",
@@ -45,14 +57,24 @@ const socialLinks = [
     bgColor: "bg-gradient-to-br from-[#833AB4] via-[#E1306C] to-[#F77737]",
     hoverBg: "hover:opacity-90",
   },
+  // {
+  //   // icon: SiYoutube,
+  //   icon: FaYoutube,
+  //   href: "https://www.youtube.com/@astrosantoshpandey",
+  //   label: "YouTube",
+  //   color: "text-white",
+  //   bgColor: "bg-[#FF0000]",
+  //   hoverBg: "hover:bg-[#FF0000]/90",
+  // },
+
   {
-    icon: SiYoutube,
-    href: "https://www.youtube.com/@astrosantoshpandey",
-    label: "YouTube",
-    color: "text-white",
-    bgColor: "bg-[#FF0000]",
-    hoverBg: "hover:bg-[#FF0000]/90",
-  },
+  icon: FaYoutube,
+  href: "https://www.youtube.com/@astrosantoshpandey",
+  label: "YouTube",
+  color: "text-[#FF0000]",        // ← red icon
+  bgColor: "bg-white",            // ← white background
+  hoverBg: "hover:bg-white/90",
+},
   {
     icon: SiX,
     href: "https://x.com/astrosantoshrp",
@@ -139,7 +161,8 @@ export const Footer = () => {
                   aria-label={social.label}
                   className={`w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110 ${social.bgColor} ${social.hoverBg} shadow-md`}
                 >
-                  <social.icon className={`h-5 w-5 ${social.color}`} />
+                  {/* <social.icon className={`h-5 w-5 ${social.color}`} /> */}
+                  <social.icon className={`h-6 w-6 ${social.color}`} />
                 </a>
               ))}
             </div>
