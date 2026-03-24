@@ -4,10 +4,17 @@
   padding: 2rem;
   text-align: center;
 }
-/* Add this to your global CSS file (e.g., index.css or App.css) */
+
+/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
+
+/* ── Remove all italic text across every page ── */
+* {
+  font-style: normal !important;
+}
+
 
 .logo {
   height: 6em;

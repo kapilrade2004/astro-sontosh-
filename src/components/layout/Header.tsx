@@ -43,7 +43,8 @@ export const Header = () => {
         }`}
     >
       <div className="container mx-auto px-4">
-        <nav className="flex items-center justify-between h-20">
+        {/* <nav className="flex items-center justify-between h-20"> */}
+        <nav className="flex items-center justify-between h-24">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-1 group">
             {/* Hanuman Ganesha Logo */}
@@ -55,7 +56,8 @@ export const Header = () => {
               <img
                 src={hanumanGaneshaLogo}
                 alt="Hanuman Ganesha"
-                className="h-12 sm:h-14 md:h-16 w-auto object-contain"
+                // className="h-12 sm:h-14 md:h-16 w-auto object-contain"
+                className="h-16 sm:h-20 md:h-24 w-auto object-contain"
               />
             </motion.div>
 
@@ -69,7 +71,8 @@ export const Header = () => {
                 <img
                   src={nameLogoImage}
                   alt="Astro Santosh Pandey"
-                  className="h-8 sm:h-10 md:h-12 w-auto object-contain"
+                  // className="h-8 sm:h-10 md:h-12 w-auto object-contain"
+                  className="h-12 sm:h-14 md:h-16 w-auto object-contain"
                 />
               </motion.div>
               <span

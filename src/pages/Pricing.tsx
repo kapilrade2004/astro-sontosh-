@@ -1,3 +1,4 @@
+
 import { Helmet } from "react-helmet-async";
 import { Layout } from "@/components/layout/Layout";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
@@ -5,10 +6,14 @@ import { CosmicBackground } from "@/components/ui/CosmicBackground";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { CheckCircle2, Sparkles, GraduationCap, ArrowRight, X } from "lucide-react";
+import {
+  CheckCircle2, Sparkles, GraduationCap, ArrowRight, X,
+  BookOpen, Zap, Star, Layers
+} from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { AnimatePresence } from "framer-motion";
+import { crashCourses } from "./Courses";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -18,11 +23,26 @@ const fadeUp = {
   })
 };
 
+// ── Sub-course options ───────────────────────────────────────────
+const intermediateCourseOptions = [
+  "Course 1 — Transit Analysis",
+  "Course 2 — Blank Chart Prediction",
+];
+const advancedCourseOptions = [
+  "Nakshatra Astrology",
+  "Divisional Chart Analysis",
+];
+const crashCourseOptions = crashCourses.map((c) => c.title);
+
+// ── Plan definitions ─────────────────────────────────────────────
 const plans = [
   {
+    id: "foundation",
     label: "Foundation",
     name: "Foundation Course",
     price: "₹15,000",
+    duration: "3 Months",
+    icon: BookOpen,
     popular: false,
     features: [
       "Complete Astrology Fundamentals",
@@ -34,10 +54,13 @@ const plans = [
     ],
   },
   {
+    id: "intermediate",
     label: "Intermediate",
     name: "Intermediate Courses",
     price: "₹25,000",
     priceSuffix: "Each",
+    duration: "4 Months",
+    icon: Layers,
     popular: true,
     features: [
       "Transit Analysis Techniques",
@@ -47,10 +70,13 @@ const plans = [
     ],
   },
   {
+    id: "advanced",
     label: "Advanced",
     name: "Advanced Courses",
     price: "₹40,000",
     priceSuffix: "Each",
+    duration: "6 Months",
+    icon: Star,
     popular: false,
     features: [
       "Nakshatra Astrology",
@@ -60,13 +86,16 @@ const plans = [
     ],
   },
   {
+    id: "crash",
     label: "Crash Course",
     name: "Crash Courses",
     price: "₹7,000",
     priceSuffix: "Each",
+    duration: "1 Month / course",
+    icon: Zap,
     popular: false,
     features: [
-      "Specialized Astrology Topics",
+      "11 Specialized Topics Available",
       "Focused Learning Modules",
       "Practical Application",
       "Ideal for Skill Enhancement",
@@ -81,22 +110,82 @@ const enrollSteps = [
   { num: "4", title: "Access Learning Portal" },
 ];
 
+// ── Checkbox list ─────────────────────────────────────────────────
+const CheckboxList = ({
+  options,
+  selected,
+  onChange,
+  allowSelectAll,
+  selectAllLabel,
+}: {
+  options: string[];
+  selected: string[];
+  onChange: (val: string[]) => void;
+  allowSelectAll?: boolean;
+  selectAllLabel?: string;
+}) => {
+  const allSelected = selected.length === options.length;
+  const toggle = (opt: string) =>
+    onChange(selected.includes(opt) ? selected.filter((s) => s !== opt) : [...selected, opt]);
+  const toggleAll = () => onChange(allSelected ? [] : [...options]);
+
+  return (
+    <div className="space-y-2">
+      {allowSelectAll && (
+        <label className="flex items-center gap-2.5 cursor-pointer group pb-2 border-b border-primary/10">
+          <div
+            onClick={toggleAll}
+            className={`w-5 h-5 rounded flex items-center justify-center border-2 cursor-pointer transition-all shrink-0
+              ${allSelected ? "bg-primary border-primary" : "border-primary/40 bg-transparent hover:border-primary"}`}
+          >
+            {allSelected && <CheckCircle2 className="w-3 h-3 text-primary-foreground" />}
+          </div>
+          <span className="text-sm font-bold text-primary">{selectAllLabel || "Select All"}</span>
+        </label>
+      )}
+      <div className="space-y-2">
+        {options.map((opt) => {
+          const isChecked = selected.includes(opt);
+          return (
+            <label key={opt} className="flex items-start gap-2.5 cursor-pointer group">
+              <div
+                onClick={() => toggle(opt)}
+                className={`w-5 h-5 rounded flex items-center justify-center border-2 cursor-pointer transition-all shrink-0 mt-0.5
+                  ${isChecked ? "bg-primary border-primary" : "border-primary/30 bg-transparent hover:border-primary/60"}`}
+              >
+                {isChecked && <CheckCircle2 className="w-3 h-3 text-primary-foreground" />}
+              </div>
+              <span className={`text-sm leading-snug transition-colors ${isChecked ? "text-foreground font-medium" : "text-muted-foreground group-hover:text-foreground"}`}>
+                {opt}
+              </span>
+            </label>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+// ── Main Page ─────────────────────────────────────────────────────
 const Pricing = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedCourse, setSelectedCourse] = useState("");
-  const [selectedPrice, setSelectedPrice] = useState("");
+  const [activePlan, setActivePlan] = useState<typeof plans[0] | null>(null);
+  const [selectedSubCourses, setSelectedSubCourses] = useState<string[]>([]);
   const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const handleEnrollClick = (courseName: string, coursePrice?: string) => {
-    setSelectedCourse(courseName);
-    setSelectedPrice(coursePrice || "");
+  const handleEnrollClick = (plan: typeof plans[0]) => {
+    setActivePlan(plan);
+    setSelectedSubCourses([]);
+    setFormData({ name: "", email: "", phone: "" });
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setActivePlan(null);
+    setSelectedSubCourses([]);
     setFormData({ name: "", email: "", phone: "" });
   };
 
@@ -104,32 +193,38 @@ const Pricing = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const needsSubCourse = activePlan && activePlan.id !== "foundation";
+  const isFormValid = activePlan && (!needsSubCourse || selectedSubCourses.length > 0);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isFormValid) {
+      toast({ variant: "destructive", title: "Please select at least one course." });
+      return;
+    }
     setIsSubmitting(true);
-
     try {
       const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "https://backend.astrosantoshpandey.com";
+      const courseLabel = needsSubCourse && selectedSubCourses.length > 0
+        ? `${activePlan?.name}: ${selectedSubCourses.join(", ")}`
+        : activePlan?.name || "";
+
       const response = await fetch(`${apiBaseUrl}/course-enrollment`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
-          course: selectedCourse,
-          price: selectedPrice || "N/A"
+          course: courseLabel,
+          price: activePlan?.price || "N/A",
         }),
       });
-
-      if (!response.ok) throw new Error("Server responded with an error");
-
+      if (!response.ok) throw new Error("Server error");
       toast({
         title: "Enrollment Request Sent",
         description: "We have received your request and will contact you shortly.",
       });
-
       handleCloseModal();
-    } catch (error) {
-      console.error("Enrollment error:", error);
+    } catch {
       toast({
         variant: "destructive",
         title: "Submission Failed",
@@ -139,11 +234,23 @@ const Pricing = () => {
       setIsSubmitting(false);
     }
   };
+
+  // Get sub-course options for active plan
+  const subCourseOptions =
+    activePlan?.id === "intermediate" ? intermediateCourseOptions :
+    activePlan?.id === "advanced" ? advancedCourseOptions :
+    activePlan?.id === "crash" ? crashCourseOptions : [];
+
+  const selectAllLabel =
+    activePlan?.id === "intermediate" ? "Select Both Courses" :
+    activePlan?.id === "advanced" ? "Select Both Courses" :
+    "Select All 11 Courses";
+
   return (
     <Layout>
       <Helmet>
         <title>Course Pricing & Enrollment – Vedic Astrology Courses | Cosmic Guidance</title>
-        <meta name="description" content="View pricing for our Vedic Astrology courses — Foundation, Intermediate, Advanced & Crash Courses. Enroll today and start your astrological learning journey." />
+        <meta name="description" content="View pricing for our Vedic Astrology courses — Foundation, Intermediate, Advanced & Crash Courses." />
       </Helmet>
 
       {/* Hero */}
@@ -183,7 +290,8 @@ const Pricing = () => {
                 )}
                 <span className="text-xs font-semibold uppercase tracking-wider text-primary">{plan.label}</span>
                 <h3 className="font-serif text-xl font-bold mt-2 mb-1">{plan.name}</h3>
-                <div className="mt-4 mb-6">
+                <p className="text-xs text-muted-foreground mb-3">{plan.duration}</p>
+                <div className="mt-2 mb-6">
                   <span className="text-4xl font-bold text-gradient-gold">{plan.price}</span>
                   {plan.priceSuffix && <span className="text-muted-foreground text-sm ml-1">({plan.priceSuffix})</span>}
                 </div>
@@ -194,10 +302,10 @@ const Pricing = () => {
                     </li>
                   ))}
                 </ul>
-                <Button 
-                  className={plan.popular ? "glow-gold w-full" : "w-full"} 
-                  variant={plan.popular ? "default" : "outline"} 
-                  onClick={() => handleEnrollClick(plan.name, plan.price)}
+                <Button
+                  className={plan.popular ? "glow-gold w-full" : "w-full"}
+                  variant={plan.popular ? "default" : "outline"}
+                  onClick={() => handleEnrollClick(plan)}
                 >
                   Enroll Now <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -222,9 +330,7 @@ const Pricing = () => {
                   </div>
                   <span className="text-sm font-medium">{step.title}</span>
                 </div>
-                {i < enrollSteps.length - 1 && (
-                  <ArrowRight className="hidden sm:block h-5 w-5 text-primary/50 mx-2" />
-                )}
+                {i < enrollSteps.length - 1 && <ArrowRight className="hidden sm:block h-5 w-5 text-primary/50 mx-2" />}
               </motion.div>
             ))}
           </div>
@@ -237,19 +343,17 @@ const Pricing = () => {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="space-y-6">
             <Sparkles className="h-10 w-10 text-primary mx-auto" />
             <h2 className="font-serif text-3xl md:text-4xl font-bold">Begin Your Astrology Learning <span className="text-gradient-gold">Journey Today</span></h2>
-            <p className="text-muted-foreground leading-relaxed">
-              Unlock the ancient wisdom of astrology and learn how to interpret the language of the planets.
-            </p>
-            <Button size="lg" className="glow-gold" onClick={() => handleEnrollClick("Astrology Course (General)", "Variable")}>
+            <p className="text-muted-foreground leading-relaxed">Unlock the ancient wisdom of astrology and learn how to interpret the language of the planets.</p>
+            <Button size="lg" className="glow-gold" onClick={() => handleEnrollClick(plans[0])}>
               <GraduationCap className="mr-2 h-5 w-5" />Enroll Now
             </Button>
           </motion.div>
         </div>
       </section>
 
-      {/* Pop Up Enrollment Form */}
+      {/* ── Enrollment Modal ── */}
       <AnimatePresence>
-        {isModalOpen && (
+        {isModalOpen && activePlan && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -262,78 +366,140 @@ const Pricing = () => {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95, y: 20 }}
               transition={{ duration: 0.2 }}
-              className="relative w-full max-w-md bg-background/90 cosmic-card p-6 md:p-8"
+              className="relative w-full max-w-md bg-background/95 cosmic-card overflow-hidden max-h-[92vh] flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
-              <button
-                onClick={handleCloseModal}
-                className="absolute right-4 top-4 text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <X className="h-5 w-5" />
-              </button>
+              {/* ── Modal header with course info ── */}
+              <div className="bg-primary/8 border-b border-primary/15 px-6 py-5 shrink-0">
+                <button
+                  onClick={handleCloseModal}
+                  className="absolute right-4 top-4 w-8 h-8 rounded-full bg-muted/40 hover:bg-muted/70 flex items-center justify-center text-muted-foreground hover:text-foreground transition-all"
+                >
+                  <X className="h-4 w-4" />
+                </button>
 
-              <div className="text-center mb-6">
-                <GraduationCap className="h-8 w-8 text-primary mx-auto mb-3" />
-                <h3 className="font-serif text-2xl font-bold">Course Enrollment</h3>
-                <p className="text-sm text-primary mt-1 font-medium">
-                  {selectedCourse} {selectedPrice && <span className="text-muted-foreground ml-1">({selectedPrice})</span>}
-                </p>
+                <div className="flex items-center gap-3 pr-8">
+                  {/* Course icon */}
+                  <div className="w-11 h-11 rounded-full bg-primary/15 border border-primary/25 flex items-center justify-center shrink-0">
+                    <activePlan.icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold text-primary/70 uppercase tracking-widest mb-0.5">
+                      {activePlan.label}
+                    </p>
+                    <h3 className="font-serif text-lg font-bold text-foreground leading-tight">
+                      {activePlan.name}
+                    </h3>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="text-sm font-bold text-gradient-gold">{activePlan.price}</span>
+                      {activePlan.priceSuffix && (
+                        <span className="text-[10px] text-muted-foreground">/ {activePlan.priceSuffix}</span>
+                      )}
+                      <span className="text-muted-foreground/40">·</span>
+                      <span className="text-[10px] text-muted-foreground">{activePlan.duration}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
+              {/* ── Scrollable body ── */}
+              <div className="overflow-y-auto custom-scrollbar flex-1 px-6 py-5 space-y-4">
+
+                {/* Personal fields */}
                 <div className="space-y-1">
-                  <label htmlFor="name" className="text-sm font-medium text-muted-foreground">Full Name *</label>
+                  <label htmlFor="name" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    Full Name <span className="text-destructive">*</span>
+                  </label>
                   <input
-                    id="name"
-                    name="name"
-                    required
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 rounded-md bg-muted/30 border border-primary/20 focus:border-primary/60 outline-none transition-colors"
-                    placeholder="John Doe"
+                    id="name" name="name" required
+                    value={formData.name} onChange={handleChange}
+                    className="w-full px-4 py-2.5 rounded-xl bg-muted/30 border border-primary/20 focus:border-primary/50 outline-none transition-colors text-sm placeholder:text-muted-foreground/50"
+                    placeholder="Enter your full name"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label htmlFor="phone" className="text-sm font-medium text-muted-foreground">Phone Number *</label>
+                  <label htmlFor="phone" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    Phone Number <span className="text-destructive">*</span>
+                  </label>
                   <input
-                    id="phone"
-                    name="phone"
-                    type="tel"
-                    required
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 rounded-md bg-muted/30 border border-primary/20 focus:border-primary/60 outline-none transition-colors"
-                    placeholder="+91 9876543210"
+                    id="phone" name="phone" type="tel" required
+                    value={formData.phone} onChange={handleChange}
+                    className="w-full px-4 py-2.5 rounded-xl bg-muted/30 border border-primary/20 focus:border-primary/50 outline-none transition-colors text-sm placeholder:text-muted-foreground/50"
+                    placeholder="Enter phone number"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label htmlFor="email" className="text-sm font-medium text-muted-foreground">Email Address (Optional)</label>
+                  <label htmlFor="email" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    Email Address <span className="text-muted-foreground/50 normal-case font-normal">(Optional)</span>
+                  </label>
                   <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 rounded-md bg-muted/30 border border-primary/20 focus:border-primary/60 outline-none transition-colors"
-                    placeholder="john@example.com"
+                    id="email" name="email" type="email"
+                    value={formData.email} onChange={handleChange}
+                    className="w-full px-4 py-2.5 rounded-xl bg-muted/30 border border-primary/20 focus:border-primary/50 outline-none transition-colors text-sm placeholder:text-muted-foreground/50"
+                    placeholder="Enter email address"
                   />
                 </div>
 
-                <div className="pt-2">
-                  <Button 
-                    type="submit" 
-                    className="w-full glow-gold" 
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? "Submitting..." : "Submit Enrollment Request"}
-                  </Button>
-                  <p className="text-center text-xs text-muted-foreground mt-4">
-                    By submitting, you agree to our terms. We will contact you soon!
-                  </p>
-                </div>
-              </form>
+                {/* ── Sub-course selection — only for Intermediate, Advanced, Crash ── */}
+                {needsSubCourse && (
+                  <div className="space-y-3 pt-2 border-t border-primary/10">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-bold text-foreground uppercase tracking-wider">
+                        Select Course(s) <span className="text-destructive">*</span>
+                      </p>
+                      {selectedSubCourses.length > 0 && (
+                        <span className="text-[10px] font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+                          {selectedSubCourses.length} selected
+                        </span>
+                      )}
+                    </div>
+
+                    <div className={`bg-muted/20 rounded-xl border border-primary/15 p-3.5
+                      ${activePlan.id === "crash" ? "max-h-52 overflow-y-auto custom-scrollbar" : ""}`}>
+                      <CheckboxList
+                        options={subCourseOptions}
+                        selected={selectedSubCourses}
+                        onChange={setSelectedSubCourses}
+                        allowSelectAll
+                        selectAllLabel={selectAllLabel}
+                      />
+                    </div>
+
+                    {selectedSubCourses.length === 0 && (
+                      <p className="text-[10px] text-muted-foreground/70">
+                        Please select at least one course to proceed.
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* ── Fixed footer with submit ── */}
+              <div className="px-6 py-4 border-t border-primary/10 bg-background/50 shrink-0">
+                <Button
+                  type="button"
+                  className="w-full glow-gold h-11 text-sm font-bold"
+                  disabled={isSubmitting || !isFormValid || !formData.name || !formData.phone}
+                  onClick={handleSubmit}
+                >
+                  {isSubmitting ? (
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
+                      Submitting...
+                    </div>
+                  ) : (
+                    <>
+                      <GraduationCap className="w-4 h-4 mr-2" />
+                      Submit Enrollment Request
+                    </>
+                  )}
+                </Button>
+                <p className="text-center text-[10px] text-muted-foreground mt-2.5">
+                  By submitting, you agree to our terms. We will contact you soon!
+                </p>
+              </div>
             </motion.div>
           </motion.div>
         )}

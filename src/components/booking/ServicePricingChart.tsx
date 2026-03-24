@@ -7,7 +7,7 @@ const newPricingData = [
     { service: "Astrology (In-Person Mumbai)", price: "7500", duration: "60 min", icon: Sparkles },
     { service: "Premium Kundli", price: "2100", icon: Scroll },
     { service: "Numerology", price: "3100", duration: "30 min", icon: Hash },
-    { service: "Vastu", price: "5100", duration: "30 min", icon: Home },
+    { service: "Vastu (Exploration)", price: "5100", duration: "30 min", icon: Home },
 ];
 
 const repeatPricingData = [

@@ -177,84 +177,193 @@ const Palmistry = () => {
       </Helmet>
       <Layout>
         {/* Hero Section */}
+    {/* Hero Section */}
         <section className="pt-32 pb-16 bg-gradient-hero relative overflow-hidden">
           <div className="container mx-auto px-4 relative z-10">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
 
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="max-w-4xl"
-            >
-              <span className="text-primary font-medium text-sm uppercase tracking-wider">Palmistry – The Mirror of Destiny
-              </span>
-              {/* Enhanced Sanskrit Shloka - Left Aligned */}
+              {/* Left: Text Content */}
               <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative mt-3 mb-6"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
               >
-                {/* Sacred glow aura */}
-                <div className="absolute -inset-4 -left-2 bg-gradient-radial from-amber-400/20 via-yellow-400/10 to-transparent blur-2xl animate-pulse pointer-events-none" />
+                <span className="text-primary font-medium text-sm uppercase tracking-wider">
+                  Palmistry – The Mirror of Destiny
+                </span>
 
-                {/* Sanskrit text with enhanced styling */}
-                <div
-                  className="text-sm md:text-lg italic font-bold
-            tracking-normal
-            leading-loose
-            text-left
-            relative
-            bg-[length:200%_auto]
-            bg-gradient-to-r 
-            from-yellow-100 
-            via-amber-200
-            via-yellow-300 
-            via-amber-300
-            via-orange-300
-            to-yellow-100
-            bg-clip-text text-transparent
-            animate-[shimmer_5s_linear_infinite]
-            drop-shadow-[0_0_20px_rgba(251,191,36,0.95)]
-            drop-shadow-[0_0_35px_rgba(245,158,11,0.7)]"
-                  style={{
-                    textShadow: `
-              0 0 5px rgba(255,215,0,0.5),
-              0 0 12px rgba(251,191,36,0.4),
-              0 0 25px rgba(245,158,11,0.3),
-              0 3px 8px rgba(0,0,0,0.3)
-            `,
-                  }}
+                {/* Sanskrit Shloka */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="relative mt-3 mb-6"
                 >
-                  <span className="inline-block mr-2 text-[#FFD700] animate-pulse">॥</span>
-                  कराग्रे वसते लक्ष्मीः करमध्ये सरस्वती ।
-                  <br />
-                  करमूले तु गोविन्दः प्रभाते करदर्शनम्
-                  <span className="inline-block ml-2 text-[#FFD700] animate-pulse">॥</span>
+                  <div className="absolute -inset-4 -left-2 bg-gradient-radial from-amber-400/20 via-yellow-400/10 to-transparent blur-2xl animate-pulse pointer-events-none" />
+                  <div
+                    className="text-sm md:text-lg font-bold
+                      tracking-normal leading-loose text-left relative
+                      bg-[length:200%_auto]
+                      bg-gradient-to-r
+                      from-yellow-100 via-amber-200 via-yellow-300 via-amber-300 via-orange-300 to-yellow-100
+                      bg-clip-text text-transparent
+                      animate-[shimmer_5s_linear_infinite]
+                      drop-shadow-[0_0_20px_rgba(251,191,36,0.95)]
+                      drop-shadow-[0_0_35px_rgba(245,158,11,0.7)]"
+                    style={{
+                      textShadow: `
+                        0 0 5px rgba(255,215,0,0.5),
+                        0 0 12px rgba(251,191,36,0.4),
+                        0 0 25px rgba(245,158,11,0.3),
+                        0 3px 8px rgba(0,0,0,0.3)
+                      `,
+                    }}
+                  >
+                    <span className="inline-block mr-2 text-[#FFD700] animate-pulse">॥</span>
+                    कराग्रे वसते लक्ष्मीः करमध्ये सरस्वती ।
+                    <br />
+                    करमूले तु गोविन्दः प्रभाते करदर्शनम्
+                    <span className="inline-block ml-2 text-[#FFD700] animate-pulse">॥</span>
+                  </div>
+                </motion.div>
+
+                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mt-4 mb-6">
+                  Your Palms Hold the <span className="text-gradient-gold">Map of Your Destiny</span>
+                </h1>
+                <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mb-4">
+                  Discover the secrets written in your hands. Get detailed readings of your life lines,
+                  personality traits, and future potential with powerful astrological remedies.
+                </p>
+                <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mb-8">
+                  Palmistry complements astrology, especially when birth details are unavailable. The palm reflects past karma, present actions, and future possibilities.
+                </p>
+                <Button
+                  size="lg"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold"
+                  onClick={() => setShowPopup(true)}
+                >
+                  Get Palm Reading Now
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+              </motion.div>
+
+              {/* Right: Palmistry Image with premium animations */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="hidden lg:flex justify-center items-center"
+              >
+                <div className="relative flex items-center justify-center">
+
+                  {/* ── Pulse ring 1 — expands outward slowly ── */}
+                  <motion.div
+                    className="absolute rounded-full border border-primary/20"
+                    animate={{ scale: [1, 1.35, 1], opacity: [0.5, 0, 0.5] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    style={{ width: "340px", height: "340px" }}
+                  />
+
+                  {/* ── Pulse ring 2 — offset timing ── */}
+                  <motion.div
+                    className="absolute rounded-full border border-amber-400/15"
+                    animate={{ scale: [1, 1.5, 1], opacity: [0.4, 0, 0.4] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                    style={{ width: "340px", height: "340px" }}
+                  />
+
+                  {/* ── Outer rotating glow ring ── */}
+                  <motion.div
+                    className="absolute rounded-full"
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    style={{
+                      width: "340px",
+                      height: "340px",
+                      background:
+                        "conic-gradient(from 0deg, rgba(251,191,36,0.35), rgba(138,43,226,0.2), rgba(251,191,36,0.35), rgba(60,0,120,0.15), rgba(251,191,36,0.35))",
+                      borderRadius: "50%",
+                      filter: "blur(8px)",
+                    }}
+                  />
+
+                  {/* ── Floating image — gentle up/down bob ── */}
+                  <motion.div
+                    animate={{ y: [-10, 0, -10] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    className="relative z-10"
+                  >
+                    <div className="relative rounded-2xl overflow-hidden"
+                      style={{
+                        boxShadow:
+                          "0 0 50px rgba(138,43,226,0.4), 0 0 100px rgba(138,43,226,0.2), 0 0 0 1.5px rgba(251,191,36,0.45)",
+                      }}
+                    >
+                      <img
+                        src="/src/assets/Palmistry.jpeg"
+                        alt="Palmistry - Sacred Hand Reading Chart"
+                        className="w-72 lg:w-80 xl:w-[340px] h-auto object-cover rounded-2xl"
+                        style={{
+                          filter: "brightness(1.05) contrast(1.05) saturate(1.1)",
+                        }}
+                      />
+
+                      {/* Gold shimmer overlay top */}
+                      <div
+                        className="absolute top-0 left-0 right-0 h-16 pointer-events-none"
+                        style={{
+                          background:
+                            "radial-gradient(ellipse at 50% 0%, rgba(251,191,36,0.15) 0%, transparent 70%)",
+                        }}
+                      />
+
+                      {/* Bottom fade */}
+                      <div
+                        className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none"
+                        style={{
+                          background:
+                            "linear-gradient(to top, rgba(8,4,20,0.5) 0%, transparent 100%)",
+                        }}
+                      />
+                    </div>
+                  </motion.div>
+
+                  {/* ── Floating star particles ── */}
+                  {[
+                    { top: "8%",  left: "5%",  size: 6,  delay: 0 },
+                    { top: "15%", right: "6%", size: 5,  delay: 0.8 },
+                    { top: "70%", left: "3%",  size: 4,  delay: 1.4 },
+                    { top: "80%", right: "5%", size: 7,  delay: 0.4 },
+                    { top: "45%", left: "2%",  size: 4,  delay: 1.8 },
+                    { top: "30%", right: "3%", size: 5,  delay: 1.2 },
+                  ].map((star, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute rounded-full bg-amber-400/70 pointer-events-none"
+                      style={{
+                        width:  star.size,
+                        height: star.size,
+                        top:    star.top,
+                        left:   "left"  in star ? star.left  : undefined,
+                        right:  "right" in star ? star.right : undefined,
+                        boxShadow: `0 0 ${star.size * 2}px rgba(251,191,36,0.8)`,
+                      }}
+                      animate={{ opacity: [0.3, 1, 0.3], scale: [0.8, 1.2, 0.8] }}
+                      transition={{
+                        duration: 2.5,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: star.delay,
+                      }}
+                    />
+                  ))}
+
                 </div>
               </motion.div>
-              <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mt-4 mb-6">
-                Your Palms Hold the <span className="text-gradient-gold">Map of Your Destiny</span>
-              </h1>
-              <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mb-4">
-                Discover the secrets written in your hands. Get detailed readings of your life lines,
-                personality traits, and future potential with powerful astrological remedies.
-              </p>
-              <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mb-8">
-                Palmistry complements astrology, especially when birth details are unavailable. The palm reflects past karma, present actions, and future possibilities.
-              </p>
-              <Button
-                size="lg"
-                className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold"
-                onClick={() => setShowPopup(true)}
-              >
-                Get Palm Reading Now
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-            </motion.div>
+
+            </div>
           </div>
         </section>
-
         {/* Benefits Section */}
         <section className="py-20 bg-gradient-cosmic">
           <div className="container mx-auto px-4">

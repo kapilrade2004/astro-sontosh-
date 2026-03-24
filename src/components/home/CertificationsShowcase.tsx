@@ -22,6 +22,7 @@ import MCP from "@/assets/certificate-d10-chart-bootcamp-course-by-astro-arun-pa
 import MCA from "@/assets/Mastery - Medical Astrology_page-0001.jpg"
 import MDA from "@/assets/Mastery - Dasha Analysis.pdf_page-0001.jpg"
 import MCHA from "@/assets/Mastery - Child Astrology_page-0001.jpg"
+import MCHA2 from "@/assets/Mastery.jpeg"
 const certifications = [
   {
     id: 1,
@@ -149,7 +150,12 @@ const certifications = [
 
 
 
-
+{
+  id: 22,
+  title: "Mastery - Conjunction Analysis",
+  image: MCHA2,
+  verified: true,
+},
 
 ];
 

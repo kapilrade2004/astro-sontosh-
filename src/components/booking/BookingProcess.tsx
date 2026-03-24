@@ -1,3 +1,5 @@
+
+
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { load } from "@cashfreepayments/cashfree-js";
@@ -51,9 +53,10 @@ const newBookingServices = [
         icon: User,
     },
     {
-        id: "vastu",
+        id: "vastu ",
         title: "Vastu Consultation",
-        description: "Home Vastu (Online Inquiry + Recommendations) - 30 minutes",
+        // ── Row 4: Updated Vastu description text
+        description: "Vastu Exploration Call - INR 5100 | Home Vastu (Online Inquiry + Recommendations) - 30 minutes",
         price: 5100,
         duration: "30",
         icon: MapPin,
@@ -116,6 +119,7 @@ export const BookingProcess = () => {
         consultationType: "new" as "new" | "repeat",
         name: "",
         email: "",
+        // ── Row 13: dob starts empty; will only be set via date-picker, never by manual typing
         dob: "",
         phone: "",
         serviceId: "astrology-exact-birth-time",
@@ -167,10 +171,7 @@ export const BookingProcess = () => {
             const offset = 100;
             const elementPosition = bookingRef.current.getBoundingClientRect().top;
             const offsetPosition = elementPosition + window.pageYOffset - offset;
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: "smooth"
-            });
+            window.scrollTo({ top: offsetPosition, behavior: "smooth" });
         }
     };
 
@@ -179,20 +180,16 @@ export const BookingProcess = () => {
     const selectedService = allServices.find(s => s.id === bookingData.serviceId);
 
     const updateBookingData = (updates: Partial<typeof bookingData>) => {
-        // If switching consultation type, reset serviceId
         if (updates.consultationType && updates.consultationType !== bookingData.consultationType) {
             updates.serviceId = "";
             updates.duration = "";
         }
-
-        // If serviceId is being updated, check if the service has a predefined duration
         if (updates.serviceId) {
             const service = allServices.find(s => s.id === updates.serviceId);
             if (service && 'duration' in service && service.duration) {
                 updates.duration = service.duration;
             }
         }
-
         setBookingData(prev => ({ ...prev, ...updates }));
         const updatedFields = Object.keys(updates);
         if (updatedFields.length > 0) {
@@ -216,7 +213,9 @@ export const BookingProcess = () => {
             newErrors.email = "Invalid email format";
         }
 
-        if (!bookingData.dob) newErrors.dob = "Date of birth is required";
+        if (!bookingData.dob || bookingData.dob === "__future__") {
+            newErrors.dob = "Please select a correct date of birth. Future dates are not allowed.";
+        }
 
         if (!bookingData.phone) newErrors.phone = "Phone number is required";
         else if (!/^\d{10}$/.test(bookingData.phone)) newErrors.phone = "Phone number must be 10 digits";
@@ -265,7 +264,6 @@ export const BookingProcess = () => {
         setTimeout(scrollToBooking, 100);
     };
 
-    // ─── Retry helper: retries verify up to `retries` times with `delay` ms gap ───
     const verifyWithRetry = async (
         orderId: string,
         retries = 5,
@@ -279,11 +277,10 @@ export const BookingProcess = () => {
                     console.log(`Verification succeeded on attempt ${i + 1}`);
                     return verifyRes;
                 }
-                console.log(`Attempt ${i + 1} status not SUCCESS yet, statuses:`, verifyRes.data?.statuses);
+                console.log(`Attempt ${i + 1} status not SUCCESS yet:`, verifyRes.data?.statuses);
             } catch (err) {
                 console.error(`Verify attempt ${i + 1} threw error:`, err);
             }
-            // Wait before next retry (except after last attempt)
             if (i < retries - 1) {
                 await new Promise(resolve => setTimeout(resolve, delay));
             }
@@ -300,7 +297,6 @@ export const BookingProcess = () => {
             });
             return;
         }
-
         if (!cashfree) {
             toast({
                 title: "System Error",
@@ -311,9 +307,7 @@ export const BookingProcess = () => {
         }
 
         setIsProcessingPayment(true);
-
         try {
-            // Step 1: Create order on backend
             const res = await axios.post(`${API_BASE_URL}/payment`, {
                 amount: Number(selectedService?.price),
                 customer_name: bookingData.name,
@@ -322,25 +316,17 @@ export const BookingProcess = () => {
             });
 
             if (!res.data || !res.data.payment_session_id) {
-                toast({
-                    title: "Error",
-                    description: "Failed to initialize payment session.",
-                    variant: "destructive"
-                });
+                toast({ title: "Error", description: "Failed to initialize payment session.", variant: "destructive" });
                 setIsProcessingPayment(false);
                 return;
             }
 
-            // Step 2: Open Cashfree checkout modal
-            const checkoutOptions = {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const checkoutResult: any = await cashfree.checkout({
                 paymentSessionId: res.data.payment_session_id,
                 redirectTarget: "_modal",
-            };
+            });
 
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const checkoutResult: any = await cashfree.checkout(checkoutOptions);
-
-            // Step 3: Check if Cashfree SDK itself reported an error (user cancelled, etc.)
             if (checkoutResult?.error) {
                 console.error("Cashfree checkout error:", checkoutResult.error);
                 setPaymentResult({
@@ -351,20 +337,15 @@ export const BookingProcess = () => {
                 return;
             }
 
-            // Step 4: Verify payment with retry logic
-            // Cashfree may take a moment to update status after modal closes
             const verifyRes = await verifyWithRetry(res.data.order_id, 5, 2500);
 
             if (verifyRes && verifyRes.data?.success) {
-                // Step 5: Save booking details to backend
                 try {
                     const formattedDate = bookingData.selectedDate
                         ? format(bookingData.selectedDate, "yyyy-MM-dd")
                         : null;
-
                     // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     const { floorPlan, ...cleanBookingData } = bookingData;
-
                     await axios.post(`${API_BASE_URL}/dataslotbooked`, {
                         ...cleanBookingData,
                         selectedDate: formattedDate,
@@ -374,11 +355,9 @@ export const BookingProcess = () => {
                         serviceName: selectedService?.title
                     });
                 } catch (bookingError) {
-                    // Payment was successful — don't block UI, just log
                     console.error("Failed to save booking details:", bookingError);
                 }
 
-                // Step 6: Show success screen
                 setPaymentResult(verifyRes.data);
                 setBookingData(prev => ({
                     ...prev,
@@ -387,16 +366,12 @@ export const BookingProcess = () => {
                     concern: "",
                     duration: ""
                 }));
-
             } else {
-                // All retries exhausted and payment still not verified
-                // Payment may have gone through — tell user to contact support
                 setPaymentResult({
                     success: false,
                     message: `We couldn't verify your payment automatically. If your money was deducted, please contact support with Order ID: ${res.data.order_id}`
                 });
             }
-
         } catch (error) {
             console.error("Payment flow error:", error);
             toast({

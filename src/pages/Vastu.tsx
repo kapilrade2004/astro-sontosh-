@@ -106,84 +106,129 @@ const Vastu = () => {
         <link rel="canonical" href="https://astrosantoshpandey.com/vastu" />
       </Helmet>
       <Layout>
-        {/* Hero Section */}
+  {/* Hero Section */}
         <section className="pt-32 pb-16 bg-gradient-hero relative overflow-hidden">
           <div className="container mx-auto px-4 relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="max-w-4xl"
-            >
-              {/* Service Label */}
-              <span className="text-primary font-medium text-sm uppercase tracking-wider">
-                Vastu Shastra – Harmonizing Space & Energy
-              </span>
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
 
-              {/* Enhanced Sanskrit Shloka - Left Aligned */}
+              {/* Left: Text Content */}
               <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative mt-3 mb-6"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
               >
-                {/* Sacred glow aura */}
-                <div className="absolute -inset-4 -left-2 bg-gradient-radial from-amber-400/20 via-yellow-400/10 to-transparent blur-2xl animate-pulse pointer-events-none" />
+                {/* Service Label */}
+                <span className="text-primary font-medium text-sm uppercase tracking-wider">
+                  Vastu Shastra – Harmonizing Space & Energy
+                </span>
 
-                {/* Sanskrit text with enhanced styling */}
-                <div
-                  className="text-sm md:text-lg italic font-bold
-            tracking-normal
-            leading-loose
-            text-left
-            relative
-            bg-[length:200%_auto]
-            bg-gradient-to-r 
-            from-yellow-100 
-            via-amber-200
-            via-yellow-300 
-            via-amber-300
-            via-orange-300
-            to-yellow-100
-            bg-clip-text text-transparent
-            animate-[shimmer_5s_linear_infinite]
-            drop-shadow-[0_0_20px_rgba(251,191,36,0.95)]
-            drop-shadow-[0_0_35px_rgba(245,158,11,0.7)]"
-                  style={{
-                    textShadow: `
-              0 0 5px rgba(255,215,0,0.5),
-              0 0 12px rgba(251,191,36,0.4),
-              0 0 25px rgba(245,158,11,0.3),
-              0 3px 8px rgba(0,0,0,0.3)
-            `,
-                  }}
+                {/* Sanskrit Shloka */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="relative mt-3 mb-6"
                 >
-                  <span className="inline-block mr-2 text-[#FFD700] animate-pulse">॥</span>
-                  नमस्ते वास्तु पुरुष भूश्य्या भिरत प्रभो ।
-                  <br />
-                  मद्घृं धन धन्यादि समृद्धं कुरु सर्वदा
-                  <span className="inline-block ml-2 text-[#FFD700] animate-pulse">॥</span>
+                  <div className="absolute -inset-4 -left-2 bg-gradient-radial from-amber-400/20 via-yellow-400/10 to-transparent blur-2xl animate-pulse pointer-events-none" />
+                  <div
+                    className="text-sm md:text-lg font-bold
+                      tracking-normal leading-loose text-left relative
+                      bg-[length:200%_auto]
+                      bg-gradient-to-r
+                      from-yellow-100 via-amber-200 via-yellow-300 via-amber-300 via-orange-300 to-yellow-100
+                      bg-clip-text text-transparent
+                      animate-[shimmer_5s_linear_infinite]
+                      drop-shadow-[0_0_20px_rgba(251,191,36,0.95)]
+                      drop-shadow-[0_0_35px_rgba(245,158,11,0.7)]"
+                    style={{
+                      textShadow: `
+                        0 0 5px rgba(255,215,0,0.5),
+                        0 0 12px rgba(251,191,36,0.4),
+                        0 0 25px rgba(245,158,11,0.3),
+                        0 3px 8px rgba(0,0,0,0.3)
+                      `,
+                    }}
+                  >
+                    <span className="inline-block mr-2 text-[#FFD700] animate-pulse">॥</span>
+                    नमस्ते वास्तु पुरुष भूश्य्या भिरत प्रभो ।
+                    <br />
+                    मद्घृं धन धन्यादि समृद्धं कुरु सर्वदा
+                    <span className="inline-block ml-2 text-[#FFD700] animate-pulse">॥</span>
+                  </div>
+                </motion.div>
+
+                {/* Main Heading */}
+                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mt-4 mb-6">
+                  Harmonize Your <span className="text-gradient-gold">Living Space</span> for Prosperity
+                </h1>
+
+                {/* Description */}
+                <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mb-8">
+                  Vastu Shastra balances the five elements — Earth, Water, Fire, Air, and Space — to create harmony, prosperity, and peace.
+                </p>
+
+                {/* CTA Button */}
+                <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold" asChild>
+                  <Link to="/contact#booking">
+                    Book Vastu Audit
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </Link>
+                </Button>
+              </motion.div>
+
+              {/* Right: Vastu Image */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.7, delay: 0.3 }}
+                className="hidden lg:flex justify-center items-center"
+              >
+                <div className="relative w-full max-w-lg">
+                  {/* Outer golden glow */}
+                  <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-amber-400/30 via-yellow-300/15 to-transparent blur-3xl animate-pulse pointer-events-none" />
+
+                  {/* Image container */}
+                  <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                    <img
+                      src="/src/assets/vastu.jpeg"
+                      alt="Vastu Shastra - Sacred Architecture"
+                      className="w-full h-auto object-cover rounded-2xl"
+                      style={{
+                        filter: "brightness(0.95) contrast(1.05) saturate(1.1)",
+                      }}
+                    />
+
+                    {/* Subtle dark overlay at bottom for depth */}
+                    <div
+                      className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
+                      style={{
+                        background:
+                          "linear-gradient(to top, rgba(8,4,20,0.6) 0%, transparent 100%)",
+                      }}
+                    />
+
+                    {/* Gold shimmer at top */}
+                    <div
+                      className="absolute top-0 left-0 right-0 h-16 pointer-events-none"
+                      style={{
+                        background:
+                          "radial-gradient(ellipse at 50% 0%, rgba(251,191,36,0.15) 0%, transparent 70%)",
+                      }}
+                    />
+                  </div>
+
+                  {/* Gold border ring */}
+                  <div
+                    className="absolute inset-0 rounded-2xl pointer-events-none"
+                    style={{
+                      boxShadow:
+                        "inset 0 0 0 1.5px rgba(251,191,36,0.4), 0 0 35px rgba(251,191,36,0.2), 0 0 70px rgba(218,165,32,0.1)",
+                    }}
+                  />
                 </div>
               </motion.div>
 
-              {/* Main Heading */}
-              <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mt-4 mb-6">
-                Harmonize Your <span className="text-gradient-gold">Living Space</span> for Prosperity
-              </h1>
-
-              {/* Description */}
-              <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mb-8">
-                Vastu Shastra balances the five elements — Earth, Water, Fire, Air, and Space — to create harmony, prosperity, and peace.
-              </p>
-
-              {/* CTA Button */}
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold" asChild>
-                <Link to="/contact#booking">
-                  Book Vastu Audit
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Link>
-              </Button>
-            </motion.div>
+            </div>
           </div>
         </section>
 

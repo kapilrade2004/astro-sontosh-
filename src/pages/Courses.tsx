@@ -1,6 +1,7 @@
+
+
 import { Helmet } from "react-helmet-async";
 import { Layout } from "@/components/layout/Layout";
-import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { CosmicBackground } from "@/components/ui/CosmicBackground";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
@@ -9,6 +10,7 @@ import {
   BookOpen, Star, TrendingUp, User, ChevronRight,
   CheckCircle2, Sparkles, GraduationCap
 } from "lucide-react";
+import CourseImg from "@/assets/CourseImg.jpeg";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -68,11 +70,52 @@ const specialYogas = [
 
 const panchMahapurushYogas = ["Ruchak", "Bhadra", "Hansa", "Malavya", "Shasha"];
 
-const crashCourseTopics = [
-  "In-Depth Kundali Analysis", "Vimshottari Dasha System", "Ashtakvarg Analysis",
-  "Planetary Conjunction", "Career Prediction", "Medical Astrology",
-  "Child & Progeny Analysis", "Retrograde Planets", "Astrology Remedies",
-  "Gemstones & Crystals", "Rudraksha Significance",
+// ── Each crash course is now a standalone course ──
+export const crashCourses = [
+  {
+    title: "In-Depth Kundali Analysis",
+    desc: "Deep dive into reading and interpreting a complete birth chart.",
+  },
+  {
+    title: "Vimshottari Dasha System",
+    desc: "Master the primary predictive timing system in Vedic astrology.",
+  },
+  {
+    title: "Ashtakvarg Analysis",
+    desc: "Learn the Ashtakvarg method for transit and strength analysis.",
+  },
+  {
+    title: "Planetary Conjunction",
+    desc: "Understand how planetary combinations affect life events.",
+  },
+  {
+    title: "Career Prediction",
+    desc: "Techniques to analyse career, profession, and financial prospects.",
+  },
+  {
+    title: "Medical Astrology",
+    desc: "Identify health patterns and disease tendencies through the chart.",
+  },
+  {
+    title: "Child & Progeny Analysis",
+    desc: "Study of children, fertility, and parenting indicators in a chart.",
+  },
+  {
+    title: "Retrograde Planets",
+    desc: "Understand the impact and interpretation of retrograde planets.",
+  },
+  {
+    title: "Astrology Remedies",
+    desc: "Practical remedies including mantras, gemstones, and rituals.",
+  },
+  {
+    title: "Gemstones & Crystals",
+    desc: "Selection and use of gemstones for planetary strengthening.",
+  },
+  {
+    title: "Rudraksha Significance",
+    desc: "Types of Rudraksha beads and their astrological significance.",
+  },
 ];
 
 const learningSteps = [
@@ -93,61 +136,29 @@ const Courses = () => {
       {/* Hero */}
       <section className="pt-32 pb-20 bg-gradient-hero relative overflow-hidden">
         <CosmicBackground />
-
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-2 gap-14 items-center">
 
             {/* Left Content */}
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={fadeUp}
-              custom={0}
-              className="space-y-6"
-            >
-
-              {/* Badge */}
+            <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0} className="space-y-6">
               <span className="text-primary font-medium text-sm uppercase tracking-wider">
                 Vedic Astrology Courses – Vidya Dhanam
               </span>
 
-              {/* Enhanced Sanskrit Shloka - Left Aligned */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="relative mt-3 mb-6"
               >
-                {/* Sacred glow aura */}
                 <div className="absolute -inset-4 -left-2 bg-gradient-radial from-amber-400/20 via-yellow-400/10 to-transparent blur-2xl animate-pulse pointer-events-none" />
-
-                {/* Sanskrit text with enhanced styling */}
                 <div
-                  className="text-sm md:text-lg italic font-bold
-            tracking-normal
-            leading-loose
-            text-left
-            relative
-            bg-[length:200%_auto]
-            bg-gradient-to-r 
-            from-yellow-100 
-            via-amber-200
-            via-yellow-300 
-            via-amber-300
-            via-orange-300
-            to-yellow-100
-            bg-clip-text text-transparent
-            animate-[shimmer_5s_linear_infinite]
-            drop-shadow-[0_0_20px_rgba(251,191,36,0.95)]
-            drop-shadow-[0_0_35px_rgba(245,158,11,0.7)]"
-                  style={{
-                    textShadow: `
-              0 0 5px rgba(255,215,0,0.5),
-              0 0 12px rgba(251,191,36,0.4),
-              0 0 25px rgba(245,158,11,0.3),
-              0 3px 8px rgba(0,0,0,0.3)
-            `,
-                  }}
+                  className="text-sm md:text-lg font-bold tracking-normal leading-loose text-left relative
+                    bg-[length:200%_auto] bg-gradient-to-r
+                    from-yellow-100 via-amber-200 via-yellow-300 via-amber-300 via-orange-300 to-yellow-100
+                    bg-clip-text text-transparent animate-[shimmer_5s_linear_infinite]
+                    drop-shadow-[0_0_20px_rgba(251,191,36,0.95)] drop-shadow-[0_0_35px_rgba(245,158,11,0.7)]"
+                  style={{ textShadow: `0 0 5px rgba(255,215,0,0.5), 0 0 12px rgba(251,191,36,0.4), 0 0 25px rgba(245,158,11,0.3), 0 3px 8px rgba(0,0,0,0.3)` }}
                 >
                   <span className="inline-block mr-2 text-[#FFD700] animate-pulse">॥</span>
                   विद्याधनं सर्वधनं प्रधानम्
@@ -172,18 +183,36 @@ const Courses = () => {
                 </Button>
               </div>
             </motion.div>
-            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.7 }} className="hidden lg:flex justify-center">
-              <div className="w-80 h-80 rounded-full bg-gradient-cosmic border border-primary/20 flex items-center justify-center relative">
-                <Sparkles className="h-24 w-24 text-primary animate-float" />
-                <div className="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center animate-twinkle"><Star className="h-6 w-6 text-primary" /></div>
-                <div className="absolute -bottom-4 -left-4 w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center animate-twinkle" style={{ animationDelay: "1s" }}><BookOpen className="h-5 w-5 text-accent" /></div>
+
+            {/* Right — Client Photo */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7 }}
+              className="hidden lg:flex justify-center items-center"
+            >
+              <div className="relative">
+                <div className="absolute -inset-3 rounded-2xl bg-gradient-to-br from-amber-400/40 via-yellow-300/25 to-transparent blur-2xl animate-pulse pointer-events-none" />
+                <div className="absolute -inset-1 rounded-2xl bg-gradient-to-b from-amber-400/20 to-transparent blur-md pointer-events-none" />
+                <img
+                  src={CourseImg}
+                  alt="Astro Santosh Pandey - Vedic Astrology Courses"
+                  className="relative z-10 w-80 xl:w-96 h-auto object-cover object-top rounded-2xl border border-primary/30 shadow-2xl"
+                  style={{ boxShadow: "0 0 40px rgba(251,191,36,0.25), 0 0 80px rgba(245,158,11,0.15), 0 25px 50px rgba(0,0,0,0.4)" }}
+                />
+                <div className="absolute -bottom-4 -right-4 w-16 h-16 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center animate-twinkle">
+                  <Star className="h-6 w-6 text-primary" />
+                </div>
+                <div className="absolute -top-4 -left-4 w-12 h-12 rounded-full bg-accent/20 border border-accent/30 flex items-center justify-center animate-twinkle" style={{ animationDelay: "1s" }}>
+                  <BookOpen className="h-5 w-5 text-accent" />
+                </div>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Why Learn Astrology */}
+      {/* Why Learn */}
       <section className="py-20 bg-gradient-cosmic">
         <div className="container mx-auto px-4">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="text-center mb-14">
@@ -212,7 +241,7 @@ const Courses = () => {
             <p className="text-muted-foreground max-w-2xl mx-auto">From foundational knowledge to advanced mastery — choose the path that matches your learning journey.</p>
           </motion.div>
 
-          {/* Foundation Course */}
+          {/* Foundation */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="cosmic-card p-8 md:p-10 mb-10">
             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
               <div>
@@ -220,11 +249,11 @@ const Courses = () => {
                 <h3 className="font-serif text-2xl md:text-3xl font-bold">Basic / Foundation Course</h3>
               </div>
               <div className="text-right shrink-0">
-                <p className="text-3xl font-bold text-gradient-gold">₹15,000</p>
+                <p className="text-2xl font-bold text-gradient-gold">3 Months</p>
               </div>
             </div>
             <p className="text-muted-foreground leading-relaxed mb-6 max-w-3xl">
-              Perfect for beginners who want to understand the fundamentals of Vedic astrology, horoscope structure, planetary influences, and zodiac signs. This course builds a strong foundation that helps students start reading and understanding birth charts.
+              Perfect for beginners who want to understand the fundamentals of Vedic astrology, horoscope structure, planetary influences, and zodiac signs.
             </p>
             <h4 className="font-serif text-lg font-semibold mb-4">What You Will Learn</h4>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2 mb-6">
@@ -249,19 +278,19 @@ const Courses = () => {
               ))}
             </div>
             <Button className="glow-gold" asChild>
-              <Link to="/pricing"><ChevronRight className="mr-2 h-4 w-4" />View Pricing</Link>
+              <Link to="/pricing"><ChevronRight className="mr-2 h-4 w-4" />View Pricing & Enroll</Link>
             </Button>
           </motion.div>
 
-          {/* Intermediate Courses */}
+          {/* Intermediate */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={1} className="cosmic-card p-8 md:p-10 mb-10">
             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
               <div>
-                <span className="inline-block text-xs font-semibold uppercase tracking-wider text-accent bg-accent/10 px-3 py-1 rounded-full mb-3">Intermediate</span>
+                <span className="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-3 py-1 rounded-full mb-3">Intermediate</span>
                 <h3 className="font-serif text-2xl md:text-3xl font-bold">Intermediate Courses</h3>
               </div>
               <div className="text-right shrink-0">
-                <p className="text-3xl font-bold text-gradient-gold">₹25,000 <span className="text-base text-muted-foreground font-normal">/ course</span></p>
+                <p className="text-2xl font-bold text-gradient-gold">4 Months</p>
               </div>
             </div>
             <p className="text-muted-foreground leading-relaxed mb-8 max-w-3xl">
@@ -284,19 +313,19 @@ const Courses = () => {
               </div>
             </div>
             <Button className="glow-gold" asChild>
-              <Link to="/pricing"><ChevronRight className="mr-2 h-4 w-4" />See Pricing & Enroll</Link>
+              <Link to="/pricing"><ChevronRight className="mr-2 h-4 w-4" />View Pricing & Enroll</Link>
             </Button>
           </motion.div>
 
-          {/* Advanced Courses */}
+          {/* Advanced */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2} className="cosmic-card p-8 md:p-10 mb-10">
             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
               <div>
-                <span className="inline-block text-xs font-semibold uppercase tracking-wider bg-secondary text-secondary-foreground px-3 py-1 rounded-full mb-3">Advanced</span>
+                <span className="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-3 py-1 rounded-full mb-3">Advanced</span>
                 <h3 className="font-serif text-2xl md:text-3xl font-bold">Advanced / Expert Level Courses</h3>
               </div>
               <div className="text-right shrink-0">
-                <p className="text-3xl font-bold text-gradient-gold">₹40,000 <span className="text-base text-muted-foreground font-normal">/ course</span></p>
+                <p className="text-2xl font-bold text-gradient-gold">6 Months</p>
               </div>
             </div>
             <p className="text-muted-foreground leading-relaxed mb-8 max-w-3xl">
@@ -319,11 +348,11 @@ const Courses = () => {
               </div>
             </div>
             <Button className="glow-gold" asChild>
-              <Link to="/pricing"><ChevronRight className="mr-2 h-4 w-4" />View Pricing</Link>
+              <Link to="/pricing"><ChevronRight className="mr-2 h-4 w-4" />View Pricing & Enroll</Link>
             </Button>
           </motion.div>
 
-          {/* Crash Courses */}
+          {/* Crash Courses — each as a separate card */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={3} className="cosmic-card p-8 md:p-10 mb-10">
             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
               <div>
@@ -331,28 +360,37 @@ const Courses = () => {
                 <h3 className="font-serif text-2xl md:text-3xl font-bold">Astrology Crash Courses</h3>
               </div>
               <div className="text-right shrink-0">
-                <p className="text-3xl font-bold text-gradient-gold">₹7,000 <span className="text-base text-muted-foreground font-normal">/ course</span></p>
+                <p className="text-2xl font-bold text-gradient-gold">1 Month <span className="text-base text-muted-foreground font-normal">/ course</span></p>
               </div>
             </div>
-            <p className="text-muted-foreground leading-relaxed mb-6 max-w-3xl">
+            <p className="text-muted-foreground leading-relaxed mb-8 max-w-3xl">
               Short and focused courses designed for students who want to master specific astrology topics quickly. These courses provide deep insights into specialized areas of horoscope interpretation.
+              {/* Short and focused individual courses — each covering a specialized astrology topic. Enroll in one, a few, or all 11 courses based on your learning needs. */}
             </p>
-            <h4 className="font-serif text-lg font-semibold mb-4">Available Topics</h4>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2 mb-8">
-              {crashCourseTopics.map((t) => (
-                <div key={t} className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <CheckCircle2 className="h-4 w-4 text-primary shrink-0 mt-0.5" />{t}
+
+            {/* Each crash course as its own card */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+              {crashCourses.map((course, i) => (
+                <div key={i} className="bg-muted/30 rounded-xl p-4 border border-primary/10 hover:border-primary/30 transition-colors space-y-2">
+                  <div className="flex items-start gap-2">
+                    <div className="w-6 h-6 rounded-full bg-primary/15 flex items-center justify-center shrink-0 mt-0.5">
+                      <span className="text-[10px] font-bold text-primary">{i + 1}</span>
+                    </div>
+                    <h4 className="font-serif text-sm font-semibold text-foreground leading-tight">{course.title}</h4>
+                  </div>
+                  <p className="text-muted-foreground text-xs leading-relaxed pl-8">{course.desc}</p>
                 </div>
               ))}
             </div>
+
             <Button className="glow-gold" asChild>
-              <Link to="/pricing"><ChevronRight className="mr-2 h-4 w-4" />Explore Pricing</Link>
+              <Link to="/pricing"><ChevronRight className="mr-2 h-4 w-4" />View Pricing & Enroll</Link>
             </Button>
           </motion.div>
         </div>
       </section>
 
-      {/* Learning Format */}
+      {/* How It Works */}
       <section className="py-20 bg-gradient-cosmic">
         <div className="container mx-auto px-4">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="text-center mb-14">
@@ -383,7 +421,7 @@ const Courses = () => {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button size="lg" variant="outline" className="border-primary/50 text-primary hover:bg-primary/10" asChild>
-                <Link to="/pricing">View Pricing</Link>
+                <Link to="/pricing">View Pricing & Enroll</Link>
               </Button>
               <Button size="lg" className="glow-gold" asChild>
                 <Link to="/pricing"><GraduationCap className="mr-2 h-5 w-5" />Enroll Now</Link>
@@ -392,7 +430,6 @@ const Courses = () => {
           </motion.div>
         </div>
       </section>
-
     </Layout>
   );
 };

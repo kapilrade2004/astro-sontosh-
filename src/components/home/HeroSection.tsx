@@ -1,188 +1,442 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { CosmicBackground } from "@/components/ui/CosmicBackground";
-import { Sparkles, MessageCircle, Stars } from "lucide-react";
 import LOGO from "@/assets/logo by yash.png";
+import HeroImg from "@/assets/HeroImg.jpeg";
+
+/* ── animation presets ─────────────────────────────────────── */
+const ease = [0.22, 1, 0.36, 1] as const;
+
+const fadeLeft = (delay = 0) => ({
+  initial: { opacity: 0, x: -40 },
+  animate: { opacity: 1, x: 0 },
+  transition: { duration: 0.8, delay, ease },
+});
+
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 28 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.8, delay, ease },
+});
+
+const fadeScale = (delay = 0) => ({
+  initial: { opacity: 0, scale: 0.88 },
+  animate: { opacity: 1, scale: 1 },
+  transition: { duration: 0.85, delay, ease },
+});
+
+/* ── decorative zodiac glyphs (bg atmosphere) ──────────────── */
+const GLYPHS = ["♈","♉","♊","♋","♌","♍","♎","♏","♐","♑","♒","♓"];
 
 export const HeroSection = () => {
   return (
-    // Changed pt-20 to pt-32 pb-16 to give more breathing room on mobile
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero pt-32 pb-16 lg:pt-20 lg:pb-0">
+    <section
+      className="relative w-full overflow-hidden bg-gradient-hero"
+      style={{ paddingTop: "var(--navbar-height, 80px)" }}
+    >
+      {/* ── backgrounds ── */}
       <CosmicBackground />
 
-      {/* Decorative elements - Adjusted position for mobile */}
-      <motion.div
-        className="absolute top-10 right-1 lg:top-1/4 lg:right-2.5 text-primary/20"
-        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <Stars className="w-8 h-8 lg:w-12 lg:h-12" />
-      </motion.div>
+      {/* deep centre glow */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 55% at 50% 20%, rgba(251,191,36,0.06) 0%, transparent 70%)",
+        }}
+      />
 
-      <div className="container mx-auto px-4 relative z-10">
-        {/* Centered top badge */}
-        <motion.div
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mb-8 lg:mb-12 text-center"
+      {/* faint left-side violet glow */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 50% 70% at -5% 60%, rgba(139,92,246,0.07) 0%, transparent 60%)",
+        }}
+      />
+
+      {/* faint right-side gold glow */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 40% 60% at 105% 50%, rgba(251,191,36,0.06) 0%, transparent 60%)",
+        }}
+      />
+
+      {/* ── floating zodiac glyphs ── */}
+      {GLYPHS.map((g, i) => (
+        <motion.span
+          key={i}
+          className="pointer-events-none absolute select-none font-serif"
+          style={{
+            top:      `${6  + ((i * 73) % 82)}%`,
+            left:     `${2  + ((i * 61) % 95)}%`,
+            fontSize: `${28 + ((i * 17) % 28)}px`,
+            color:    `rgba(251,191,36,${0.03 + (i % 3) * 0.015})`,
+          }}
+          animate={{ y: [0, -12, 0], opacity: [0.03, 0.09, 0.03] }}
+          transition={{ duration: 7 + (i % 5), repeat: Infinity, ease: "easeInOut", delay: i * 0.35 }}
         >
-          <span className="inline-flex items-center gap-2 px-3 py-1.5 lg:px-4 lg:py-2 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs lg:text-sm">
-            <Sparkles className="w-3 h-3 lg:w-4 lg:h-4" />
-            Trusted by Clients Worldwide
-          </span>
-        </motion.div>
+          {g}
+        </motion.span>
+      ))}
 
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center max-w-7xl mx-auto">
-          {/* Left Content */}
-          {/* Added flex-col items-center for mobile centering, lg:items-start for desktop */}
-          <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+      {/* ── top gold divider ── */}
+      <div className="relative z-10 mx-auto px-6 lg:px-10 mt-5 lg:mt-7" style={{ maxWidth: "90rem" }}>
+        <motion.div
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={{ scaleX: 1, opacity: 1 }}
+          transition={{ duration: 1.1, ease }}
+          className="h-px origin-center"
+          style={{
+            background:
+              "linear-gradient(90deg, transparent 0%, rgba(251,191,36,0.12) 15%, rgba(251,191,36,0.6) 50%, rgba(251,191,36,0.12) 85%, transparent 100%)",
+          }}
+        />
+      </div>
+
+      {/* ══════════════════════════════════════════════════════
+          3-COLUMN GRID  —  text | logo+shloka | photo
+         ══════════════════════════════════════════════════════ */}
+      <div
+        className="relative z-10 mx-auto w-full px-6 lg:px-10 py-8 lg:py-12"
+        style={{ maxWidth: "90rem" }}
+      >
+        <div
+          className="grid items-center gap-x-8 lg:gap-x-14"
+          style={{ gridTemplateColumns: "1fr auto 1fr" }}
+        >
+
+          {/* ══ COL 1 — Headline + Subtext ══ */}
+          <div className="flex flex-col items-start">
+
+            {/* heading */}
             <motion.h1
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
-              // Adjusted font sizes for mobile (text-3xl)
-              className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 lg:mb-6"
+              {...fadeLeft(0.15)}
+              className="font-serif font-bold leading-[1.13] mb-5 lg:mb-6"
+              style={{ fontSize: "clamp(1.6rem, 3vw, 3.2rem)" }}
             >
-              Transform Your Life With Expert{" "}
-              <span className="text-gradient-gold block lg:inline">Astrology, Numerology, Vastu & Palmistry</span>{" "}
-              Guidance
+              Transform Your Life{" "}
+              <span
+                className="block"
+                style={{ color: "rgba(255,255,255,0.92)" }}
+              >
+                With Expert
+              </span>
+              <span
+                className="block bg-clip-text text-transparent"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(130deg, #fef9c3 0%, #fcd34d 28%, #f59e0b 58%, #b45309 100%)",
+                }}
+              >
+                Astrology, Numerology,
+              </span>
+              <span
+                className="block bg-clip-text text-transparent"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(130deg, #fef9c3 0%, #fcd34d 28%, #f59e0b 58%, #b45309 100%)",
+                }}
+              >
+                Vastu &amp; Palmistry
+              </span>
+              <span
+                className="block"
+                style={{ color: "rgba(255,255,255,0.92)" }}
+              >
+                Guidance
+              </span>
             </motion.h1>
 
+            {/* thin gold rule */}
+            <motion.div
+              initial={{ width: 0, opacity: 0 }}
+              animate={{ width: "5rem", opacity: 1 }}
+              transition={{ duration: 0.9, delay: 0.32, ease }}
+              className="h-px mb-5 lg:mb-6 flex-shrink-0"
+              style={{
+                background:
+                  "linear-gradient(90deg, rgba(251,191,36,1) 0%, rgba(251,191,36,0.15) 100%)",
+              }}
+            />
+
+            {/* subtext */}
             <motion.p
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-              className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 lg:mb-8 max-w-2xl lg:max-w-none"
+              {...fadeLeft(0.38)}
+              className="leading-relaxed"
+              style={{
+                fontSize: "clamp(0.85rem, 1.1vw, 1.05rem)",
+                color: "rgba(255,255,255,0.58)",
+                maxWidth: "24rem",
+              }}
             >
-              Accurate predictions, personalised remedies, and life-changing solutions
-              for career, marriage, finance, health & peace.
+              Accurate predictions, personalised remedies, and life-changing
+              solutions for career, marriage, finance, health &amp; peace.
             </motion.p>
 
+            {/* CTA slot */}
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-              // Added w-full to container for mobile stacking
-              className="flex flex-col sm:flex-row gap-4 mb-8 lg:mb-12 w-full sm:w-auto"
-            >
-              <Button
-                size="lg"
-                // Added w-full sm:w-auto for full width buttons on mobile
-                className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold text-base lg:text-lg px-8 py-6 w-full sm:w-auto"
-                asChild
-              >
-                <Link to="/contact#booking">
-                  <Sparkles className="w-5 h-5 mr-2" />
-                  Book Consultation
-                </Link>
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-primary text-primary hover:bg-primary/10 text-base lg:text-lg px-8 py-6 w-full sm:w-auto"
-                asChild
-              >
-                <a href="https://wa.me/+918879731174" target="_blank" rel="noopener noreferrer">
-                  <MessageCircle className="w-5 h-5 mr-2" />
-                  WhatsApp Now
-                </a>
-              </Button>
-            </motion.div>
-
-            {/* Stats
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full"
-            >
-              {[
-                { value: "25+", label: "Years Experience" },
-                { value: "10K+", label: "Happy Clients" },
-                { value: "95%", label: "Accuracy Rate" },
-                { value: "50+", label: "Countries Served" },
-              ].map((stat, index) => (
-                // Added text-center for mobile, lg:text-left handled implicitly via parent or added specifically
-                <div key={index} className="text-center lg:text-left">
-                  <div className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-gradient-gold">
-                    {stat.value}
-                  </div>
-                  <div className="text-muted-foreground text-xs sm:text-sm mt-1">{stat.label}</div>
-                </div>
-              ))}
-            </motion.div> */}
+              {...fadeUp(0.48)}
+              className="mt-7 lg:mt-9 flex flex-wrap gap-3"
+            />
           </div>
 
-          {/* Right Image with Sanskrit text below */}
-          {/* REMOVED 'hidden' class so it shows on mobile. Added mt-12 for spacing on mobile */}
-          <div className="relative flex flex-col items-center gap-1 mt-0 lg:mt-0 -translate-y-8 lg:-translate-y-12">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-              className="relative w-3/4 lg:w-full max-w-sm lg:max-w-lg flex items-center justify-center"
-            >
-              {/* Yellow Glow Background */}
+          {/* ══ COL 2 — Logo + Shloka ══ */}
+          <motion.div
+            {...fadeScale(0.1)}
+            className="flex flex-col items-center gap-3"
+            style={{ minWidth: "clamp(180px, 18vw, 280px)" }}
+          >
+            {/* logo glow disc */}
+            <div className="relative flex items-center justify-center">
               <div
-                className="
-   
-  "
-              />
-
-              {/* Logo with SMOOTHER animation */}
-              <motion.img
-                src={LOGO}
-                alt="Astrology Logo"
-                className="relative z-10 w-full h-auto object-contain drop-shadow-2xl will-change-transform"
-                animate={{ y: [-20, 0, -20] }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  times: [0, 0.5, 1]
+                className="pointer-events-none absolute rounded-full blur-2xl"
+                style={{
+                  width:  "clamp(170px, 18vw, 290px)",
+                  height: "clamp(170px, 18vw, 290px)",
+                  background:
+                    "radial-gradient(circle, rgba(251,191,36,0.26) 0%, transparent 70%)",
                 }}
               />
-            </motion.div>
+              <motion.img
+                src={LOGO}
+                alt="Astro Santosh Pandey Logo"
+                className="relative z-10 h-auto object-contain"
+                style={{ width: "clamp(150px, 16vw, 260px)", filter: "drop-shadow(0 0 32px rgba(251,191,36,0.45))" }}
+                animate={{ y: [-6, 0, -6] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </div>
 
+            {/* ornament row */}
+            <div className="flex items-center gap-1.5">
+              {[4, 4, 6, 4, 4].map((sz, i) => (
+                <span
+                  key={i}
+                  className="rounded-full inline-block"
+                  style={{
+                    width:      sz,
+                    height:     sz,
+                    background: i === 2 ? "rgba(251,191,36,1)" : "rgba(251,191,36,0.38)",
+                    boxShadow:  i === 2 ? "0 0 8px rgba(251,191,36,0.7)" : "none",
+                  }}
+                />
+              ))}
+            </div>
+
+            {/* shloka */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+              {...fadeUp(0.32)}
+              className="relative px-4 py-2 rounded-lg"
+              style={{
+                background: "rgba(251,191,36,0.055)",
+                border:     "1px solid rgba(251,191,36,0.22)",
+                backdropFilter: "blur(10px)",
+              }}
             >
-              <p className="
-  text-3xl md:text-2xl lg:text-3xl
-  font-bold
-  italic
-  text-center
-  tracking-normal
-  leading-relaxed
-  py-1
-  bg-gradient-to-r from-yellow-200 via-yellow-400 to-amber-500
-  bg-clip-text text-transparent
-  drop-shadow-[0_0_12px_rgba(255,200,120,0.6)]
-">
+              {/* inner glow */}
+              <div
+                className="absolute inset-0 rounded-lg pointer-events-none"
+                style={{
+                  background:
+                    "radial-gradient(ellipse at 50% 120%, rgba(251,191,36,0.18) 0%, transparent 65%)",
+                }}
+              />
+              <p
+                className="relative font-bold whitespace-nowrap text-center"
+                style={{
+                  fontSize: "clamp(0.72rem, 1vw, 0.95rem)",
+                  backgroundImage:
+                    "linear-gradient(90deg, #fef3c7 0%, #fde68a 25%, #fbbf24 50%, #fde68a 75%, #fef3c7 100%)",
+                  backgroundClip: "text",
+                  WebkitBackgroundClip: "text",
+                  color: "transparent",
+                  backgroundSize: "200% auto",
+                }}
+              >
                 ॥ धर्मो रक्षति रक्षितः ॥
               </p>
-
             </motion.div>
-          </div>
+          </motion.div>
+
+          {/* ══ COL 3 — Astrologer Photo ══ */}
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.85, delay: 0.18, ease }}
+            className="flex justify-end items-start"
+          >
+            <div className="relative flex items-center justify-center">
+
+              {/* outer ambient glow */}
+              <div
+                className="pointer-events-none absolute rounded-full blur-3xl"
+                style={{
+                  width:  "clamp(200px, 24vw, 420px)",
+                  height: "clamp(200px, 24vw, 420px)",
+                  background:
+                    "radial-gradient(circle, rgba(251,191,36,0.14) 0%, rgba(139,92,246,0.06) 55%, transparent 100%)",
+                }}
+              />
+
+              {/* pulse rings */}
+              {[
+                { s: [1, 1.25, 1], o: [0.5,  0, 0.5],  delay: 0,   color: "rgba(139,92,246,0.3)"  },
+                { s: [1, 1.52, 1], o: [0.35, 0, 0.35], delay: 1.0, color: "rgba(251,191,36,0.25)" },
+                { s: [1, 1.80, 1], o: [0.18, 0, 0.18], delay: 2.1, color: "rgba(251,191,36,0.14)" },
+              ].map((r, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute rounded-full border pointer-events-none"
+                  animate={{ scale: r.s, opacity: r.o }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: r.delay }}
+                  style={{
+                    width:       "clamp(160px, 18vw, 300px)",
+                    height:      "clamp(160px, 18vw, 300px)",
+                    borderColor: r.color,
+                  }}
+                />
+              ))}
+
+              {/* ── image card ── */}
+              <motion.div
+                animate={{ y: [-7, 0, -7] }}
+                transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+                className="relative z-10"
+              >
+                {/* corner bracket accents */}
+                {[
+                  { top: -10, left:  -10, borderTop:    "1.5px solid", borderLeft:   "1.5px solid" },
+                  { top: -10, right: -10, borderTop:    "1.5px solid", borderRight:  "1.5px solid" },
+                  { bottom: -10, left:  -10, borderBottom: "1.5px solid", borderLeft:  "1.5px solid" },
+                  { bottom: -10, right: -10, borderBottom: "1.5px solid", borderRight: "1.5px solid" },
+                ].map((c, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.6 + i * 0.08 }}
+                    className="absolute pointer-events-none"
+                    style={{
+                      ...c,
+                      width:       22,
+                      height:      22,
+                      borderColor: "rgba(251,191,36,0.75)",
+                      borderRadius: 3,
+                    }}
+                  />
+                ))}
+
+                {/* card */}
+                <div
+                  className="relative rounded-2xl overflow-hidden"
+                  style={{
+                    background: "#06060f",
+                    boxShadow: [
+                      "0 0 0 1px rgba(251,191,36,0.38)",
+                      "0 0 28px rgba(251,191,36,0.15)",
+                      "0 0 70px rgba(251,191,36,0.07)",
+                      "inset 0 1px 0 rgba(255,255,255,0.04)",
+                      "0 32px 64px rgba(0,0,0,0.6)",
+                    ].join(", "),
+                  }}
+                >
+                  <img
+                    src={HeroImg}
+                    alt="Astro Santosh Pandey"
+                    className="block h-auto object-cover object-top"
+                    style={{
+                      width:      "clamp(175px, 20vw, 310px)",
+                      mixBlendMode: "screen",
+                      filter:     "brightness(0.94) contrast(1.09) saturate(1.06)",
+                    }}
+                  />
+
+                  {/* top gold shimmer */}
+                  <div
+                    className="absolute top-0 inset-x-0 h-20 pointer-events-none z-10"
+                    style={{
+                      background:
+                        "radial-gradient(ellipse at 50% 0%, rgba(251,191,36,0.2) 0%, transparent 70%)",
+                    }}
+                  />
+
+                  {/* bottom fade */}
+                  <div
+                    className="absolute bottom-0 inset-x-0 h-20 pointer-events-none z-10"
+                    style={{
+                      background:
+                        "linear-gradient(to top, rgba(6,6,15,0.96) 0%, transparent 100%)",
+                    }}
+                  />
+                </div>
+              </motion.div>
+
+              {/* sparkle dots */}
+              {[
+                { top: "9%",  left:  "1%",  size: 5, delay: 0.0 },
+                { top: "22%", right: "3%",  size: 4, delay: 0.8 },
+                { top: "48%", left:  "-1%", size: 6, delay: 1.6 },
+                { top: "68%", right: "2%",  size: 4, delay: 0.4 },
+                { top: "82%", left:  "5%",  size: 3, delay: 2.0 },
+                { top: "33%", right: "0%",  size: 5, delay: 1.2 },
+                { top: "58%", left:  "6%",  size: 3, delay: 2.4 },
+              ].map((s, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute rounded-full pointer-events-none"
+                  style={{
+                    width:      s.size,
+                    height:     s.size,
+                    top:        s.top,
+                    left:       "left"  in s ? s.left  : undefined,
+                    right:      "right" in s ? s.right : undefined,
+                    background: "rgba(251,191,36,0.85)",
+                    boxShadow:  `0 0 ${s.size * 3}px rgba(251,191,36,0.9)`,
+                  }}
+                  animate={{ opacity: [0.15, 1, 0.15], scale: [0.6, 1.5, 0.6] }}
+                  transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: s.delay }}
+                />
+              ))}
+            </div>
+          </motion.div>
+
         </div>
       </div>
 
-      {/* Scroll indicator - Hidden on very small screens to save space, visible on md+ */}
+      {/* ── bottom gold divider ── */}
+      <div className="relative z-10 mx-auto px-6 lg:px-10" style={{ maxWidth: "90rem" }}>
+        <motion.div
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={{ scaleX: 1, opacity: 1 }}
+          transition={{ duration: 1.1, delay: 0.5, ease }}
+          className="h-px origin-center"
+          style={{
+            background:
+              "linear-gradient(90deg, transparent 0%, rgba(251,191,36,0.1) 15%, rgba(251,191,36,0.45) 50%, rgba(251,191,36,0.1) 85%, transparent 100%)",
+          }}
+        />
+      </div>
+
+      {/* ── scroll indicator ── */}
       <motion.div
-        className="absolute bottom-4 lg:bottom-8 left-1/2 -translate-x-1/2 hidden md:flex"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        className="relative z-10 flex justify-center py-5"
+        animate={{ y: [0, 7, 0] }}
+        transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
       >
-        <div className="w-6 h-10 rounded-full border-2 border-primary/50 flex items-start justify-center p-2">
-          <motion.div
-            className="w-1.5 h-3 bg-primary rounded-full"
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          />
+        <div className="flex flex-col items-center gap-1">
+          <div
+            className="w-5 h-9 rounded-full border-2 flex items-start justify-center pt-1.5"
+            style={{ borderColor: "rgba(251,191,36,0.3)" }}
+          >
+            <motion.div
+              className="w-[3px] h-2.5 rounded-full"
+              style={{ background: "rgba(251,191,36,0.65)" }}
+              animate={{ y: [0, 10, 0], opacity: [1, 0.25, 1] }}
+              transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </div>
         </div>
       </motion.div>
     </section>
