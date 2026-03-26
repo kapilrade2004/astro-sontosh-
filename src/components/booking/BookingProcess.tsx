@@ -11,6 +11,7 @@ import { format } from "date-fns";
 import { BookingDetailsStep } from "./steps/BookingDetailsStep";
 import { BookingSlotStep } from "./steps/BookingSlotStep";
 import { BookingStatusScreen } from "./steps/BookingStatusScreen";
+import { sendLeadToCRM } from "@/lib/sendLeadToCRM";
 
 const newBookingServices = [
     {
@@ -268,7 +269,7 @@ export const BookingProcess = () => {
         orderId: string,
         retries = 5,
         delay = 2500
-    ): Promise<{ data: { success: boolean; [key: string]: unknown } } | null> => {
+    ): Promise<{ data: { success: boolean;[key: string]: unknown } } | null> => {
         for (let i = 0; i < retries; i++) {
             try {
                 console.log(`Verify attempt ${i + 1} for order: ${orderId}`);
@@ -308,6 +309,25 @@ export const BookingProcess = () => {
 
         setIsProcessingPayment(true);
         try {
+
+            await sendLeadToCRM({
+                name: bookingData.name,
+                phone: bookingData.phone,
+                email: bookingData.email || "",
+                source: "Website Booking Form",
+                tags: [
+                    "Booking Form",
+                    selectedService?.title || "",
+                    bookingData.consultationType || "",
+                    bookingData.selectedDate
+                        ? `Preferred Date: ${format(bookingData.selectedDate, "yyyy-MM-dd")}`
+                        : "",
+                    bookingData.selectedTime
+                        ? `Preferred Time: ${bookingData.selectedTime}`
+                        : "",
+                ].filter(Boolean),
+            });
+
             const res = await axios.post(`${API_BASE_URL}/payment`, {
                 amount: Number(selectedService?.price),
                 customer_name: bookingData.name,

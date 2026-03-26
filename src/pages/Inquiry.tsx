@@ -4,6 +4,8 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import axios from "axios";
+import { sendLeadToCRM } from "@/lib/sendLeadToCRM";
+
 import {
   ChevronRight, ChevronLeft, CheckCircle2,
   Star, Phone, Calendar, Clock, MapPin, Ruler,
@@ -34,10 +36,10 @@ type FieldErrors = Partial<Record<keyof FormData, string>>;
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const SERVICES: { id: Service; emoji: string; label: string; desc: string }[] = [
-  { id: "Astrology",  emoji: "🪐", label: "Astrology",  desc: "Birth chart, predictions & planetary guidance" },
+  { id: "Astrology", emoji: "🪐", label: "Astrology", desc: "Birth chart, predictions & planetary guidance" },
   { id: "Numerology", emoji: "🔢", label: "Numerology", desc: "Life path, destiny & soul urge numbers" },
-  { id: "Vastu",      emoji: "🏠", label: "Vastu",      desc: "Space harmonisation & energy alignment" },
-  { id: "Palmistry",  emoji: "✋", label: "Palmistry",  desc: "In-person reading of your life lines" },
+  { id: "Vastu", emoji: "🏠", label: "Vastu", desc: "Space harmonisation & energy alignment" },
+  { id: "Palmistry", emoji: "✋", label: "Palmistry", desc: "In-person reading of your life lines" },
 ];
 
 const TIME_SLOTS = [
@@ -46,7 +48,7 @@ const TIME_SLOTS = [
   "04:00 PM", "05:00 PM", "06:00 PM",
 ];
 
-const HOURS   = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, "0"));
+const HOURS = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, "0"));
 const MINUTES = ["00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"];
 const todayStr = new Date().toISOString().split("T")[0];
 
@@ -65,7 +67,7 @@ const STEP_LABELS = ["Service", "Your Details", "Consultation", "Confirm"];
 const StepBar = ({ current }: { current: number }) => (
   <div className="flex items-center justify-center gap-0 mb-8 select-none">
     {STEP_LABELS.map((label, i) => {
-      const done   = i < current;
+      const done = i < current;
       const active = i === current;
       return (
         <div key={label} className="flex items-center">
@@ -193,7 +195,7 @@ const Step1 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof
 
 const Step2 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof FormData, v: string) => void; errors: FieldErrors }) => {
   const isAstrology = form.service === "Astrology";
-  const isVastu     = form.service === "Vastu";
+  const isVastu = form.service === "Vastu";
   const isPalmistry = form.service === "Palmistry";
 
   return (
@@ -365,9 +367,9 @@ const Step3 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof
 const Step4 = ({ form }: { form: FormData }) => {
   const svc = SERVICES.find((s) => s.id === form.service)!;
   const rows = [
-    { label: "Service",        value: `${svc.emoji} ${svc.label}` },
-    { label: "Name",           value: form.name },
-    { label: "Mobile",         value: `+91 ${form.mobile}` },
+    { label: "Service", value: `${svc.emoji} ${svc.label}` },
+    { label: "Name", value: form.name },
+    { label: "Mobile", value: `+91 ${form.mobile}` },
     ...(form.service !== "Vastu" ? [{ label: "Date of Birth", value: formatDisplayDate(form.dob) }] : []),
     ...(form.service === "Astrology" ? [{ label: "Time of Birth", value: `${form.tob_hour}:${form.tob_minute} ${form.tob_period}` }] : []),
     ...(form.service === "Astrology" ? [{ label: "Place of Birth", value: form.pob }] : []),
@@ -501,12 +503,12 @@ const EMPTY: FormData = {
 };
 
 const InquiryForm = () => {
-  const [step, setStep]                 = useState(0);
-  const [submitted, setSubmit]          = useState(false);
+  const [step, setStep] = useState(0);
+  const [submitted, setSubmit] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitError, setSubmitError]   = useState<string | null>(null);
-  const [form, setForm]                 = useState<FormData>(EMPTY);
-  const [errors, setErrors]             = useState<FieldErrors>({});
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [form, setForm] = useState<FormData>(EMPTY);
+  const [errors, setErrors] = useState<FieldErrors>({});
 
   const setField = (key: keyof FormData, value: string) => {
     setForm((f) => ({ ...f, [key]: value }));
@@ -519,17 +521,17 @@ const InquiryForm = () => {
       if (!form.service) e.service = "Please select a service to continue.";
     }
     if (step === 1) {
-      if (!form.name.trim())                              e.name   = "Please enter your full name.";
+      if (!form.name.trim()) e.name = "Please enter your full name.";
       if (!form.mobile || !/^\d{10}$/.test(form.mobile)) e.mobile = "Enter a valid 10-digit number.";
-      if (form.service !== "Vastu" && !form.dob)          e.dob    = "Please select your date of birth.";
+      if (form.service !== "Vastu" && !form.dob) e.dob = "Please select your date of birth.";
       if (form.service === "Astrology") {
-        if (!form.tob_hour)   e.tob_hour   = "Select hour.";
+        if (!form.tob_hour) e.tob_hour = "Select hour.";
         if (!form.tob_minute) e.tob_minute = "Select minute.";
-        if (!form.pob.trim()) e.pob        = "Please enter your place of birth.";
+        if (!form.pob.trim()) e.pob = "Please enter your place of birth.";
       }
       if (form.service === "Vastu") {
         if (!form.length) e.length = "Enter length.";
-        if (!form.width)  e.width  = "Enter width.";
+        if (!form.width) e.width = "Enter width.";
       }
     }
     if (step === 2 && form.service !== "Palmistry") {
@@ -564,20 +566,34 @@ const InquiryForm = () => {
         : undefined;
 
       const payload = {
-        service:     form.service,
-        name:        form.name,
-        mobile:      form.mobile,
-        dob:         form.service !== "Vastu" ? form.dob : undefined,
-        tob:         tob,
-        pob:         form.service === "Astrology" ? form.pob : undefined,
-        length:      form.service === "Vastu" ? form.length : undefined,
-        width:       form.service === "Vastu" ? form.width : undefined,
+        service: form.service,
+        name: form.name,
+        mobile: form.mobile,
+        dob: form.service !== "Vastu" ? form.dob : undefined,
+        tob: tob,
+        pob: form.service === "Astrology" ? form.pob : undefined,
+        length: form.service === "Vastu" ? form.length : undefined,
+        width: form.service === "Vastu" ? form.width : undefined,
         consultDate: form.consultDate || undefined,
         consultTime: form.consultTime || undefined,
-        message:     form.message || undefined,
+        message: form.message || undefined,
       };
 
       await axios.post(`${API_BASE_URL}/inquiry`, payload);
+
+      await sendLeadToCRM({
+        name: form.name,
+        phone: form.mobile,
+        email: "",
+        source: "Website Inquiry Form",
+        tags: [
+          "Inquiry Form",
+          form.service || "",
+          form.consultDate ? `Preferred Date: ${form.consultDate}` : "",
+          form.consultTime ? `Preferred Time: ${form.consultTime}` : "",
+        ].filter(Boolean),
+      });
+
       setSubmit(true);
     } catch (err) {
       console.error("Inquiry submission error:", err);
