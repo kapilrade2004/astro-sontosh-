@@ -1,3 +1,188 @@
+// import { useState, useEffect } from "react";
+// import { Link, useLocation } from "react-router-dom";
+// import { motion, AnimatePresence } from "framer-motion";
+// import { Menu, X, Phone } from "lucide-react";
+// import { Button } from "@/components/ui/button";
+// import logoImage from "@/assets/logo-removebg-preview (1).png";
+// import nameLogoImage from "@/assets/name_logo.png";
+// import hanumanGaneshaLogo from "@/assets/hanuman-ganesha_logo.png";
+
+// const navItems = [
+//   { name: "Home", path: "/" },
+//   { name: "Astrology", path: "/astrology" },
+//   { name: "Numerology", path: "/numerology" },
+//   { name: "Vastu", path: "/vastu" },
+//   { name: "Palmistry", path: "/palmistry" },
+//   { name: "Courses", path: "/courses" },
+//   { name: "About", path: "/about" },
+//   { name: "Contact", path: "/contact" },
+// ];
+
+// export const Header = () => {
+//   const [isScrolled, setIsScrolled] = useState(false);
+//   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+//   const location = useLocation();
+
+//   useEffect(() => {
+//     const handleScroll = () => {
+//       setIsScrolled(window.scrollY > 50);
+//     };
+//     window.addEventListener("scroll", handleScroll);
+//     return () => window.removeEventListener("scroll", handleScroll);
+//   }, []);
+
+//   useEffect(() => {
+//     setIsMobileMenuOpen(false);
+//   }, [location]);
+
+//   return (
+//     <header
+//       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
+//         ? "bg-background/95 backdrop-blur-lg shadow-lg border-b border-border"
+//         : "bg-transparent"
+//         }`}
+//     >
+//       <div className="container mx-auto px-4">
+//         {/* <nav className="flex items-center justify-between h-20"> */}
+//         <nav className="flex items-center justify-between h-24">
+//           {/* Logo */}
+//           <Link to="/" className="flex items-center gap-1 group">
+//             {/* Hanuman Ganesha Logo */}
+//             <motion.div
+//               whileHover={{ scale: 1.05 }}
+//               transition={{ duration: 0.3 }}
+//               className="flex-shrink-0"
+//             >
+//               <img
+//                 src={hanumanGaneshaLogo}
+//                 alt="Hanuman Ganesha"
+//                 // className="h-12 sm:h-14 md:h-16 w-auto object-contain"
+//                 className="h-16 sm:h-20 md:h-24 w-auto object-contain"
+//               />
+//             </motion.div>
+
+//             {/* Name Logo & Shloka */}
+//             <div className="flex flex-col items-start justify-center">
+//               <motion.div
+//                 whileHover={{ scale: 1.05 }}
+//                 transition={{ duration: 0.3 }}
+//                 className="flex-shrink-0"
+//               >
+//                 <img
+//                   src={nameLogoImage}
+//                   alt="Astro Santosh Pandey"
+//                   // className="h-8 sm:h-10 md:h-12 w-auto object-contain"
+//                   className="h-12 sm:h-14 md:h-16 w-auto object-contain"
+//                 />
+//               </motion.div>
+//               <span
+//                 className="text-[10px] sm:text-xs italic mt-0.5 text-[#FFD700] leading-tight pl-1"
+//                 style={{
+//                   textShadow:
+//                     "0 0 3px rgba(255,215,0,0.4), 0 0 6px rgba(218,165,32,0.25)",
+//                 }}
+//               >
+//                 ज्योतिषं सर्वार्थ साधकं
+//               </span>
+//             </div>
+//           </Link>
+
+//           {/* Desktop Navigation */}
+//           <div className="hidden lg:flex items-center gap-8">
+//             {navItems.map((item) => (
+//               <Link
+//                 key={item.path}
+//                 to={item.path}
+//                 className={`relative text-sm font-medium transition-colors hover:text-primary ${location.pathname === item.path
+//                   ? "text-primary"
+//                   : "text-foreground/80"
+//                   }`}
+//               >
+//                 {item.name}
+//                 {location.pathname === item.path && (
+//                   <motion.div
+//                     layoutId="activeNav"
+//                     className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full"
+//                   />
+//                 )}
+//               </Link>
+//             ))}
+//           </div>
+
+//           {/* CTA Buttons */}
+//           <div className="hidden lg:flex items-center gap-4">
+//             <Button variant="ghost" size="sm" className="text-foreground/80 hover:text-primary" asChild>
+//               <a href="https://wa.me/+918879731174" target="_blank" rel="noopener noreferrer">
+//                 <Phone className="h-4 w-4 mr-2" />
+//                 WhatsApp
+//               </a>
+//             </Button>
+//             <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold" asChild>
+//               <Link to="/contact#booking">Book Consultation</Link>
+//             </Button>
+//           </div>
+
+//           {/* Mobile Menu Button */}
+//           <button
+//             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+//             className="lg:hidden p-2 text-foreground"
+//           >
+//             {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+//           </button>
+//         </nav>
+//       </div>
+
+//       {/* Mobile Menu */}
+//       <AnimatePresence>
+//         {isMobileMenuOpen && (
+//           <motion.div
+//             initial={{ opacity: 0, height: 0 }}
+//             animate={{ opacity: 1, height: "auto" }}
+//             exit={{ opacity: 0, height: 0 }}
+//             className="lg:hidden bg-background/98 backdrop-blur-lg border-t border-border"
+//           >
+//             <div className="container mx-auto px-4 py-6 space-y-4">
+//               {navItems.map((item, index) => (
+//                 <motion.div
+//                   key={item.path}
+//                   initial={{ opacity: 0, x: -20 }}
+//                   animate={{ opacity: 1, x: 0 }}
+//                   transition={{ delay: index * 0.05 }}
+//                 >
+//                   <Link
+//                     to={item.path}
+//                     className={`block py-2 text-lg font-medium ${location.pathname === item.path
+//                       ? "text-primary"
+//                       : "text-foreground/80"
+//                       }`}
+//                   >
+//                     {item.name}
+//                   </Link>
+//                 </motion.div>
+//               ))}
+//               <div className="pt-4 flex flex-col gap-3">
+//                 <Button className="w-full bg-primary text-primary-foreground" asChild>
+//                   <Link to="/contact">Book Consultation</Link>
+//                 </Button>
+//                 <Button variant="outline" className="w-full border-primary text-primary" asChild>
+//                   <a href="https://wa.me/+918879731174" target="_blank" rel="noopener noreferrer">
+//                     WhatsApp Now
+//                   </a>
+//                 </Button>
+//               </div>
+//             </div>
+//           </motion.div>
+//         )}
+//       </AnimatePresence>
+//     </header>
+//   );
+// };
+
+
+//test
+
+
+
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -43,10 +228,16 @@ export const Header = () => {
         }`}
     >
       <div className="container mx-auto px-4">
-        {/* <nav className="flex items-center justify-between h-20"> */}
         <nav className="flex items-center justify-between h-24">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-1 group">
+
+          {/* ───── Logo ───── */}
+          {/* FIX 1: gap-1 → gap-3 for space between Hanuman logo & text  */}
+          {/* FIX 2: textDecoration none + outline none removes the dot    */}
+          <Link
+            to="/"
+            className="flex items-center gap-3 group"
+            style={{ textDecoration: "none", outline: "none" }}
+          >
             {/* Hanuman Ganesha Logo */}
             <motion.div
               whileHover={{ scale: 1.05 }}
@@ -56,13 +247,13 @@ export const Header = () => {
               <img
                 src={hanumanGaneshaLogo}
                 alt="Hanuman Ganesha"
-                // className="h-12 sm:h-14 md:h-16 w-auto object-contain"
                 className="h-16 sm:h-20 md:h-24 w-auto object-contain"
               />
             </motion.div>
 
             {/* Name Logo & Shloka */}
-            <div className="flex flex-col items-start justify-center">
+            {/* FIX 3: pointer-events-none prevents activeNav underline bleeding in */}
+            <div className="flex flex-col items-start justify-center pointer-events-none">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
@@ -71,7 +262,6 @@ export const Header = () => {
                 <img
                   src={nameLogoImage}
                   alt="Astro Santosh Pandey"
-                  // className="h-8 sm:h-10 md:h-12 w-auto object-contain"
                   className="h-12 sm:h-14 md:h-16 w-auto object-contain"
                 />
               </motion.div>
@@ -87,7 +277,7 @@ export const Header = () => {
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* ───── Desktop Navigation ───── */}
           <div className="hidden lg:flex items-center gap-8">
             {navItems.map((item) => (
               <Link
@@ -109,30 +299,47 @@ export const Header = () => {
             ))}
           </div>
 
-          {/* CTA Buttons */}
+          {/* ───── CTA Buttons ───── */}
           <div className="hidden lg:flex items-center gap-4">
-            <Button variant="ghost" size="sm" className="text-foreground/80 hover:text-primary" asChild>
-              <a href="https://wa.me/+918879731174" target="_blank" rel="noopener noreferrer">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-foreground/80 hover:text-primary"
+              asChild
+            >
+              <a
+                href="https://wa.me/+918879731174"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Phone className="h-4 w-4 mr-2" />
                 WhatsApp
               </a>
             </Button>
-            <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold" asChild>
+            <Button
+              size="sm"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold"
+              asChild
+            >
               <Link to="/contact#booking">Book Consultation</Link>
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* ───── Mobile Menu Button ───── */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="lg:hidden p-2 text-foreground"
           >
-            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {isMobileMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
           </button>
         </nav>
       </div>
 
-      {/* Mobile Menu */}
+      {/* ───── Mobile Menu ───── */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -161,11 +368,22 @@ export const Header = () => {
                 </motion.div>
               ))}
               <div className="pt-4 flex flex-col gap-3">
-                <Button className="w-full bg-primary text-primary-foreground" asChild>
+                <Button
+                  className="w-full bg-primary text-primary-foreground"
+                  asChild
+                >
                   <Link to="/contact">Book Consultation</Link>
                 </Button>
-                <Button variant="outline" className="w-full border-primary text-primary" asChild>
-                  <a href="https://wa.me/+918879731174" target="_blank" rel="noopener noreferrer">
+                <Button
+                  variant="outline"
+                  className="w-full border-primary text-primary"
+                  asChild
+                >
+                  <a
+                    href="https://wa.me/+918879731174"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     WhatsApp Now
                   </a>
                 </Button>

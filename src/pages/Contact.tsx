@@ -44,8 +44,8 @@ const Contact = () => {
 
       <Layout>
 
-        {/* Hero Section */}
-        <section className="pt-32 pb-8 bg-gradient-hero relative overflow-hidden">
+        {/* ── Hero Section ── */}
+        <section className="pt-28 pb-8 bg-gradient-hero relative overflow-hidden">
 
           {/* ambient glow layers */}
           <div
@@ -64,7 +64,7 @@ const Contact = () => {
           />
 
           {/* top gold divider */}
-          <div className="absolute top-[7.8rem] left-0 right-0 z-10 px-6 lg:px-10">
+          <div className="absolute top-[6.8rem] left-0 right-0 z-10 px-4 sm:px-6 lg:px-10">
             <motion.div
               initial={{ scaleX: 0, opacity: 0 }}
               animate={{ scaleX: 1, opacity: 1 }}
@@ -78,10 +78,91 @@ const Contact = () => {
             />
           </div>
 
-          {/* 2-column: text left | logo right */}
-          <div className="container mx-auto px-4 relative z-10">
+          <div className="container mx-auto px-4 sm:px-6 relative z-10">
+
+            {/* ── MOBILE layout (hidden on lg+) ── */}
+            <div className="flex flex-col items-center gap-6 lg:hidden">
+
+              {/* Logo + shloka centred on mobile */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.88 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.85, delay: 0.15, ease }}
+                className="flex flex-col items-center gap-2 w-full"
+              >
+                <div className="relative flex items-center justify-center">
+                  <div
+                    className="pointer-events-none absolute rounded-full blur-2xl"
+                    style={{
+                      width: 220, height: 220,
+                      background: "radial-gradient(circle, rgba(251,191,36,0.26) 0%, transparent 70%)",
+                    }}
+                  />
+                  <motion.img
+                    src={LOGO}
+                    alt="Astro Santosh Pandey Logo"
+                    className="relative z-10 h-auto object-contain"
+                    style={{ width: 200, filter: "drop-shadow(0 0 28px rgba(251,191,36,0.5))" }}
+                    animate={{ y: [-5, 0, -5] }}
+                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                  />
+                </div>
+
+                {/* shloka */}
+                <motion.div {...fadeUp(0.32)} className="relative w-full text-center">
+                  <div className="absolute -inset-4 bg-gradient-radial from-amber-400/20 via-yellow-400/10 to-transparent blur-2xl animate-pulse pointer-events-none" />
+                  <div
+                    className="text-sm font-bold tracking-normal leading-loose text-center relative
+                      bg-[length:200%_auto] bg-gradient-to-r
+                      from-yellow-100 via-amber-200 via-yellow-300 via-amber-300 via-orange-300 to-yellow-100
+                      bg-clip-text text-transparent animate-[shimmer_5s_linear_infinite]
+                      drop-shadow-[0_0_20px_rgba(251,191,36,0.95)]
+                      drop-shadow-[0_0_35px_rgba(245,158,11,0.7)]"
+                    style={{
+                      textShadow: "0 0 5px rgba(255,215,0,0.5), 0 0 12px rgba(251,191,36,0.4), 0 0 25px rgba(245,158,11,0.3), 0 3px 8px rgba(0,0,0,0.3)",
+                    }}
+                  >
+                    <span className="inline-block mr-2 text-[#FFD700] animate-pulse">&#x0964;&#x0964;</span>
+                    &#x0927;&#x0930;&#x094D;&#x092E;&#x094B;&#x0020;&#x0930;&#x0915;&#x094D;&#x0937;&#x0924;&#x093F;&#x0020;&#x0930;&#x0915;&#x094D;&#x0937;&#x093F;&#x0924;&#x0903;
+                    <span className="inline-block ml-2 text-[#FFD700] animate-pulse">&#x0964;&#x0964;</span>
+                  </div>
+                </motion.div>
+              </motion.div>
+
+              {/* Text below logo on mobile */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2, ease }}
+                className="flex flex-col items-start w-full"
+              >
+                <span className="text-primary font-medium text-xs uppercase tracking-wider mb-3">
+                  Contact Us
+                </span>
+
+                <h1 className="font-serif text-3xl sm:text-4xl font-bold mb-4 leading-tight">
+                  Seek Clarity.
+                  <span className="text-gradient-gold"> Align with Dharma.</span>
+                </h1>
+
+                <div
+                  className="h-px mb-4 flex-shrink-0"
+                  style={{
+                    width: "4rem",
+                    background: "linear-gradient(90deg, rgba(251,191,36,1) 0%, rgba(251,191,36,0.15) 100%)",
+                  }}
+                />
+
+                <p className="text-muted-foreground text-base leading-relaxed">
+                  Ready to unlock the secrets of your destiny? Reach out to us for a personalized
+                  consultation and take the first step towards clarity and success.
+                </p>
+              </motion.div>
+            </div>
+
+            {/* ── DESKTOP layout (hidden below lg) ── */}
             <div
-              className="grid items-center gap-x-8 lg:gap-x-16"
+              className="hidden lg:grid items-center gap-x-8 lg:gap-x-16"
               style={{ gridTemplateColumns: "1fr auto" }}
             >
 
@@ -111,7 +192,6 @@ const Contact = () => {
                   <span className="text-gradient-gold"> Align with Dharma.</span>
                 </motion.h1>
 
-                {/* gold accent rule */}
                 <motion.div
                   initial={{ width: 0, opacity: 0 }}
                   animate={{ width: "5rem", opacity: 1 }}
@@ -140,15 +220,14 @@ const Contact = () => {
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 transition={{ duration: 0.85, delay: 0.15, ease }}
                 className="flex flex-col items-center gap-3"
-                style={{ minWidth: "clamp(220px, 22vw, 340px)" }}
+                style={{ minWidth: "clamp(280px, 30vw, 440px)" }}
               >
-                {/* glow disc */}
                 <div className="relative flex items-center justify-center">
                   <div
                     className="pointer-events-none absolute rounded-full blur-2xl"
                     style={{
-                      width: "clamp(210px, 22vw, 360px)",
-                      height: "clamp(210px, 22vw, 360px)",
+                      width:  "clamp(280px, 30vw, 460px)",
+                      height: "clamp(280px, 30vw, 460px)",
                       background:
                         "radial-gradient(circle, rgba(251,191,36,0.26) 0%, transparent 70%)",
                     }}
@@ -158,53 +237,28 @@ const Contact = () => {
                     alt="Astro Santosh Pandey Logo"
                     className="relative z-10 h-auto object-contain"
                     style={{
-                      width: "clamp(190px, 20vw, 320px)",
-                      filter: "drop-shadow(0 0 32px rgba(251,191,36,0.45))",
+                      width: "clamp(260px, 28vw, 420px)",
+                      filter: "drop-shadow(0 0 40px rgba(251,191,36,0.55))",
                     }}
                     animate={{ y: [-6, 0, -6] }}
                     transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                   />
                 </div>
 
-                {/* ornament dots */}
-                <div className="flex items-center gap-1.5">
-                  {[4, 4, 6, 4, 4].map((sz, i) => (
-                    <span
-                      key={i}
-                      className="rounded-full inline-block"
-                      style={{
-                        width: sz,
-                        height: sz,
-                        background: i === 2 ? "rgba(251,191,36,1)" : "rgba(251,191,36,0.38)",
-                        boxShadow: i === 2 ? "0 0 8px rgba(251,191,36,0.7)" : "none",
-                      }}
-                    />
-                  ))}
-                </div>
-
-                {/* shloka — same style as HeroSection */}
                 <motion.div
                   {...fadeUp(0.32)}
-                  className="relative mt-1 mb-0 w-full"
+                  className="relative mt-3 mb-2 w-full"
                 >
                   <div className="absolute -inset-4 -left-2 bg-gradient-radial from-amber-400/20 via-yellow-400/10 to-transparent blur-2xl animate-pulse pointer-events-none" />
                   <div
-                    className="text-sm md:text-base font-bold
-                      tracking-normal leading-loose text-center relative
-                      bg-[length:200%_auto]
-                      bg-gradient-to-r
+                    className="text-sm md:text-lg font-bold tracking-normal leading-loose text-center relative
+                      bg-[length:200%_auto] bg-gradient-to-r
                       from-yellow-100 via-amber-200 via-yellow-300 via-amber-300 via-orange-300 to-yellow-100
-                      bg-clip-text text-transparent
-                      animate-[shimmer_5s_linear_infinite]
+                      bg-clip-text text-transparent animate-[shimmer_5s_linear_infinite]
                       drop-shadow-[0_0_20px_rgba(251,191,36,0.95)]
                       drop-shadow-[0_0_35px_rgba(245,158,11,0.7)]"
                     style={{
-                      textShadow: `
-                        0 0 5px rgba(255,215,0,0.5),
-                        0 0 12px rgba(251,191,36,0.4),
-                        0 0 25px rgba(245,158,11,0.3),
-                        0 3px 8px rgba(0,0,0,0.3)
-                      `,
+                      textShadow: "0 0 5px rgba(255,215,0,0.5), 0 0 12px rgba(251,191,36,0.4), 0 0 25px rgba(245,158,11,0.3), 0 3px 8px rgba(0,0,0,0.3)",
                     }}
                   >
                     <span className="inline-block mr-2 text-[#FFD700] animate-pulse">&#x0964;&#x0964;</span>
@@ -212,14 +266,13 @@ const Contact = () => {
                     <span className="inline-block ml-2 text-[#FFD700] animate-pulse">&#x0964;&#x0964;</span>
                   </div>
                 </motion.div>
-
               </motion.div>
 
             </div>
           </div>
 
           {/* bottom gold divider */}
-          <div className="relative z-10 mt-8 px-6 lg:px-10">
+          <div className="relative z-10 mt-8 px-4 sm:px-6 lg:px-10">
             <motion.div
               initial={{ scaleX: 0, opacity: 0 }}
               animate={{ scaleX: 1, opacity: 1 }}
@@ -234,7 +287,7 @@ const Contact = () => {
           </div>
         </section>
 
-        {/* Booking Section */}
+        {/* ── Booking Section ── */}
         <section
           id="booking"
           className="py-6 md:py-8 bg-background relative scroll-mt-32"
@@ -244,7 +297,7 @@ const Contact = () => {
           </div>
         </section>
 
-        {/* Map Section */}
+        {/* ── Map Section ── */}
         <section className="py-6 bg-gradient-cosmic">
           <div className="container mx-auto px-4">
             <motion.div
