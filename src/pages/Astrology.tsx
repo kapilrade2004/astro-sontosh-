@@ -419,8 +419,8 @@ const Astrology = () => {
           >
             Disclaimer —
           </span>{" "}
-          My suggestions / remedial measures / advice are not a substitute to any medical / financial / legal / any other professional advice / treatment / measures.
-        </p>
+          {/* My suggestions / remedial measures / advice are not a substitute to any medical / financial / legal / any other professional advice / treatment / measures. */}
+The guidance, recommendations, and measures shared here do not replace professional advice or treatment in medical, financial, legal, or other fields. They are intended to complement, not substitute, professional measures.</p>
       </div>
     </motion.div>
 
