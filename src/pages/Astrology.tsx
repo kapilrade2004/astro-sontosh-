@@ -352,43 +352,80 @@ const Astrology = () => {
           </div>
         </section>
 
-        {/* Remedies Section */}
-        <section className="py-20 bg-gradient-cosmic">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center max-w-3xl mx-auto mb-12"
-            >
-              <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">
-                Customised <span className="text-gradient-gold">Remedies</span>
-              </h2>
-              <p className="text-muted-foreground text-lg">
-                Personalized solutions based on your unique birth chart, right Tithi, and suitable Nakshatra for maximum effectiveness.
-              </p>
-            </motion.div>
+      {/* Remedies Section */}
+<section className="py-20 bg-gradient-cosmic">
+  <div className="container mx-auto px-4">
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      className="text-center max-w-3xl mx-auto mb-12"
+    >
+      <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">
+        Customised <span className="text-gradient-gold">Remedies</span>
+      </h2>
+      <p className="text-muted-foreground text-lg">
+        Personalized solutions based on your unique birth chart, right Tithi, and suitable Nakshatra for maximum effectiveness.
+      </p>
+    </motion.div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {remedies.map((remedy, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.05 }}
-                  className="cosmic-card p-5 text-center group hover:scale-105 transition-transform"
-                >
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mx-auto mb-3">
-                    <remedy.icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <h3 className="font-semibold text-sm mb-1">{remedy.title}</h3>
-                  <p className="text-muted-foreground text-xs">{remedy.description}</p>
-                </motion.div>
-              ))}
-            </div>
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {remedies.map((remedy, index) => (
+        <motion.div
+          key={index}
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: index * 0.05 }}
+          className="cosmic-card p-5 text-center group hover:scale-105 transition-transform"
+        >
+          <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mx-auto mb-3">
+            <remedy.icon className="w-5 h-5 text-primary" />
           </div>
-        </section>
+          <h3 className="font-semibold text-sm mb-1">{remedy.title}</h3>
+          <p className="text-muted-foreground text-xs">{remedy.description}</p>
+        </motion.div>
+      ))}
+    </div>
+
+    {/* Disclaimer */}
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: 0.2 }}
+      className="mt-10 max-w-3xl mx-auto"
+    >
+      <div
+        className="rounded-lg px-5 py-3 flex items-start gap-3"
+        style={{
+          background: "rgba(251,191,36,0.05)",
+          border: "1px solid rgba(251,191,36,0.18)",
+        }}
+      >
+        <span
+          className="mt-0.5 shrink-0 text-base leading-none"
+          style={{ color: "rgba(251,191,36,0.7)" }}
+        >
+          ⚠
+        </span>
+        <p
+          className="text-xs sm:text-sm leading-relaxed"
+          style={{ color: "rgba(255,255,255,0.45)" }}
+        >
+          <span
+            className="font-semibold"
+            style={{ color: "rgba(251,191,36,0.7)" }}
+          >
+            Disclaimer —
+          </span>{" "}
+          My suggestions / remedial measures / advice are not a substitute to any medical / financial / legal / any other professional advice / treatment / measures.
+        </p>
+      </div>
+    </motion.div>
+
+  </div>
+</section>
 
         {/* FAQ Section */}
         <section className="py-20 bg-background">
