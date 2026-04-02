@@ -457,7 +457,7 @@ const Contact = () => {
                         "radial-gradient(circle, rgba(251,191,36,0.26) 0%, transparent 70%)",
                     }}
                   />
-                  <motion.img
+                  {/* <motion.img
                     src={LOGO}
                     alt="Astro Santosh Pandey Logo"
                     className="relative z-10 h-auto object-contain"
@@ -467,7 +467,24 @@ const Contact = () => {
                     }}
                     animate={{ y: [-5, 0, -5] }}
                     transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                  />
+                  /> */}
+
+
+                   <motion.img
+                                  src={LOGO}
+                                  alt="Astro Santosh Pandey Logo"
+                                  className="relative z-10 h-auto object-contain"
+                                  style={{
+                                    width: 200,
+                                    // KEY FIX: "screen" blend mode makes the dark JPEG background
+                                    // invisible so only the gold lion/zodiac artwork shines through —
+                                    // matching exactly how the logo looks in the screenshot.
+                                    mixBlendMode: "screen",
+                                    filter: "brightness(1.1) contrast(1.05) saturate(1.1)",
+                                  }}
+                                  animate={{ y: [-5, 0, -5] }}
+                                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                                />
                 </div>
 
                 {/* shloka */}
@@ -630,7 +647,7 @@ const Contact = () => {
                         "radial-gradient(circle, rgba(251,191,36,0.26) 0%, transparent 70%)",
                     }}
                   />
-                  <motion.img
+                  {/* <motion.img
                     src={LOGO}
                     alt="Astro Santosh Pandey Logo"
                     className="relative z-10 h-auto object-contain"
@@ -640,7 +657,23 @@ const Contact = () => {
                     }}
                     animate={{ y: [-6, 0, -6] }}
                     transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                  />
+                  /> */}
+
+                    <motion.img
+                                  src={LOGO}
+                                  alt="Astro Santosh Pandey Logo"
+                                  className="relative z-10 h-auto object-contain"
+                                  style={{
+                                    width: "clamp(260px, 28vw, 420px)",
+                                    // KEY FIX: "screen" blend mode knocks out the dark JPEG background
+                                    // so only the vivid gold lion and zodiac ring are visible —
+                                    // perfectly matching the screenshot's gold-on-dark aesthetic.
+                                    mixBlendMode: "screen",
+                                    filter: "brightness(1.1) contrast(1.05) saturate(1.1)",
+                                  }}
+                                  animate={{ y: [-6, 0, -6] }}
+                                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                                />
                 </div>
 
                 <motion.div {...fadeUp(0.32)} className="relative mt-3 mb-2 w-full">

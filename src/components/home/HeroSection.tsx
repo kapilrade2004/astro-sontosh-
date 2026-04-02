@@ -194,6 +194,137 @@
 //             </motion.p>
 //           </motion.div>
 
+//           {/* ── MOBILE: Astrologer Photo ── */}
+//           <motion.div
+//             initial={{ opacity: 0, y: 30 }}
+//             animate={{ opacity: 1, y: 0 }}
+//             transition={{ duration: 0.85, delay: 0.3, ease }}
+//             className="flex justify-center items-center w-full"
+//           >
+//             <div className="relative flex items-center justify-center">
+
+//               {/* background glow blob */}
+//               <div
+//                 className="pointer-events-none absolute rounded-full blur-3xl"
+//                 style={{
+//                   width: 280,
+//                   height: 280,
+//                   background:
+//                     "radial-gradient(circle, rgba(251,191,36,0.14) 0%, rgba(139,92,246,0.06) 55%, transparent 100%)",
+//                 }}
+//               />
+
+//               {/* pulsing rings */}
+//               {[
+//                 { s: [1, 1.25, 1], o: [0.5,  0, 0.5],  delay: 0,   color: "rgba(139,92,246,0.3)"  },
+//                 { s: [1, 1.52, 1], o: [0.35, 0, 0.35], delay: 1.0, color: "rgba(251,191,36,0.25)" },
+//                 { s: [1, 1.80, 1], o: [0.18, 0, 0.18], delay: 2.1, color: "rgba(251,191,36,0.14)" },
+//               ].map((r, i) => (
+//                 <motion.div
+//                   key={i}
+//                   className="absolute rounded-full border pointer-events-none"
+//                   animate={{ scale: r.s, opacity: r.o }}
+//                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: r.delay }}
+//                   style={{
+//                     width: 220,
+//                     height: 220,
+//                     borderColor: r.color,
+//                   }}
+//                 />
+//               ))}
+
+//               {/* floating image container */}
+//               <motion.div
+//                 animate={{ y: [-7, 0, -7] }}
+//                 transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+//                 className="relative z-10"
+//               >
+//                 {/* corner brackets */}
+//                 {[
+//                   { top: -10, left:  -10, borderTop:    "1.5px solid", borderLeft:   "1.5px solid" },
+//                   { top: -10, right: -10, borderTop:    "1.5px solid", borderRight:  "1.5px solid" },
+//                   { bottom: -10, left:  -10, borderBottom: "1.5px solid", borderLeft:  "1.5px solid" },
+//                   { bottom: -10, right: -10, borderBottom: "1.5px solid", borderRight: "1.5px solid" },
+//                 ].map((c, i) => (
+//                   <motion.div
+//                     key={i}
+//                     initial={{ opacity: 0 }}
+//                     animate={{ opacity: 1 }}
+//                     transition={{ delay: 0.6 + i * 0.08 }}
+//                     className="absolute pointer-events-none"
+//                     style={{ ...c, width: 22, height: 22, borderColor: "rgba(251,191,36,0.75)", borderRadius: 3 }}
+//                   />
+//                 ))}
+
+//                 <div
+//                   className="relative rounded-2xl overflow-hidden"
+//                   style={{
+//                     background: "#06060f",
+//                     boxShadow: [
+//                       "0 0 0 1px rgba(251,191,36,0.38)",
+//                       "0 0 28px rgba(251,191,36,0.15)",
+//                       "0 0 70px rgba(251,191,36,0.07)",
+//                       "inset 0 1px 0 rgba(255,255,255,0.04)",
+//                       "0 32px 64px rgba(0,0,0,0.6)",
+//                     ].join(", "),
+//                   }}
+//                 >
+//                   <img
+//                     src={HeroImg}
+//                     alt="Astro Santosh Pandey"
+//                     className="block h-auto object-cover object-top"
+//                     style={{
+//                       width: "260px",
+//                       mixBlendMode: "screen",
+//                       filter: "brightness(0.94) contrast(1.09) saturate(1.06)",
+//                     }}
+//                   />
+//                   <div
+//                     className="absolute top-0 inset-x-0 h-20 pointer-events-none z-10"
+//                     style={{
+//                       background:
+//                         "radial-gradient(ellipse at 50% 0%, rgba(251,191,36,0.2) 0%, transparent 70%)",
+//                     }}
+//                   />
+//                   <div
+//                     className="absolute bottom-0 inset-x-0 h-20 pointer-events-none z-10"
+//                     style={{
+//                       background: "linear-gradient(to top, rgba(6,6,15,0.96) 0%, transparent 100%)",
+//                     }}
+//                   />
+//                 </div>
+//               </motion.div>
+
+//               {/* sparkle dots */}
+//               {[
+//                 { top: "9%",  left:  "1%",  size: 5, delay: 0.0 },
+//                 { top: "22%", right: "3%",  size: 4, delay: 0.8 },
+//                 { top: "48%", left:  "-1%", size: 6, delay: 1.6 },
+//                 { top: "68%", right: "2%",  size: 4, delay: 0.4 },
+//                 { top: "82%", left:  "5%",  size: 3, delay: 2.0 },
+//                 { top: "33%", right: "0%",  size: 5, delay: 1.2 },
+//                 { top: "58%", left:  "6%",  size: 3, delay: 2.4 },
+//               ].map((s, i) => (
+//                 <motion.div
+//                   key={i}
+//                   className="absolute rounded-full pointer-events-none"
+//                   style={{
+//                     width:      s.size,
+//                     height:     s.size,
+//                     top:        s.top,
+//                     left:       "left"  in s ? s.left  : undefined,
+//                     right:      "right" in s ? s.right : undefined,
+//                     background: "rgba(251,191,36,0.85)",
+//                     boxShadow:  `0 0 ${s.size * 3}px rgba(251,191,36,0.9)`,
+//                   }}
+//                   animate={{ opacity: [0.15, 1, 0.15], scale: [0.6, 1.5, 0.6] }}
+//                   transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: s.delay }}
+//                 />
+//               ))}
+//             </div>
+//           </motion.div>
+//           {/* ── END MOBILE: Astrologer Photo ── */}
+
 //         </div>
 
 //         {/* ── DESKTOP layout (hidden below lg) ── */}
@@ -265,17 +396,18 @@
 //                   background: "radial-gradient(circle, rgba(251,191,36,0.26) 0%, transparent 70%)",
 //                 }}
 //               />
+              
 //               <motion.img
-//                 src={LOGO}
-//                 alt="Astro Santosh Pandey Logo"
-//                 className="relative z-10 h-auto object-contain"
-//                 style={{
-//                   width: "clamp(260px, 28vw, 420px)",
-//                   filter: "drop-shadow(0 0 40px rgba(251,191,36,0.55))",
-//                 }}
-//                 animate={{ y: [-6, 0, -6] }}
-//                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-//               />
+//   src={LOGO}
+//   alt="Astro Santosh Pandey Logo"
+//   className="relative z-10 h-auto object-contain"
+//   style={{
+//     width: "clamp(260px, 28vw, 420px)",
+//     filter: "brightness(1.15) contrast(0.95) drop-shadow(0 0 22px rgba(251,191,36,0.4))"
+//   }}
+//   animate={{ y: [-6, 0, -6] }}
+//   transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+// />
 //             </div>
 
 //             <motion.div {...fadeUp(0.32)} className="relative mt-3 mb-2">
@@ -461,9 +593,10 @@
 
 
 
-//testing
 
 
+
+// // test 
 
 
 
@@ -581,18 +714,26 @@ export const HeroSection = () => {
             className="flex flex-col items-center gap-2 w-full"
           >
             <div className="relative flex items-center justify-center">
+              {/* Ambient glow behind logo */}
               <div
                 className="pointer-events-none absolute rounded-full blur-2xl"
                 style={{
-                  width: 220, height: 220,
-                  background: "radial-gradient(circle, rgba(251,191,36,0.26) 0%, transparent 70%)",
+                  width: 240, height: 240,
+                  background: "radial-gradient(circle, rgba(251,191,36,0.32) 0%, rgba(251,191,36,0.08) 55%, transparent 100%)",
                 }}
               />
               <motion.img
                 src={LOGO}
                 alt="Astro Santosh Pandey Logo"
                 className="relative z-10 h-auto object-contain"
-                style={{ width: 200, filter: "drop-shadow(0 0 28px rgba(251,191,36,0.5))" }}
+                style={{
+                  width: 200,
+                  // KEY FIX: "screen" blend mode makes the dark JPEG background
+                  // invisible so only the gold lion/zodiac artwork shines through —
+                  // matching exactly how the logo looks in the screenshot.
+                  mixBlendMode: "screen",
+                  filter: "brightness(1.1) contrast(1.05) saturate(1.1)",
+                }}
                 animate={{ y: [-5, 0, -5] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
               />
@@ -857,12 +998,13 @@ export const HeroSection = () => {
             style={{ minWidth: "clamp(280px, 30vw, 440px)" }}
           >
             <div className="relative flex items-center justify-center">
+              {/* Stronger ambient glow to complement gold logo */}
               <div
                 className="pointer-events-none absolute rounded-full blur-2xl"
                 style={{
-                  width:  "clamp(280px, 30vw, 460px)",
-                  height: "clamp(280px, 30vw, 460px)",
-                  background: "radial-gradient(circle, rgba(251,191,36,0.26) 0%, transparent 70%)",
+                  width:  "clamp(300px, 32vw, 480px)",
+                  height: "clamp(300px, 32vw, 480px)",
+                  background: "radial-gradient(circle, rgba(251,191,36,0.32) 0%, rgba(251,191,36,0.08) 55%, transparent 100%)",
                 }}
               />
               <motion.img
@@ -871,7 +1013,11 @@ export const HeroSection = () => {
                 className="relative z-10 h-auto object-contain"
                 style={{
                   width: "clamp(260px, 28vw, 420px)",
-                  filter: "drop-shadow(0 0 40px rgba(251,191,36,0.55))",
+                  // KEY FIX: "screen" blend mode knocks out the dark JPEG background
+                  // so only the vivid gold lion and zodiac ring are visible —
+                  // perfectly matching the screenshot's gold-on-dark aesthetic.
+                  mixBlendMode: "screen",
+                  filter: "brightness(1.1) contrast(1.05) saturate(1.1)",
                 }}
                 animate={{ y: [-6, 0, -6] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
