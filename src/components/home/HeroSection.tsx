@@ -112,18 +112,26 @@
 //             className="flex flex-col items-center gap-2 w-full"
 //           >
 //             <div className="relative flex items-center justify-center">
+//               {/* Ambient glow behind logo */}
 //               <div
 //                 className="pointer-events-none absolute rounded-full blur-2xl"
 //                 style={{
-//                   width: 220, height: 220,
-//                   background: "radial-gradient(circle, rgba(251,191,36,0.26) 0%, transparent 70%)",
+//                   width: 240, height: 240,
+//                   background: "radial-gradient(circle, rgba(251,191,36,0.32) 0%, rgba(251,191,36,0.08) 55%, transparent 100%)",
 //                 }}
 //               />
 //               <motion.img
 //                 src={LOGO}
 //                 alt="Astro Santosh Pandey Logo"
 //                 className="relative z-10 h-auto object-contain"
-//                 style={{ width: 200, filter: "drop-shadow(0 0 28px rgba(251,191,36,0.5))" }}
+//                 style={{
+//                   width: 200,
+//                   // KEY FIX: "screen" blend mode makes the dark JPEG background
+//                   // invisible so only the gold lion/zodiac artwork shines through —
+//                   // matching exactly how the logo looks in the screenshot.
+//                   mixBlendMode: "screen",
+//                   filter: "brightness(1.1) contrast(1.05) saturate(1.1)",
+//                 }}
 //                 animate={{ y: [-5, 0, -5] }}
 //                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
 //               />
@@ -388,26 +396,30 @@
 //             style={{ minWidth: "clamp(280px, 30vw, 440px)" }}
 //           >
 //             <div className="relative flex items-center justify-center">
+//               {/* Stronger ambient glow to complement gold logo */}
 //               <div
 //                 className="pointer-events-none absolute rounded-full blur-2xl"
 //                 style={{
-//                   width:  "clamp(280px, 30vw, 460px)",
-//                   height: "clamp(280px, 30vw, 460px)",
-//                   background: "radial-gradient(circle, rgba(251,191,36,0.26) 0%, transparent 70%)",
+//                   width:  "clamp(300px, 32vw, 480px)",
+//                   height: "clamp(300px, 32vw, 480px)",
+//                   background: "radial-gradient(circle, rgba(251,191,36,0.32) 0%, rgba(251,191,36,0.08) 55%, transparent 100%)",
 //                 }}
 //               />
-              
 //               <motion.img
-//   src={LOGO}
-//   alt="Astro Santosh Pandey Logo"
-//   className="relative z-10 h-auto object-contain"
-//   style={{
-//     width: "clamp(260px, 28vw, 420px)",
-//     filter: "brightness(1.15) contrast(0.95) drop-shadow(0 0 22px rgba(251,191,36,0.4))"
-//   }}
-//   animate={{ y: [-6, 0, -6] }}
-//   transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-// />
+//                 src={LOGO}
+//                 alt="Astro Santosh Pandey Logo"
+//                 className="relative z-10 h-auto object-contain"
+//                 style={{
+//                   width: "clamp(260px, 28vw, 420px)",
+//                   // KEY FIX: "screen" blend mode knocks out the dark JPEG background
+//                   // so only the vivid gold lion and zodiac ring are visible —
+//                   // perfectly matching the screenshot's gold-on-dark aesthetic.
+//                   mixBlendMode: "screen",
+//                   filter: "brightness(1.1) contrast(1.05) saturate(1.1)",
+//                 }}
+//                 animate={{ y: [-6, 0, -6] }}
+//                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+//               />
 //             </div>
 
 //             <motion.div {...fadeUp(0.32)} className="relative mt-3 mb-2">
@@ -591,12 +603,7 @@
 // };
 
 
-
-
-
-
-
-// // test 
+//test
 
 
 
@@ -728,9 +735,6 @@ export const HeroSection = () => {
                 className="relative z-10 h-auto object-contain"
                 style={{
                   width: 200,
-                  // KEY FIX: "screen" blend mode makes the dark JPEG background
-                  // invisible so only the gold lion/zodiac artwork shines through —
-                  // matching exactly how the logo looks in the screenshot.
                   mixBlendMode: "screen",
                   filter: "brightness(1.1) contrast(1.05) saturate(1.1)",
                 }}
@@ -843,29 +847,12 @@ export const HeroSection = () => {
                 />
               ))}
 
-              {/* floating image container */}
+              {/* floating image container — corner brackets REMOVED */}
               <motion.div
                 animate={{ y: [-7, 0, -7] }}
                 transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
                 className="relative z-10"
               >
-                {/* corner brackets */}
-                {[
-                  { top: -10, left:  -10, borderTop:    "1.5px solid", borderLeft:   "1.5px solid" },
-                  { top: -10, right: -10, borderTop:    "1.5px solid", borderRight:  "1.5px solid" },
-                  { bottom: -10, left:  -10, borderBottom: "1.5px solid", borderLeft:  "1.5px solid" },
-                  { bottom: -10, right: -10, borderBottom: "1.5px solid", borderRight: "1.5px solid" },
-                ].map((c, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.6 + i * 0.08 }}
-                    className="absolute pointer-events-none"
-                    style={{ ...c, width: 22, height: 22, borderColor: "rgba(251,191,36,0.75)", borderRadius: 3 }}
-                  />
-                ))}
-
                 <div
                   className="relative rounded-2xl overflow-hidden"
                   style={{
@@ -998,7 +985,6 @@ export const HeroSection = () => {
             style={{ minWidth: "clamp(280px, 30vw, 440px)" }}
           >
             <div className="relative flex items-center justify-center">
-              {/* Stronger ambient glow to complement gold logo */}
               <div
                 className="pointer-events-none absolute rounded-full blur-2xl"
                 style={{
@@ -1013,9 +999,6 @@ export const HeroSection = () => {
                 className="relative z-10 h-auto object-contain"
                 style={{
                   width: "clamp(260px, 28vw, 420px)",
-                  // KEY FIX: "screen" blend mode knocks out the dark JPEG background
-                  // so only the vivid gold lion and zodiac ring are visible —
-                  // perfectly matching the screenshot's gold-on-dark aesthetic.
                   mixBlendMode: "screen",
                   filter: "brightness(1.1) contrast(1.05) saturate(1.1)",
                 }}
@@ -1080,27 +1063,12 @@ export const HeroSection = () => {
                 />
               ))}
 
+              {/* floating image container — corner brackets REMOVED */}
               <motion.div
                 animate={{ y: [-7, 0, -7] }}
                 transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
                 className="relative z-10"
               >
-                {[
-                  { top: -10, left:  -10, borderTop:    "1.5px solid", borderLeft:   "1.5px solid" },
-                  { top: -10, right: -10, borderTop:    "1.5px solid", borderRight:  "1.5px solid" },
-                  { bottom: -10, left:  -10, borderBottom: "1.5px solid", borderLeft:  "1.5px solid" },
-                  { bottom: -10, right: -10, borderBottom: "1.5px solid", borderRight: "1.5px solid" },
-                ].map((c, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.6 + i * 0.08 }}
-                    className="absolute pointer-events-none"
-                    style={{ ...c, width: 22, height: 22, borderColor: "rgba(251,191,36,0.75)", borderRadius: 3 }}
-                  />
-                ))}
-
                 <div
                   className="relative rounded-2xl overflow-hidden"
                   style={{
