@@ -23,27 +23,35 @@ import MCA from "@/assets/Mastery - Medical Astrology_page-0001.jpg"
 import MDA from "@/assets/Mastery - Dasha Analysis.pdf_page-0001.jpg"
 import MCHA from "@/assets/Mastery - Child Astrology_page-0001.jpg"
 import MCHA2 from "@/assets/Mastery.jpeg"
+import MCIPA from "@/assets/Master_in_Palmistry.png"
 const certifications = [
-  {
+
+    {
     id: 1,
+    title: "Master in Palmistry",
+    image: MCIPA,
+    verified: true,
+  },
+  {
+    id: 2,
     title: "Astro Expertise",
     image: CAEC,
     verified: true,
   },
   {
-    id: 2,
+    id: 3,
     title: "Diploma in Palmistry",
     image: SRPD,
     verified: true,
   },
   {
-    id: 3,
+    id: 4,
     title: "Diploma in Astrology",
     image: SRPDA,
     verified: true,
   },
   {
-    id: 4,
+    id: 5,
     title: "Ultimate Astrology ",
     image: CTUAC,
     verified: true,
