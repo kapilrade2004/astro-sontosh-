@@ -35,12 +35,20 @@ export const CTASection = () => {
           </h2>
 
           {/* <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-10"> */}
-            <p className="text-muted-foreground text-lg">
+            {/* <p className="text-muted-foreground text-lg"> */}
+            {/* <p className="text-muted-foreground text-base max-w-2xl mx-auto mb-10">
             Take the first step towards clarity, success, and peace. Book your personalized
             consultation today and unlock the cosmic secrets of your destiny.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center"> */}
+
+          <p className="text-muted-foreground text-lg">
+  Take the first step towards clarity, success, and peace. Book your personalized
+  consultation today and unlock the cosmic secrets of your destiny.
+</p>
+
+<div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
             <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold text-lg px-8 py-6" asChild>
               <Link to="/contact#booking">
                 Book Consultation

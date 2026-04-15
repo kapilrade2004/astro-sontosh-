@@ -1,5 +1,12 @@
+
+
 import { motion } from "framer-motion";
-import { Gem, Circle, Sparkles, Flame, BookOpen, Sun, Shield, Leaf } from "lucide-react";
+import { Gem, Sparkles, Flame, BookOpen, Sun, Shield, Leaf } from "lucide-react";
+import RudrakshaImg from "@/assets/Rudraksha-icon-PNG.png";
+
+const RudrakshaIcon = ({ className }: { className?: string }) => (
+  <img src={RudrakshaImg} className={className} alt="Rudraksha" style={{ objectFit: "contain" }} />
+);
 
 const remedies = [
   {
@@ -8,7 +15,7 @@ const remedies = [
     description: "Powerful planetary gemstones recommended based on your birth chart for protection and prosperity.",
   },
   {
-    icon: Circle,
+    icon: "rudraksha",
     title: "Rudraksha",
     description: "Sacred beads with divine energy to enhance meditation, remove obstacles, and bring peace.",
   },
@@ -76,7 +83,11 @@ export const RemediesSection = () => {
               className="cosmic-card p-6 text-center group hover:scale-[1.05] transition-transform duration-300"
             >
               <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                <remedy.icon className="w-6 h-6 text-primary" />
+                {remedy.icon === "rudraksha" ? (
+                  <RudrakshaIcon className="w-6 h-6 text-primary" />
+                ) : (
+                  <remedy.icon className="w-6 h-6 text-primary" />
+                )}
               </div>
               <h3 className="font-serif text-base font-semibold mb-2">{remedy.title}</h3>
               <p className="text-muted-foreground text-xs leading-relaxed">{remedy.description}</p>

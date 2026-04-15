@@ -107,7 +107,7 @@ const repeatBookingServices = [
     },
        {
         id: "numerology-repeat-post-30",
-        title: "numerology - Follow-up (post 30 days)",
+        title: "Numerology - Follow-up (post 30 days)",
         description: "Follow-up consultation (post 30 days) - 30 Minutes",
         price: 5100,
         duration: "30",
