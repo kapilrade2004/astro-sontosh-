@@ -1,4 +1,7 @@
 
+
+
+
 // import { Helmet } from "react-helmet-async";
 // import { Layout } from "@/components/layout/Layout";
 // import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
@@ -173,12 +176,14 @@
 //   const [selectedSubCourses, setSelectedSubCourses] = useState<string[]>([]);
 //   const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
 //   const [isSubmitting, setIsSubmitting] = useState(false);
+//   const [isSuccess, setIsSuccess] = useState(false);
 //   const { toast } = useToast();
 
 //   const handleEnrollClick = (plan: typeof plans[0]) => {
 //     setActivePlan(plan);
 //     setSelectedSubCourses([]);
 //     setFormData({ name: "", email: "", phone: "" });
+//     setIsSuccess(false);
 //     setIsModalOpen(true);
 //   };
 
@@ -187,6 +192,7 @@
 //     setActivePlan(null);
 //     setSelectedSubCourses([]);
 //     setFormData({ name: "", email: "", phone: "" });
+//     setIsSuccess(false);
 //   };
 
 //   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -219,11 +225,7 @@
 //         }),
 //       });
 //       if (!response.ok) throw new Error("Server error");
-//       toast({
-//         title: "Enrollment Request Sent",
-//         description: "We have received your request and will contact you shortly.",
-//       });
-//       handleCloseModal();
+//       setIsSuccess(true);
 //     } catch {
 //       toast({
 //         variant: "destructive",
@@ -405,101 +407,126 @@
 //               {/* ── Scrollable body ── */}
 //               <div className="overflow-y-auto custom-scrollbar flex-1 px-6 py-5 space-y-4">
 
-//                 {/* Personal fields */}
-//                 <div className="space-y-1">
-//                   <label htmlFor="name" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-//                     Full Name <span className="text-destructive">*</span>
-//                   </label>
-//                   <input
-//                     id="name" name="name" required
-//                     value={formData.name} onChange={handleChange}
-//                     className="w-full px-4 py-2.5 rounded-xl bg-muted/30 border border-primary/20 focus:border-primary/50 outline-none transition-colors text-sm placeholder:text-muted-foreground/50"
-//                     placeholder="Enter your full name"
-//                   />
-//                 </div>
-
-//                 <div className="space-y-1">
-//                   <label htmlFor="phone" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-//                     Phone Number <span className="text-destructive">*</span>
-//                   </label>
-//                   <input
-//                     id="phone" name="phone" type="tel" required
-//                     value={formData.phone} onChange={handleChange}
-//                     className="w-full px-4 py-2.5 rounded-xl bg-muted/30 border border-primary/20 focus:border-primary/50 outline-none transition-colors text-sm placeholder:text-muted-foreground/50"
-//                     placeholder="Enter phone number"
-//                   />
-//                 </div>
-
-//                 <div className="space-y-1">
-//                   <label htmlFor="email" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-//                     Email Address <span className="text-muted-foreground/50 normal-case font-normal">(Optional)</span>
-//                   </label>
-//                   <input
-//                     id="email" name="email" type="email"
-//                     value={formData.email} onChange={handleChange}
-//                     className="w-full px-4 py-2.5 rounded-xl bg-muted/30 border border-primary/20 focus:border-primary/50 outline-none transition-colors text-sm placeholder:text-muted-foreground/50"
-//                     placeholder="Enter email address"
-//                   />
-//                 </div>
-
-//                 {/* ── Sub-course selection — only for Intermediate, Advanced, Crash ── */}
-//                 {needsSubCourse && (
-//                   <div className="space-y-3 pt-2 border-t border-primary/10">
-//                     <div className="flex items-center justify-between">
-//                       <p className="text-xs font-bold text-foreground uppercase tracking-wider">
-//                         Select Course(s) <span className="text-destructive">*</span>
-//                       </p>
-//                       {selectedSubCourses.length > 0 && (
-//                         <span className="text-[10px] font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
-//                           {selectedSubCourses.length} selected
-//                         </span>
-//                       )}
+//                 {/* ── Success Screen ── */}
+//                 {isSuccess ? (
+//                   <div className="flex flex-col items-center justify-center text-center py-10 px-4 space-y-5">
+//                     <div className="w-16 h-16 rounded-full bg-primary/15 border-2 border-primary/40 flex items-center justify-center">
+//                       <CheckCircle2 className="h-8 w-8 text-primary" />
 //                     </div>
-
-//                     <div className={`bg-muted/20 rounded-xl border border-primary/15 p-3.5
-//                       ${activePlan.id === "crash" ? "max-h-52 overflow-y-auto custom-scrollbar" : ""}`}>
-//                       <CheckboxList
-//                         options={subCourseOptions}
-//                         selected={selectedSubCourses}
-//                         onChange={setSelectedSubCourses}
-//                         allowSelectAll
-//                         selectAllLabel={selectAllLabel}
+//                     <div className="space-y-2">
+//                       <h3 className="font-serif text-xl font-bold text-foreground">
+//                         Thank you for connecting with us.
+//                       </h3>
+//                       <p className="text-muted-foreground text-sm leading-relaxed">
+//                         We have received your details / query. Our team shall respond within 24 hours.
+//                       </p>
+//                     </div>
+//                     <Button className="glow-gold mt-2" onClick={handleCloseModal}>
+//                       Close
+//                     </Button>
+//                   </div>
+//                 ) : (
+//                   <>
+//                     {/* Personal fields */}
+//                     <div className="space-y-1">
+//                       <label htmlFor="name" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+//                         Full Name <span className="text-destructive">*</span>
+//                       </label>
+//                       <input
+//                         id="name" name="name" required
+//                         value={formData.name} onChange={handleChange}
+//                         className="w-full px-4 py-2.5 rounded-xl bg-muted/30 border border-primary/20 focus:border-primary/50 outline-none transition-colors text-sm placeholder:text-muted-foreground/50"
+//                         placeholder="Enter your full name"
 //                       />
 //                     </div>
 
-//                     {selectedSubCourses.length === 0 && (
-//                       <p className="text-[10px] text-muted-foreground/70">
-//                         Please select at least one course to proceed.
-//                       </p>
+//                     <div className="space-y-1">
+//                       <label htmlFor="phone" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+//                         Phone Number <span className="text-destructive">*</span>
+//                       </label>
+//                       <input
+//                         id="phone" name="phone" type="tel" required
+//                         value={formData.phone} onChange={handleChange}
+//                         className="w-full px-4 py-2.5 rounded-xl bg-muted/30 border border-primary/20 focus:border-primary/50 outline-none transition-colors text-sm placeholder:text-muted-foreground/50"
+//                         placeholder="Enter phone number"
+//                       />
+//                     </div>
+
+//                     <div className="space-y-1">
+//                       <label htmlFor="email" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+//                         Email Address <span className="text-muted-foreground/50 normal-case font-normal">(Optional)</span>
+//                       </label>
+//                       <input
+//                         id="email" name="email" type="email"
+//                         value={formData.email} onChange={handleChange}
+//                         className="w-full px-4 py-2.5 rounded-xl bg-muted/30 border border-primary/20 focus:border-primary/50 outline-none transition-colors text-sm placeholder:text-muted-foreground/50"
+//                         placeholder="Enter email address"
+//                       />
+//                     </div>
+
+//                     {/* ── Sub-course selection — only for Intermediate, Advanced, Crash ── */}
+//                     {needsSubCourse && (
+//                       <div className="space-y-3 pt-2 border-t border-primary/10">
+//                         <div className="flex items-center justify-between">
+//                           <p className="text-xs font-bold text-foreground uppercase tracking-wider">
+//                             Select Course(s) <span className="text-destructive">*</span>
+//                           </p>
+//                           {selectedSubCourses.length > 0 && (
+//                             <span className="text-[10px] font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+//                               {selectedSubCourses.length} selected
+//                             </span>
+//                           )}
+//                         </div>
+
+//                         <div className={`bg-muted/20 rounded-xl border border-primary/15 p-3.5
+//                           ${activePlan.id === "crash" ? "max-h-52 overflow-y-auto custom-scrollbar" : ""}`}>
+//                           <CheckboxList
+//                             options={subCourseOptions}
+//                             selected={selectedSubCourses}
+//                             onChange={setSelectedSubCourses}
+//                             allowSelectAll
+//                             selectAllLabel={selectAllLabel}
+//                           />
+//                         </div>
+
+//                         {selectedSubCourses.length === 0 && (
+//                           <p className="text-[10px] text-muted-foreground/70">
+//                             Please select at least one course to proceed.
+//                           </p>
+//                         )}
+//                       </div>
 //                     )}
-//                   </div>
+//                   </>
 //                 )}
 //               </div>
 
 //               {/* ── Fixed footer with submit ── */}
-//               <div className="px-6 py-4 border-t border-primary/10 bg-background/50 shrink-0">
-//                 <Button
-//                   type="button"
-//                   className="w-full glow-gold h-11 text-sm font-bold"
-//                   disabled={isSubmitting || !isFormValid || !formData.name || !formData.phone}
-//                   onClick={handleSubmit}
-//                 >
-//                   {isSubmitting ? (
-//                     <div className="flex items-center gap-2">
-//                       <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
-//                       Submitting...
-//                     </div>
-//                   ) : (
-//                     <>
-//                       <GraduationCap className="w-4 h-4 mr-2" />
-//                       Submit Enrollment Request
-//                     </>
-//                   )}
-//                 </Button>
-//                 <p className="text-center text-[10px] text-muted-foreground mt-2.5">
-//                   By submitting, you agree to our terms. We will contact you soon!
-//                 </p>
-//               </div>
+//               {!isSuccess && (
+//                 <div className="px-6 py-4 border-t border-primary/10 bg-background/50 shrink-0">
+//                   <Button
+//                     type="button"
+//                     className="w-full glow-gold h-11 text-sm font-bold"
+//                     disabled={isSubmitting || !isFormValid || !formData.name || !formData.phone}
+//                     onClick={handleSubmit}
+//                   >
+//                     {isSubmitting ? (
+//                       <div className="flex items-center gap-2">
+//                         <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
+//                         Submitting...
+//                       </div>
+//                     ) : (
+//                       <>
+//                         <GraduationCap className="w-4 h-4 mr-2" />
+//                         Submit Enrollment Request
+//                       </>
+//                     )}
+//                   </Button>
+//                   <p className="text-center text-[10px] text-muted-foreground mt-2.5">
+//                     By submitting, you agree to our terms. We will contact you soon!
+//                   </p>
+//                 </div>
+//               )}
+
 //             </motion.div>
 //           </motion.div>
 //         )}
@@ -511,10 +538,7 @@
 // export default Pricing;
 
 
-
 //testing
-
-
 
 
 import { Helmet } from "react-helmet-async";
@@ -523,7 +547,6 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { CosmicBackground } from "@/components/ui/CosmicBackground";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
 import {
   CheckCircle2, Sparkles, GraduationCap, ArrowRight, X,
   BookOpen, Zap, Star, Layers
@@ -628,6 +651,30 @@ const enrollSteps = [
   { num: "4", title: "Access Learning Portal" },
 ];
 
+// ── Standalone validation helpers ────────────────────────────────
+const validateName = (value: string): string => {
+  if (!value.trim()) return "Full name is required.";
+  if (value.trim().length < 3) return "Name must be at least 3 characters.";
+  if (!/^[a-zA-Z\s]+$/.test(value.trim()))
+    return "Name can only contain letters and spaces.";
+  return "";
+};
+
+const validatePhone = (value: string): string => {
+  if (!value.trim()) return "Phone number is required.";
+  if (!/^\d{10}$/.test(value.trim()))
+    return "Enter a valid 10-digit phone number.";
+  return "";
+};
+
+// Email is optional — only validate format if something is entered
+const validateEmail = (value: string): string => {
+  if (!value.trim()) return "";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()))
+    return "Enter a valid email address (e.g. name@example.com).";
+  return "";
+};
+
 // ── Checkbox list ─────────────────────────────────────────────────
 const CheckboxList = ({
   options,
@@ -686,65 +733,102 @@ const CheckboxList = ({
 
 // ── Main Page ─────────────────────────────────────────────────────
 const Pricing = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activePlan, setActivePlan] = useState<typeof plans[0] | null>(null);
+  const [isModalOpen, setIsModalOpen]   = useState(false);
+  const [activePlan, setActivePlan]     = useState<typeof plans[0] | null>(null);
   const [selectedSubCourses, setSelectedSubCourses] = useState<string[]>([]);
-  const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
+  const [formData, setFormData]         = useState({ name: "", email: "", phone: "" });
+
+  // ── Per-field error strings ──────────────────────────────────
+  const [formErrors, setFormErrors] = useState<{
+    name?: string;
+    phone?: string;
+    email?: string;
+  }>({});
+
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isSuccess, setIsSuccess]       = useState(false);
   const { toast } = useToast();
 
+  // ── Open modal — reset everything ───────────────────────────
   const handleEnrollClick = (plan: typeof plans[0]) => {
     setActivePlan(plan);
     setSelectedSubCourses([]);
     setFormData({ name: "", email: "", phone: "" });
+    setFormErrors({});
     setIsSuccess(false);
     setIsModalOpen(true);
   };
 
+  // ── Close modal — reset everything ──────────────────────────
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setActivePlan(null);
     setSelectedSubCourses([]);
     setFormData({ name: "", email: "", phone: "" });
+    setFormErrors({});
     setIsSuccess(false);
   };
 
+  // ── Live validation on every keystroke ──────────────────────
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    // Only allow digits in phone field
+    const sanitised = name === "phone" ? value.replace(/\D/g, "") : value;
+    setFormData((prev) => ({ ...prev, [name]: sanitised }));
+
+    let error = "";
+    if (name === "name")  error = validateName(sanitised);
+    if (name === "phone") error = validatePhone(sanitised);
+    if (name === "email") error = validateEmail(sanitised);
+
+    setFormErrors((prev) => ({ ...prev, [name]: error }));
+  };
+
+  // ── Full validation run on submit ────────────────────────────
+  const validateAll = (): boolean => {
+    const errors = {
+      name:  validateName(formData.name),
+      phone: validatePhone(formData.phone),
+      email: validateEmail(formData.email),
+    };
+    setFormErrors(errors);
+    return !errors.name && !errors.phone && !errors.email;
   };
 
   const needsSubCourse = activePlan && activePlan.id !== "foundation";
-  const isFormValid = activePlan && (!needsSubCourse || selectedSubCourses.length > 0);
+  const isFormValid    = activePlan && (!needsSubCourse || selectedSubCourses.length > 0);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateAll()) return;
     if (!isFormValid) {
       toast({ variant: "destructive", title: "Please select at least one course." });
       return;
     }
+
     setIsSubmitting(true);
     try {
-      const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "https://backend.astrosantoshpandey.com";
+      const apiBaseUrl  = import.meta.env.VITE_API_BASE_URL || "https://backend.astrosantoshpandey.com";
       const courseLabel = needsSubCourse && selectedSubCourses.length > 0
         ? `${activePlan?.name}: ${selectedSubCourses.join(", ")}`
         : activePlan?.name || "";
 
       const response = await fetch(`${apiBaseUrl}/course-enrollment`, {
-        method: "POST",
+        method:  "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
           course: courseLabel,
-          price: activePlan?.price || "N/A",
+          price:  activePlan?.price || "N/A",
         }),
       });
       if (!response.ok) throw new Error("Server error");
       setIsSuccess(true);
     } catch {
       toast({
-        variant: "destructive",
-        title: "Submission Failed",
+        variant:     "destructive",
+        title:       "Submission Failed",
         description: "Something went wrong. Please try again or contact us on WhatsApp.",
       });
     } finally {
@@ -752,16 +836,23 @@ const Pricing = () => {
     }
   };
 
-  // Get sub-course options for active plan
   const subCourseOptions =
     activePlan?.id === "intermediate" ? intermediateCourseOptions :
-    activePlan?.id === "advanced" ? advancedCourseOptions :
-    activePlan?.id === "crash" ? crashCourseOptions : [];
+    activePlan?.id === "advanced"     ? advancedCourseOptions     :
+    activePlan?.id === "crash"        ? crashCourseOptions        : [];
 
   const selectAllLabel =
     activePlan?.id === "intermediate" ? "Select Both Courses" :
-    activePlan?.id === "advanced" ? "Select Both Courses" :
+    activePlan?.id === "advanced"     ? "Select Both Courses" :
     "Select All 11 Courses";
+
+  // ── Shared input className builder ───────────────────────────
+  const inputCls = (field: "name" | "phone" | "email") =>
+    `w-full px-4 py-2.5 rounded-xl bg-muted/30 border transition-colors text-sm placeholder:text-muted-foreground/50 outline-none ${
+      formErrors[field]
+        ? "border-red-500 focus:border-red-500"
+        : "border-primary/20 focus:border-primary/50"
+    }`;
 
   return (
     <Layout>
@@ -793,11 +884,8 @@ const Pricing = () => {
             {plans.map((plan, i) => (
               <motion.div
                 key={plan.name}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-                custom={i}
+                initial="hidden" whileInView="visible" viewport={{ once: true }}
+                variants={fadeUp} custom={i}
                 className={`cosmic-card p-8 flex flex-col relative ${plan.popular ? "border-primary/60 ring-2 ring-primary/30" : ""}`}
               >
                 {plan.popular && (
@@ -872,21 +960,17 @@ const Pricing = () => {
       <AnimatePresence>
         {isModalOpen && activePlan && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
             onClick={handleCloseModal}
           >
             <motion.div
-              initial={{ scale: 0.95, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95, y: 20 }}
+              initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 20 }}
               transition={{ duration: 0.2 }}
               className="relative w-full max-w-md bg-background/95 cosmic-card overflow-hidden max-h-[92vh] flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* ── Modal header with course info ── */}
+              {/* Modal header */}
               <div className="bg-primary/8 border-b border-primary/15 px-6 py-5 shrink-0">
                 <button
                   onClick={handleCloseModal}
@@ -894,24 +978,16 @@ const Pricing = () => {
                 >
                   <X className="h-4 w-4" />
                 </button>
-
                 <div className="flex items-center gap-3 pr-8">
-                  {/* Course icon */}
                   <div className="w-11 h-11 rounded-full bg-primary/15 border border-primary/25 flex items-center justify-center shrink-0">
                     <activePlan.icon className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <p className="text-[10px] font-bold text-primary/70 uppercase tracking-widest mb-0.5">
-                      {activePlan.label}
-                    </p>
-                    <h3 className="font-serif text-lg font-bold text-foreground leading-tight">
-                      {activePlan.name}
-                    </h3>
+                    <p className="text-[10px] font-bold text-primary/70 uppercase tracking-widest mb-0.5">{activePlan.label}</p>
+                    <h3 className="font-serif text-lg font-bold text-foreground leading-tight">{activePlan.name}</h3>
                     <div className="flex items-center gap-2 mt-1">
                       <span className="text-sm font-bold text-gradient-gold">{activePlan.price}</span>
-                      {activePlan.priceSuffix && (
-                        <span className="text-[10px] text-muted-foreground">/ {activePlan.priceSuffix}</span>
-                      )}
+                      {activePlan.priceSuffix && <span className="text-[10px] text-muted-foreground">/ {activePlan.priceSuffix}</span>}
                       <span className="text-muted-foreground/40">·</span>
                       <span className="text-[10px] text-muted-foreground">{activePlan.duration}</span>
                     </div>
@@ -919,67 +995,77 @@ const Pricing = () => {
                 </div>
               </div>
 
-              {/* ── Scrollable body ── */}
+              {/* Scrollable body */}
               <div className="overflow-y-auto custom-scrollbar flex-1 px-6 py-5 space-y-4">
-
-                {/* ── Success Screen ── */}
                 {isSuccess ? (
                   <div className="flex flex-col items-center justify-center text-center py-10 px-4 space-y-5">
                     <div className="w-16 h-16 rounded-full bg-primary/15 border-2 border-primary/40 flex items-center justify-center">
                       <CheckCircle2 className="h-8 w-8 text-primary" />
                     </div>
                     <div className="space-y-2">
-                      <h3 className="font-serif text-xl font-bold text-foreground">
-                        Thank you for connecting with us.
-                      </h3>
+                      <h3 className="font-serif text-xl font-bold text-foreground">Thank you for connecting with us.</h3>
                       <p className="text-muted-foreground text-sm leading-relaxed">
                         We have received your details / query. Our team shall respond within 24 hours.
                       </p>
                     </div>
-                    <Button className="glow-gold mt-2" onClick={handleCloseModal}>
-                      Close
-                    </Button>
+                    <Button className="glow-gold mt-2" onClick={handleCloseModal}>Close</Button>
                   </div>
                 ) : (
                   <>
-                    {/* Personal fields */}
+                    {/* ── Full Name ── */}
                     <div className="space-y-1">
                       <label htmlFor="name" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                         Full Name <span className="text-destructive">*</span>
                       </label>
                       <input
                         id="name" name="name" required
-                        value={formData.name} onChange={handleChange}
-                        className="w-full px-4 py-2.5 rounded-xl bg-muted/30 border border-primary/20 focus:border-primary/50 outline-none transition-colors text-sm placeholder:text-muted-foreground/50"
+                        value={formData.name}
+                        onChange={handleChange}
+                        className={inputCls("name")}
                         placeholder="Enter your full name"
                       />
+                      {formErrors.name && (
+                        <p className="text-red-500 text-[11px] mt-1 font-medium">{formErrors.name}</p>
+                      )}
                     </div>
 
+                    {/* ── Phone Number ── */}
                     <div className="space-y-1">
                       <label htmlFor="phone" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                         Phone Number <span className="text-destructive">*</span>
                       </label>
                       <input
                         id="phone" name="phone" type="tel" required
-                        value={formData.phone} onChange={handleChange}
-                        className="w-full px-4 py-2.5 rounded-xl bg-muted/30 border border-primary/20 focus:border-primary/50 outline-none transition-colors text-sm placeholder:text-muted-foreground/50"
-                        placeholder="Enter phone number"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        className={inputCls("phone")}
+                        placeholder="Enter 10-digit phone number"
+                        maxLength={10}
                       />
+                      {formErrors.phone && (
+                        <p className="text-red-500 text-[11px] mt-1 font-medium">{formErrors.phone}</p>
+                      )}
                     </div>
 
+                    {/* ── Email Address (optional) ── */}
                     <div className="space-y-1">
                       <label htmlFor="email" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                        Email Address <span className="text-muted-foreground/50 normal-case font-normal">(Optional)</span>
+                        Email Address{" "}
+                        <span className="text-muted-foreground/50 normal-case font-normal">(Optional)</span>
                       </label>
                       <input
                         id="email" name="email" type="email"
-                        value={formData.email} onChange={handleChange}
-                        className="w-full px-4 py-2.5 rounded-xl bg-muted/30 border border-primary/20 focus:border-primary/50 outline-none transition-colors text-sm placeholder:text-muted-foreground/50"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className={inputCls("email")}
                         placeholder="Enter email address"
                       />
+                      {formErrors.email && (
+                        <p className="text-red-500 text-[11px] mt-1 font-medium">{formErrors.email}</p>
+                      )}
                     </div>
 
-                    {/* ── Sub-course selection — only for Intermediate, Advanced, Crash ── */}
+                    {/* ── Sub-course selection ── */}
                     {needsSubCourse && (
                       <div className="space-y-3 pt-2 border-t border-primary/10">
                         <div className="flex items-center justify-between">
@@ -992,9 +1078,9 @@ const Pricing = () => {
                             </span>
                           )}
                         </div>
-
-                        <div className={`bg-muted/20 rounded-xl border border-primary/15 p-3.5
-                          ${activePlan.id === "crash" ? "max-h-52 overflow-y-auto custom-scrollbar" : ""}`}>
+                        <div className={`bg-muted/20 rounded-xl border border-primary/15 p-3.5 ${
+                          activePlan.id === "crash" ? "max-h-52 overflow-y-auto custom-scrollbar" : ""
+                        }`}>
                           <CheckboxList
                             options={subCourseOptions}
                             selected={selectedSubCourses}
@@ -1003,7 +1089,6 @@ const Pricing = () => {
                             selectAllLabel={selectAllLabel}
                           />
                         </div>
-
                         {selectedSubCourses.length === 0 && (
                           <p className="text-[10px] text-muted-foreground/70">
                             Please select at least one course to proceed.
@@ -1015,13 +1100,13 @@ const Pricing = () => {
                 )}
               </div>
 
-              {/* ── Fixed footer with submit ── */}
+              {/* Fixed footer */}
               {!isSuccess && (
                 <div className="px-6 py-4 border-t border-primary/10 bg-background/50 shrink-0">
                   <Button
                     type="button"
                     className="w-full glow-gold h-11 text-sm font-bold"
-                    disabled={isSubmitting || !isFormValid || !formData.name || !formData.phone}
+                    disabled={isSubmitting || !isFormValid}
                     onClick={handleSubmit}
                   >
                     {isSubmitting ? (
@@ -1041,7 +1126,6 @@ const Pricing = () => {
                   </p>
                 </div>
               )}
-
             </motion.div>
           </motion.div>
         )}

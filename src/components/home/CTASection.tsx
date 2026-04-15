@@ -34,7 +34,8 @@ export const CTASection = () => {
             Ready to <span className="text-gradient-gold">Transform</span> Your Life?
           </h2>
 
-          <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-10">
+          {/* <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-10"> */}
+            <p className="text-muted-foreground text-lg">
             Take the first step towards clarity, success, and peace. Book your personalized
             consultation today and unlock the cosmic secrets of your destiny.
           </p>

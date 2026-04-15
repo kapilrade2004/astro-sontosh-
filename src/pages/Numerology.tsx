@@ -1,3 +1,7 @@
+//testing
+
+
+
 // import { Helmet } from "react-helmet-async";
 // import { AnimatePresence, motion } from "framer-motion";
 // import { Link } from "react-router-dom";
@@ -81,7 +85,6 @@
 //   },
 // ];
 
-
 // const containerVariants = {
 //   hidden: { opacity: 0 },
 //   visible: {
@@ -93,6 +96,69 @@
 // const itemVariants = {
 //   hidden: { opacity: 0, y: 30 },
 //   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+// };
+
+// /* ── Reusable Numerology Image visual ───────────────────────── */
+// const NumerologyImage = ({ size = "lg" }: { size?: "sm" | "lg" }) => {
+//   const imgClass =
+//     size === "sm"
+//       ? "w-full h-48 sm:h-56 object-cover rounded-2xl"
+//       : "w-full h-auto object-cover rounded-2xl";
+
+//   return (
+//     <div className={`relative w-full ${size === "sm" ? "max-w-sm mx-auto" : "max-w-lg"}`}>
+//       {/* Outer purple-gold glow */}
+//       <div className="absolute -inset-6 rounded-2xl bg-gradient-to-br from-purple-500/25 via-amber-400/20 to-purple-800/20 blur-3xl animate-pulse pointer-events-none" />
+
+//       {/* Image container */}
+//       <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+//         <img
+//           src="/src/assets/Numerology.jpeg"
+//           alt="Numerology - Sacred Numbers & Zodiac"
+//           className={imgClass}
+//           style={{ filter: "brightness(1.0) contrast(1.05) saturate(1.08)" }}
+//         />
+
+//         {/* Gold shimmer overlay at top */}
+//         <div
+//           className="absolute top-0 left-0 right-0 h-20 pointer-events-none"
+//           style={{
+//             background:
+//               "radial-gradient(ellipse at 50% 0%, rgba(251,191,36,0.12) 0%, transparent 70%)",
+//           }}
+//         />
+
+//         {/* Bottom fade */}
+//         <div
+//           className="absolute bottom-0 left-0 right-0 h-20 pointer-events-none"
+//           style={{
+//             background: "linear-gradient(to top, rgba(8,4,20,0.55) 0%, transparent 100%)",
+//           }}
+//         />
+
+//         {/* Left edge fade */}
+//         <div
+//           className="absolute inset-y-0 left-0 w-8 pointer-events-none"
+//           style={{ background: "linear-gradient(to right, rgba(8,4,20,0.4), transparent)" }}
+//         />
+
+//         {/* Right edge fade */}
+//         <div
+//           className="absolute inset-y-0 right-0 w-8 pointer-events-none"
+//           style={{ background: "linear-gradient(to left, rgba(8,4,20,0.4), transparent)" }}
+//         />
+//       </div>
+
+//       {/* Gold border ring */}
+//       <div
+//         className="absolute inset-0 rounded-2xl pointer-events-none"
+//         style={{
+//           boxShadow:
+//             "inset 0 0 0 1.5px rgba(251,191,36,0.4), 0 0 35px rgba(251,191,36,0.2), 0 0 70px rgba(138,43,226,0.15)",
+//         }}
+//       />
+//     </div>
+//   );
 // };
 
 // const Numerology = () => {
@@ -109,25 +175,15 @@
 //   });
 
 //   const validateName = (name) => {
-//     if (!name.trim()) {
-//       return 'Name is required';
-//     }
-//     if (name.trim().length < 2) {
-//       return 'Name must be at least 2 characters';
-//     }
-//     if (!/^[a-zA-Z\s]+$/.test(name)) {
-//       return 'Name can only contain letters and spaces';
-//     }
+//     if (!name.trim()) return 'Name is required';
+//     if (name.trim().length < 2) return 'Name must be at least 2 characters';
+//     if (!/^[a-zA-Z\s]+$/.test(name)) return 'Name can only contain letters and spaces';
 //     return '';
 //   };
 
 //   const validateMobile = (mobile) => {
-//     if (!mobile) {
-//       return 'Mobile number is required';
-//     }
-//     if (!/^\d{10}$/.test(mobile)) {
-//       return 'Mobile number must be exactly 10 digits';
-//     }
+//     if (!mobile) return 'Mobile number is required';
+//     if (!/^\d{10}$/.test(mobile)) return 'Mobile number must be exactly 10 digits';
 //     return '';
 //   };
 
@@ -138,7 +194,7 @@
 //   };
 
 //   const handleMobileChange = (e) => {
-//     const value = e.target.value.replace(/\D/g, ''); // Only allow digits
+//     const value = e.target.value.replace(/\D/g, '');
 //     if (value.length <= 10) {
 //       setFormData({ ...formData, mobile: value });
 //       setErrors({ ...errors, mobile: validateMobile(value) });
@@ -156,14 +212,12 @@
 //       return;
 //     }
 
-//     // Compose WhatsApp message
 //     const message = encodeURIComponent(
 //       `Hello Astro Santosh Pandey,\n\nI would like to request a numerology analysis.\n\nMy Details:\nFull Name: ${formData.name}\nMobile Number: ${formData.mobile}\nDate of Birth: ${formData.dob}\n\nThank you.`
 //     );
 
 //     window.open(`https://wa.me/918879731174?text=${message}`, '_blank');
 
-//     // Reset form and close
 //     setFormData({ name: '', mobile: '', dob: '' });
 //     setErrors({ name: '', mobile: '' });
 //     setOpenForm(false);
@@ -177,8 +231,8 @@
 //         <link rel="canonical" href="https://astrosantoshpandey.com/numerology" />
 //       </Helmet>
 //       <Layout>
-//         {/* Hero Section */}
-//      {/* Hero Section */}
+
+//         {/* ── Hero Section ── */}
 //         <section className="pt-32 pb-16 bg-gradient-hero relative overflow-hidden">
 //           <div className="container mx-auto px-4 relative z-10">
 //             <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -202,22 +256,15 @@
 //                 >
 //                   <div className="absolute -inset-4 -left-2 bg-gradient-radial from-amber-400/20 via-yellow-400/10 to-transparent blur-2xl animate-pulse pointer-events-none" />
 //                   <div
-//                     className="text-sm md:text-lg font-bold
-//                       tracking-normal leading-loose text-left relative
-//                       bg-[length:200%_auto]
-//                       bg-gradient-to-r
+//                     className="text-sm md:text-lg font-bold tracking-normal leading-loose text-left relative
+//                       bg-[length:200%_auto] bg-gradient-to-r
 //                       from-yellow-100 via-amber-200 via-yellow-300 via-amber-300 via-orange-300 to-yellow-100
-//                       bg-clip-text text-transparent
-//                       animate-[shimmer_5s_linear_infinite]
+//                       bg-clip-text text-transparent animate-[shimmer_5s_linear_infinite]
 //                       drop-shadow-[0_0_20px_rgba(251,191,36,0.95)]
 //                       drop-shadow-[0_0_35px_rgba(245,158,11,0.7)]"
 //                     style={{
-//                       textShadow: `
-//                         0 0 5px rgba(255,215,0,0.5),
-//                         0 0 12px rgba(251,191,36,0.4),
-//                         0 0 25px rgba(245,158,11,0.3),
-//                         0 3px 8px rgba(0,0,0,0.3)
-//                       `,
+//                       textShadow:
+//                         "0 0 5px rgba(255,215,0,0.5), 0 0 12px rgba(251,191,36,0.4), 0 0 25px rgba(245,158,11,0.3), 0 3px 8px rgba(0,0,0,0.3)",
 //                     }}
 //                   >
 //                     <span className="inline-block mr-2 text-[#FFD700] animate-pulse">॥</span>
@@ -234,6 +281,17 @@
 //                 <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mb-8">
 //                   Numerology is a precise, data-driven occult science that uncovers personality traits, karmic strengths, and life cycles — using only your date of birth.
 //                 </p>
+
+//                 {/* ── MOBILE: Numerology image between text and button ── */}
+//                 <motion.div
+//                   initial={{ opacity: 0, scale: 0.85 }}
+//                   animate={{ opacity: 1, scale: 1 }}
+//                   transition={{ duration: 0.8, delay: 0.3 }}
+//                   className="flex lg:hidden justify-center items-center mb-8"
+//                 >
+//                   <NumerologyImage size="sm" />
+//                 </motion.div>
+
 //                 <Button
 //                   size="lg"
 //                   className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold"
@@ -244,82 +302,21 @@
 //                 </Button>
 //               </motion.div>
 
-//               {/* Right: Numerology Image */}
+//               {/* Right: Numerology Image — desktop only */}
 //               <motion.div
 //                 initial={{ opacity: 0, scale: 0.85 }}
 //                 animate={{ opacity: 1, scale: 1 }}
 //                 transition={{ duration: 0.8, delay: 0.3 }}
 //                 className="hidden lg:flex justify-center items-center"
 //               >
-//                 <div className="relative w-full max-w-lg">
-
-//                   {/* Outer purple-gold glow — matches numerology image colours */}
-//                   <div className="absolute -inset-6 rounded-2xl bg-gradient-to-br from-purple-500/25 via-amber-400/20 to-purple-800/20 blur-3xl animate-pulse pointer-events-none" />
-
-//                   {/* Image container */}
-//                   <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-//                     <img
-//                       src="/src/assets/Numerology.jpeg"
-//                       alt="Numerology - Sacred Numbers & Zodiac"
-//                       className="w-full h-auto object-cover rounded-2xl"
-//                       style={{
-//                         filter: "brightness(1.0) contrast(1.05) saturate(1.08)",
-//                       }}
-//                     />
-
-//                     {/* Gold shimmer overlay at top */}
-//                     <div
-//                       className="absolute top-0 left-0 right-0 h-20 pointer-events-none"
-//                       style={{
-//                         background:
-//                           "radial-gradient(ellipse at 50% 0%, rgba(251,191,36,0.12) 0%, transparent 70%)",
-//                       }}
-//                     />
-
-//                     {/* Bottom fade to blend with page */}
-//                     <div
-//                       className="absolute bottom-0 left-0 right-0 h-20 pointer-events-none"
-//                       style={{
-//                         background:
-//                           "linear-gradient(to top, rgba(8,4,20,0.55) 0%, transparent 100%)",
-//                       }}
-//                     />
-
-//                     {/* Subtle left edge fade */}
-//                     <div
-//                       className="absolute inset-y-0 left-0 w-8 pointer-events-none"
-//                       style={{
-//                         background:
-//                           "linear-gradient(to right, rgba(8,4,20,0.4), transparent)",
-//                       }}
-//                     />
-
-//                     {/* Subtle right edge fade */}
-//                     <div
-//                       className="absolute inset-y-0 right-0 w-8 pointer-events-none"
-//                       style={{
-//                         background:
-//                           "linear-gradient(to left, rgba(8,4,20,0.4), transparent)",
-//                       }}
-//                     />
-//                   </div>
-
-//                   {/* Gold border ring */}
-//                   <div
-//                     className="absolute inset-0 rounded-2xl pointer-events-none"
-//                     style={{
-//                       boxShadow:
-//                         "inset 0 0 0 1.5px rgba(251,191,36,0.4), 0 0 35px rgba(251,191,36,0.2), 0 0 70px rgba(138,43,226,0.15)",
-//                     }}
-//                   />
-//                 </div>
+//                 <NumerologyImage size="lg" />
 //               </motion.div>
 
 //             </div>
 //           </div>
 //         </section>
 
-//         {/* Highlights */}
+//         {/* ── Highlights ── */}
 //         <section className="py-12 bg-background border-b border-border">
 //           <div className="container mx-auto px-4">
 //             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -343,7 +340,7 @@
 //           </div>
 //         </section>
 
-//         {/* Services Section */}
+//         {/* ── Services Section ── */}
 //         <section className="py-20 bg-background">
 //           <div className="container mx-auto px-4">
 //             <motion.div
@@ -400,7 +397,7 @@
 //           </div>
 //         </section>
 
-//         {/* FAQ Section */}
+//         {/* ── FAQ Section ── */}
 //         <section className="py-20 bg-gradient-cosmic">
 //           <div className="container mx-auto px-4">
 //             <motion.div
@@ -431,7 +428,7 @@
 //           </div>
 //         </section>
 
-//         {/* CTA Section */}
+//         {/* ── CTA Section ── */}
 //         <section className="py-20 bg-background">
 //           <div className="container mx-auto px-4 text-center">
 //             <motion.div
@@ -455,10 +452,11 @@
 //                 Check My Numbers
 //                 <ArrowRight className="w-5 h-5 ml-2" />
 //               </Button>
-
 //             </motion.div>
 //           </div>
 //         </section>
+
+//         {/* ── Modal Form ── */}
 //         <AnimatePresence>
 //           {openForm && (
 //             <motion.div
@@ -501,8 +499,9 @@
 //                       placeholder="Enter your name"
 //                       value={formData.name}
 //                       onChange={handleNameChange}
-//                       className={`mt-1 w-full rounded-lg bg-background border ${errors.name ? 'border-red-500' : 'border-border'
-//                         } px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50`}
+//                       className={`mt-1 w-full rounded-lg bg-background border ${
+//                         errors.name ? 'border-red-500' : 'border-border'
+//                       } px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50`}
 //                       required
 //                     />
 //                     {errors.name && (
@@ -518,8 +517,9 @@
 //                       placeholder="Enter 10-digit mobile number"
 //                       value={formData.mobile}
 //                       onChange={handleMobileChange}
-//                       className={`mt-1 w-full rounded-lg bg-background border ${errors.mobile ? 'border-red-500' : 'border-border'
-//                         } px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50`}
+//                       className={`mt-1 w-full rounded-lg bg-background border ${
+//                         errors.mobile ? 'border-red-500' : 'border-border'
+//                       } px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50`}
 //                       required
 //                     />
 //                     {errors.mobile && (
@@ -535,9 +535,9 @@
 //                       max={new Date().toISOString().split('T')[0]}
 //                       value={formData.dob}
 //                       onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
-//                       className="mt-1 w-full rounded-lg bg-background border border-border px-4 py-2 
-//              focus:outline-none focus:ring-2 focus:ring-primary/50 text-white 
-//              [&::-webkit-calendar-picker-indicator]:invert"
+//                       className="mt-1 w-full rounded-lg bg-background border border-border px-4 py-2
+//                         focus:outline-none focus:ring-2 focus:ring-primary/50 text-white
+//                         [&::-webkit-calendar-picker-indicator]:invert"
 //                       required
 //                     />
 //                   </div>
@@ -554,6 +554,7 @@
 //             </motion.div>
 //           )}
 //         </AnimatePresence>
+
 //       </Layout>
 //     </>
 //   );
@@ -563,7 +564,12 @@
 
 
 
-//test
+
+
+//testing
+
+
+
 
 
 
@@ -672,10 +678,7 @@ const NumerologyImage = ({ size = "lg" }: { size?: "sm" | "lg" }) => {
 
   return (
     <div className={`relative w-full ${size === "sm" ? "max-w-sm mx-auto" : "max-w-lg"}`}>
-      {/* Outer purple-gold glow */}
       <div className="absolute -inset-6 rounded-2xl bg-gradient-to-br from-purple-500/25 via-amber-400/20 to-purple-800/20 blur-3xl animate-pulse pointer-events-none" />
-
-      {/* Image container */}
       <div className="relative rounded-2xl overflow-hidden shadow-2xl">
         <img
           src="/src/assets/Numerology.jpeg"
@@ -683,8 +686,6 @@ const NumerologyImage = ({ size = "lg" }: { size?: "sm" | "lg" }) => {
           className={imgClass}
           style={{ filter: "brightness(1.0) contrast(1.05) saturate(1.08)" }}
         />
-
-        {/* Gold shimmer overlay at top */}
         <div
           className="absolute top-0 left-0 right-0 h-20 pointer-events-none"
           style={{
@@ -692,29 +693,21 @@ const NumerologyImage = ({ size = "lg" }: { size?: "sm" | "lg" }) => {
               "radial-gradient(ellipse at 50% 0%, rgba(251,191,36,0.12) 0%, transparent 70%)",
           }}
         />
-
-        {/* Bottom fade */}
         <div
           className="absolute bottom-0 left-0 right-0 h-20 pointer-events-none"
           style={{
             background: "linear-gradient(to top, rgba(8,4,20,0.55) 0%, transparent 100%)",
           }}
         />
-
-        {/* Left edge fade */}
         <div
           className="absolute inset-y-0 left-0 w-8 pointer-events-none"
           style={{ background: "linear-gradient(to right, rgba(8,4,20,0.4), transparent)" }}
         />
-
-        {/* Right edge fade */}
         <div
           className="absolute inset-y-0 right-0 w-8 pointer-events-none"
           style={{ background: "linear-gradient(to left, rgba(8,4,20,0.4), transparent)" }}
         />
       </div>
-
-      {/* Gold border ring */}
       <div
         className="absolute inset-0 rounded-2xl pointer-events-none"
         style={{
@@ -726,47 +719,55 @@ const NumerologyImage = ({ size = "lg" }: { size?: "sm" | "lg" }) => {
   );
 };
 
+// ── Empty form & error state ─────────────────────────────────────
+const emptyForm = { name: "", mobile: "", dob: "" };
+const emptyErrors = { name: "", mobile: "" };
+
 const Numerology = () => {
   const [openForm, setOpenForm] = useState(false);
+  const [formData, setFormData] = useState(emptyForm);
+  const [errors, setErrors] = useState(emptyErrors);
 
-  const [formData, setFormData] = useState({
-    name: '',
-    mobile: '',
-    dob: ''
-  });
-  const [errors, setErrors] = useState({
-    name: '',
-    mobile: ''
-  });
-
-  const validateName = (name) => {
-    if (!name.trim()) return 'Name is required';
-    if (name.trim().length < 2) return 'Name must be at least 2 characters';
-    if (!/^[a-zA-Z\s]+$/.test(name)) return 'Name can only contain letters and spaces';
-    return '';
+  // ── Reset helper — clears both form data and errors ──
+  const resetForm = () => {
+    setFormData(emptyForm);
+    setErrors(emptyErrors);
   };
 
-  const validateMobile = (mobile) => {
-    if (!mobile) return 'Mobile number is required';
-    if (!/^\d{10}$/.test(mobile)) return 'Mobile number must be exactly 10 digits';
-    return '';
+  // ── Close modal and always reset ──
+  const handleCloseForm = () => {
+    setOpenForm(false);
+    resetForm();
   };
 
-  const handleNameChange = (e) => {
+  const validateName = (name: string) => {
+    if (!name.trim()) return "Name is required";
+    if (name.trim().length < 2) return "Name must be at least 2 characters";
+    if (!/^[a-zA-Z\s]+$/.test(name)) return "Name can only contain letters and spaces";
+    return "";
+  };
+
+  const validateMobile = (mobile: string) => {
+    if (!mobile) return "Mobile number is required";
+    if (!/^\d{10}$/.test(mobile)) return "Mobile number must be exactly 10 digits";
+    return "";
+  };
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setFormData({ ...formData, name: value });
     setErrors({ ...errors, name: validateName(value) });
   };
 
-  const handleMobileChange = (e) => {
-    const value = e.target.value.replace(/\D/g, '');
+  const handleMobileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, "");
     if (value.length <= 10) {
       setFormData({ ...formData, mobile: value });
       setErrors({ ...errors, mobile: validateMobile(value) });
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     const nameError = validateName(formData.name);
@@ -781,11 +782,10 @@ const Numerology = () => {
       `Hello Astro Santosh Pandey,\n\nI would like to request a numerology analysis.\n\nMy Details:\nFull Name: ${formData.name}\nMobile Number: ${formData.mobile}\nDate of Birth: ${formData.dob}\n\nThank you.`
     );
 
-    window.open(`https://wa.me/918879731174?text=${message}`, '_blank');
+    window.open(`https://wa.me/918879731174?text=${message}`, "_blank");
 
-    setFormData({ name: '', mobile: '', dob: '' });
-    setErrors({ name: '', mobile: '' });
-    setOpenForm(false);
+    // ── Clear form + close after successful submit ──
+    handleCloseForm();
   };
 
   return (
@@ -1029,7 +1029,7 @@ const Numerology = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
-              onClick={() => setOpenForm(false)}
+              onClick={handleCloseForm}
             >
               <motion.div
                 initial={{ scale: 0.9, y: 30 }}
@@ -1040,7 +1040,7 @@ const Numerology = () => {
               >
                 {/* Close Button */}
                 <button
-                  onClick={() => setOpenForm(false)}
+                  onClick={handleCloseForm}
                   className="absolute top-4 right-4 text-muted-foreground hover:text-primary"
                 >
                   <X className="w-5 h-5" />
@@ -1065,7 +1065,7 @@ const Numerology = () => {
                       value={formData.name}
                       onChange={handleNameChange}
                       className={`mt-1 w-full rounded-lg bg-background border ${
-                        errors.name ? 'border-red-500' : 'border-border'
+                        errors.name ? "border-red-500" : "border-border"
                       } px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50`}
                       required
                     />
@@ -1083,7 +1083,7 @@ const Numerology = () => {
                       value={formData.mobile}
                       onChange={handleMobileChange}
                       className={`mt-1 w-full rounded-lg bg-background border ${
-                        errors.mobile ? 'border-red-500' : 'border-border'
+                        errors.mobile ? "border-red-500" : "border-border"
                       } px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50`}
                       required
                     />
@@ -1097,7 +1097,7 @@ const Numerology = () => {
                     <label className="text-sm font-medium">Date of Birth</label>
                     <input
                       type="date"
-                      max={new Date().toISOString().split('T')[0]}
+                      max={new Date().toISOString().split("T")[0]}
                       value={formData.dob}
                       onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
                       className="mt-1 w-full rounded-lg bg-background border border-border px-4 py-2

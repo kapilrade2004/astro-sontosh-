@@ -603,14 +603,14 @@
 // };
 
 
-//test
+//testin
 
 
 
 import { motion } from "framer-motion";
 import { CosmicBackground } from "@/components/ui/CosmicBackground";
 import LOGO from "@/assets/logo by yash.png";
-import HeroImg from "@/assets/HeroImg.jpeg";
+import HeroImg from "@/assets/HeroImgg.jpeg";
 
 /* ── animation presets ─────────────────────────────────────── */
 const ease = [0.22, 1, 0.36, 1] as const;

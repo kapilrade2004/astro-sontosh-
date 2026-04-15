@@ -38,13 +38,13 @@ const newBookingServices = [
         duration: "60",
         icon: Sparkles,
     },
-    {
-        id: "premium-kundli",
-        title: "Premium Kundli",
-        description: "Detailed life analysis and comprehensive horoscope report",
-        price: 2100,
-        icon: UserCheck,
-    },
+    // {
+    //     id: "premium-kundli",
+    //     title: "Premium Kundli",
+    //     description: "Detailed life analysis and comprehensive horoscope report",
+    //     price: 2100,
+    //     icon: UserCheck,
+    // },
     {
         id: "numerology",
         title: "Numerology Analysis",
@@ -75,7 +75,7 @@ const repeatBookingServices = [
     },
     {
         id: "astrology-repeat-10-to-30",
-        title: "Astrology - Follow-up (10-30 days)",
+        title: "Astrology - Follow-up (11-30 days)",
         description: "Follow-up consultation (after 10 days till 30 days) - 30 Minutes",
         price: 3100,
         duration: "30",
@@ -104,7 +104,15 @@ const repeatBookingServices = [
         price: 2100,
         duration: "30",
         icon: User,
-    }
+    },
+       {
+        id: "numerology-repeat-post-30",
+        title: "numerology - Follow-up (post 30 days)",
+        description: "Follow-up consultation (post 30 days) - 30 Minutes",
+        price: 5100,
+        duration: "30",
+        icon: Sparkles,
+    },
 ];
 
 const durations = [
