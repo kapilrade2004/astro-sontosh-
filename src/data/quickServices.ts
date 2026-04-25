@@ -1,384 +1,5 @@
-// import { MessageCircle, Star, Gem, Zap, Heart, Briefcase } from "lucide-react";
 
-// export type ServiceCategory =
-//   | "love-relationships"
-//   | "career-money"
-//   | "instant-decisions"
-//   | "personal-insights";
-
-// export interface QuickService {
-//   id: string;
-//   slug: string;
-//   title: string;
-//   shortDescription: string;
-//   price: number;
-//   deliveryTime: string; // e.g. "2 hrs", "6 hrs", "24 hrs"
-//   category: ServiceCategory;
-//   icon: React.ElementType;
-//   // Individual page sections
-//   problemStatement: string;
-//   whenToUse: string[];
-//   benefits: string[];
-//   risks: string[];
-//   deliverables: string[];
-//   requiresBirthTime: boolean;
-//   requiresDOB: boolean;
-// }
-
-// export const serviceCategories: { id: ServiceCategory; label: string; emoji: string }[] = [
-//   { id: "love-relationships", label: "Love & Relationships", emoji: "💞" },
-//   { id: "career-money",       label: "Career & Money",       emoji: "💼" },
-//   { id: "instant-decisions",  label: "Instant Decisions",    emoji: "⚡" },
-//   { id: "personal-insights",  label: "Personal Insights",    emoji: "✨" },
-// ];
-
-// export const quickServices: QuickService[] = [
-//   // ── LOVE & RELATIONSHIPS ───────────────────────────────────────
-//   {
-//     id: "matchmaking",
-//     slug: "marriage-matchmaking",
-//     title: "Marriage – MatchMaking",
-//     shortDescription:
-//       "Astrological compatibility analysis to help you find or evaluate a life partner with cosmic precision.",
-//     price: 2100,
-//     deliveryTime: "24 hrs",
-//     category: "love-relationships",
-//     icon: Heart,
-//     problemStatement:
-//       "Choosing a life partner is the single most important decision you'll ever make. Yet most people rely on chance, gut feeling, or fleeting chemistry — ignoring the cosmic blueprint that reveals true compatibility at the soul level.",
-//     whenToUse: [
-//       "You are considering a marriage proposal and want a second opinion from the stars",
-//       "You have shortlisted a few profiles and want to compare compatibility",
-//       "Your family wants a Kundli-match before proceeding with an alliance",
-//       "You want to understand the long-term emotional and financial compatibility",
-//     ],
-//     benefits: [
-//       "Discover true compatibility across emotional, financial, and spiritual dimensions",
-//       "Identify potential friction points before they become real-life problems",
-//       "Understand the strengths and growth areas of the union",
-//       "Make a confident, informed decision backed by centuries of Jyotish wisdom",
-//     ],
-//     risks: [
-//       "Proceeding without compatibility analysis risks emotional and financial incompatibility",
-//       "Ignoring cosmic signs can lead to recurring conflicts that erode the relationship",
-//       "Misaligned Gunas can impact health, children, and family harmony",
-//     ],
-//     deliverables: [
-//       "Guna Milan score with detailed breakdown (36 points)",
-//       "Mangal Dosha analysis for both horoscopes",
-//       "Compatibility across 8 major life areas",
-//       "Recommended auspicious date range for engagement/marriage",
-//       "Delivered as a detailed PDF report via WhatsApp & Email",
-//     ],
-//     requiresBirthTime: true,
-//     requiresDOB: true,
-//   },
-//   {
-//     id: "relationship-question",
-//     slug: "address-relationship-question",
-//     title: "Address 1 Relationship Question",
-//     shortDescription:
-//       "Get a precise, personalised astrological answer to your most pressing love or relationship question.",
-//     price: 1100,
-//     deliveryTime: "6 hrs",
-//     category: "love-relationships",
-//     icon: MessageCircle,
-//     problemStatement:
-//       "You have one burning question about your relationship — will he come back? Is she the one? Should I confess? The mind loops endlessly without a clear answer, creating anxiety and indecision.",
-//     whenToUse: [
-//       "You need clarity on a specific situation in your romantic life",
-//       "You are at a crossroads and need a directional answer",
-//       "You want to know the cosmic timing of an upcoming event",
-//       "You feel confused about someone's intentions towards you",
-//     ],
-//     benefits: [
-//       "Get a direct, personalised answer — not generic horoscope advice",
-//       "Understand the planetary influences affecting your specific situation",
-//       "Gain peace of mind and the confidence to act",
-//       "Receive guidance on the best timing for your next step",
-//     ],
-//     risks: [
-//       "Acting without clarity can lead to regrettable decisions in matters of the heart",
-//       "Unresolved emotional confusion affects your mental health and professional life",
-//     ],
-//     deliverables: [
-//       "Written astrological analysis of your specific question",
-//       "Planetary influences affecting the situation",
-//       "Recommended action and timing",
-//       "Delivered via WhatsApp within 6 hours",
-//     ],
-//     requiresBirthTime: false,
-//     requiresDOB: true,
-//   },
-
-//   // ── CAREER & MONEY ─────────────────────────────────────────────
-//   {
-//     id: "career-guidance",
-//     slug: "career-guidance",
-//     title: "Career Guidance",
-//     shortDescription:
-//       "Unlock your cosmic career blueprint — the right field, the right timing, the right moves for your professional rise.",
-//     price: 2100,
-//     deliveryTime: "24 hrs",
-//     category: "career-money",
-//     icon: Briefcase,
-//     problemStatement:
-//       "Most people spend decades in careers that don't align with their natural strengths or destiny. They follow societal expectations or random opportunities, wondering why success feels forced. Your birth chart holds the blueprint for your ideal professional path.",
-//     whenToUse: [
-//       "You are at a career crossroads — job change, business vs. job dilemma",
-//       "You feel stuck or underpaid despite hard work",
-//       "You want to know the best time to start a business or negotiate a raise",
-//       "You are a student choosing between fields of study",
-//     ],
-//     benefits: [
-//       "Identify your natural professional strengths from your planetary positions",
-//       "Discover your most favourable career sectors as per your chart",
-//       "Know the right timing (Dasha/Transit) for major career moves",
-//       "Avoid costly career mistakes by aligning with your cosmic path",
-//     ],
-//     risks: [
-//       "Choosing the wrong career path wastes years of energy, income, and opportunity",
-//       "Making a big move in an unfavourable planetary period can backfire significantly",
-//     ],
-//     deliverables: [
-//       "Career sector analysis based on 10th house and planetary positions",
-//       "Current Dasha period and its impact on career",
-//       "Best time windows for job changes, promotions, or business launch",
-//       "Personalised action plan delivered via WhatsApp & Email within 24 hours",
-//     ],
-//     requiresBirthTime: true,
-//     requiresDOB: true,
-//   },
-
-//   // ── INSTANT DECISIONS ─────────────────────────────────────────
-//   {
-//     id: "muhurat",
-//     slug: "muhurat-auspicious-timing",
-//     title: "Muhurat – Auspicious Timing",
-//     shortDescription:
-//       "Find the most powerful cosmic window for buying jewellery, vehicles, property, and other major purchases.",
-//     price: 1100,
-//     deliveryTime: "6 hrs",
-//     category: "instant-decisions",
-//     icon: Star,
-//     problemStatement:
-//       "Every major purchase carries energy. Starting an important transaction at the wrong planetary moment can invite obstacles, losses, or regret. A Muhurat aligns your action with the universe's most supportive energy.",
-//     whenToUse: [
-//       "You are planning to buy gold, jewellery, or diamonds",
-//       "You are finalising a vehicle purchase",
-//       "You are registering or entering a new property",
-//       "You want the most auspicious date for signing a business agreement",
-//     ],
-//     benefits: [
-//       "Ensure your purchase is backed by positive planetary energy",
-//       "Maximise the long-term value and positive outcome of the acquisition",
-//       "Avoid inauspicious timings known to cause loss or complications",
-//       "Get a precise date + time window, not just a vague suggestion",
-//     ],
-//     risks: [
-//       "Acting in an inauspicious Muhurat can nullify the positive intent behind the purchase",
-//       "Negative planetary aspects at the time of purchase can affect the object's longevity",
-//     ],
-//     deliverables: [
-//       "3–5 auspicious date and time windows within your preferred month",
-//       "Explanation of why each window is favourable",
-//       "Things to avoid on the day of purchase",
-//       "Delivered via WhatsApp within 6 hours",
-//     ],
-//     requiresBirthTime: false,
-//     requiresDOB: true,
-//   },
-//   {
-//     id: "lucky-days",
-//     slug: "personalised-lucky-days-colours",
-//     title: "Personalised Lucky Days & Colours",
-//     shortDescription:
-//       "Discover your personally auspicious days, colours, and numbers to maximise success in daily life.",
-//     price: 1100,
-//     deliveryTime: "6 hrs",
-//     category: "instant-decisions",
-//     icon: Star,
-//     problemStatement:
-//       "There are days when everything flows effortlessly, and days when nothing works. This isn't random — it's planetary timing. Knowing your personal lucky days and colours lets you schedule what matters most for maximum impact.",
-//     whenToUse: [
-//       "You want to plan important meetings, launches, or decisions on power days",
-//       "You want to know which colours amplify your personal magnetism",
-//       "You are starting a new chapter and want daily life to support your goals",
-//       "You want a simple, practical tool for everyday cosmic alignment",
-//     ],
-//     benefits: [
-//       "Plan your week around your most powerful days",
-//       "Use colour psychology aligned with your planetary rulers",
-//       "Improve luck in business, social interactions, and personal endeavours",
-//       "Simple, immediately actionable insights",
-//     ],
-//     risks: [
-//       "Scheduling critical actions on your weak days increases the chance of obstacles and delays",
-//     ],
-//     deliverables: [
-//       "Your weekly lucky days and their optimal activities",
-//       "Your power colours for different life areas",
-//       "Your personal lucky numbers",
-//       "Delivered as a handy PDF guide via WhatsApp",
-//     ],
-//     requiresBirthTime: false,
-//     requiresDOB: true,
-//   },
-
-//   // ── PERSONAL INSIGHTS ──────────────────────────────────────────
-//   {
-//     id: "gemstone",
-//     slug: "personalised-gemstone-recommendation",
-//     title: "Personalised Gemstone Recommendation",
-//     shortDescription:
-//       "Know exactly which gemstone to wear — and which to avoid — to amplify your strengths and protect your energy.",
-//     price: 2100,
-//     deliveryTime: "24 hrs",
-//     category: "personal-insights",
-//     icon: Gem,
-//     problemStatement:
-//       "The gemstone market is flooded with generic recommendations. Wearing the wrong stone can create more problems than it solves. Your unique birth chart determines which planetary energy you need to strengthen — and which gemstone channels exactly that.",
-//     whenToUse: [
-//       "You want to wear a gemstone but need to know if it's right for you",
-//       "You feel like your energy or luck needs a boost",
-//       "A jeweller or relative recommended a stone but you want a second opinion",
-//       "You are going through a challenging Dasha and want gemstone support",
-//     ],
-//     benefits: [
-//       "Receive a genuinely personalised recommendation — not a Sun-sign generalisation",
-//       "Know the exact metal, weight, finger, and day to wear the stone",
-//       "Understand which stones to strictly avoid based on your chart",
-//       "Maximise the stone's impact with proper activation instructions",
-//     ],
-//     risks: [
-//       "Wearing an incompatible gemstone can aggravate malefic planetary energies",
-//       "Generic recommendations from jewellers are profit-driven, not chart-driven",
-//     ],
-//     deliverables: [
-//       "Primary gemstone recommendation with full specifications",
-//       "Alternative semi-precious stone option",
-//       "Gemstones to strictly avoid",
-//       "Activation ritual and wearing instructions",
-//       "Delivered as a detailed PDF via WhatsApp & Email",
-//     ],
-//     requiresBirthTime: true,
-//     requiresDOB: true,
-//   },
-//   {
-//     id: "rudraksha",
-//     slug: "personalised-rudraksha-crystal",
-//     title: "Personalised Rudraksha / Crystal Recommendation",
-//     shortDescription:
-//       "Find the specific Rudraksha bead or healing crystal that resonates with your planetary energy.",
-//     price: 1100,
-//     deliveryTime: "6 hrs",
-//     category: "personal-insights",
-//     icon: Gem,
-//     problemStatement:
-//       "Rudraksha and crystals are powerful tools — but only when matched to your specific planetary needs. Wearing the wrong Mukhi or crystal creates energetic dissonance rather than harmony.",
-//     whenToUse: [
-//       "You want to start wearing Rudraksha and need guidance on the right Mukhi",
-//       "You are drawn to crystals but don't know which resonates with your chart",
-//       "You want to enhance a specific life area: health, money, relationships, or spirituality",
-//     ],
-//     benefits: [
-//       "Receive a chart-specific recommendation, not a generic guide",
-//       "Understand the planetary deity and energy behind your Rudraksha",
-//       "Know how to cleanse, charge, and wear your crystal correctly",
-//     ],
-//     risks: [
-//       "Wrong Mukhi Rudraksha can amplify negative planetary energies",
-//     ],
-//     deliverables: [
-//       "Recommended Rudraksha Mukhi with explanation",
-//       "Crystal recommendation for your dominant planetary need",
-//       "Wearing and maintenance instructions",
-//       "Delivered via WhatsApp within 6 hours",
-//     ],
-//     requiresBirthTime: false,
-//     requiresDOB: true,
-//   },
-//   {
-//     id: "lifestyle",
-//     slug: "personalised-lifestyle-behavioural-recommendation",
-//     title: "Lifestyle & Behavioural Recommendation",
-//     shortDescription:
-//       "Receive a personalised cosmic lifestyle prescription — diet, habits, and behavioural shifts aligned to your chart.",
-//     price: 2100,
-//     deliveryTime: "24 hrs",
-//     category: "personal-insights",
-//     icon: Heart,
-//     problemStatement:
-//       "Generic wellness advice doesn't account for your unique planetary constitution. What works for one person can be counterproductive for another. Your chart reveals the specific lifestyle patterns that will allow you to thrive physically, mentally, and energetically.",
-//     whenToUse: [
-//       "You want a lifestyle plan rooted in your astrological blueprint",
-//       "You struggle with habits that don't stick despite good intentions",
-//       "You want to align your diet, sleep, and daily rhythm with your cosmic nature",
-//       "You are starting a wellness journey and want a personalised foundation",
-//     ],
-//     benefits: [
-//       "Get lifestyle recommendations tailored to your planetary constitution",
-//       "Understand the root behavioural patterns shown in your chart",
-//       "Receive simple, implementable daily practices for your specific chart",
-//       "Align your natural rhythms with planetary cycles for sustained energy",
-//     ],
-//     risks: [
-//       "Ignoring your planetary constitution means repeated cycles of unsustainable habits",
-//     ],
-//     deliverables: [
-//       "Dietary recommendations based on your dominant planets",
-//       "Daily routine framework aligned with your chart",
-//       "Behavioural tendencies to embrace and to moderate",
-//       "Delivered as a personalised PDF guide via WhatsApp & Email",
-//     ],
-//     requiresBirthTime: true,
-//     requiresDOB: true,
-//   },
-//   {
-//     id: "tattoo",
-//     slug: "personalised-tattoo-recommendation",
-//     title: "Personalised Tattoo Recommendation",
-//     shortDescription:
-//       "Choose a tattoo that carries the right energy for your chart — symbol, placement, and timing.",
-//     price: 1100,
-//     deliveryTime: "6 hrs",
-//     category: "personal-insights",
-//     icon: Zap,
-//     problemStatement:
-//       "A tattoo is permanent. Getting a symbol, deity, or element that conflicts with your planetary energies can create long-term energetic friction. Your chart reveals exactly what symbols, elements, and placements will serve as protective or amplifying talismans.",
-//     whenToUse: [
-//       "You are planning your first or next tattoo and want it to carry positive energy",
-//       "You want a symbol that aligns with your planetary strengths",
-//       "You are choosing between multiple design ideas and want cosmic guidance",
-//     ],
-//     benefits: [
-//       "Choose a tattoo that works as a personal talisman",
-//       "Know the most auspicious body placement based on your chart",
-//       "Avoid symbols or placements that conflict with your planetary chart",
-//       "Get an auspicious date window for getting the tattoo done",
-//     ],
-//     risks: [
-//       "An astrologically incompatible tattoo can create a permanent energetic drain",
-//     ],
-//     deliverables: [
-//       "Recommended symbols or motifs aligned to your chart",
-//       "Ideal body placement based on planetary zones",
-//       "Symbols to avoid",
-//       "Auspicious date window for the tattoo session",
-//       "Delivered via WhatsApp within 6 hours",
-//     ],
-//     requiresBirthTime: false,
-//     requiresDOB: true,
-//   },
-// ];
-
-
-
-//testing
-
-
-
-import { MessageCircle, Star, Gem, Zap, Heart, Briefcase, Moon, MapPin, Home, Clock, TrendingUp, Sparkles, Compass, Brain, Hash, DollarSign, Plane, CheckCircle,Scroll } from "lucide-react";
+import { MessageCircle, Star, Gem, Zap, Heart, Briefcase, Moon, Home, Clock, TrendingUp, Sparkles, Compass, Brain, Hash, DollarSign, Plane, Scroll, Baby } from "lucide-react";
 
 export type ServiceCategory =
   | "love-relationships"
@@ -414,6 +35,7 @@ export const serviceCategories: { id: ServiceCategory; label: string; emoji: str
 export const quickServices: QuickService[] = [
 
   // ── LOVE & RELATIONSHIPS ───────────────────────────────────────
+  // REMOVED: matchmaking (Marriage – MatchMaking)
 
   {
     id: "relationship-question",
@@ -605,46 +227,8 @@ export const quickServices: QuickService[] = [
     requiresDOB: true,
   },
 
-  {
-    id: "matchmaking",
-    slug: "marriage-matchmaking",
-    title: "Marriage – MatchMaking",
-    shortDescription:
-      "Comprehensive astrological compatibility analysis with Guna Milan, Mangal Dosha, and full life-area compatibility for a marriage alliance.",
-    price: 2100,
-    deliveryTime: "24 hrs",
-    category: "love-relationships",
-    icon: Heart,
-    problemStatement:
-      "Choosing a life partner is the single most important decision you'll ever make. A proper Kundli-based MatchMaking goes far deeper than a quick compatibility check.",
-    whenToUse: [
-      "You are considering a marriage proposal and want a thorough astrological review",
-      "Your family wants a complete Kundli match before proceeding with an alliance",
-      "You want to understand long-term emotional, financial, and spiritual compatibility",
-      "You want Mangal Dosha analysis and Guna Milan score",
-    ],
-    benefits: [
-      "Discover true compatibility across all dimensions of married life",
-      "Identify potential friction points before they become real problems",
-      "Understand the strengths and growth areas of the union",
-      "Make a confident, informed decision backed by Jyotish wisdom",
-    ],
-    risks: [
-      "Proceeding without proper MatchMaking risks emotional and financial incompatibility",
-      "Ignoring Mangal Dosha or Guna Milan can impact health, children, and family harmony",
-    ],
-    deliverables: [
-      "Guna Milan score with detailed breakdown (36 points)",
-      "Mangal Dosha analysis for both horoscopes",
-      "Compatibility across 8 major life areas",
-      "Recommended auspicious date range for engagement/marriage",
-      "Delivered as a detailed PDF via WhatsApp & Email",
-    ],
-    requiresBirthTime: true,
-    requiresDOB: true,
-  },
-
   // ── CAREER & MONEY ─────────────────────────────────────────────
+  // REMOVED: career-direction-check (Career Direction Quick Check)
 
   {
     id: "opportunity-check",
@@ -678,44 +262,6 @@ export const quickServices: QuickService[] = [
       "Current planetary period assessment",
       "Next positive window timeline",
       "Key areas of life that will be activated",
-      "Delivered via WhatsApp within 6 hours",
-    ],
-    requiresBirthTime: false,
-    requiresDOB: true,
-  },
-
-  {
-    id: "career-direction-check",
-    slug: "career-direction-quick-check",
-    title: "Career Direction Quick Check",
-    shortDescription:
-      "Get a quick astrological read on your current career path — is it aligned with your chart, and what direction should you move in?",
-    price: 1100,
-    deliveryTime: "6 hrs",
-    category: "career-money",
-    icon: Briefcase,
-    problemStatement:
-      "When you feel stuck, underpaid, or uncertain about your career direction, your birth chart can reveal whether you're on the right path and what move will create momentum.",
-    whenToUse: [
-      "You feel stuck or underpaid despite hard work",
-      "You are considering a job change and want a directional check",
-      "You want to know if your current role aligns with your planetary strengths",
-      "You need a quick read on whether to stay or move on professionally",
-    ],
-    benefits: [
-      "Confirm whether your current direction aligns with your chart",
-      "Get a clear directional nudge — stay, pivot, or accelerate",
-      "Understand your current planetary period's impact on career",
-      "Receive one specific actionable career recommendation",
-    ],
-    risks: [
-      "Staying in a misaligned career path wastes years of energy and income",
-      "Making a major move in an unfavourable period can backfire significantly",
-    ],
-    deliverables: [
-      "Quick career path alignment check",
-      "Current Dasha impact on professional life",
-      "One clear directional recommendation",
       "Delivered via WhatsApp within 6 hours",
     ],
     requiresBirthTime: false,
@@ -771,7 +317,7 @@ export const quickServices: QuickService[] = [
     category: "career-money",
     icon: DollarSign,
     problemStatement:
-      "When money keeps slipping through your fingers or income stagnates despite effort, it often points to a specific planetary blockage in your chart — particularly in the 2nd, 8th, or 11th house.",
+      "When money keeps slipping through your fingers or income stagnates despite effort, it often points to a specific planetary blockage in your chart.",
     whenToUse: [
       "You work hard but money doesn't accumulate",
       "Unexpected expenses keep draining your savings",
@@ -849,7 +395,7 @@ export const quickServices: QuickService[] = [
     category: "instant-decisions",
     icon: Compass,
     problemStatement:
-      "Timing is everything. The same action taken at the right planetary moment succeeds; taken at the wrong time, it struggles. A Go/Wait check aligns your decision with the universe's current energy.",
+      "Timing is everything. The same action taken at the right planetary moment succeeds; taken at the wrong time, it struggles.",
     whenToUse: [
       "You are about to make a significant decision and feel uncertain about timing",
       "You have an opportunity in front of you and want to know if now is the right time",
@@ -887,7 +433,7 @@ export const quickServices: QuickService[] = [
     category: "instant-decisions",
     icon: Clock,
     problemStatement:
-      "Every important action carries the energy of the moment it begins. Starting at a Shubh time — even for everyday decisions — dramatically improves the probability of a positive outcome.",
+      "Every important action carries the energy of the moment it begins. Starting at a Shubh time dramatically improves the probability of a positive outcome.",
     whenToUse: [
       "You want to know the best time to sign a document or agreement",
       "You are scheduling an important meeting or call",
@@ -1029,43 +575,10 @@ export const quickServices: QuickService[] = [
   },
 
   // ── PERSONAL INSIGHTS ──────────────────────────────────────────
-
-  {
-    id: "lucky-day-finder",
-    slug: "lucky-day-date-finder",
-    title: "Lucky Day / Date Finder (for any task)",
-    shortDescription:
-      "Find your personally auspicious day or date for any task — meetings, launches, signings, or new beginnings.",
-    price: 500,
-    deliveryTime: "2 hrs",
-    category: "personal-insights",
-    icon: Star,
-    problemStatement:
-      "Not all days carry the same energy for you. Your personal lucky days — determined by your birth chart — are when planetary forces align in your favour for specific types of actions.",
-    whenToUse: [
-      "You want to schedule something important on your personal lucky day",
-      "You are starting a new project and want the best date",
-      "You want to know which days this week or month are most powerful for you",
-      "You prefer taking action when cosmic energy is on your side",
-    ],
-    benefits: [
-      "Identify your personal lucky days for any given period",
-      "Schedule important actions when planetary support is strongest",
-      "Improve your success rate by timing your moves cosmically",
-      "Simple, immediately actionable guidance",
-    ],
-    risks: [
-      "Taking important actions on your personally weak days increases resistance and obstacles",
-    ],
-    deliverables: [
-      "Your personally lucky days for the requested period",
-      "Best dates for your specific task type",
-      "Days to avoid for the same period",
-      "Delivered via WhatsApp within 2 hours",
-    ],
-    requiresBirthTime: false,
-    requiresDOB: true,
-  },
+  // REMOVED: lucky-day-finder, simple-remedy, rudraksha-suitability,
+  //          crystal-suitability, tattoo-suitability
+  // RENAMED: gemstone-suitability → "Personalised Gemstone Recommendation"
+  // ADDED:   newborn-baby-name
 
   {
     id: "lucky-color",
@@ -1115,7 +628,7 @@ export const quickServices: QuickService[] = [
     category: "personal-insights",
     icon: Moon,
     problemStatement:
-      "Most people are disconnected from their natural planetary rhythm. A simple daily ritual aligned to your chart takes minutes but creates a consistent foundation of cosmic support for everything you do.",
+      "Most people are disconnected from their natural planetary rhythm. A simple daily ritual aligned to your chart takes minutes but creates a consistent foundation of cosmic support.",
     whenToUse: [
       "You want to start a spiritually aligned daily practice",
       "You feel scattered or low-energy and want a grounding routine",
@@ -1179,80 +692,6 @@ export const quickServices: QuickService[] = [
   },
 
   {
-    id: "simple-remedy",
-    slug: "simple-remedy-suggestion",
-    title: "Simple Remedy Suggestion (1–2 Actions)",
-    shortDescription:
-      "Get 1–2 simple, chart-specific remedies for your current challenge — practical actions with real planetary impact.",
-    price: 1100,
-    deliveryTime: "6 hrs",
-    category: "personal-insights",
-    icon: Sparkles,
-    problemStatement:
-      "Many people want astrological remedies but don't know where to start or which remedies are actually relevant to their chart. A personalised remedy is infinitely more effective than a generic one.",
-    whenToUse: [
-      "You are going through a difficult phase and want specific remedial actions",
-      "You want a simple remedy without a full consultation",
-      "You have tried generic remedies that haven't worked",
-      "You want targeted support for a specific area of life",
-    ],
-    benefits: [
-      "Receive chart-specific remedies — not copy-paste solutions",
-      "Understand why each remedy works for your specific planetary situation",
-      "Simple enough to start today without special materials",
-      "Focused on your most pressing challenge",
-    ],
-    risks: [
-      "Generic remedies applied without chart analysis can be ineffective or counterproductive",
-    ],
-    deliverables: [
-      "1–2 personalised remedy actions for your current situation",
-      "Explanation of the planetary logic behind each remedy",
-      "Simple instructions to begin immediately",
-      "Delivered via WhatsApp within 6 hours",
-    ],
-    requiresBirthTime: false,
-    requiresDOB: true,
-  },
-
-  {
-    id: "tattoo-suitability",
-    slug: "tattoo-suitability-check",
-    title: "Tattoo Suitability Check",
-    shortDescription:
-      "Is your planned tattoo astrologically suitable? Get a quick check on symbol, placement, and timing.",
-    price: 1100,
-    deliveryTime: "6 hrs",
-    category: "personal-insights",
-    icon: Zap,
-    problemStatement:
-      "A tattoo is permanent. Getting a symbol or placement that conflicts with your planetary energies can create long-term energetic friction that is hard to reverse.",
-    whenToUse: [
-      "You are planning a tattoo and want to check if it's astrologically suitable",
-      "You want to know if a specific symbol is compatible with your chart",
-      "You want confirmation that the timing is right for getting inked",
-      "You want to avoid a design that conflicts with your planetary energy",
-    ],
-    benefits: [
-      "Confirm your planned tattoo is cosmically compatible",
-      "Know the most auspicious time to get the tattoo done",
-      "Avoid symbols or placements that create permanent energetic friction",
-      "Get simple guidance quickly without a full consultation",
-    ],
-    risks: [
-      "An astrologically incompatible tattoo creates a permanent energetic drain",
-    ],
-    deliverables: [
-      "Suitability check for your planned symbol and placement",
-      "Yes/No on current timing",
-      "Any important cautions or adjustments",
-      "Delivered via WhatsApp within 6 hours",
-    ],
-    requiresBirthTime: false,
-    requiresDOB: true,
-  },
-
-  {
     id: "personal-strength-insight",
     slug: "personal-strength-insight",
     title: "Personal Strength Insight (Hidden Strengths)",
@@ -1263,7 +702,7 @@ export const quickServices: QuickService[] = [
     category: "personal-insights",
     icon: Brain,
     problemStatement:
-      "Most people are living at a fraction of their potential because they don't know their true planetary strengths. Your chart reveals gifts and talents that you may have overlooked, dismissed, or never developed.",
+      "Most people are living at a fraction of their potential because they don't know their true planetary strengths. Your chart reveals gifts and talents you may have overlooked, dismissed, or never developed.",
     whenToUse: [
       "You feel you have untapped potential but don't know what it is",
       "You want to understand your natural gifts from a cosmic perspective",
@@ -1364,85 +803,87 @@ export const quickServices: QuickService[] = [
   },
 
   {
-    id: "rudraksha-suitability",
-    slug: "rudraksha-suitability-check",
-    title: "Rudraksha Suitability Check",
+    id: "rudraksha-crystal-combo",
+    slug: "personalised-rudraksha-crystal",
+    title: "Personalised Rudraksha / Crystal Recommendation",
     shortDescription:
-      "Find out which Rudraksha Mukhi is right for your chart — and which ones to avoid.",
-    price: 500,
-    deliveryTime: "2 hrs",
+      "Find the specific Rudraksha bead or healing crystal that resonates with your planetary energy.",
+    price: 1100,
+    deliveryTime: "6 hrs",
     category: "personal-insights",
     icon: Gem,
     problemStatement:
-      "Wearing the wrong Mukhi Rudraksha can amplify negative planetary energies rather than positive ones. A chart-specific check ensures you get the benefit you're seeking.",
+      "Rudraksha and crystals are powerful tools — but only when matched to your specific planetary needs. Wearing the wrong Mukhi or crystal creates energetic dissonance rather than harmony.",
     whenToUse: [
-      "You want to start wearing Rudraksha and need to know the right Mukhi",
-      "Someone recommended a Rudraksha to you and you want to verify it's suitable",
-      "You want to know if a Rudraksha you already wear is compatible with your chart",
-      "You want to enhance a specific life area through Rudraksha",
+      "You want a personalised Rudraksha and crystal combination recommendation",
+      "You want to enhance a specific life area: health, money, relationships, or spirituality",
+      "You want a more detailed recommendation than a basic suitability check",
     ],
     benefits: [
-      "Receive a chart-specific Rudraksha recommendation",
+      "Receive a chart-specific combination recommendation",
       "Understand the planetary deity and energy behind your Rudraksha",
-      "Avoid wearing Mukhis that conflict with your chart",
-      "Quick answer without needing a full consultation",
+      "Know how to cleanse, charge, and wear your crystal correctly",
     ],
     risks: [
       "Wrong Mukhi Rudraksha can amplify negative planetary energies",
     ],
     deliverables: [
       "Recommended Rudraksha Mukhi with explanation",
-      "Mukhis to avoid based on your chart",
-      "Basic wearing instructions",
-      "Delivered via WhatsApp within 2 hours",
+      "Crystal recommendation for your dominant planetary need",
+      "Wearing and maintenance instructions",
+      "Delivered via WhatsApp within 6 hours",
     ],
     requiresBirthTime: false,
     requiresDOB: true,
   },
 
   {
-    id: "crystal-suitability",
-    slug: "crystal-suitability-check",
-    title: "Crystal Suitability Check",
+    id: "newborn-baby-name",
+    slug: "personalised-newborn-baby-name",
+    title: "Personalised New Born Baby Name",
     shortDescription:
-      "Find out which healing crystal is compatible with your planetary chart and which ones to avoid.",
-    price: 500,
-    deliveryTime: "2 hrs",
+      "Get an astrologically and numerologically aligned name for your newborn — a name that supports their cosmic destiny from day one.",
+    price: 1100,
+    deliveryTime: "24 hrs",
     category: "personal-insights",
-    icon: Gem,
+    icon: Baby,
     problemStatement:
-      "Crystals are powerful tools — but only when matched to your specific planetary needs. Wearing the wrong crystal creates energetic dissonance rather than harmony.",
+      "A child's name is the first and most lasting gift you give them. A name aligned with their birth chart and numerological blueprint creates a lifelong foundation of positive energy, identity, and cosmic support.",
     whenToUse: [
-      "You are drawn to crystals and want to know which resonates with your chart",
-      "Someone gifted you a crystal and you want to check if it's suitable",
-      "You want to use crystals for a specific intention and need the right one",
-      "You want to check if a crystal you already use is compatible",
+      "Your baby has just been born and you want an astrologically aligned name",
+      "You want name suggestions that match your child's birth chart and numerology",
+      "You have shortlisted names and want to verify which is most auspicious",
+      "You want the name to support your child's planetary strengths",
     ],
     benefits: [
-      "Receive a chart-specific crystal recommendation",
-      "Know how to cleanse, charge, and use it correctly",
-      "Avoid crystals that create subtle energetic conflict",
-      "Quick, practical guidance you can act on immediately",
+      "Give your child a name that aligns with their planetary destiny",
+      "Receive multiple name suggestions across different initials",
+      "Ensure the name's numerological value supports success and wellbeing",
+      "A thoughtful, personalised gift that lasts a lifetime",
     ],
     risks: [
-      "Using an incompatible crystal can create energetic dissonance that affects your mood and clarity",
+      "A name that conflicts with the birth chart can create subtle identity and energetic dissonance throughout life",
     ],
     deliverables: [
-      "Recommended crystal based on your dominant planetary need",
-      "Crystals to avoid",
-      "Simple usage and cleansing instructions",
-      "Delivered via WhatsApp within 2 hours",
+      "3–5 auspicious name suggestions based on birth chart",
+      "Explanation of why each name is aligned",
+      "Numerological value of each suggested name",
+      "Delivered via WhatsApp & Email within 24 hours",
     ],
-    requiresBirthTime: false,
+    requiresBirthTime: true,
     requiresDOB: true,
   },
+
+  // ── RENAMED: gemstone-suitability ─────────────────────────────
+  // Old title: "Gemstone Suitability Check (Basic)"
+  // New title: "Personalised Gemstone Recommendation"
 
   {
     id: "gemstone-suitability",
-    slug: "gemstone-suitability-check",
-    title: "Gemstone Suitability Check (Basic)",
+    slug: "personalised-gemstone-recommendation",
+    title: "Personalised Gemstone Recommendation",
     shortDescription:
-      "Know exactly which gemstone is right for your chart — and which ones to strictly avoid.",
+      "Know exactly which gemstone to wear — and which to avoid — to amplify your strengths and protect your energy.",
     price: 2100,
     deliveryTime: "24 hrs",
     category: "personal-insights",
@@ -1473,41 +914,6 @@ export const quickServices: QuickService[] = [
       "Delivered as a detailed PDF via WhatsApp & Email",
     ],
     requiresBirthTime: true,
-    requiresDOB: true,
-  },
-
-  {
-    id: "rudraksha-crystal-combo",
-    slug: "personalised-rudraksha-crystal",
-    title: "Personalised Rudraksha / Crystal Recommendation",
-    shortDescription:
-      "Find the specific Rudraksha bead or healing crystal that resonates with your planetary energy.",
-    price: 1100,
-    deliveryTime: "6 hrs",
-    category: "personal-insights",
-    icon: Gem,
-    problemStatement:
-      "Rudraksha and crystals are powerful tools — but only when matched to your specific planetary needs. Wearing the wrong Mukhi or crystal creates energetic dissonance rather than harmony.",
-    whenToUse: [
-      "You want a personalised combination recommendation for Rudraksha and crystal",
-      "You want to enhance a specific life area: health, money, relationships, or spirituality",
-      "You want a more detailed recommendation than a basic suitability check",
-    ],
-    benefits: [
-      "Receive a chart-specific combination recommendation",
-      "Understand the planetary deity and energy behind your Rudraksha",
-      "Know how to cleanse, charge, and wear your crystal correctly",
-    ],
-    risks: [
-      "Wrong Mukhi Rudraksha can amplify negative planetary energies",
-    ],
-    deliverables: [
-      "Recommended Rudraksha Mukhi with explanation",
-      "Crystal recommendation for your dominant planetary need",
-      "Wearing and maintenance instructions",
-      "Delivered via WhatsApp within 6 hours",
-    ],
-    requiresBirthTime: false,
     requiresDOB: true,
   },
 
@@ -1584,13 +990,14 @@ export const quickServices: QuickService[] = [
     requiresBirthTime: false,
     requiresDOB: true,
   },
+
   {
     id: "premium-kundli",
     slug: "personalised-premium-kundli",
     title: "Personalised Premium Kundli",
     shortDescription:
       "Receive a comprehensive, personalised Kundli report — detailed planetary positions, house analysis, Dasha timeline, and life predictions across all key areas.",
-    price: 1100,
+    price: 2100,
     deliveryTime: "24 hrs",
     category: "personal-insights",
     icon: Scroll,
