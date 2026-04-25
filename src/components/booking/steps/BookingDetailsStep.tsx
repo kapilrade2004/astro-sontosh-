@@ -1,5 +1,7 @@
 
 
+
+
 // import { useState, useRef, useEffect, useCallback } from "react";
 // import { createPortal } from "react-dom";
 // import { motion, AnimatePresence } from "framer-motion";
@@ -38,10 +40,29 @@
 //     const [pendingDate, setPendingDate] = useState<Date | undefined>(
 //         bookingData.dob ? new Date(bookingData.dob) : undefined
 //     );
-//     // Position of the calendar dropdown relative to viewport
 //     const [calendarPos, setCalendarPos] = useState({ top: 0, left: 0, width: 0 });
 
+//     // ── Name validation state (local to this step) ──────────────
+//     const [nameError, setNameError] = useState("");
+
 //     const triggerRef = useRef<HTMLButtonElement>(null);
+
+//     const validateName = (value: string): string => {
+//         if (!value.trim()) return "Full name is required.";
+//         if (value.trim().length < 3) return "Name must be at least 3 characters.";
+//         if (!/^[a-zA-Z\s]+$/.test(value.trim()))
+//             return "Name can only contain letters and spaces.";
+//         return "";
+//     };
+
+//     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//         const value = e.target.value;
+//         updateBookingData({ name: value });
+//         setNameError(validateName(value));
+//     };
+
+//     // Combine local nameError with parent errors.name (parent runs on Next click)
+//     const displayNameError = nameError || errors.name;
 
 //     // Compute and store the position every time the calendar opens
 //     const openCalendar = useCallback(() => {
@@ -51,10 +72,9 @@
 //             const spaceBelow = window.innerHeight - rect.bottom;
 //             const top =
 //                 spaceBelow >= calendarHeight
-//                     ? rect.bottom + window.scrollY + 4   // open below
-//                     : rect.top + window.scrollY - calendarHeight - 4; // open above
+//                     ? rect.bottom + window.scrollY + 4
+//                     : rect.top + window.scrollY - calendarHeight - 4;
 
-//             // On mobile center it; on desktop align to trigger
 //             const isMobile = window.innerWidth < 640;
 //             const calWidth = Math.min(320, window.innerWidth - 32);
 //             const left = isMobile
@@ -74,7 +94,6 @@
 //         if (!calendarOpen) return;
 //         const handleOutside = (e: MouseEvent) => {
 //             const target = e.target as HTMLElement;
-//             // Ignore clicks inside the calendar portal
 //             if (target.closest("[data-dob-calendar]")) return;
 //             if (triggerRef.current?.contains(target)) return;
 //             setCalendarOpen(false);
@@ -118,6 +137,14 @@
 //         updateBookingData({ dob: "" });
 //     };
 
+//     // ── Run name validation before passing to parent's onNext ──
+//     const handleNext = () => {
+//         const err = validateName(bookingData.name);
+//         setNameError(err);
+//         if (err) return; // stop here — parent's validateStep1 will catch other fields
+//         onNext();
+//     };
+
 //     const confirmedDob = bookingData.dob || "";
 //     const dobError = errors.dob;
 
@@ -126,10 +153,7 @@
 //         <AnimatePresence>
 //             {calendarOpen && (
 //                 <>
-//                     {/* Invisible full-screen backdrop */}
 //                     <div className="fixed inset-0 z-[998]" onClick={handleCancel} />
-
-//                     {/* Calendar panel — absolutely positioned via JS coords */}
 //                     <motion.div
 //                         data-dob-calendar
 //                         initial={{ opacity: 0, y: -6, scale: 0.97 }}
@@ -145,7 +169,6 @@
 //                         }}
 //                         className="bg-background border border-primary/25 rounded-2xl shadow-2xl overflow-hidden"
 //                     >
-//                         {/* Month header + date grid */}
 //                         <div className="p-2">
 //                             <Calendar
 //                                 mode="single"
@@ -156,8 +179,6 @@
 //                                 className="w-full"
 //                             />
 //                         </div>
-
-//                         {/* ── Confirm / Cancel buttons ── */}
 //                         <div className="flex items-center gap-2 px-3 pb-3 pt-1 border-t border-primary/10 bg-primary/5">
 //                             <Button
 //                                 type="button"
@@ -216,7 +237,8 @@
 //             </div>
 
 //             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-//                 {/* Full Name */}
+
+//                 {/* ── Full Name with live validation ── */}
 //                 <div className="space-y-1.5">
 //                     <Label htmlFor="name" className="text-primary font-medium text-xs">
 //                         Full Name *
@@ -225,13 +247,13 @@
 //                         id="name"
 //                         placeholder="Enter full name"
 //                         className={`bg-background border-primary/20 focus:border-primary h-10 text-sm ${
-//                             errors.name ? "border-red-500 focus:border-red-500" : ""
+//                             displayNameError ? "border-red-500 focus:border-red-500" : ""
 //                         }`}
 //                         value={bookingData.name}
-//                         onChange={(e) => updateBookingData({ name: e.target.value })}
+//                         onChange={handleNameChange}
 //                     />
-//                     {errors.name && (
-//                         <p className="text-red-500 text-[10px] mt-1">{errors.name}</p>
+//                     {displayNameError && (
+//                         <p className="text-red-500 text-[10px] mt-1">{displayNameError}</p>
 //                     )}
 //                 </div>
 
@@ -260,8 +282,6 @@
 //                     <Label className="text-primary font-medium text-xs">
 //                         Date of Birth *
 //                     </Label>
-
-//                     {/* Trigger button — styled like an input */}
 //                     <button
 //                         ref={triggerRef}
 //                         type="button"
@@ -289,7 +309,6 @@
 //                             <CalendarIcon className="w-4 h-4 text-primary/60" />
 //                         </div>
 //                     </button>
-
 //                     {dobError && (
 //                         <p className="text-red-500 text-[10px] mt-1 leading-snug">{dobError}</p>
 //                     )}
@@ -354,22 +373,19 @@
 //                 <Button
 //                     size="lg"
 //                     className="px-8 py-3 h-auto text-base bg-primary hover:bg-primary/90 glow-gold font-bold"
-//                     onClick={onNext}
+//                     onClick={handleNext}
 //                 >
 //                     Next Step <ArrowRight className="ml-2 w-4 h-4" />
 //                 </Button>
 //             </div>
 
-//             {/* Calendar rendered into document.body via portal — never clips or overlaps form */}
 //             {typeof document !== "undefined" && createPortal(calendarPortal, document.body)}
 //         </motion.div>
 //     );
 // };
 
 
-//testing 
-
-
+//temporary
 
 
 
@@ -585,27 +601,11 @@ export const BookingDetailsStep = ({
             animate={{ opacity: 1, y: 0 }}
             className="space-y-4 md:space-y-6"
         >
-            {/* Consultation Type Toggle */}
-            <div className="flex flex-wrap gap-3 justify-center md:justify-start mb-4">
-                <Button
-                    variant={bookingData.consultationType === "new" ? "default" : "outline"}
-                    className={`rounded-full px-5 py-1.5 h-auto text-sm transition-all ${
-                        bookingData.consultationType === "new" ? "glow-gold" : ""
-                    }`}
-                    onClick={() => updateBookingData({ consultationType: "new" })}
-                >
-                    New Consultation
-                </Button>
-                <Button
-                    variant={bookingData.consultationType === "repeat" ? "default" : "outline"}
-                    className={`rounded-full px-5 py-1.5 h-auto text-sm transition-all ${
-                        bookingData.consultationType === "repeat" ? "glow-gold" : ""
-                    }`}
-                    onClick={() => updateBookingData({ consultationType: "repeat" })}
-                >
-                    Follow-up Consultation
-                </Button>
-            </div>
+            {/* ── Consultation Type Toggle REMOVED ──
+                Tab switching is handled by the parent BookingProcess top-level tab bar.
+                This component receives the correct bookingServices list and
+                consultationType via props — no secondary toggle is needed here.
+            ── */}
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 

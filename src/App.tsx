@@ -20,6 +20,8 @@ import Inquiry from "./pages/Inquiry";
 import Courses from "./pages/Courses";
 import Pricing from "./pages/Pricing";
 const queryClient = new QueryClient();
+import { QuickServicesPage } from "@/pages/quick-services/QuickServicesPage";
+import { QuickServiceDetailPage } from "@/pages/quick-services/QuickServiceDetailPage";
 
 const App = () => (
   <HelmetProvider>
@@ -41,6 +43,8 @@ const App = () => (
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/inquiry" element={<Inquiry />} />
             <Route path="/courses" element={<Courses />} />
+<Route path="/quick-services"       element={<QuickServicesPage />} />
+<Route path="/quick-services/:slug" element={<QuickServiceDetailPage />} />
             <Route path="/pricing" element={<Pricing />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

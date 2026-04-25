@@ -33,7 +33,7 @@ const newPricingData = [
     { service: "Astrology (Exact Birth Time Known)", price: "5100", duration: "30 min", icon: Sparkles },
     { service: "Astrology (Exact Birth Time NOT Known)", price: "7500", duration: "60 min", icon: Sparkles },
     { service: "Astrology (In-Person Mumbai)", price: "7500", duration: "60 min", icon: Sparkles },
-    { service: "Premium Kundli", price: "2100", icon: Scroll },
+    // { service: "Premium Kundli", price: "2100", icon: Scroll },
     { service: "Numerology", price: "3100", duration: "30 min", icon: Hash },
     { service: "Vastu (Exploration Call)", price: "5100", duration: "30 min", icon: Home },
 ];
