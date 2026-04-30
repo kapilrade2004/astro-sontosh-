@@ -1,3 +1,5 @@
+
+
 // import { useState } from "react";
 // import { motion, AnimatePresence } from "framer-motion";
 // import { ArrowRight, Clock, Sparkles, Zap } from "lucide-react";
@@ -173,8 +175,9 @@
 //           <p className="text-muted-foreground text-sm">
 //             For deeper life questions, book a 30 or 60-minute one-on-one session.
 //           </p>
+//           {/* ✅ UPDATED: hash changed from #booking to #quickservice */}
 //           <Link
-//             to="/contact#booking"
+//             to="/contact#quickservice"
 //             className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-xl font-bold text-sm glow-gold hover:bg-primary/90 transition-colors"
 //           >
 //             Book Consultation <ArrowRight className="w-4 h-4" />
@@ -307,7 +310,14 @@ export const QuickServicesPage = () => {
       : quickServices.filter((s) => s.category === active);
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
+    <div
+      className="min-h-screen bg-background text-foreground flex flex-col"
+      // ✅ FIX 3: Disable copy-paste on the page
+      onCopy={(e) => e.preventDefault()}
+      onCut={(e) => e.preventDefault()}
+      onPaste={(e) => e.preventDefault()}
+      style={{ userSelect: "none", WebkitUserSelect: "none" }}
+    >
       <Header />
 
       {/* ── HERO ──────────────────────────────────────────────── */}
@@ -458,7 +468,6 @@ export const QuickServicesPage = () => {
           <p className="text-muted-foreground text-sm">
             For deeper life questions, book a 30 or 60-minute one-on-one session.
           </p>
-          {/* ✅ UPDATED: hash changed from #booking to #quickservice */}
           <Link
             to="/contact#quickservice"
             className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-xl font-bold text-sm glow-gold hover:bg-primary/90 transition-colors"
@@ -511,9 +520,11 @@ const ServiceCard = ({ service }: { service: (typeof quickServices)[0] }) => {
   const Icon = service.icon;
   const catLabel = serviceCategories.find((c) => c.id === service.category);
 
+  // ✅ FIX 1 & 2: "Get Answer" clicks navigate to /quick-services/[slug]
+  // The entire card is already wrapped in a Link to the slug — this is correct.
+  // Ensure your router has a route: /quick-services/:slug → QuickServiceDetailPage
   return (
     <Link to={`/quick-services/${service.slug}`} className="group block h-full">
-      {/* cosmic-card matches your site's existing card style */}
       <div className="cosmic-card h-full flex flex-col p-5 gap-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/10 cursor-pointer">
 
         {/* top row: icon + category badge */}
