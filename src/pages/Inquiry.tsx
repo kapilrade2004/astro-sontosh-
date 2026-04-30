@@ -777,7 +777,6 @@
 
 //testing (30-04-2026)
 
-
 import { Helmet } from "react-helmet-async";
 import { motion, AnimatePresence } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
@@ -947,7 +946,7 @@ const Step1 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof
       </h3>
       <p className="text-xs md:text-sm text-muted-foreground">Select the area you'd like guidance on</p>
     </div>
-    {/* ✅ CHANGE: Grid is now 1-col on mobile, 3-col on sm+ since only 3 services */}
+    {/* Service cards — equal height via grid rows, stacked layout on all sizes */}
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
       {SERVICES.map((s, i) => {
         const sel = form.service === s.id;
@@ -960,21 +959,35 @@ const Step1 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.97 }}
             onClick={() => setField("service", s.id)}
-            className="text-left p-4 md:p-5 rounded-2xl border-2 transition-all duration-250 flex items-start gap-3"
+            className="text-left p-4 rounded-2xl border-2 transition-all duration-250 flex flex-col gap-2 w-full h-full"
             style={{
               background: sel ? "linear-gradient(135deg, hsl(var(--primary)/0.12), hsl(35 80% 45%/0.07))" : "hsl(var(--card)/0.7)",
               borderColor: sel ? "hsl(var(--primary))" : "hsl(var(--border))",
               boxShadow: sel ? "0 0 0 3px hsl(var(--primary)/0.1)" : "none",
+              minHeight: "100px",
             }}
           >
-            <span className="text-2xl md:text-3xl shrink-0 mt-0.5">{s.emoji}</span>
-            <div className="flex-1 min-w-0">
-              <p className="font-semibold text-sm md:text-base" style={{ color: sel ? "hsl(var(--primary))" : "hsl(var(--card-foreground))" }}>
-                {s.label}
-              </p>
-              <p className="text-xs mt-0.5 text-muted-foreground">{s.desc}</p>
+            {/* Top row: emoji + checkmark */}
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-2xl leading-none shrink-0">{s.emoji}</span>
+              {sel && (
+                <CheckCircle2
+                  className="shrink-0"
+                  style={{ color: "hsl(var(--primary))", width: 17, height: 17 }}
+                />
+              )}
             </div>
-            {sel && <CheckCircle2 className="shrink-0 mt-0.5" style={{ color: "hsl(var(--primary))", width: 18, height: 18 }} />}
+            {/* Label */}
+            <p
+              className="font-semibold text-sm leading-snug"
+              style={{ color: sel ? "hsl(var(--primary))" : "hsl(var(--card-foreground))" }}
+            >
+              {s.label}
+            </p>
+            {/* Description — fixed line-clamp so all cards stay same height */}
+            <p className="text-xs text-muted-foreground leading-snug line-clamp-3">
+              {s.desc}
+            </p>
           </motion.button>
         );
       })}
