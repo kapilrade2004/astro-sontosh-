@@ -698,9 +698,7 @@
 
 
 
-//testing
-
-
+//testing (2-5-2026)
 
 
 import { useState, useRef, useEffect } from "react";
@@ -708,17 +706,16 @@ import axios from "axios";
 import { load } from "@cashfreepayments/cashfree-js";
 import { Sparkles, User, MapPin, Zap } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { format } from "date-fns";
 
-import { BookingDetailsStep } from "./steps/BookingDetailsStep";
-import { BookingSlotStep } from "./steps/BookingSlotStep";
-import { BookingStatusScreen } from "./steps/BookingStatusScreen";
-import { sendLeadToCRM } from "@/lib/sendLeadToCRM";
+import { BookingDetailsStep }   from "./steps/BookingDetailsStep";
+import { BookingSlotStep }      from "./steps/BookingSlotStep";
+import { BookingStatusScreen }  from "./steps/BookingStatusScreen";
+import { sendLeadToCRM }        from "@/lib/sendLeadToCRM";
 import { QuickServiceBookingTab, type QuickServiceFormData } from "./QuickServiceBookingTab";
-import { quickServices } from "@/data/quickServices";
+import { quickServices }        from "@/data/quickServices";
 
-// ── NEW CONSULTATION SERVICES ────────────────────────────────────
-// Titles, prices and durations match the screenshot exactly.
-// "Premium Kundli" is intentionally NOT listed here (marked Remove in screenshot).
+// ── NEW CONSULTATION SERVICES ─────────────────────────────────────────────────
 const newBookingServices = [
     {
         id: "astrology-exact-birth-time",
@@ -762,8 +759,7 @@ const newBookingServices = [
     },
 ];
 
-// ── REPEAT / FOLLOW-UP CONSULTATION SERVICES ────────────────────
-// All 6 entries match the screenshot exactly.
+// ── REPEAT / FOLLOW-UP CONSULTATION SERVICES ──────────────────────────────────
 const repeatBookingServices = [
     {
         id: "astrology-repeat-within-10",
@@ -832,9 +828,9 @@ export const BookingProcess = () => {
         return "new";
     };
 
-    const [activeTab, setActiveTab] = useState<TabType>(getInitialTab);
-    const [bookingStep, setBookingStep] = useState<"details" | "slot">("details");
-    const [bookingData, setBookingData] = useState({
+    const [activeTab, setActiveTab]           = useState<TabType>(getInitialTab);
+    const [bookingStep, setBookingStep]       = useState<"details" | "slot">("details");
+    const [bookingData, setBookingData]       = useState({
         consultationType: "new" as "new" | "repeat",
         name: "",
         email: "",
@@ -852,22 +848,21 @@ export const BookingProcess = () => {
         selectedDate: undefined as Date | undefined,
         selectedTime: null as string | null,
     });
-    const [errors, setErrors] = useState<Record<string, string>>({});
-
+    const [errors, setErrors]                 = useState<Record<string, string>>({});
     const [quickServiceData, setQuickServiceData] = useState<QuickServiceFormData | null>(null);
     const [quickServiceStep, setQuickServiceStep] = useState<"details" | "slot">("details");
-
-    const [cashfree, setCashfree] = useState<any>(null);
+    const [cashfree, setCashfree]             = useState<any>(null);
     const [isProcessingPayment, setIsProcessingPayment] = useState(false);
-    const [paymentResult, setPaymentResult] = useState<any>(null);
+    const [paymentResult, setPaymentResult]   = useState<any>(null);
 
-    const { toast } = useToast();
-    const bookingRef = useRef<HTMLDivElement>(null);
+    const { toast }    = useToast();
+    const bookingRef   = useRef<HTMLDivElement>(null);
 
     const selectedQuickService = quickServiceData?.serviceId
         ? quickServices.find((s: any) => s.id === quickServiceData.serviceId)
         : null;
 
+    // ── hash listener ────────────────────────────────────────────
     useEffect(() => {
         const handleHashChange = () => {
             if (window.location.hash === "#quickservice") {
@@ -883,6 +878,7 @@ export const BookingProcess = () => {
         return () => window.removeEventListener("hashchange", handleHashChange);
     }, []);
 
+    // ── Cashfree SDK init ────────────────────────────────────────
     useEffect(() => {
         const initSDK = async () => {
             try {
@@ -899,7 +895,7 @@ export const BookingProcess = () => {
         if (bookingRef.current) {
             const offset = 100;
             const elementPosition = bookingRef.current.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - offset;
+            const offsetPosition  = elementPosition + window.pageYOffset - offset;
             window.scrollTo({ top: offsetPosition, behavior: "smooth" });
         }
     };
@@ -911,7 +907,7 @@ export const BookingProcess = () => {
     const updateBookingData = (updates: Partial<typeof bookingData>) => {
         if (updates.consultationType && updates.consultationType !== bookingData.consultationType) {
             updates.serviceId = "";
-            updates.duration = "";
+            updates.duration  = "";
         }
         if (updates.serviceId) {
             const service = [...newBookingServices, ...repeatBookingServices].find(
@@ -1001,6 +997,7 @@ export const BookingProcess = () => {
         return null;
     };
 
+    // ── Standard booking payment ──────────────────────────────────
     const handlePay = async () => {
         if (!validateStep2()) {
             toast({ title: "Missing Information", description: "Please complete all required fields.", variant: "destructive" });
@@ -1013,15 +1010,15 @@ export const BookingProcess = () => {
         setIsProcessingPayment(true);
         try {
             await sendLeadToCRM({
-                name: bookingData.name,
-                phone: bookingData.phone,
-                email: bookingData.email || "",
+                name:   bookingData.name,
+                phone:  bookingData.phone,
+                email:  bookingData.email || "",
                 source: "Website Booking Form",
-                tags: [selectedService?.title || "", bookingData.consultationType || ""].filter(Boolean),
+                tags:   [selectedService?.title || "", bookingData.consultationType || ""].filter(Boolean),
             });
             const res = await axios.post(`${API_BASE_URL}/payment`, {
-                amount: Number(selectedService?.price),
-                customer_name: bookingData.name,
+                amount:         Number(selectedService?.price),
+                customer_name:  bookingData.name,
                 customer_phone: bookingData.phone,
                 customer_email: bookingData.email || "customer@example.com",
             });
@@ -1039,6 +1036,23 @@ export const BookingProcess = () => {
             }
             const verifyRes = await verifyWithRetry(res.data.order_id);
             if (verifyRes?.data?.success) {
+                // Save booking data
+                try {
+                    const formattedDate = bookingData.selectedDate
+                        ? format(bookingData.selectedDate, "yyyy-MM-dd")
+                        : null;
+                    const { floorPlan, ...cleanBookingData } = bookingData;
+                    await axios.post(`${API_BASE_URL}/dataslotbooked`, {
+                        ...cleanBookingData,
+                        selectedDate:     formattedDate,
+                        orderId:          res.data.order_id,
+                        paymentSessionId: res.data.payment_session_id,
+                        amount:           Number(selectedService?.price),
+                        serviceName:      selectedService?.title,
+                    });
+                } catch (bookingError) {
+                    console.error("Failed to save booking details:", bookingError);
+                }
                 setPaymentResult(verifyRes.data);
                 setBookingStep("details");
             } else {
@@ -1052,6 +1066,7 @@ export const BookingProcess = () => {
         }
     };
 
+    // ── Quick Service payment ─────────────────────────────────────
     const handleQuickServicePay = async () => {
         if (!quickServiceData || !selectedQuickService) {
             toast({ title: "Missing Information", description: "Please complete the form first.", variant: "destructive" });
@@ -1064,37 +1079,68 @@ export const BookingProcess = () => {
         setIsProcessingPayment(true);
         try {
             await sendLeadToCRM({
-                name: quickServiceData.fullName,
-                phone: quickServiceData.phone,
-                email: quickServiceData.email || "",
+                name:   quickServiceData.fullName,
+                phone:  quickServiceData.phone,
+                email:  quickServiceData.email || "",
                 source: "Quick Service Booking",
-                tags: ["Quick Service", selectedQuickService.title].filter(Boolean),
+                tags:   ["Quick Service", selectedQuickService.title].filter(Boolean),
             });
+
             const res = await axios.post(`${API_BASE_URL}/payment`, {
-                amount: Number(selectedQuickService.price),
-                customer_name: quickServiceData.fullName,
+                amount:         Number(selectedQuickService.price),
+                customer_name:  quickServiceData.fullName,
                 customer_phone: quickServiceData.phone,
                 customer_email: quickServiceData.email || "customer@example.com",
             });
+
             if (!res.data?.payment_session_id) {
                 setPaymentResult({ success: false, message: "Could not create a payment session. Please try again." });
                 return;
             }
+
             const checkoutResult = await cashfree.checkout({
                 paymentSessionId: res.data.payment_session_id,
                 redirectTarget: "_modal",
             });
+
             if (checkoutResult?.error) {
                 setPaymentResult({ success: false, message: checkoutResult.error.message || "Payment was not completed. Please try again." });
                 return;
             }
+
             const verifyRes = await verifyWithRetry(res.data.order_id);
+
             if (verifyRes?.data?.success) {
+                // ✅ FIX: Save quick service order to backend — triggers WhatsApp + CRM
+                // Now includes placeOfBirth and timeOfBirth from updated QuickServiceFormData
+                try {
+                    await axios.post(`${API_BASE_URL}/quick-service-order`, {
+                        serviceId:        quickServiceData.serviceId,
+                        serviceTitle:     selectedQuickService.title,
+                        price:            Number(selectedQuickService.price),
+                        deliveryTime:     selectedQuickService.deliveryTime,
+                        fullName:         quickServiceData.fullName,
+                        dob:              quickServiceData.dob,
+                        timeOfBirth:      quickServiceData.timeOfBirth,   // ✅ FIX
+                        placeOfBirth:     quickServiceData.placeOfBirth,  // ✅ FIX
+                        question:         quickServiceData.question,
+                        phone:            quickServiceData.phone,
+                        email:            quickServiceData.email,
+                        orderId:          res.data.order_id,
+                        paymentSessionId: res.data.payment_session_id,
+                    });
+                } catch (orderError) {
+                    console.error("Failed to save quick service order:", orderError);
+                }
+
                 setPaymentResult(verifyRes.data);
                 setQuickServiceData(null);
                 setQuickServiceStep("details");
             } else {
-                setPaymentResult({ success: false, message: `Couldn't verify payment. Contact support with Order ID: ${res.data.order_id}` });
+                setPaymentResult({
+                    success: false,
+                    message: `Couldn't verify payment. Contact support with Order ID: ${res.data.order_id}`,
+                });
             }
         } catch (error: any) {
             console.error("Quick service payment error:", error);
@@ -1123,14 +1169,14 @@ export const BookingProcess = () => {
                 ...prev,
                 consultationType: tab,
                 serviceId: tab === "new" ? "astrology-exact-birth-time" : "",
-                duration: tab === "new" ? "30" : "",
+                duration:  tab === "new" ? "30" : "",
             }));
         }
     };
 
     const isQuickServiceActive = activeTab === "quickservice";
-    const currentStep = isQuickServiceActive ? quickServiceStep : bookingStep;
-    const showPaymentResult = paymentResult !== null;
+    const currentStep          = isQuickServiceActive ? quickServiceStep : bookingStep;
+    const showPaymentResult    = paymentResult !== null;
 
     return (
         <div ref={bookingRef} className="w-full max-w-4xl mx-auto">
@@ -1143,41 +1189,28 @@ export const BookingProcess = () => {
 
             <div className="bg-gradient-to-br from-background via-background/95 to-primary/5 rounded-2xl border border-primary/20 p-4 md:p-6 shadow-xl">
 
-                {/* ── Tab bar ── */}
+                {/* ── Tab bar ─────────────────────────────────────── */}
                 <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-6 pb-3 border-b border-primary/20">
-                    <button
-                        onClick={() => handleTabChange("new")}
-                        className={`px-4 md:px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                            activeTab === "new"
-                                ? "bg-primary text-white shadow-lg shadow-primary/30"
-                                : "text-muted-foreground hover:text-primary hover:bg-primary/5"
-                        }`}
-                    >
-                        ✨ New Consultation
-                    </button>
-                    <button
-                        onClick={() => handleTabChange("repeat")}
-                        className={`px-4 md:px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                            activeTab === "repeat"
-                                ? "bg-primary text-white shadow-lg shadow-primary/30"
-                                : "text-muted-foreground hover:text-primary hover:bg-primary/5"
-                        }`}
-                    >
-                        🔄 Follow-up Consultation
-                    </button>
-                    <button
-                        onClick={() => handleTabChange("quickservice")}
-                        className={`px-4 md:px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                            activeTab === "quickservice"
-                                ? "bg-primary text-white shadow-lg shadow-primary/30"
-                                : "text-muted-foreground hover:text-primary hover:bg-primary/5"
-                        }`}
-                    >
-                        ⚡ Quick Service
-                    </button>
+                    {[
+                        { id: "new",          label: "✨ New Consultation"      },
+                        { id: "repeat",       label: "🔄 Follow-up Consultation" },
+                        { id: "quickservice", label: "⚡ Quick Service"          },
+                    ].map((tab) => (
+                        <button
+                            key={tab.id}
+                            onClick={() => handleTabChange(tab.id as TabType)}
+                            className={`px-4 md:px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                                activeTab === tab.id
+                                    ? "bg-primary text-white shadow-lg shadow-primary/30"
+                                    : "text-muted-foreground hover:text-primary hover:bg-primary/5"
+                            }`}
+                        >
+                            {tab.label}
+                        </button>
+                    ))}
                 </div>
 
-                {/* Step indicator — New / Repeat */}
+                {/* ── Step indicator — New / Repeat ────────────────── */}
                 {!isQuickServiceActive && !showPaymentResult && currentStep === "slot" && (
                     <div className="flex items-center justify-center gap-2 mb-6">
                         <div className="flex items-center">
@@ -1192,7 +1225,7 @@ export const BookingProcess = () => {
                     </div>
                 )}
 
-                {/* Step indicator — Quick Service */}
+                {/* ── Step indicator — Quick Service ───────────────── */}
                 {isQuickServiceActive && !showPaymentResult && quickServiceStep === "slot" && (
                     <div className="flex items-center justify-center gap-2 mb-6">
                         <div className="flex items-center">
@@ -1207,7 +1240,7 @@ export const BookingProcess = () => {
                     </div>
                 )}
 
-                {/* ── Content ── */}
+                {/* ── Content ─────────────────────────────────────── */}
                 {showPaymentResult ? (
                     <BookingStatusScreen
                         paymentResult={paymentResult}
@@ -1222,6 +1255,7 @@ export const BookingProcess = () => {
                     />
                 ) : (
                     <>
+                        {/* ── Quick Service tab ──────────────────────── */}
                         {activeTab === "quickservice" &&
                             (quickServiceStep === "details" ? (
                                 <QuickServiceBookingTab onNext={handleQuickServiceNext} />
@@ -1232,39 +1266,88 @@ export const BookingProcess = () => {
                                             <Zap className="w-5 h-5 text-primary" />
                                             <h3 className="font-bold text-lg">Review Your Request</h3>
                                         </div>
+
+                                        {/* ✅ FIX: review grid now shows placeOfBirth + timeOfBirth */}
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm bg-primary/5 p-4 rounded-xl">
                                             <div className="space-y-2">
-                                                <p><span className="text-muted-foreground">Name:</span> <span className="font-medium">{quickServiceData?.fullName}</span></p>
-                                                <p><span className="text-muted-foreground">Email:</span> <span className="font-medium">{quickServiceData?.email || "—"}</span></p>
-                                                <p><span className="text-muted-foreground">Phone:</span> <span className="font-medium">+91 {quickServiceData?.phone}</span></p>
+                                                <p>
+                                                    <span className="text-muted-foreground">Name:</span>{" "}
+                                                    <span className="font-medium">{quickServiceData?.fullName}</span>
+                                                </p>
+                                                <p>
+                                                    <span className="text-muted-foreground">Email:</span>{" "}
+                                                    <span className="font-medium">{quickServiceData?.email || "—"}</span>
+                                                </p>
+                                                <p>
+                                                    <span className="text-muted-foreground">Phone:</span>{" "}
+                                                    <span className="font-medium">+91 {quickServiceData?.phone}</span>
+                                                </p>
+                                                {quickServiceData?.dob && (
+                                                    <p>
+                                                        <span className="text-muted-foreground">DOB:</span>{" "}
+                                                        <span className="font-medium">{quickServiceData.dob}</span>
+                                                    </p>
+                                                )}
                                             </div>
                                             <div className="space-y-2">
-                                                <p><span className="text-muted-foreground">Service:</span> <span className="font-medium text-primary">{selectedQuickService?.title}</span></p>
-                                                <p><span className="text-muted-foreground">Delivery:</span> <span className="font-medium">{selectedQuickService?.deliveryTime}</span></p>
-                                                {quickServiceData?.dob && (
-                                                    <p><span className="text-muted-foreground">DOB:</span> <span className="font-medium">{quickServiceData.dob}</span></p>
+                                                <p>
+                                                    <span className="text-muted-foreground">Service:</span>{" "}
+                                                    <span className="font-medium text-primary">{selectedQuickService?.title}</span>
+                                                </p>
+                                                <p>
+                                                    <span className="text-muted-foreground">Delivery:</span>{" "}
+                                                    <span className="font-medium">{selectedQuickService?.deliveryTime}</span>
+                                                </p>
+                                                {/* ✅ FIX: placeOfBirth shown in review */}
+                                                {quickServiceData?.placeOfBirth && (
+                                                    <p>
+                                                        <span className="text-muted-foreground">Place of Birth:</span>{" "}
+                                                        <span className="font-medium">{quickServiceData.placeOfBirth}</span>
+                                                    </p>
+                                                )}
+                                                {/* ✅ FIX: timeOfBirth shown in review */}
+                                                {quickServiceData?.timeOfBirth && (
+                                                    <p>
+                                                        <span className="text-muted-foreground">Time of Birth:</span>{" "}
+                                                        <span className="font-medium">{quickServiceData.timeOfBirth}</span>
+                                                    </p>
                                                 )}
                                             </div>
                                         </div>
+
                                         <div className="bg-primary/5 rounded-xl p-4 border border-primary/20">
                                             <p className="text-muted-foreground text-xs mb-1">Your Question:</p>
                                             <p className="text-sm italic">"{quickServiceData?.question}"</p>
                                         </div>
+
                                         <div className="flex items-center justify-between p-4 bg-gradient-to-r from-primary/15 to-primary/5 rounded-xl border border-primary/20">
                                             <div>
                                                 <p className="text-xs text-muted-foreground">Total Amount</p>
-                                                <p className="text-2xl font-bold text-primary">₹{selectedQuickService?.price?.toLocaleString("en-IN")}</p>
+                                                <p className="text-2xl font-bold text-primary">
+                                                    ₹{selectedQuickService?.price?.toLocaleString("en-IN")}
+                                                </p>
                                             </div>
                                             <p className="text-[10px] text-muted-foreground">Incl. all taxes</p>
                                         </div>
                                     </div>
+
                                     <div className="flex flex-col sm:flex-row gap-3 justify-between pt-2">
-                                        <button onClick={handleQuickServiceBack} className="px-6 py-2.5 rounded-xl border border-primary/20 text-sm font-medium hover:bg-primary/5 transition-colors">
+                                        <button
+                                            onClick={handleQuickServiceBack}
+                                            className="px-6 py-2.5 rounded-xl border border-primary/20 text-sm font-medium hover:bg-primary/5 transition-colors"
+                                        >
                                             ← Back
                                         </button>
-                                        <button onClick={handleQuickServicePay} disabled={isProcessingPayment} className="px-8 py-2.5 rounded-xl bg-primary hover:bg-primary/90 text-white font-bold shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-70">
+                                        <button
+                                            onClick={handleQuickServicePay}
+                                            disabled={isProcessingPayment}
+                                            className="px-8 py-2.5 rounded-xl bg-primary hover:bg-primary/90 text-white font-bold shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-70"
+                                        >
                                             {isProcessingPayment ? (
-                                                <>Processing... <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /></>
+                                                <>
+                                                    Processing...{" "}
+                                                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                                </>
                                             ) : (
                                                 <>Pay ₹{selectedQuickService?.price?.toLocaleString("en-IN")} →</>
                                             )}
@@ -1273,6 +1356,7 @@ export const BookingProcess = () => {
                                 </div>
                             ))}
 
+                        {/* ── New / Repeat tab ───────────────────────── */}
                         {activeTab !== "quickservice" &&
                             (currentStep === "details" ? (
                                 <BookingDetailsStep
@@ -1300,3 +1384,6 @@ export const BookingProcess = () => {
         </div>
     );
 };
+
+
+

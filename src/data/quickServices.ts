@@ -116,7 +116,7 @@
 //   {
 //     id: "family-issue-insight",
 //     slug: "family-issue-insight",
-//     title: "Family Issue Insight (Quick Guidance)",
+//     title: " Family Issue Insight",
 //     shortDescription:
 //       "Get quick astrological insight into a pressing family issue and clarity on the best path forward.",
 //     price: 1100,
@@ -309,7 +309,7 @@
 //   {
 //     id: "money-flow-check",
 //     slug: "money-flow-check",
-//     title: "Money Flow Check (Why money is stuck?)",
+//     title: " Money Flow Guidance?)",
 //     shortDescription:
 //       "Find out the planetary reason your money feels blocked and receive targeted guidance to restore financial flow.",
 //     price: 2100,
@@ -657,7 +657,7 @@
 //   {
 //     id: "sleep-stress-insight",
 //     slug: "sleep-stress-astrology-insight",
-//     title: "Sleep / Stress Astrology Insight",
+//     title: " Sleep / Stress Related Insight",
 //     shortDescription:
 //       "Understand the planetary root of your sleep issues or stress and receive targeted remedies for relief.",
 //     price: 1100,
@@ -768,7 +768,7 @@
 //   {
 //     id: "lucky-days",
 //     slug: "personalised-lucky-days-colours",
-//     title: "Personalised Lucky Days & Colours",
+//     title: "Personalised  Know Your Lucky Days & Colours",
 //     shortDescription:
 //       "Discover your personally auspicious days, colours, and numbers to maximise success in daily life.",
 //     price: 1100,
@@ -840,7 +840,7 @@
 //   {
 //     id: "newborn-baby-name",
 //     slug: "personalised-newborn-baby-name",
-//     title: "Personalised New Born Baby Name",
+//     title: "Personalised 8.  New Born Baby Name Recommendation",
 //     shortDescription:
 //       "Get an astrologically and numerologically aligned name for your newborn — a name that supports their cosmic destiny from day one.",
 //     price: 1100,
@@ -1077,7 +1077,7 @@ export const quickServices: QuickService[] = [
   {
     id: "relationship-conflict",
     slug: "relationship-conflict-guidance",
-    title: "Relationship Conflict Guidance",
+    title: "Relationship  Guidance",
     shortDescription:
       "Understand the cosmic root of recurring conflicts in your relationship and receive targeted guidance to restore harmony.",
     price: 1100,
@@ -1115,7 +1115,7 @@ export const quickServices: QuickService[] = [
   {
     id: "family-issue-insight",
     slug: "family-issue-insight",
-    title: "Family Issue Insight (Quick Guidance)",
+    title: " Family Issue Insight",
     shortDescription:
       "Get quick astrological insight into a pressing family issue and clarity on the best path forward.",
     price: 1100,
@@ -1153,7 +1153,7 @@ export const quickServices: QuickService[] = [
   {
     id: "love-situation-clarity",
     slug: "love-situation-clarity",
-    title: "Love Situation Clarity (Where is it going?)",
+    title: "Love Situation Guidance",
     shortDescription:
       "Find out the likely direction of your current romantic situation — is it heading towards commitment, separation, or a turning point?",
     price: 1100,
@@ -1191,7 +1191,7 @@ export const quickServices: QuickService[] = [
   {
     id: "compatibility-quick-check",
     slug: "compatibility-quick-check",
-    title: "Compatibility Quick Check",
+    title: "Compatibility  Check",
     shortDescription:
       "A fast astrological compatibility snapshot between you and someone you're considering for a relationship or partnership.",
     price: 2100,
@@ -1307,7 +1307,7 @@ export const quickServices: QuickService[] = [
   {
     id: "money-flow-check",
     slug: "money-flow-check",
-    title: "Money Flow Check (Why money is stuck?)",
+    title: " Money Flow Guidance",
     shortDescription:
       "Find out the planetary reason your money feels blocked and receive targeted guidance to restore financial flow.",
     price: 2100,
@@ -1652,7 +1652,7 @@ export const quickServices: QuickService[] = [
   {
     id: "sleep-stress-insight",
     slug: "sleep-stress-astrology-insight",
-    title: "Sleep / Stress Astrology Insight",
+    title: " Sleep / Stress Related Insight",
     shortDescription:
       "Understand the planetary root of your sleep issues or stress and receive targeted remedies for relief.",
     price: 1100,
@@ -1763,7 +1763,7 @@ export const quickServices: QuickService[] = [
   {
     id: "lucky-days",
     slug: "personalised-lucky-days-colours",
-    title: "Lucky Days & Colours",
+    title: " Know Your Lucky Days & Colours",
     shortDescription:
       "Discover your personally auspicious days, colours, and numbers to maximise success in daily life.",
     price: 1100,
@@ -1835,7 +1835,7 @@ export const quickServices: QuickService[] = [
   {
     id: "newborn-baby-name",
     slug: "personalised-newborn-baby-name",
-    title: "New Born Baby Name",
+    title: "8.  New Born Baby Name Recommendation",
     shortDescription:
       "Get an astrologically and numerologically aligned name for your newborn — a name that supports their cosmic destiny from day one.",
     price: 1100,

@@ -773,8 +773,7 @@
 // export default QuickServiceBookingTab;
 
 
-//testing (30-04-2026)
-
+//testing (2-5-2026)
 
 
 import { useState, useRef, useEffect } from "react";
@@ -788,9 +787,11 @@ import {
   Clock,
   Info,
   Sparkles,
+  MapPin,
 } from "lucide-react";
 import { createPortal } from "react-dom";
 import { format, startOfDay, isAfter } from "date-fns";
+import { useNavigate } from "react-router-dom";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -798,7 +799,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { quickServices, serviceCategories } from "@/data/quickServices";
 
-// ── Category accent config ───────────────────────────────────────────────────
+// ── Category accent config ────────────────────────────────────────────────────
 const categoryConfig: Record<string, { border: string; bg: string; label: string; dot: string }> = {
   "love-relationships": {
     border: "border-rose-400/40",
@@ -826,7 +827,7 @@ const categoryConfig: Record<string, { border: string; bg: string; label: string
   },
 };
 
-// ── Shared input class ───────────────────────────────────────────────────────
+// ── Shared input class ────────────────────────────────────────────────────────
 const inputCls = (hasError?: boolean) =>
   [
     "w-full h-11 px-3 rounded-lg border text-sm transition-all duration-200",
@@ -837,7 +838,7 @@ const inputCls = (hasError?: boolean) =>
       : "border-primary/25 hover:border-primary/50 focus:border-primary/60",
   ].join(" ");
 
-// ── DOB Picker ───────────────────────────────────────────────────────────────
+// ── DOB Picker ────────────────────────────────────────────────────────────────
 const DobPicker = ({
   value,
   onChange,
@@ -927,6 +928,7 @@ const DobPicker = ({
           <CalendarIcon className="w-4 h-4 text-primary/60" />
         </div>
       </button>
+
       {error && (
         <p className="text-red-400 text-[10px] mt-1 flex items-center gap-1">
           <span className="w-1 h-1 rounded-full bg-red-400 inline-block" />
@@ -1001,7 +1003,7 @@ const DobPicker = ({
   );
 };
 
-// ── Service Dropdown ─────────────────────────────────────────────────────────
+// ── Service Dropdown ──────────────────────────────────────────────────────────
 const ServiceDropdown = ({
   value,
   onChange,
@@ -1024,7 +1026,7 @@ const ServiceDropdown = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSelect = (service: any) => {
+  const handleSelect = (service: (typeof quickServices)[0]) => {
     onChange(service.id);
     setIsOpen(false);
   };
@@ -1066,7 +1068,7 @@ const ServiceDropdown = ({
         />
       </button>
 
-      {/* Selected service price pill */}
+      {/* Price pill when closed */}
       {selectedService && !isOpen && (
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
@@ -1129,7 +1131,7 @@ const ServiceDropdown = ({
                     <div className={["ml-auto w-1.5 h-1.5 rounded-full opacity-70", cfg.dot].join(" ")} />
                   </div>
 
-                  {/* Services */}
+                  {/* Services in category */}
                   {catServices.map((service) => {
                     const isSelected = service.id === value;
                     return (
@@ -1193,7 +1195,7 @@ const ServiceDropdown = ({
   );
 };
 
-// ── Field label helper ───────────────────────────────────────────────────────
+// ── Field label helper ────────────────────────────────────────────────────────
 const FieldLabel = ({
   children,
   required,
@@ -1214,7 +1216,7 @@ const FieldLabel = ({
   </Label>
 );
 
-// ── Error message helper ─────────────────────────────────────────────────────
+// ── Error message helper ──────────────────────────────────────────────────────
 const FieldError = ({ msg }: { msg?: string }) =>
   msg ? (
     <p className="text-red-400 text-[10px] mt-1 flex items-center gap-1">
@@ -1223,33 +1225,40 @@ const FieldError = ({ msg }: { msg?: string }) =>
     </p>
   ) : null;
 
-// ── Types ────────────────────────────────────────────────────────────────────
+// ── Types ─────────────────────────────────────────────────────────────────────
+// ✅ FIX 1 DONE: placeOfBirth added to type so parent receives it via onNext
 export interface QuickServiceFormData {
-  fullName: string;
-  email: string;
-  dob: string;
-  phone: string;
-  serviceId: string;
-  timeOfBirth: string;
-  question: string;
+  fullName:     string;
+  email:        string;
+  dob:          string;
+  phone:        string;
+  serviceId:    string;
+  timeOfBirth:  string;
+  placeOfBirth: string; // ← NEW
+  question:     string;
 }
 
-// ── Main component ───────────────────────────────────────────────────────────
+// ── Main component ────────────────────────────────────────────────────────────
 export const QuickServiceBookingTab = ({
   onNext,
 }: {
   onNext?: (data: QuickServiceFormData) => void;
 }) => {
-  const { toast } = useToast();
+  const { toast }  = useToast();
+  const navigate   = useNavigate(); // ✅ FIX 2 & 3: for redirect on Get Answer
+
+  // ✅ FIX 1 DONE: placeOfBirth added to form state
   const [form, setForm] = useState<QuickServiceFormData>({
-    fullName: "",
-    email: "",
-    dob: "",
-    phone: "",
-    serviceId: "",
-    timeOfBirth: "",
-    question: "",
+    fullName:     "",
+    email:        "",
+    dob:          "",
+    phone:        "",
+    serviceId:    "",
+    timeOfBirth:  "",
+    placeOfBirth: "", // ← NEW
+    question:     "",
   });
+
   const [errors, setErrors] = useState<Record<string, string>>({});
   const selectedService = quickServices.find((s) => s.id === form.serviceId) ?? null;
 
@@ -1264,6 +1273,7 @@ export const QuickServiceBookingTab = ({
 
   const handleServiceChange = (id: string) => {
     update("serviceId", id);
+    // Clear DOB/TOB only if previous service required them and new one doesn't
     const svc = quickServices.find((s) => s.id === id);
     if (svc && !svc.requiresDOB) update("dob", "");
     if (svc && !svc.requiresBirthTime) update("timeOfBirth", "");
@@ -1273,6 +1283,7 @@ export const QuickServiceBookingTab = ({
   const validate = () => {
     const e: Record<string, string> = {};
 
+    // Full Name
     const nameTrimmed = form.fullName.trim();
     if (!nameTrimmed) {
       e.fullName = "Full name is required";
@@ -1284,18 +1295,22 @@ export const QuickServiceBookingTab = ({
       e.fullName = "Name must be 60 characters or fewer";
     }
 
+    // Email (optional)
     if (form.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
       e.email = "Enter a valid email address";
     }
 
+    // Service
     if (!form.serviceId) {
       e.serviceId = "Please select a service";
     }
 
+    // DOB — required only when service demands it
     if (selectedService?.requiresDOB && !form.dob) {
       e.dob = "Date of birth is required for this service";
     }
 
+    // Phone
     if (!form.phone) {
       e.phone = "Mobile number is required";
     } else if (!/^\d{10}$/.test(form.phone)) {
@@ -1304,6 +1319,12 @@ export const QuickServiceBookingTab = ({
       e.phone = "Enter a valid mobile number";
     }
 
+    // ✅ FIX 1 DONE: Place of Birth — always required
+    if (!form.placeOfBirth.trim()) {
+      e.placeOfBirth = "Place of birth is required";
+    }
+
+    // Question
     const questionTrimmed = form.question.trim();
     if (!questionTrimmed) {
       e.question = "Please describe your question";
@@ -1317,6 +1338,7 @@ export const QuickServiceBookingTab = ({
     return Object.keys(e).length === 0;
   };
 
+  // ✅ FIX 2 & 3 DONE: redirect to correct service page on Get Answer
   const handleNext = () => {
     if (!validate()) {
       toast({
@@ -1326,29 +1348,42 @@ export const QuickServiceBookingTab = ({
       });
       return;
     }
-    onNext?.(form);
+
+    if (onNext) {
+      // Parent component handles navigation (e.g. multi-step flow)
+      onNext(form);
+    } else if (selectedService) {
+      // Direct redirect to the service's dedicated page
+      // Pass prefill data via location state so the detail page can pre-fill the form
+      navigate(`/quick-services/${selectedService.slug}`, {
+        state: { prefill: form },
+      });
+    }
+  };
+
+  // ── Shared props for form rows (re-enable selection/paste inside inputs) ──
+  const formRowProps = {
+    style: { userSelect: "text" as const, WebkitUserSelect: "text" as const },
+    onCopy:  (e: React.ClipboardEvent) => e.stopPropagation(),
+    onCut:   (e: React.ClipboardEvent) => e.stopPropagation(),
+    onPaste: (e: React.ClipboardEvent) => e.stopPropagation(),
   };
 
   return (
-    // ✅ FIX 3: Disable copy-paste on outer wrapper, but re-enable inside inputs below
+    // ✅ FIX 4 DONE: copy-paste disabled on outer wrapper
     <motion.div
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.22 }}
       className="space-y-5"
-      onCopy={(e) => e.preventDefault()}
-      onCut={(e) => e.preventDefault()}
+      onCopy={(e)  => e.preventDefault()}
+      onCut={(e)   => e.preventDefault()}
       style={{ userSelect: "none", WebkitUserSelect: "none" }}
     >
-      {/* Row 1 — Name / Email / DOB */}
-      {/* ✅ FIX 3: Re-enable userSelect inside all form input rows so users can type freely */}
-      <div
-        className="grid grid-cols-1 sm:grid-cols-3 gap-4"
-        style={{ userSelect: "text", WebkitUserSelect: "text" }}
-        onCopy={(e) => e.stopPropagation()}
-        onCut={(e) => e.stopPropagation()}
-        onPaste={(e) => e.stopPropagation()}
-      >
+
+      {/* ── Row 1: Name / Email / DOB ─────────────────────────── */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4" {...formRowProps}>
+        {/* Full Name */}
         <div className="space-y-1.5">
           <FieldLabel required>Full Name</FieldLabel>
           <input
@@ -1364,6 +1399,7 @@ export const QuickServiceBookingTab = ({
           <FieldError msg={errors.fullName} />
         </div>
 
+        {/* Email */}
         <div className="space-y-1.5">
           <FieldLabel optional="optional">Email Address</FieldLabel>
           <input
@@ -1376,9 +1412,10 @@ export const QuickServiceBookingTab = ({
           <FieldError msg={errors.email} />
         </div>
 
+        {/* DOB */}
         <div className="space-y-1.5">
           <FieldLabel
-            required={selectedService?.requiresDOB}
+            required={!!selectedService?.requiresDOB}
             optional={!selectedService?.requiresDOB ? "if required" : undefined}
           >
             Date of Birth
@@ -1391,14 +1428,9 @@ export const QuickServiceBookingTab = ({
         </div>
       </div>
 
-      {/* Row 2 — Phone / Service */}
-      <div
-        className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-        style={{ userSelect: "text", WebkitUserSelect: "text" }}
-        onCopy={(e) => e.stopPropagation()}
-        onCut={(e) => e.stopPropagation()}
-        onPaste={(e) => e.stopPropagation()}
-      >
+      {/* ── Row 2: Phone / Service ────────────────────────────── */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" {...formRowProps}>
+        {/* Phone */}
         <div className="space-y-1.5">
           <FieldLabel required>Mobile Number</FieldLabel>
           <div className="flex">
@@ -1417,6 +1449,7 @@ export const QuickServiceBookingTab = ({
           <FieldError msg={errors.phone} />
         </div>
 
+        {/* Service */}
         <div className="space-y-1.5">
           <FieldLabel required>Quick Service</FieldLabel>
           <ServiceDropdown
@@ -1427,62 +1460,69 @@ export const QuickServiceBookingTab = ({
         </div>
       </div>
 
-      {/* Row 3 — Time of Birth (conditional) + Question */}
-      <div
-        className={`grid gap-4 ${
-          selectedService?.requiresBirthTime
-            ? "grid-cols-1 sm:grid-cols-[1fr_2fr]"
-            : "grid-cols-1"
-        }`}
-        style={{ userSelect: "text", WebkitUserSelect: "text" }}
-        onCopy={(e) => e.stopPropagation()}
-        onCut={(e) => e.stopPropagation()}
-        onPaste={(e) => e.stopPropagation()}
-      >
-        {selectedService?.requiresBirthTime && (
-          <div className="space-y-1.5">
-            <FieldLabel optional="if known">Time of Birth</FieldLabel>
-            <input
-              placeholder="e.g. 10:30 AM"
-              className={inputCls()}
-              value={form.timeOfBirth}
-              onChange={(e) => update("timeOfBirth", e.target.value)}
-            />
-          </div>
-        )}
-
+      {/* ── Row 3: Place of Birth / Time of Birth ─────────────── */}
+      {/* ✅ FIX 1 DONE: POB always visible + required. TOB always visible (optional). */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" {...formRowProps}>
+        {/* Place of Birth */}
         <div className="space-y-1.5">
-          <FieldLabel required>Your Question</FieldLabel>
-          <div className="relative">
-            <Textarea
-              placeholder="Describe your question or what guidance you seek…"
-              rows={3}
-              className={[
-                "w-full px-3 py-2.5 rounded-lg border text-sm transition-all duration-200 resize-none",
-                "bg-white/5 text-foreground placeholder:text-white/30",
-                "focus:outline-none focus:ring-1 focus:ring-primary/60",
-                errors.question
-                  ? "border-red-500/70 focus:border-red-500"
-                  : "border-primary/25 hover:border-primary/50 focus:border-primary/60",
-              ].join(" ")}
-              value={form.question}
-              maxLength={500}
-              onChange={(e) => update("question", e.target.value)}
-            />
-            <span
-              className={[
-                "absolute bottom-2 right-3 text-[10px] pointer-events-none",
-                form.question.length > 450 ? "text-amber-400/70" : "text-white/20",
-              ].join(" ")}
-            >
-              {form.question.length}/500
-            </span>
-          </div>
-          <FieldError msg={errors.question} />
+          <FieldLabel required>
+            <MapPin className="w-3 h-3 mr-0.5" />
+            Place of Birth
+          </FieldLabel>
+          <input
+            placeholder="City, State (e.g. Mumbai, Maharashtra)"
+            className={inputCls(!!errors.placeOfBirth)}
+            value={form.placeOfBirth}
+            maxLength={100}
+            onChange={(e) => update("placeOfBirth", e.target.value)}
+          />
+          <FieldError msg={errors.placeOfBirth} />
+        </div>
+
+        {/* Time of Birth — always visible, optional */}
+        <div className="space-y-1.5">
+          <FieldLabel optional="if known">Time of Birth</FieldLabel>
+          <input
+            placeholder="e.g. 10:30 AM"
+            className={inputCls()}
+            value={form.timeOfBirth}
+            onChange={(e) => update("timeOfBirth", e.target.value)}
+          />
         </div>
       </div>
 
-      {/* Selected service summary card */}
+      {/* ── Row 4: Question ───────────────────────────────────── */}
+      <div className="space-y-1.5" {...formRowProps}>
+        <FieldLabel required>Your Question</FieldLabel>
+        <div className="relative">
+          <Textarea
+            placeholder="Describe your question or what guidance you seek…"
+            rows={3}
+            className={[
+              "w-full px-3 py-2.5 rounded-lg border text-sm transition-all duration-200 resize-none",
+              "bg-white/5 text-foreground placeholder:text-white/30",
+              "focus:outline-none focus:ring-1 focus:ring-primary/60",
+              errors.question
+                ? "border-red-500/70 focus:border-red-500"
+                : "border-primary/25 hover:border-primary/50 focus:border-primary/60",
+            ].join(" ")}
+            value={form.question}
+            maxLength={500}
+            onChange={(e) => update("question", e.target.value)}
+          />
+          <span
+            className={[
+              "absolute bottom-2 right-3 text-[10px] pointer-events-none",
+              form.question.length > 450 ? "text-amber-400/70" : "text-white/20",
+            ].join(" ")}
+          >
+            {form.question.length}/500
+          </span>
+        </div>
+        <FieldError msg={errors.question} />
+      </div>
+
+      {/* ── Selected service summary card ─────────────────────── */}
       <AnimatePresence>
         {selectedService && (
           <motion.div
@@ -1499,7 +1539,7 @@ export const QuickServiceBookingTab = ({
                 "shadow-[0_0_20px_rgba(212,175,55,0.06)]",
               ].join(" ")}
             >
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 min-w-0">
                 <div
                   className={[
                     "w-10 h-10 rounded-xl flex items-center justify-center shrink-0",
@@ -1509,12 +1549,12 @@ export const QuickServiceBookingTab = ({
                 >
                   <selectedService.icon className="w-5 h-5 text-primary" />
                 </div>
-                <div>
-                  <p className="text-sm font-semibold text-white leading-snug">
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-white leading-snug truncate">
                     {selectedService.title}
                   </p>
                   <div className="flex items-center gap-1 mt-0.5">
-                    <Clock className="w-3 h-3 text-primary/50" />
+                    <Clock className="w-3 h-3 text-primary/50 shrink-0" />
                     <span className="text-[10px] text-white/45">
                       Delivered in {selectedService.deliveryTime} · via WhatsApp
                     </span>
@@ -1532,13 +1572,14 @@ export const QuickServiceBookingTab = ({
         )}
       </AnimatePresence>
 
-      {/* Footer — trust note + CTA */}
-      <div className="flex items-center justify-between gap-4 pt-1">
+      {/* ── Footer: trust note + CTA ──────────────────────────── */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
         <p className="text-[10px] text-white/35 flex items-center gap-1.5">
           <Info className="w-3 h-3 text-primary/40 shrink-0" />
           Secure payment · Delivered on WhatsApp
         </p>
 
+        {/* ✅ FIX 2 & 3 DONE: redirects to /quick-services/:slug on valid submit */}
         <button
           onClick={handleNext}
           className={[
@@ -1547,16 +1588,16 @@ export const QuickServiceBookingTab = ({
             "hover:bg-primary/90 active:scale-[0.98]",
             "shadow-[0_4px_20px_rgba(212,175,55,0.35)]",
             "hover:shadow-[0_4px_28px_rgba(212,175,55,0.5)]",
-            "flex items-center gap-2",
+            "flex items-center gap-2 w-full sm:w-auto justify-center",
           ].join(" ")}
         >
-          <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full hover:translate-x-full transition-transform duration-700 ease-in-out pointer-events-none" />
           <Zap className="w-4 h-4 shrink-0" />
           {selectedService
             ? `Get Answer · ₹${selectedService.price.toLocaleString("en-IN")}`
-            : "Next Step →"}
+            : "Get Answer →"}
         </button>
       </div>
+
     </motion.div>
   );
 };
