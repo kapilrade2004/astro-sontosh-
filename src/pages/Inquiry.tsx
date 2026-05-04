@@ -18,12 +18,31 @@ import {
 
 type Service = "Astrology" | "Numerology" | "Vastu";
 
+// interface FormData {
+//   service: Service | "";
+//   name: string;
+//   mobile: string;
+//   // dob: string;
+//   // Numerology DOB uses separate dropdowns to prevent manual typing
+//   dob_day: string;
+//   dob_month: string;
+//   dob_year: string;
+//   tob_hour: string;
+//   tob_minute: string;
+//   tob_period: "AM" | "PM";
+//   pob: string;
+//   length: string;
+//   width: string;
+//   consultDate: string;
+//   consultTime: string;
+//   message: string;
+// }
+
 interface FormData {
   service: Service | "";
   name: string;
   mobile: string;
-  dob: string;
-  // Numerology DOB uses separate dropdowns to prevent manual typing
+  // Unified DOB for Astrology + Numerology
   dob_day: string;
   dob_month: string;
   dob_year: string;
@@ -37,7 +56,6 @@ interface FormData {
   consultTime: string;
   message: string;
 }
-
 type FieldErrors = Partial<Record<keyof FormData, string>>;
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -100,14 +118,21 @@ const nameKeyDownGuard = (e: React.KeyboardEvent<HTMLInputElement>) => {
 };
 
 // ─── EMPTY defined once — used in reset() and service-change wipe ─────
+// const EMPTY: FormData = {
+//   service: "", name: "", mobile: "", dob: "",
+//   dob_day: "", dob_month: "", dob_year: "",
+//   tob_hour: "", tob_minute: "", tob_period: "AM",
+//   pob: "", length: "", width: "",
+//   consultDate: "", consultTime: "", message: "",
+// };
+
 const EMPTY: FormData = {
-  service: "", name: "", mobile: "", dob: "",
+  service: "", name: "", mobile: "",
   dob_day: "", dob_month: "", dob_year: "",
   tob_hour: "", tob_minute: "", tob_period: "AM",
   pob: "", length: "", width: "",
   consultDate: "", consultTime: "", message: "",
 };
-
 // ─── Step Bar ─────────────────────────────────────────────────────────────────
 
 const STEP_LABELS = ["Service", "Your Details", "Consultation", "Confirm"];
@@ -270,20 +295,295 @@ const Step1 = ({
 
 // ─── STEP 2 — Personal Details ────────────────────────────────────────────────
 
+// const Step2 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof FormData, v: string) => void; errors: FieldErrors }) => {
+//   const isAstrology  = form.service === "Astrology";
+//   const isVastu      = form.service === "Vastu";
+//   const isNumerology = form.service === "Numerology";
+
+//   // Vastu dimensions: 1–200 ft dropdown
+//   const DIMENSION_OPTIONS = Array.from({ length: 200 }, (_, i) => i + 1);
+
+//   // Shared: name input requires letters-only guard for Numerology AND Vastu
+//   const needsNameGuard = isNumerology || isVastu;
+
+//   // Build Numerology DOB display string from dropdowns
+//   const numDobDisplay = form.dob_day && form.dob_month && form.dob_year
+//     ? `${form.dob_day}-${form.dob_month}-${form.dob_year}`
+//     : "";
+
+//   return (
+//     <div className="space-y-5">
+//       <div>
+//         <h3 className="font-serif text-lg md:text-xl font-bold mb-1" style={{ color: "hsl(var(--card-foreground))" }}>
+//           Your Details
+//         </h3>
+//         <p className="text-xs md:text-sm text-muted-foreground">
+//           Information required for your{" "}
+//           <span style={{ color: "hsl(var(--primary))" }}>{form.service}</span> reading
+//         </p>
+//       </div>
+
+//       {/* ── Full Name ──
+//           Letters-only keydown guard + paste blocked for BOTH Numerology AND Vastu.
+//           CHANGE 5: Neutral placeholder — no personal example names.
+//       */}
+//       <Field label="Full Name" icon={<Star size={13} />} error={errors.name} required>
+//         <input
+//           type="text"
+//           value={form.name}
+//           onChange={(e) => setField("name", e.target.value)}
+//           placeholder="Enter your full name"
+//           className={iCls}
+//           style={iStyle(errors.name)}
+//           onKeyDown={needsNameGuard ? nameKeyDownGuard : undefined}
+//           onPaste={needsNameGuard ? (e) => e.preventDefault() : undefined}
+//         />
+//         {needsNameGuard && (
+//           <p className="text-[11px] mt-0.5" style={{ color: "hsl(var(--muted-foreground))" }}>
+//             ℹ️ Only letters are accepted. Copy-paste is disabled for accuracy.
+//           </p>
+//         )}
+//       </Field>
+
+//       {/* ── Mobile ── */}
+//       <Field
+//         label="Mobile Number"
+//         icon={<Phone size={13} />}
+//         error={errors.mobile}
+//         required
+//         hint="You'll receive a WhatsApp confirmation on this number"
+//       >
+//         <div className="flex gap-2">
+//           <div
+//             className="flex items-center px-3 rounded-xl text-sm font-medium shrink-0"
+//             style={{ background: "hsl(var(--card))", border: "1.5px solid hsl(var(--border))", color: "hsl(var(--muted-foreground))" }}
+//           >
+//             🇮🇳 +91
+//           </div>
+//           <input
+//             type="tel"
+//             value={form.mobile}
+//             maxLength={10}
+//             onChange={(e) => setField("mobile", e.target.value.replace(/\D/g, ""))}
+//             placeholder="Enter your 10-digit number"
+//             className={`${iCls} flex-1`}
+//             style={iStyle(errors.mobile)}
+//           />
+//         </div>
+//       </Field>
+
+//       {/* ── Date of Birth — Astrology: native date picker (optional) ──
+//           CHANGE 6: DOB is optional for Astrology. Hint text updated to clarify.
+//       */}
+//       {isAstrology && (
+//         <Field
+//           label="Date of Birth"
+//           icon={<Calendar size={13} />}
+//           error={errors.dob}
+//           required={false}
+//           hint={
+//             form.dob
+//               ? `Selected: ${formatDisplayDate(form.dob)}`
+//               : "Optional — leave blank if not known"
+//           }
+//         >
+//           <input
+//             type="date"
+//             value={form.dob}
+//             max={todayStr}
+//             onChange={(e) => setField("dob", e.target.value)}
+//             className={iCls}
+//             style={{ ...iStyle(errors.dob), colorScheme: "dark" }}
+//           />
+//           {/* CHANGE 6: Contextual note pointing users to prior consultation details */}
+//           {/* <p className="text-[11px] mt-0.5" style={{ color: "hsl(var(--muted-foreground))" }}>
+//             ℹ️ Had a prior consultation? Your birth details may already be on record — you can leave this blank.
+//           </p> */}
+//         </Field>
+//       )}
+
+//       {/* ── Date of Birth — Numerology: dropdown selects ONLY (no manual typing) ──
+//           CHANGE 2: Disabled manual entry. Three select dropdowns (Day / Month / Year).
+//           CHANGE 6: DOB is optional for Numerology. Hint text updated to clarify.
+//       */}
+//       {isNumerology && (
+//         <Field
+//           label="Date of Birth"
+//           icon={<Calendar size={13} />}
+//           error={errors.dob_day || errors.dob_month || errors.dob_year}
+//           required={false}
+//           hint={numDobDisplay ? `Selected: ${numDobDisplay}` : ""}
+//         >
+//           <div className="grid grid-cols-3 gap-2">
+//             {/* Day */}
+//             <select
+//               value={form.dob_day}
+//               onChange={(e) => setField("dob_day", e.target.value)}
+//               className={iCls}
+//               style={{ ...iStyle(errors.dob_day), colorScheme: "dark" }}
+//             >
+//               <option value="">Day</option>
+//               {DAYS.map((d) => <option key={d} value={d}>{d}</option>)}
+//             </select>
+//             {/* Month */}
+//             <select
+//               value={form.dob_month}
+//               onChange={(e) => setField("dob_month", e.target.value)}
+//               className={iCls}
+//               style={{ ...iStyle(errors.dob_month), colorScheme: "dark" }}
+//             >
+//               <option value="">Month</option>
+//               {MONTHS.map((m) => <option key={m.val} value={m.val}>{m.label}</option>)}
+//             </select>
+//             {/* Year */}
+//             <select
+//               value={form.dob_year}
+//               onChange={(e) => setField("dob_year", e.target.value)}
+//               className={iCls}
+//               style={{ ...iStyle(errors.dob_year), colorScheme: "dark" }}
+//             >
+//               <option value="">Year</option>
+//               {YEARS.map((y) => <option key={y} value={y}>{y}</option>)}
+//             </select>
+//           </div>
+//           <p className="text-[11px] mt-0.5" style={{ color: "hsl(var(--muted-foreground))" }}>
+//             ℹ️ Please select from the dropdowns — manual typing is disabled for accuracy.
+//           </p>
+//           {/* CHANGE 6: Contextual note pointing users to prior consultation details */}
+//           {/* <p className="text-[11px] mt-0.5" style={{ color: "hsl(var(--muted-foreground))" }}>
+//             Had a prior consultation? Your birth details may already be on record — you can leave this blank.
+//           </p> */}
+//         </Field>
+//       )}
+
+//       {/* ── Time of Birth — Astrology only ── */}
+//       {isAstrology && (
+//         <Field
+//           label="Time of Birth"
+//           icon={<Clock size={13} />}
+//           error={errors.tob_hour || errors.tob_minute}
+//           required
+//           hint={
+//             form.tob_hour && form.tob_minute
+//               ? `Selected: ${form.tob_hour}:${form.tob_minute} ${form.tob_period}`
+//               : "Select hour, minute and AM/PM"
+//           }
+//         >
+//           <div className="grid grid-cols-3 gap-2">
+//             <select
+//               value={form.tob_hour}
+//               onChange={(e) => setField("tob_hour", e.target.value)}
+//               className={iCls}
+//               style={{ ...iStyle(errors.tob_hour), colorScheme: "dark" }}
+//             >
+//               <option value="">Hour</option>
+//               {HOURS.map((h) => <option key={h} value={h}>{h}</option>)}
+//             </select>
+//             <select
+//               value={form.tob_minute}
+//               onChange={(e) => setField("tob_minute", e.target.value)}
+//               className={iCls}
+//               style={{ ...iStyle(errors.tob_minute), colorScheme: "dark" }}
+//             >
+//               <option value="">Min</option>
+//               {MINUTES.map((m) => <option key={m} value={m}>{m}</option>)}
+//             </select>
+//             <div className="flex rounded-xl overflow-hidden" style={{ border: "1.5px solid hsl(var(--border))" }}>
+//               {(["AM", "PM"] as const).map((p) => (
+//                 <button
+//                   key={p}
+//                   type="button"
+//                   onClick={() => setField("tob_period", p)}
+//                   className="flex-1 text-sm font-bold transition-all duration-200"
+//                   style={{
+//                     background: form.tob_period === p
+//                       ? "linear-gradient(135deg, hsl(var(--primary)), hsl(35 80% 45%))"
+//                       : "hsl(var(--card))",
+//                     color: form.tob_period === p ? "#fff" : "hsl(var(--muted-foreground))",
+//                   }}
+//                 >
+//                   {p}
+//                 </button>
+//               ))}
+//             </div>
+//           </div>
+//         </Field>
+//       )}
+
+//       {/* ── Place of Birth — Astrology only ──
+//           CHANGE 5: Neutral placeholder — no personal example value.
+//       */}
+//       {isAstrology && (
+//         <Field
+//           label="Place of Birth"
+//           icon={<MapPin size={13} />}
+//           error={errors.pob}
+//           required
+//           hint="City or town where you were born"
+//         >
+//           <input
+//             type="text"
+//             value={form.pob}
+//             onChange={(e) => setField("pob", e.target.value)}
+//             placeholder="Enter your place of birth"
+//             className={iCls}
+//             style={iStyle(errors.pob)}
+//           />
+//         </Field>
+//       )}
+
+//       {/* ── Vastu dimensions — dropdown 1–200 ft ── */}
+//       {isVastu && (
+//         <Field
+//           label="Property Dimensions"
+//           icon={<Ruler size={13} />}
+//           error={errors.length || errors.width}
+//           required
+//           hint="Select the Length and Width of your property in feet"
+//         >
+//           <div className="grid grid-cols-2 gap-3">
+//             <div className="flex flex-col gap-1">
+//               <span className="text-[11px] font-medium" style={{ color: "hsl(var(--muted-foreground))" }}>Length (ft)</span>
+//               <select
+//                 value={form.length}
+//                 onChange={(e) => setField("length", e.target.value)}
+//                 className={iCls}
+//                 style={{ ...iStyle(errors.length), colorScheme: "dark" }}
+//               >
+//                 <option value="">Select Length</option>
+//                 {DIMENSION_OPTIONS.map((v) => <option key={v} value={String(v)}>{v} ft</option>)}
+//               </select>
+//             </div>
+//             <div className="flex flex-col gap-1">
+//               <span className="text-[11px] font-medium" style={{ color: "hsl(var(--muted-foreground))" }}>Width (ft)</span>
+//               <select
+//                 value={form.width}
+//                 onChange={(e) => setField("width", e.target.value)}
+//                 className={iCls}
+//                 style={{ ...iStyle(errors.width), colorScheme: "dark" }}
+//               >
+//                 <option value="">Select Width</option>
+//                 {DIMENSION_OPTIONS.map((v) => <option key={v} value={String(v)}>{v} ft</option>)}
+//               </select>
+//             </div>
+//           </div>
+//         </Field>
+//       )}
+//     </div>
+//   );
+// };
+
+// ─── STEP 2 — Personal Details (UPDATED) ────────────────────────────────────────────────
 const Step2 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof FormData, v: string) => void; errors: FieldErrors }) => {
   const isAstrology  = form.service === "Astrology";
   const isVastu      = form.service === "Vastu";
   const isNumerology = form.service === "Numerology";
 
-  // Vastu dimensions: 1–200 ft dropdown
   const DIMENSION_OPTIONS = Array.from({ length: 200 }, (_, i) => i + 1);
-
-  // Shared: name input requires letters-only guard for Numerology AND Vastu
   const needsNameGuard = isNumerology || isVastu;
 
-  // Build Numerology DOB display string from dropdowns
-  const numDobDisplay = form.dob_day && form.dob_month && form.dob_year
-    ? `${form.dob_day}-${form.dob_month}-${form.dob_year}`
+  const dobDisplay = form.dob_day && form.dob_month && form.dob_year 
+    ? `${form.dob_day}-${form.dob_month}-${form.dob_year}` 
     : "";
 
   return (
@@ -298,10 +598,7 @@ const Step2 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof
         </p>
       </div>
 
-      {/* ── Full Name ──
-          Letters-only keydown guard + paste blocked for BOTH Numerology AND Vastu.
-          CHANGE 5: Neutral placeholder — no personal example names.
-      */}
+      {/* Full Name */}
       <Field label="Full Name" icon={<Star size={13} />} error={errors.name} required>
         <input
           type="text"
@@ -320,7 +617,7 @@ const Step2 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof
         )}
       </Field>
 
-      {/* ── Mobile ── */}
+      {/* Mobile Number */}
       <Field
         label="Mobile Number"
         icon={<Phone size={13} />}
@@ -329,10 +626,8 @@ const Step2 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof
         hint="You'll receive a WhatsApp confirmation on this number"
       >
         <div className="flex gap-2">
-          <div
-            className="flex items-center px-3 rounded-xl text-sm font-medium shrink-0"
-            style={{ background: "hsl(var(--card))", border: "1.5px solid hsl(var(--border))", color: "hsl(var(--muted-foreground))" }}
-          >
+          <div className="flex items-center px-3 rounded-xl text-sm font-medium shrink-0"
+               style={{ background: "hsl(var(--card))", border: "1.5px solid hsl(var(--border))", color: "hsl(var(--muted-foreground))" }}>
             🇮🇳 +91
           </div>
           <input
@@ -347,50 +642,23 @@ const Step2 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof
         </div>
       </Field>
 
-      {/* ── Date of Birth — Astrology: native date picker (optional) ──
-          CHANGE 6: DOB is optional for Astrology. Hint text updated to clarify.
-      */}
-      {isAstrology && (
+      {/* UNIFIED DOB Dropdowns - For Astrology & Numerology */}
+      {(isAstrology || isNumerology) && (
+        // <Field
+        //   label="Date of Birth"
+        //   icon={<Calendar size={13} />}
+        //   error={errors.dob_day || errors.dob_month || errors.dob_year}
+        //   required={false}
+        //   hint={dobDisplay ? `Selected: ${dobDisplay}` : "Select from dropdowns only"}
+        // >
         <Field
-          label="Date of Birth"
-          icon={<Calendar size={13} />}
-          error={errors.dob}
-          required={false}
-          hint={
-            form.dob
-              ? `Selected: ${formatDisplayDate(form.dob)}`
-              : "Optional — leave blank if not known"
-          }
-        >
-          <input
-            type="date"
-            value={form.dob}
-            max={todayStr}
-            onChange={(e) => setField("dob", e.target.value)}
-            className={iCls}
-            style={{ ...iStyle(errors.dob), colorScheme: "dark" }}
-          />
-          {/* CHANGE 6: Contextual note pointing users to prior consultation details */}
-          {/* <p className="text-[11px] mt-0.5" style={{ color: "hsl(var(--muted-foreground))" }}>
-            ℹ️ Had a prior consultation? Your birth details may already be on record — you can leave this blank.
-          </p> */}
-        </Field>
-      )}
-
-      {/* ── Date of Birth — Numerology: dropdown selects ONLY (no manual typing) ──
-          CHANGE 2: Disabled manual entry. Three select dropdowns (Day / Month / Year).
-          CHANGE 6: DOB is optional for Numerology. Hint text updated to clarify.
-      */}
-      {isNumerology && (
-        <Field
-          label="Date of Birth"
-          icon={<Calendar size={13} />}
-          error={errors.dob_day || errors.dob_month || errors.dob_year}
-          required={false}
-          hint={numDobDisplay ? `Selected: ${numDobDisplay}` : ""}
-        >
+  label="Date of Birth"
+  icon={<Calendar size={13} />}
+  error={errors.dob_day || errors.dob_month || errors.dob_year}
+  required={true}   // ← change from false to true
+  hint={dobDisplay ? `Selected: ${dobDisplay}` : "Select from dropdowns only"}
+>
           <div className="grid grid-cols-3 gap-2">
-            {/* Day */}
             <select
               value={form.dob_day}
               onChange={(e) => setField("dob_day", e.target.value)}
@@ -400,7 +668,7 @@ const Step2 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof
               <option value="">Day</option>
               {DAYS.map((d) => <option key={d} value={d}>{d}</option>)}
             </select>
-            {/* Month */}
+
             <select
               value={form.dob_month}
               onChange={(e) => setField("dob_month", e.target.value)}
@@ -410,7 +678,7 @@ const Step2 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof
               <option value="">Month</option>
               {MONTHS.map((m) => <option key={m.val} value={m.val}>{m.label}</option>)}
             </select>
-            {/* Year */}
+
             <select
               value={form.dob_year}
               onChange={(e) => setField("dob_year", e.target.value)}
@@ -422,17 +690,13 @@ const Step2 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof
             </select>
           </div>
           <p className="text-[11px] mt-0.5" style={{ color: "hsl(var(--muted-foreground))" }}>
-            ℹ️ Please select from the dropdowns — manual typing is disabled for accuracy.
+            ℹ️ Manual entry disabled. Please select from dropdowns only.
           </p>
-          {/* CHANGE 6: Contextual note pointing users to prior consultation details */}
-          {/* <p className="text-[11px] mt-0.5" style={{ color: "hsl(var(--muted-foreground))" }}>
-            Had a prior consultation? Your birth details may already be on record — you can leave this blank.
-          </p> */}
         </Field>
       )}
 
-      {/* ── Time of Birth — Astrology only ── */}
-      {isAstrology && (
+      {/* Time of Birth - Astrology only */}
+    {isAstrology && (
         <Field
           label="Time of Birth"
           icon={<Clock size={13} />}
@@ -543,7 +807,7 @@ const Step2 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof
             </div>
           </div>
         </Field>
-      )}
+        )}
     </div>
   );
 };
@@ -620,11 +884,89 @@ const Step3 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof
 
 // ─── STEP 4 — Review ─────────────────────────────────────────────────────────
 
+// const Step4 = ({ form }: { form: FormData }) => {
+//   const svc = SERVICES.find((s) => s.id === form.service)!;
+
+//   // Build Numerology DOB display string from dropdowns
+//   const numDobDisplay = form.dob_day && form.dob_month && form.dob_year
+//     ? `${form.dob_day}-${form.dob_month}-${form.dob_year}`
+//     : null;
+
+//   const rows = [
+//     { label: "Service", value: `${svc.emoji} ${svc.label}` },
+//     { label: "Name",    value: form.name },
+//     { label: "Mobile",  value: `+91 ${form.mobile}` },
+//     // Astrology — native DOB (optional, only show if filled)
+//     ...(form.service === "Astrology" && form.dob
+//       ? [{ label: "Date of Birth", value: formatDisplayDate(form.dob) }]
+//       : []),
+//     // Numerology — dropdown DOB (optional, only show if all three parts filled)
+//     ...(form.service === "Numerology" && numDobDisplay
+//       ? [{ label: "Date of Birth", value: numDobDisplay }]
+//       : []),
+//     ...(form.service === "Astrology"
+//       ? [{ label: "Time of Birth",  value: `${form.tob_hour}:${form.tob_minute} ${form.tob_period}` }]
+//       : []),
+//     ...(form.service === "Astrology"
+//       ? [{ label: "Place of Birth", value: form.pob }]
+//       : []),
+//     ...(form.service === "Vastu"
+//       ? [{ label: "Dimensions",     value: `${form.length}ft (L) × ${form.width}ft (W)` }]
+//       : []),
+//     ...(form.consultDate
+//       ? [{ label: "Preferred Date", value: new Date(form.consultDate).toLocaleDateString("en-IN", { day: "2-digit", month: "long", year: "numeric" }) }]
+//       : []),
+//     ...(form.consultTime ? [{ label: "Preferred Time", value: form.consultTime }] : []),
+//     ...(form.message     ? [{ label: "Message",        value: form.message }]     : []),
+//   ];
+
+//   return (
+//     <div className="space-y-5">
+//       <div>
+//         <h3 className="font-serif text-lg md:text-xl font-bold mb-1" style={{ color: "hsl(var(--card-foreground))" }}>
+//           Review Your Inquiry
+//         </h3>
+//         <p className="text-xs md:text-sm text-muted-foreground">Please verify your details before submitting</p>
+//       </div>
+//       <div className="rounded-2xl overflow-hidden" style={{ border: "1.5px solid hsl(var(--border))" }}>
+//         {rows.map((row, i) => (
+//           <motion.div
+//             key={row.label}
+//             initial={{ opacity: 0, x: -8 }}
+//             animate={{ opacity: 1, x: 0 }}
+//             transition={{ delay: i * 0.04 }}
+//             className="flex items-start gap-3 px-4 py-3 border-b last:border-b-0"
+//             style={{
+//               background:  i % 2 === 0 ? "hsl(var(--card)/0.5)" : "hsl(var(--card)/0.2)",
+//               borderColor: "hsl(var(--border))",
+//             }}
+//           >
+//             <span className="text-xs font-semibold w-28 shrink-0 pt-0.5" style={{ color: "hsl(var(--muted-foreground))" }}>
+//               {row.label}
+//             </span>
+//             <span className="text-xs md:text-sm font-medium flex-1" style={{ color: "hsl(var(--card-foreground))" }}>
+//               {row.value}
+//             </span>
+//           </motion.div>
+//         ))}
+//       </div>
+//       <div
+//         className="flex gap-3 p-4 rounded-2xl text-xs text-muted-foreground"
+//         style={{ background: "hsl(var(--primary)/0.07)", border: "1.5px solid hsl(var(--primary)/0.2)" }}
+//       >
+//         <span className="text-base shrink-0">🔒</span>
+//         Your information is confidential and will only be used to provide personalised astrological guidance.
+//       </div>
+//     </div>
+//   );
+// };
+
+// ─── STEP 4 — Review ─────────────────────────────────────────────────────────
 const Step4 = ({ form }: { form: FormData }) => {
   const svc = SERVICES.find((s) => s.id === form.service)!;
 
-  // Build Numerology DOB display string from dropdowns
-  const numDobDisplay = form.dob_day && form.dob_month && form.dob_year
+  // Unified DOB display
+  const dobDisplay = form.dob_day && form.dob_month && form.dob_year
     ? `${form.dob_day}-${form.dob_month}-${form.dob_year}`
     : null;
 
@@ -632,28 +974,31 @@ const Step4 = ({ form }: { form: FormData }) => {
     { label: "Service", value: `${svc.emoji} ${svc.label}` },
     { label: "Name",    value: form.name },
     { label: "Mobile",  value: `+91 ${form.mobile}` },
-    // Astrology — native DOB (optional, only show if filled)
-    ...(form.service === "Astrology" && form.dob
-      ? [{ label: "Date of Birth", value: formatDisplayDate(form.dob) }]
+
+    // Unified DOB display for both Astrology and Numerology
+    ...(dobDisplay ? [{ label: "Date of Birth", value: dobDisplay }] : []),
+
+    // Time of Birth - Astrology only
+    ...(form.service === "Astrology" && form.tob_hour && form.tob_minute
+      ? [{ label: "Time of Birth", value: `${form.tob_hour}:${form.tob_minute} ${form.tob_period}` }]
       : []),
-    // Numerology — dropdown DOB (optional, only show if all three parts filled)
-    ...(form.service === "Numerology" && numDobDisplay
-      ? [{ label: "Date of Birth", value: numDobDisplay }]
-      : []),
-    ...(form.service === "Astrology"
-      ? [{ label: "Time of Birth",  value: `${form.tob_hour}:${form.tob_minute} ${form.tob_period}` }]
-      : []),
-    ...(form.service === "Astrology"
+
+    // Place of Birth - Astrology only
+    ...(form.service === "Astrology" && form.pob
       ? [{ label: "Place of Birth", value: form.pob }]
       : []),
-    ...(form.service === "Vastu"
-      ? [{ label: "Dimensions",     value: `${form.length}ft (L) × ${form.width}ft (W)` }]
+
+    // Vastu Dimensions
+    ...(form.service === "Vastu" && form.length && form.width
+      ? [{ label: "Dimensions", value: `${form.length}ft (L) × ${form.width}ft (W)` }]
       : []),
+
+    // Consultation Details
     ...(form.consultDate
       ? [{ label: "Preferred Date", value: new Date(form.consultDate).toLocaleDateString("en-IN", { day: "2-digit", month: "long", year: "numeric" }) }]
       : []),
     ...(form.consultTime ? [{ label: "Preferred Time", value: form.consultTime }] : []),
-    ...(form.message     ? [{ label: "Message",        value: form.message }]     : []),
+    ...(form.message ? [{ label: "Message", value: form.message }] : []),
   ];
 
   return (
@@ -664,6 +1009,7 @@ const Step4 = ({ form }: { form: FormData }) => {
         </h3>
         <p className="text-xs md:text-sm text-muted-foreground">Please verify your details before submitting</p>
       </div>
+
       <div className="rounded-2xl overflow-hidden" style={{ border: "1.5px solid hsl(var(--border))" }}>
         {rows.map((row, i) => (
           <motion.div
@@ -673,7 +1019,7 @@ const Step4 = ({ form }: { form: FormData }) => {
             transition={{ delay: i * 0.04 }}
             className="flex items-start gap-3 px-4 py-3 border-b last:border-b-0"
             style={{
-              background:  i % 2 === 0 ? "hsl(var(--card)/0.5)" : "hsl(var(--card)/0.2)",
+              background: i % 2 === 0 ? "hsl(var(--card)/0.5)" : "hsl(var(--card)/0.2)",
               borderColor: "hsl(var(--border))",
             }}
           >
@@ -686,6 +1032,7 @@ const Step4 = ({ form }: { form: FormData }) => {
           </motion.div>
         ))}
       </div>
+
       <div
         className="flex gap-3 p-4 rounded-2xl text-xs text-muted-foreground"
         style={{ background: "hsl(var(--primary)/0.07)", border: "1.5px solid hsl(var(--primary)/0.2)" }}
@@ -696,7 +1043,6 @@ const Step4 = ({ form }: { form: FormData }) => {
     </div>
   );
 };
-
 // ─── Success ─────────────────────────────────────────────────────────────────
 
 const SuccessScreen = ({ form, onReset }: { form: FormData; onReset: () => void }) => (
@@ -808,28 +1154,62 @@ const InquiryForm = () => {
       if (!form.service) e.service = "Please select a service to continue.";
     }
 
-    if (step === 1) {
-      // Name validation for ALL services — Astrology, Vastu and Numerology
-      if (!form.name.trim()) {
-        e.name = "Please enter your full name.";
-      } else if (!isValidName(form.name)) {
-        e.name = "Name must be at least 2 characters and contain only letters.";
-      }
-      if (!form.mobile || !/^\d{10}$/.test(form.mobile)) {
-        e.mobile = "Enter a valid 10-digit number.";
-      }
-      // DOB is optional for all services — no required validation
-      if (form.service === "Astrology") {
-        if (!form.tob_hour)   e.tob_hour   = "Select hour.";
-        if (!form.tob_minute) e.tob_minute = "Select minute.";
-        if (!form.pob.trim()) e.pob        = "Please enter your place of birth.";
-      }
-      if (form.service === "Vastu") {
-        if (!form.length) e.length = "Please select a length.";
-        if (!form.width)  e.width  = "Please select a width.";
-      }
-    }
+    // if (step === 1) {
+    //   // Name validation for ALL services — Astrology, Vastu and Numerology
+    //   if (!form.name.trim()) {
+    //     e.name = "Please enter your full name.";
+    //   } else if (!isValidName(form.name)) {
+    //     e.name = "Name must be at least 2 characters and contain only letters.";
+    //   }
+    //   if (!form.mobile || !/^\d{10}$/.test(form.mobile)) {
+    //     e.mobile = "Enter a valid 10-digit number.";
+    //   }
+    //   // DOB is optional for all services — no required validation
+    //   if (form.service === "Astrology") {
+    //     if (!form.tob_hour)   e.tob_hour   = "Select hour.";
+    //     if (!form.tob_minute) e.tob_minute = "Select minute.";
+    //     if (!form.pob.trim()) e.pob        = "Please enter your place of birth.";
+    //   }
+    //   if (form.service === "Vastu") {
+    //     if (!form.length) e.length = "Please select a length.";
+    //     if (!form.width)  e.width  = "Please select a width.";
+    //   }
+    // }
 
+    if (step === 1) {
+  if (!form.name.trim() || !isValidName(form.name)) {
+    e.name = "Please enter a valid full name (min 2 letters only).";
+  }
+  if (!form.mobile || !/^\d{10}$/.test(form.mobile)) {
+    e.mobile = "Enter a valid 10-digit number.";
+  }
+
+  // DOB Validation (Unified)
+  // if ((form.service === "Astrology" || form.service === "Numerology")) {
+  //   if (!form.dob_day || !form.dob_month || !form.dob_year) {
+  //     e.dob_day = "Please select your full Date of Birth.";
+  //   }
+  // }
+
+
+  // DOB Validation (Unified)
+if (form.service === "Astrology" || form.service === "Numerology") {
+  if (!form.dob_day || !form.dob_month || !form.dob_year) {
+    e.dob_day   = "Please select Day.";
+    e.dob_month = "Please select Month.";
+    e.dob_year  = "Please select Year.";
+  }
+}
+  if (form.service === "Astrology") {
+    if (!form.tob_hour) e.tob_hour = "Select hour.";
+    if (!form.tob_minute) e.tob_minute = "Select minute.";
+    if (!form.pob.trim()) e.pob = "Please enter your place of birth.";
+  }
+  if (form.service === "Vastu") {
+    if (!form.length) e.length = "Please select length.";
+    if (!form.width) e.width = "Please select width.";
+  }
+}
     if (step === 2) {
       if (!form.consultDate) e.consultDate = "Please select a date.";
       if (!form.consultTime) e.consultTime = "Please select a time slot.";
@@ -856,22 +1236,37 @@ const InquiryForm = () => {
         ? `${form.dob_year}-${form.dob_month}-${form.dob_day}`
         : undefined;
 
+      // const payload = {
+      //   service:     form.service,
+      //   name:        form.name,
+      //   mobile:      form.mobile,
+      //   // DOB: Astrology uses native picker, Numerology uses assembled dropdown value
+      //   dob: form.service === "Astrology"
+      //     ? (form.dob || undefined)
+      //     : numDob,
+      //   tob,
+      //   pob:         form.service === "Astrology" ? form.pob    : undefined,
+      //   length:      form.service === "Vastu"     ? form.length : undefined,
+      //   width:       form.service === "Vastu"     ? form.width  : undefined,
+      //   consultDate: form.consultDate || undefined,
+      //   consultTime: form.consultTime || undefined,
+      //   message:     form.message     || undefined,
+      // };
       const payload = {
-        service:     form.service,
-        name:        form.name,
-        mobile:      form.mobile,
-        // DOB: Astrology uses native picker, Numerology uses assembled dropdown value
-        dob: form.service === "Astrology"
-          ? (form.dob || undefined)
-          : numDob,
-        tob,
-        pob:         form.service === "Astrology" ? form.pob    : undefined,
-        length:      form.service === "Vastu"     ? form.length : undefined,
-        width:       form.service === "Vastu"     ? form.width  : undefined,
-        consultDate: form.consultDate || undefined,
-        consultTime: form.consultTime || undefined,
-        message:     form.message     || undefined,
-      };
+  service: form.service,
+  name: form.name,
+  mobile: form.mobile,
+  dob: (form.dob_day && form.dob_month && form.dob_year) 
+    ? `${form.dob_year}-${form.dob_month}-${form.dob_day}` 
+    : undefined,
+  tob,
+  pob: form.service === "Astrology" ? form.pob : undefined,
+  length: form.service === "Vastu" ? form.length : undefined,
+  width: form.service === "Vastu" ? form.width : undefined,
+  consultDate: form.consultDate || undefined,
+  consultTime: form.consultTime || undefined,
+  message: form.message || undefined,
+};
 
       await axios.post(`${API_BASE_URL}/inquiry`, payload);
 
