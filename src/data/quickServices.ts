@@ -1835,7 +1835,7 @@ export const quickServices: QuickService[] = [
   {
     id: "newborn-baby-name",
     slug: "personalised-newborn-baby-name",
-    title: "8.  New Born Baby Name Recommendation",
+    title: "New Born Baby Name Recommendation",
     shortDescription:
       "Get an astrologically and numerologically aligned name for your newborn — a name that supports their cosmic destiny from day one.",
     price: 1100,

@@ -16,38 +16,31 @@ import {
     Moon, TrendingUp, Compass, Brain, DollarSign, Plane, Baby,
 } from "lucide-react";
 
+// ── Unified label class ───────────────────────────────────────────
+// Matches QuickServiceBookingTab FieldLabel and BookingDetailsStep exactly
+const labelCls = "text-primary/90 font-semibold text-[11px] uppercase tracking-wider";
+
 // ── Micro / Quick Service pricing ────────────────────────────────
 const microPricingData = [
-    // ── ₹500 tier ──
     { service: "Daily Ritual Suggestion (Simple Routine)",        price: "500",   icon: Moon        },
     { service: "Go Ahead or Wait Decision Guidance",              price: "500",   icon: Compass     },
     { service: "Right Time Check (Shubh Time for Any Decision)",  price: "500",   icon: Clock       },
-    // ── ₹1,100 tier ──
     { service: "Ask 1 Question (Yes/No + Reason)",                price: "1,100", icon: MessageCircle },
-    // ✅ 1. Relationship Conflict Guidance → Relationship Guidance
     { service: "Relationship Guidance",                           price: "1,100", icon: Heart       },
-    // ✅ 2. Family Issue Insight (Quick Guidance) → Family Issue Insight
     { service: "Family Issue Insight",                            price: "1,100", icon: Heart       },
-    // ✅ 3. Love Situation Clarity (Where is it going?) → Love Situation Guidance
     { service: "Love Situation Guidance",                         price: "1,100", icon: Heart       },
     { service: "Opportunity Check (Anything good coming soon?)",  price: "1,100", icon: TrendingUp  },
-    // ✅ 6. Sleep / Stress Astrology Insight → Sleep / Stress Related Insight
     { service: "Sleep / Stress Related Insight",                  price: "1,100", icon: Moon        },
     { service: "Strength Insight (Hidden Strengths)",             price: "1,100", icon: Brain       },
     { service: "Name Initial Suggestion (for business/personal)", price: "1,100", icon: Hash        },
     { service: "Property Buying Time Check",                      price: "1,100", icon: Home        },
     { service: "Muhurat – Auspicious Timing",                     price: "1,100", icon: Star        },
-    // ✅ 7. Lucky Days & Colours → Know Your Lucky Days & Colours
     { service: "Know Your Lucky Days & Colours",                  price: "1,100", icon: Star        },
     { service: "Rudraksha / Crystal Recommendation",              price: "1,100", icon: Gem         },
     { service: "Tattoo Recommendation",                           price: "1,100", icon: Zap         },
-    // ✅ 8. New Born Baby Name → New Born Baby Name Recommendation
     { service: "New Born Baby Name Recommendation",               price: "1,100", icon: Baby        },
-    // ── ₹2,100 tier ──
-    // ✅ 4. Compatibility Quick Check → Compatibility Check
     { service: "Compatibility Check",                             price: "2,100", icon: Heart       },
     { service: "Job Change Decision Guidance",                    price: "2,100", icon: Briefcase   },
-    // ✅ 5. Money Flow Check (Why money is stuck?) → Money Flow Guidance
     { service: "Money Flow Guidance",                             price: "2,100", icon: DollarSign  },
     { service: "Career Guidance",                                 price: "2,100", icon: Briefcase   },
     { service: "Travel / Relocation Decision Check",              price: "2,100", icon: Plane       },
@@ -165,13 +158,13 @@ interface TimeOfBirthPickerProps {
 }
 
 const TimeOfBirthPicker = ({ value, onChange, error }: TimeOfBirthPickerProps) => {
-    const [isOpen, setIsOpen]   = useState(false);
-    const containerRef          = useRef<HTMLDivElement>(null);
-    const minuteScrollRef       = useRef<HTMLDivElement>(null);
+    const [isOpen, setIsOpen]     = useState(false);
+    const containerRef            = useRef<HTMLDivElement>(null);
+    const minuteScrollRef         = useRef<HTMLDivElement>(null);
 
     const parseValue = (val: string) => {
         if (!val) return { hour: "", minute: "00", period: "AM" };
-        const [h, m] = val.split(":").map(Number);
+        const [h, m]  = val.split(":").map(Number);
         const period  = h >= 12 ? "PM" : "AM";
         const hour12  = h % 12 === 0 ? 12 : h % 12;
         return { hour: String(hour12).padStart(2, "0"), minute: String(m).padStart(2, "0"), period };
@@ -416,8 +409,9 @@ export const BookingSlotStep = ({
                 {/* RIGHT: Form fields + Pay */}
                 <div className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
+                        {/* ── Gender ── */}
                         <div className="space-y-1.5">
-                            <Label className="text-primary font-medium text-xs">Gender</Label>
+                            <Label className={labelCls}>Gender</Label>
                             <Select value={bookingData.gender} onValueChange={(val) => updateBookingData({ gender: val })}>
                                 <SelectTrigger className={`bg-background border-primary/20 h-10 text-sm ${errors.gender ? "border-red-500" : ""}`}>
                                     <SelectValue placeholder="Gender" />
@@ -430,10 +424,12 @@ export const BookingSlotStep = ({
                             </Select>
                             {errors.gender && <p className="text-red-500 text-[10px] mt-1">{errors.gender}</p>}
                         </div>
+
+                        {/* ── Place of Birth ── */}
                         <div className="space-y-1.5">
-                            <Label className="text-primary font-medium text-xs">Place of Birth</Label>
+                            <Label className={labelCls}>Place of Birth</Label>
                             <Input
-                                placeholder="City"
+                                placeholder="Place of Birth"
                                 className={`bg-background border-primary/20 h-10 text-sm ${errors.place ? "border-red-500" : ""}`}
                                 value={bookingData.place}
                                 onChange={(e) => updateBookingData({ place: e.target.value })}
@@ -442,10 +438,11 @@ export const BookingSlotStep = ({
                         </div>
                     </div>
 
+                    {/* ── Time of Birth ── */}
                     {["astrology-exact-birth-time", "astrology-no-exact-birth-time", "astrology-in-person",
                       "numerology", "premium-kundli"].includes(bookingData.serviceId) && (
                         <div className="space-y-1.5">
-                            <Label className="text-primary font-medium text-xs">Time of Birth</Label>
+                            <Label className={labelCls}>Time of Birth</Label>
                             <TimeOfBirthPicker
                                 value={bookingData.timeOfBirth || ""}
                                 onChange={(val) => updateBookingData({ timeOfBirth: val })}
@@ -454,10 +451,11 @@ export const BookingSlotStep = ({
                         </div>
                     )}
 
+                    {/* ── Vastu fields ── */}
                     {bookingData.serviceId === "vastu" && (
                         <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="space-y-4">
                             <div className="space-y-1.5">
-                                <Label className="text-primary font-medium text-xs">Area Dimension</Label>
+                                <Label className={labelCls}>Area Dimension</Label>
                                 <Input placeholder="e.g. 20x40 ft"
                                     className={`bg-background border-primary/20 h-10 text-sm ${errors.areaDimension ? "border-red-500" : ""}`}
                                     value={bookingData.areaDimension}
@@ -465,7 +463,7 @@ export const BookingSlotStep = ({
                                 {errors.areaDimension && <p className="text-red-500 text-[10px] mt-1">{errors.areaDimension}</p>}
                             </div>
                             <div className="space-y-1.5">
-                                <Label className="text-primary font-medium text-xs">Property Location</Label>
+                                <Label className={labelCls}>Property Location</Label>
                                 <Input placeholder="Nearest City / Area"
                                     className={`bg-background border-primary/20 h-10 text-sm ${errors.propertyLocation ? "border-red-500" : ""}`}
                                     value={bookingData.propertyLocation}
@@ -473,21 +471,23 @@ export const BookingSlotStep = ({
                                 {errors.propertyLocation && <p className="text-red-500 text-[10px] mt-1">{errors.propertyLocation}</p>}
                             </div>
                             <div className="space-y-1.5">
-                                <Label className="text-primary font-medium text-xs">Upload Floor Plan</Label>
+                                <Label className={labelCls}>Upload Floor Plan</Label>
                                 <Input type="file" className="bg-background border-primary/20 h-10 py-1 text-xs"
                                     onChange={(e) => updateBookingData({ floorPlan: e.target.files?.[0] })} />
                             </div>
                         </motion.div>
                     )}
 
+                    {/* ── Detailed Concern ── */}
                     <div className="space-y-1.5">
-                        <Label className="text-primary font-medium text-xs">Detailed Concern</Label>
+                        <Label className={labelCls}>Detailed Concern</Label>
                         <Textarea placeholder="Your questions or details..." rows={3}
                             className="bg-background border-primary/20 resize-none py-2 text-sm"
                             value={bookingData.concern}
                             onChange={(e) => updateBookingData({ concern: e.target.value })} />
                     </div>
 
+                    {/* ── Amount + Pay ── */}
                     <div className="pt-4 space-y-4 border-t border-primary/20">
                         <div className="flex items-center justify-between p-3.5 bg-primary/10 rounded-2xl border border-primary/20 shadow-inner">
                             <div className="flex flex-col gap-1">
