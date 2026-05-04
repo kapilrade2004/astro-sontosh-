@@ -580,8 +580,8 @@ const Step2 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof
   const isNumerology = form.service === "Numerology";
 
   const DIMENSION_OPTIONS = Array.from({ length: 200 }, (_, i) => i + 1);
-  const needsNameGuard = isNumerology || isVastu;
-
+  // const needsNameGuard = isNumerology || isVastu;
+const needsNameGuard = isAstrology || isNumerology || isVastu; 
   const dobDisplay = form.dob_day && form.dob_month && form.dob_year 
     ? `${form.dob_day}-${form.dob_month}-${form.dob_year}` 
     : "";
