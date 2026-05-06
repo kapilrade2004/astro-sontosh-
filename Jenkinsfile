@@ -68,6 +68,7 @@ pipeline {
                             -e "ssl_email=''' + env.SSL_EMAIL + '''" \
                             -e "docker_image=''' + env.DOCKER_IMAGE + '''" \
                             -e "registry=''' + env.REGISTRY + '''" \
+                            -e "registry_image=''' + env.REGISTRY_IMAGE + '''" \
                             -e "registry_user=$REGISTRY_USER" \
                             -e "registry_pass=$REGISTRY_PASS" \
                             -e "env_file=''' + env.WORKSPACE + '''/.env"
@@ -79,7 +80,7 @@ pipeline {
 
     post {
         success {
-            echo "Deployed successfully to https://${DOMAIN}"
+            echo "Deployed successfully to https://${env.DOMAIN}"
         }
         failure {
             echo "Deployment failed!"
