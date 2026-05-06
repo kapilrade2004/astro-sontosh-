@@ -24,133 +24,140 @@ import MDA from "@/assets/Mastery - Dasha Analysis.pdf_page-0001.jpg"
 import MCHA from "@/assets/Mastery - Child Astrology_page-0001.jpg"
 import MCHA2 from "@/assets/Mastery.jpeg"
 import MCIPA from "@/assets/Master_in_Palmistry.png"
+import MA from "@/assets/Master_Astrology.png"
 const certifications = [
+  {
+    id: 1,
+    title: "Master in Astrology",
+    image: MA,
+    verified: true,
+  },
 
     {
-    id: 1,
+    id: 2,
     title: "Master in Palmistry",
     image: MCIPA,
     verified: true,
   },
   {
-    id: 2,
+    id: 3,
     title: "Astro Expertise",
     image: CAEC,
     verified: true,
   },
   {
-    id: 3,
+    id: 4,
     title: "Diploma in Palmistry",
     image: SRPD,
     verified: true,
   },
   {
-    id: 4,
+    id: 5,
     title: "Diploma in Astrology",
     image: SRPDA,
     verified: true,
   },
   {
-    id: 5,
+    id: 6,
     title: "Ultimate Astrology ",
     image: CTUAC,
     verified: true,
   },
   {
-    id: 6,
+    id: 7,
     title: "Mastery - Retrograde Planets",
     image: CRPBA,
     verified: true,
   },
 
   {
-    id: 7,
+    id: 8,
     title: "Mastery - Marriage Prediction",
     image: CMPM,
     verified: true,
   },
   {
-    id: 8,
+    id: 9,
     title: "Mastery - Kundali Reading",
     image: CKMCBA,
     verified: true,
   },
   {
-    id: 9,
+    id: 10,
     title: " Mastery - Nakshatra",
     image: CBNCBA,
     verified: true,
   },
   {
-    id: 10,
+    id: 11,
     title: "Mastery - Astro Remedies",
     image: C360ARB,
     verified: true,
   },
   {
-    id: 11,
+    id: 12,
     title: " Advanced Astro Vastu Shastra",
     image: AVS,
     verified: true,
   },
   {
-    id: 12,
+    id: 13,
     title: "Mastery - Timing of Events / Transit",
     image: ATOETC,
     verified: true,
   },
   {
-    id: 13,
+    id: 14,
     title: "Mastery - 10 Sureshot Prediction",
     image: SPOA10,
     verified: true,
   },
 
   {
-    id: 14,
+    id: 15,
     title: " Mastery - Crystal & Gemstone",
     image: CAG,
     verified: true,
   },
   {
-    id: 15,
+    id: 16,
     title: "Mastery - Rudraksha",
     image: RC,
     verified: true,
   },
   {
-    id: 16,
+    id: 17,
     title: "The Ultimate Vishwakarma Vastu",
     image: TUVV,
     verified: true,
   },
   {
-    id: 17,
+    id: 18,
     title: "Certification in Astrology",
     image: CA,
     verified: true,
   },
   {
-    id: 18,
+    id: 19,
     title: "Mastery - Career Prediction",
     image: MCP,
     verified: true,
   },
 
 {
-  id: 19,
+  id: 20,
   title: "Mastery - Medical Astrology",
   image: MCA,
   verified: true,
 },
 {
-  id: 20,
+  id: 21,
   title: "Mastery - Dasha Analysis",
   image: MDA,
   verified: true,
 },
 {
-  id: 21,
+  id: 22,
   title: "Mastery - Child Astrology",
   image: MCHA,
   verified: true,
@@ -159,7 +166,7 @@ const certifications = [
 
 
 {
-  id: 22,
+  id: 23,
   title: "Mastery - Conjunction Analysis",
   image: MCHA2,
   verified: true,
