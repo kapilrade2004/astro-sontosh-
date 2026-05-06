@@ -1,33 +1,36 @@
 pipeline {
     agent any
-    
+
     environment {
+//         DEPLOY_CONFIG = readYaml file: 'deploy-config.yml'
+//         DOCKER_IMAGE = "${DEPLOY_CONFIG.registry_image}:${BUILD_NUMBER}"
         ANSIBLE_DIR = '/opt/ansible'
     }
 
     stages {
         stage('Init - load deploy.yml into env') {
-            steps {
-                script {
-                    def cfgFile = 'deploy-config.yml'
-                    if (!fileExists(cfgFile)) {
-                        error "deploy-config.yml not found in workspace"
-                    }
-                    def cfg = readYaml file: cfgFile
-                    echo "cfg.class = ${cfg.getClass().getName()}"
-                    echo "cfg.toString(): ${cfg.toString()}"
-                    env.APP_NAME          = cfg.app_name
-                    env.APP_PORT          = cfg.app_port.toString()
-                    env.HEALTH_CHECK_PATH = cfg.health_check_path
-                    env.NODE_ENV          = cfg.env
-                    env.DOMAIN            = cfg.domain
-                    env.TARGET_HOST       = cfg.target_host
-                    env.SSL_EMAIL         = cfg.ssl_email
-                    env.REGISTRY          = cfg.registry
-                    env.REGISTRY_IMAGE    = cfg.registry_image
-                    env.DOCKER_IMAGE      = "${cfg.registry_image}:${BUILD_NUMBER}"
-                }
+          steps {
+            script {
+              def cfgFile = 'deploy-config.yml'
+              if (!fileExists(cfgFile)) {
+                error "deploy.yml not found in workspace"
+              }
+              def cfg = readYaml file: cfgFile
+              echo "cfg.class = ${cfg.getClass().getName()}"
+              echo "cfg.toString(): ${cfg.toString()}"
+              // Print the object and its class
+              env.APP_NAME       = cfg.app_name
+              env.APP_PORT       = cfg.app_port.toString()
+              env.HEALTH_CHECK_PATH= cfg.health_check_path
+              env.NODE_ENV       = cfg.env
+              env.DOMAIN         = cfg.domain
+              env.TARGET_HOST    = cfg.target_host
+              env.SSL_EMAIL      = cfg.ssl_email
+              env.REGISTRY       = cfg.registry
+              env.REGISTRY_IMAGE = cfg.registry_image
+              env.DOCKER_IMAGE   = "${cfg.registry_image}:${cfg.app_name}-${BUILD_NUMBER}"
             }
+          }
         }
 
         stage('Checkout') {
@@ -57,22 +60,20 @@ pipeline {
                     usernameVariable: 'REGISTRY_USER',
                     passwordVariable: 'REGISTRY_PASS'
                 )]) {
-                    sh '''
-                        ansible-playbook -i ''' + env.ANSIBLE_DIR + '''/inventory.yml ''' + env.ANSIBLE_DIR + '''/deploy.yml \
-                            -e "target_host=''' + env.TARGET_HOST + '''" \
-                            -e "app_name=''' + env.APP_NAME + '''" \
-                            -e "app_port=''' + env.APP_PORT + '''" \
-                            -e "health_check_path=''' + env.HEALTH_CHECK_PATH + '''" \
-                            -e "env=''' + env.NODE_ENV + '''" \
-                            -e "domain=''' + env.DOMAIN + '''" \
-                            -e "ssl_email=''' + env.SSL_EMAIL + '''" \
-                            -e "docker_image=''' + env.DOCKER_IMAGE + '''" \
-                            -e "registry=''' + env.REGISTRY + '''" \
-                            -e "registry_image=''' + env.REGISTRY_IMAGE + '''" \
-                            -e "registry_user=$REGISTRY_USER" \
-                            -e "registry_pass=$REGISTRY_PASS" \
-                            -e "env_file=''' + env.WORKSPACE + '''/.env"
-                    '''
+                    sh """
+                        ansible-playbook -i ${ANSIBLE_DIR}/inventory.yml ${ANSIBLE_DIR}/deploy.yml \
+                            -e "target_host=${TARGET_HOST}" \
+                            -e "app_name=${APP_NAME}" \
+                            -e "app_port=${APP_PORT}" \
+                            -e "health_check_path=${HEALTH_CHECK_PATH}" \
+                            -e "env=${NODE_ENV}" \
+                            -e "domain=${DOMAIN}" \
+                            -e "ssl_email=${SSL_EMAIL}" \
+                            -e "docker_image=${DOCKER_IMAGE}" \
+                            -e "registry=${REGISTRY}" \
+                            -e "registry_user=${REGISTRY_USER}" \
+                            -e "registry_pass=${REGISTRY_PASS}"
+                    """
                 }
             }
         }
@@ -80,7 +81,7 @@ pipeline {
 
     post {
         success {
-            echo "Deployed successfully to https://${env.DOMAIN}"
+            echo "Deployed successfully to https://${DOMAIN}"
         }
         failure {
             echo "Deployment failed!"
