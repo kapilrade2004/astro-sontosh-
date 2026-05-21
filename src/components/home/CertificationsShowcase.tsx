@@ -23,6 +23,7 @@ import MCA from "@/assets/Mastery - Medical Astrology_page-0001.jpg"
 import MDA from "@/assets/Mastery - Dasha Analysis.pdf_page-0001.jpg"
 import MCHA from "@/assets/Mastery - Child Astrology_page-0001.jpg"
 import MCHA2 from "@/assets/Mastery.jpeg"
+import AdVA from "@/assets/Advance_Vedic.jpg"
 import MCIPA from "@/assets/Master_in_Palmistry.png"
 import MA from "@/assets/Master_Astrology.png"
 const certifications = [
@@ -169,6 +170,12 @@ const certifications = [
   id: 23,
   title: "Mastery - Conjunction Analysis",
   image: MCHA2,
+  verified: true,
+},
+{
+  id: 24,
+  title: "Advance Vedic Astrology",
+  image: AdVA,
   verified: true,
 },
 
