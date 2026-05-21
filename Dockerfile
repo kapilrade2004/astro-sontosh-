@@ -7,6 +7,9 @@ WORKDIR /app
 COPY package.json /app
 COPY package-lock.json /app
 
+COPY pnpm-lock.yaml /app
+COPY pnpm-workspace.yaml /app
+
 RUN pnpm install
 
 COPY . /app
