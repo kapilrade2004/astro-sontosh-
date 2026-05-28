@@ -1,6 +1,3 @@
-
-
-
 import { Helmet } from "react-helmet-async";
 import { motion, AnimatePresence } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
@@ -8,41 +5,24 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import axios from "axios";
 import { sendLeadToCRM } from "@/lib/sendLeadToCRM";
+import LOGO from "@/assets/logo by yash.png";
 
 import {
   ChevronRight, ChevronLeft, CheckCircle2,
   Star, Phone, Calendar, Clock, MapPin, Ruler,
+  ChevronDown, ChevronUp, IndianRupee,
+  Moon, Compass, MessageCircle, Heart, TrendingUp,
+  Brain, Hash, Home, Gem, Zap, Baby, Briefcase,
+  DollarSign, Plane, Scroll, Sparkles, User, Repeat,
 } from "lucide-react";
 
-// ─── Types ───────────────────────────────────────────────────────────────────
-
+// ─── Types ────────────────────────────────────────────────────────────────────
 type Service = "Astrology" | "Numerology" | "Vastu";
-
-// interface FormData {
-//   service: Service | "";
-//   name: string;
-//   mobile: string;
-//   // dob: string;
-//   // Numerology DOB uses separate dropdowns to prevent manual typing
-//   dob_day: string;
-//   dob_month: string;
-//   dob_year: string;
-//   tob_hour: string;
-//   tob_minute: string;
-//   tob_period: "AM" | "PM";
-//   pob: string;
-//   length: string;
-//   width: string;
-//   consultDate: string;
-//   consultTime: string;
-//   message: string;
-// }
 
 interface FormData {
   service: Service | "";
   name: string;
   mobile: string;
-  // Unified DOB for Astrology + Numerology
   dob_day: string;
   dob_month: string;
   dob_year: string;
@@ -59,7 +39,6 @@ interface FormData {
 type FieldErrors = Partial<Record<keyof FormData, string>>;
 
 // ─── Constants ────────────────────────────────────────────────────────────────
-
 const SERVICES: { id: Service; emoji: string; label: string; desc: string }[] = [
   { id: "Astrology",  emoji: "🪐", label: "Astrology",  desc: "Birth chart, predictions & planetary guidance" },
   { id: "Numerology", emoji: "🔢", label: "Numerology", desc: "Life path, destiny & soul urge numbers" },
@@ -75,7 +54,6 @@ const TIME_SLOTS = [
 const HOURS   = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, "0"));
 const MINUTES = Array.from({ length: 59 }, (_, i) => String(i + 1).padStart(2, "0"));
 
-// Numerology DOB dropdown data
 const DAYS   = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, "0"));
 const MONTHS = [
   { val: "01", label: "January" }, { val: "02", label: "February" }, { val: "03", label: "March" },
@@ -87,7 +65,6 @@ const currentYear = new Date().getFullYear();
 const YEARS = Array.from({ length: 100 }, (_, i) => String(currentYear - i));
 
 const todayStr = new Date().toISOString().split("T")[0];
-
 const getMaxConsultDate = (): string => {
   const d = new Date();
   d.setMonth(d.getMonth() + 3);
@@ -103,28 +80,16 @@ const formatDisplayDate = (iso: string) => {
   return `${d}-${m}-${y}`;
 };
 
-// Name validation — letters/spaces/dots/hyphens only, min 2 chars
 const isValidName = (name: string): boolean => {
   const trimmed = name.trim();
   return trimmed.length >= 2 && /^[a-zA-Z\s.'\-]+$/.test(trimmed);
 };
 
-// Shared keydown guard: allows only letters, spaces and basic punctuation
-// Used for BOTH Numerology and Vastu name fields
 const nameKeyDownGuard = (e: React.KeyboardEvent<HTMLInputElement>) => {
   const allowed = /^[a-zA-Z\s.'\-]$/;
   const navKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab", "Home", "End"];
   if (!allowed.test(e.key) && !navKeys.includes(e.key)) e.preventDefault();
 };
-
-// ─── EMPTY defined once — used in reset() and service-change wipe ─────
-// const EMPTY: FormData = {
-//   service: "", name: "", mobile: "", dob: "",
-//   dob_day: "", dob_month: "", dob_year: "",
-//   tob_hour: "", tob_minute: "", tob_period: "AM",
-//   pob: "", length: "", width: "",
-//   consultDate: "", consultTime: "", message: "",
-// };
 
 const EMPTY: FormData = {
   service: "", name: "", mobile: "",
@@ -133,8 +98,226 @@ const EMPTY: FormData = {
   pob: "", length: "", width: "",
   consultDate: "", consultTime: "", message: "",
 };
-// ─── Step Bar ─────────────────────────────────────────────────────────────────
 
+
+
+// ─── Per-service pricing datasets ────────────────────────────────────────────
+
+// Quick / Micro services — all 25 services matching quickServices.ts exactly
+// Sorted by price tier: ₹500 → ₹1,100 → ₹2,100
+const quickServicesData = [
+  // ── ₹500 tier ──────────────────────────────────────────────────────────────
+  { service: "Daily Ritual Suggestion (Simple Routine)",        price: "500",   icon: Moon,          tier: "₹500"   },
+  { service: "Go Ahead or Wait Decision Guidance",              price: "500",   icon: Compass,       tier: "₹500"   },
+  { service: "Right Time Check (Shubh Time for Any Decision)",  price: "500",   icon: Clock,         tier: "₹500"   },
+  // ── ₹1,100 tier ────────────────────────────────────────────────────────────
+  { service: "Ask 1 Question (Yes/No + Reason)",                price: "1,100", icon: MessageCircle, tier: "₹1,100" },
+  { service: "Relationship Guidance",                           price: "1,100", icon: Heart,         tier: "₹1,100" },
+  { service: "Family Issue Insight",                            price: "1,100", icon: Heart,         tier: "₹1,100" },
+  { service: "Love Situation Guidance",                         price: "1,100", icon: Heart,         tier: "₹1,100" },
+  { service: "Opportunity Check (Anything good coming soon?)",  price: "1,100", icon: TrendingUp,    tier: "₹1,100" },
+  { service: "Sleep / Stress Related Insight",                  price: "1,100", icon: Moon,          tier: "₹1,100" },
+  { service: "Strength Insight (Hidden Strengths)",             price: "1,100", icon: Brain,         tier: "₹1,100" },
+  { service: "Name Initial Suggestion (for business/personal)", price: "1,100", icon: Hash,          tier: "₹1,100" }, // ✅ added
+  { service: "Property Buying Time Check",                      price: "1,100", icon: Home,          tier: "₹1,100" }, // ✅ added
+  { service: "Muhurat – Auspicious Timing",                     price: "1,100", icon: Star,          tier: "₹1,100" },
+  { service: "Know Your Lucky Days & Colours",                  price: "1,100", icon: Star,          tier: "₹1,100" },
+  { service: "Rudraksha / Crystal Recommendation",              price: "1,100", icon: Gem,           tier: "₹1,100" },
+  { service: "Tattoo Recommendation",                           price: "1,100", icon: Zap,           tier: "₹1,100" },
+  { service: "New Born Baby Name Recommendation",               price: "1,100", icon: Baby,          tier: "₹1,100" },
+  // ── ₹2,100 tier ────────────────────────────────────────────────────────────
+  { service: "Compatibility Check",                             price: "2,100", icon: Heart,         tier: "₹2,100" },
+  { service: "Job Change Decision Guidance",                    price: "2,100", icon: Briefcase,     tier: "₹2,100" },
+  { service: "Money Flow Guidance",                             price: "2,100", icon: DollarSign,    tier: "₹2,100" },
+  { service: "Career Guidance",                                 price: "2,100", icon: Briefcase,     tier: "₹2,100" },
+  { service: "Travel / Relocation Decision Check",              price: "2,100", icon: Plane,         tier: "₹2,100" },
+  { service: "Gemstone Recommendation",                         price: "2,100", icon: Gem,           tier: "₹2,100" }, // ✅ added
+  { service: "Lifestyle & Behavioural Recommendation",          price: "2,100", icon: Heart,         tier: "₹2,100" },
+  { service: "Premium Kundli",                                  price: "2,100", icon: Scroll,        tier: "₹2,100" }, // ✅ added
+];
+
+// Astrology-specific pricing
+const astrologyData = [
+  { service: "New Consultation (Exact Birth Time Known)",       price: "11,000", duration: "30 min", icon: Sparkles },
+  { service: "New Consultation (Exact Birth Time NOT Known)",   price: "15,000", duration: "60 min", icon: Sparkles },
+  { service: "In-Person Consultation (Mumbai Only)",            price: "15,000", duration: "60 min", icon: Sparkles },
+  { service: "Follow-up within 10 days",                        price: "2,100",  duration: "30 min", icon: Repeat   },
+  { service: "Follow-up (11–30 days)",                          price: "3,100",  duration: "30 min", icon: Repeat   },
+  { service: "Follow-up (post 30 days)",                        price: "5,100",  duration: "30 min", icon: Repeat   },
+  { service: "Name Initial Suggestion (business/personal)",     price: "1,100",  icon: Hash         },
+  { service: "Property Buying Time Check",                      price: "1,100",  icon: Home         },
+  { service: "Gemstone Recommendation",                         price: "2,100",  icon: Gem          },
+  { service: "Premium Kundli",                                  price: "2,100",  icon: Scroll       },
+];
+
+// Numerology-specific pricing
+const numerologyData = [
+  { service: "New Consultation",                                price: "3,100",  duration: "30 min", icon: Hash     },
+  { service: "Follow-up within 10 days",                        price: "1,100",  duration: "30 min", icon: Repeat   },
+  { service: "Follow-up (11–30 days)",                          price: "2,100",  duration: "30 min", icon: Repeat   },
+  { service: "Follow-up (post 30 days)",                        price: "3,100",  duration: "30 min", icon: Repeat   },
+  { service: "Name Initial Suggestion (business/personal)",     price: "1,100",  icon: Hash         },
+  { service: "Know Your Lucky Days & Colours",                  price: "1,100",  icon: Star         },
+];
+
+// Vastu-specific pricing
+const vastuData = [
+  { service: "Vastu Exploration Call (Online)",                 price: "5,100",  duration: "30 min", icon: Home     },
+  { service: "Property Buying Time Check",                      price: "1,100",  icon: Home         },
+];
+
+// ─── Pricing Row ──────────────────────────────────────────────────────────────
+type PricingItem = {
+  service: string;
+  price: string;
+  icon: React.ElementType;
+  duration?: string;
+  tier?: string;
+};
+
+const PricingRow = ({ item }: { item: PricingItem }) => (
+  <div className="flex items-center justify-between px-3 py-2.5 hover:bg-primary/5 transition-colors group">
+    <div className="flex items-center gap-2.5 min-w-0">
+      <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
+        <item.icon className="w-3 h-3 text-primary" />
+      </div>
+      <div className="min-w-0">
+        <span className="font-medium text-foreground text-[11px] block leading-snug">{item.service}</span>
+        {item.duration && (
+          <p className="text-[9px] text-muted-foreground leading-none mt-0.5 flex items-center gap-1">
+            <Clock className="w-2.5 h-2.5 inline" />{item.duration}
+          </p>
+        )}
+      </div>
+    </div>
+    <div className="flex flex-col items-end shrink-0 pl-3">
+      <span className="text-sm font-bold text-primary">₹{item.price}</span>
+    </div>
+  </div>
+);
+
+// ─── Single service accordion ─────────────────────────────────────────────────
+interface ServiceAccordionProps {
+  emoji: string;
+  label: string;
+  subtitle: string;
+  items: PricingItem[];
+  priceRange: string;         // e.g. "₹500 – ₹2,100"
+  accentColor?: string;       // optional tint override
+  defaultOpen?: boolean;
+}
+
+const ServiceAccordion = ({
+  emoji, label, subtitle, items, priceRange, defaultOpen = false,
+}: ServiceAccordionProps) => {
+  const [open, setOpen] = useState(defaultOpen);
+
+  return (
+    <div
+      className="rounded-2xl overflow-hidden border border-primary/20 transition-all duration-200"
+      style={{ background: "hsl(var(--card)/0.5)" }}
+    >
+      {/* Header / toggle */}
+      <button
+        type="button"
+        onClick={() => setOpen((p) => !p)}
+        className="w-full flex items-center justify-between gap-3 px-4 py-3 hover:bg-primary/5 transition-colors"
+      >
+        <div className="flex items-center gap-3 text-left min-w-0">
+          {/* Emoji badge */}
+          <div
+            className="w-8 h-8 rounded-xl flex items-center justify-center text-base shrink-0 shadow-sm"
+            style={{ background: "hsl(var(--primary)/0.12)", border: "1px solid hsl(var(--primary)/0.25)" }}
+          >
+            {emoji}
+          </div>
+          <div className="min-w-0">
+            <p className="text-sm font-bold leading-none" style={{ color: "hsl(var(--card-foreground))" }}>
+              {label}
+            </p>
+            <p className="text-[10px] text-muted-foreground mt-0.5 leading-none truncate">{subtitle}</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2 shrink-0">
+          {/* Price range pill — hidden when open */}
+          {!open && (
+            <span
+              className="text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap"
+              style={{
+                background: "hsl(var(--primary)/0.12)",
+                color: "hsl(var(--primary))",
+                border: "1px solid hsl(var(--primary)/0.2)",
+              }}
+            >
+              {priceRange}
+            </span>
+          )}
+          {open
+            ? <ChevronUp className="w-4 h-4 text-primary" />
+            : <ChevronDown className="w-4 h-4 text-primary/60" />
+          }
+        </div>
+      </button>
+
+      {/* Collapsible rows */}
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            key="content"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.22, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            <div
+              className="border-t border-primary/10 divide-y divide-primary/8 max-h-64 overflow-y-auto"
+              style={{ background: "hsl(var(--background)/0.4)" }}
+            >
+              {items.map((item, i) => <PricingRow key={i} item={item} />)}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+// ─── Service-wise pricing panel ───────────────────────────────────────────────
+const ServiceWisePricing = () => (
+  <div className="space-y-2.5">
+    <ServiceAccordion
+      emoji="⚡"
+      label="Quick Services"
+      subtitle="Instant guidance, no appointment needed"
+      priceRange="₹500 – ₹2,100"
+      items={quickServicesData}
+    />
+    <ServiceAccordion
+      emoji="🪐"
+      label="Astrology"
+      subtitle="Consultations, follow-ups & astrology add-ons"
+      priceRange="₹1,100 – ₹15,000"
+      items={astrologyData}
+    />
+    <ServiceAccordion
+      emoji="🔢"
+      label="Numerology"
+      subtitle="Life path, destiny & soul urge numbers"
+      priceRange="₹1,100 – ₹3,100"
+      items={numerologyData}
+    />
+    <ServiceAccordion
+      emoji="🏠"
+      label="Vastu"
+      subtitle="Space harmonisation & energy alignment"
+      priceRange="₹1,100 – ₹5,100"
+      items={vastuData}
+    />
+  </div>
+);
+
+// ─── Step Bar ─────────────────────────────────────────────────────────────────
 const STEP_LABELS = ["Service", "Your Details", "Consultation", "Confirm"];
 
 const StepBar = ({ current }: { current: number }) => (
@@ -181,7 +364,6 @@ const StepBar = ({ current }: { current: number }) => (
 );
 
 // ─── Shared Field Wrapper ─────────────────────────────────────────────────────
-
 const Field = ({
   label, icon, error, required = false, hint, children,
 }: {
@@ -213,17 +395,12 @@ const iStyle = (err?: string): React.CSSProperties => ({
 const iCls = "w-full px-3 md:px-4 py-2.5 md:py-3 rounded-xl text-sm outline-none transition-all duration-200 focus:ring-2 focus:ring-amber-500/30";
 
 // ─── STEP 1 — Service ─────────────────────────────────────────────────────────
-
 const Step1 = ({
-  form,
-  setField,
-  errors,
-  clearedByServiceChange,
+  form, setField, errors, clearedByServiceChange,
 }: {
   form: FormData;
   setField: (k: keyof FormData, v: string) => void;
   errors: FieldErrors;
-  // CHANGE 7: banner shown after a service-change data wipe
   clearedByServiceChange: boolean;
 }) => (
   <div className="space-y-5">
@@ -234,7 +411,6 @@ const Step1 = ({
       <p className="text-xs md:text-sm text-muted-foreground">Select the area you'd like guidance on</p>
     </div>
 
-    {/* CHANGE 7: Inform user that previously entered data was cleared when they switched service */}
     <AnimatePresence>
       {clearedByServiceChange && (
         <motion.div
@@ -250,9 +426,7 @@ const Step1 = ({
           }}
         >
           <span className="shrink-0 text-sm">🔄</span>
-          <span>
-            You switched services — all previously entered details have been cleared so you start fresh.
-          </span>
+          <span>You switched services — all previously entered details have been cleared so you start fresh.</span>
         </motion.div>
       )}
     </AnimatePresence>
@@ -294,297 +468,14 @@ const Step1 = ({
 );
 
 // ─── STEP 2 — Personal Details ────────────────────────────────────────────────
-
-// const Step2 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof FormData, v: string) => void; errors: FieldErrors }) => {
-//   const isAstrology  = form.service === "Astrology";
-//   const isVastu      = form.service === "Vastu";
-//   const isNumerology = form.service === "Numerology";
-
-//   // Vastu dimensions: 1–200 ft dropdown
-//   const DIMENSION_OPTIONS = Array.from({ length: 200 }, (_, i) => i + 1);
-
-//   // Shared: name input requires letters-only guard for Numerology AND Vastu
-//   const needsNameGuard = isNumerology || isVastu;
-
-//   // Build Numerology DOB display string from dropdowns
-//   const numDobDisplay = form.dob_day && form.dob_month && form.dob_year
-//     ? `${form.dob_day}-${form.dob_month}-${form.dob_year}`
-//     : "";
-
-//   return (
-//     <div className="space-y-5">
-//       <div>
-//         <h3 className="font-serif text-lg md:text-xl font-bold mb-1" style={{ color: "hsl(var(--card-foreground))" }}>
-//           Your Details
-//         </h3>
-//         <p className="text-xs md:text-sm text-muted-foreground">
-//           Information required for your{" "}
-//           <span style={{ color: "hsl(var(--primary))" }}>{form.service}</span> reading
-//         </p>
-//       </div>
-
-//       {/* ── Full Name ──
-//           Letters-only keydown guard + paste blocked for BOTH Numerology AND Vastu.
-//           CHANGE 5: Neutral placeholder — no personal example names.
-//       */}
-//       <Field label="Full Name" icon={<Star size={13} />} error={errors.name} required>
-//         <input
-//           type="text"
-//           value={form.name}
-//           onChange={(e) => setField("name", e.target.value)}
-//           placeholder="Enter your full name"
-//           className={iCls}
-//           style={iStyle(errors.name)}
-//           onKeyDown={needsNameGuard ? nameKeyDownGuard : undefined}
-//           onPaste={needsNameGuard ? (e) => e.preventDefault() : undefined}
-//         />
-//         {needsNameGuard && (
-//           <p className="text-[11px] mt-0.5" style={{ color: "hsl(var(--muted-foreground))" }}>
-//             ℹ️ Only letters are accepted. Copy-paste is disabled for accuracy.
-//           </p>
-//         )}
-//       </Field>
-
-//       {/* ── Mobile ── */}
-//       <Field
-//         label="Mobile Number"
-//         icon={<Phone size={13} />}
-//         error={errors.mobile}
-//         required
-//         hint="You'll receive a WhatsApp confirmation on this number"
-//       >
-//         <div className="flex gap-2">
-//           <div
-//             className="flex items-center px-3 rounded-xl text-sm font-medium shrink-0"
-//             style={{ background: "hsl(var(--card))", border: "1.5px solid hsl(var(--border))", color: "hsl(var(--muted-foreground))" }}
-//           >
-//             🇮🇳 +91
-//           </div>
-//           <input
-//             type="tel"
-//             value={form.mobile}
-//             maxLength={10}
-//             onChange={(e) => setField("mobile", e.target.value.replace(/\D/g, ""))}
-//             placeholder="Enter your 10-digit number"
-//             className={`${iCls} flex-1`}
-//             style={iStyle(errors.mobile)}
-//           />
-//         </div>
-//       </Field>
-
-//       {/* ── Date of Birth — Astrology: native date picker (optional) ──
-//           CHANGE 6: DOB is optional for Astrology. Hint text updated to clarify.
-//       */}
-//       {isAstrology && (
-//         <Field
-//           label="Date of Birth"
-//           icon={<Calendar size={13} />}
-//           error={errors.dob}
-//           required={false}
-//           hint={
-//             form.dob
-//               ? `Selected: ${formatDisplayDate(form.dob)}`
-//               : "Optional — leave blank if not known"
-//           }
-//         >
-//           <input
-//             type="date"
-//             value={form.dob}
-//             max={todayStr}
-//             onChange={(e) => setField("dob", e.target.value)}
-//             className={iCls}
-//             style={{ ...iStyle(errors.dob), colorScheme: "dark" }}
-//           />
-//           {/* CHANGE 6: Contextual note pointing users to prior consultation details */}
-//           {/* <p className="text-[11px] mt-0.5" style={{ color: "hsl(var(--muted-foreground))" }}>
-//             ℹ️ Had a prior consultation? Your birth details may already be on record — you can leave this blank.
-//           </p> */}
-//         </Field>
-//       )}
-
-//       {/* ── Date of Birth — Numerology: dropdown selects ONLY (no manual typing) ──
-//           CHANGE 2: Disabled manual entry. Three select dropdowns (Day / Month / Year).
-//           CHANGE 6: DOB is optional for Numerology. Hint text updated to clarify.
-//       */}
-//       {isNumerology && (
-//         <Field
-//           label="Date of Birth"
-//           icon={<Calendar size={13} />}
-//           error={errors.dob_day || errors.dob_month || errors.dob_year}
-//           required={false}
-//           hint={numDobDisplay ? `Selected: ${numDobDisplay}` : ""}
-//         >
-//           <div className="grid grid-cols-3 gap-2">
-//             {/* Day */}
-//             <select
-//               value={form.dob_day}
-//               onChange={(e) => setField("dob_day", e.target.value)}
-//               className={iCls}
-//               style={{ ...iStyle(errors.dob_day), colorScheme: "dark" }}
-//             >
-//               <option value="">Day</option>
-//               {DAYS.map((d) => <option key={d} value={d}>{d}</option>)}
-//             </select>
-//             {/* Month */}
-//             <select
-//               value={form.dob_month}
-//               onChange={(e) => setField("dob_month", e.target.value)}
-//               className={iCls}
-//               style={{ ...iStyle(errors.dob_month), colorScheme: "dark" }}
-//             >
-//               <option value="">Month</option>
-//               {MONTHS.map((m) => <option key={m.val} value={m.val}>{m.label}</option>)}
-//             </select>
-//             {/* Year */}
-//             <select
-//               value={form.dob_year}
-//               onChange={(e) => setField("dob_year", e.target.value)}
-//               className={iCls}
-//               style={{ ...iStyle(errors.dob_year), colorScheme: "dark" }}
-//             >
-//               <option value="">Year</option>
-//               {YEARS.map((y) => <option key={y} value={y}>{y}</option>)}
-//             </select>
-//           </div>
-//           <p className="text-[11px] mt-0.5" style={{ color: "hsl(var(--muted-foreground))" }}>
-//             ℹ️ Please select from the dropdowns — manual typing is disabled for accuracy.
-//           </p>
-//           {/* CHANGE 6: Contextual note pointing users to prior consultation details */}
-//           {/* <p className="text-[11px] mt-0.5" style={{ color: "hsl(var(--muted-foreground))" }}>
-//             Had a prior consultation? Your birth details may already be on record — you can leave this blank.
-//           </p> */}
-//         </Field>
-//       )}
-
-//       {/* ── Time of Birth — Astrology only ── */}
-//       {isAstrology && (
-//         <Field
-//           label="Time of Birth"
-//           icon={<Clock size={13} />}
-//           error={errors.tob_hour || errors.tob_minute}
-//           required
-//           hint={
-//             form.tob_hour && form.tob_minute
-//               ? `Selected: ${form.tob_hour}:${form.tob_minute} ${form.tob_period}`
-//               : "Select hour, minute and AM/PM"
-//           }
-//         >
-//           <div className="grid grid-cols-3 gap-2">
-//             <select
-//               value={form.tob_hour}
-//               onChange={(e) => setField("tob_hour", e.target.value)}
-//               className={iCls}
-//               style={{ ...iStyle(errors.tob_hour), colorScheme: "dark" }}
-//             >
-//               <option value="">Hour</option>
-//               {HOURS.map((h) => <option key={h} value={h}>{h}</option>)}
-//             </select>
-//             <select
-//               value={form.tob_minute}
-//               onChange={(e) => setField("tob_minute", e.target.value)}
-//               className={iCls}
-//               style={{ ...iStyle(errors.tob_minute), colorScheme: "dark" }}
-//             >
-//               <option value="">Min</option>
-//               {MINUTES.map((m) => <option key={m} value={m}>{m}</option>)}
-//             </select>
-//             <div className="flex rounded-xl overflow-hidden" style={{ border: "1.5px solid hsl(var(--border))" }}>
-//               {(["AM", "PM"] as const).map((p) => (
-//                 <button
-//                   key={p}
-//                   type="button"
-//                   onClick={() => setField("tob_period", p)}
-//                   className="flex-1 text-sm font-bold transition-all duration-200"
-//                   style={{
-//                     background: form.tob_period === p
-//                       ? "linear-gradient(135deg, hsl(var(--primary)), hsl(35 80% 45%))"
-//                       : "hsl(var(--card))",
-//                     color: form.tob_period === p ? "#fff" : "hsl(var(--muted-foreground))",
-//                   }}
-//                 >
-//                   {p}
-//                 </button>
-//               ))}
-//             </div>
-//           </div>
-//         </Field>
-//       )}
-
-//       {/* ── Place of Birth — Astrology only ──
-//           CHANGE 5: Neutral placeholder — no personal example value.
-//       */}
-//       {isAstrology && (
-//         <Field
-//           label="Place of Birth"
-//           icon={<MapPin size={13} />}
-//           error={errors.pob}
-//           required
-//           hint="City or town where you were born"
-//         >
-//           <input
-//             type="text"
-//             value={form.pob}
-//             onChange={(e) => setField("pob", e.target.value)}
-//             placeholder="Enter your place of birth"
-//             className={iCls}
-//             style={iStyle(errors.pob)}
-//           />
-//         </Field>
-//       )}
-
-//       {/* ── Vastu dimensions — dropdown 1–200 ft ── */}
-//       {isVastu && (
-//         <Field
-//           label="Property Dimensions"
-//           icon={<Ruler size={13} />}
-//           error={errors.length || errors.width}
-//           required
-//           hint="Select the Length and Width of your property in feet"
-//         >
-//           <div className="grid grid-cols-2 gap-3">
-//             <div className="flex flex-col gap-1">
-//               <span className="text-[11px] font-medium" style={{ color: "hsl(var(--muted-foreground))" }}>Length (ft)</span>
-//               <select
-//                 value={form.length}
-//                 onChange={(e) => setField("length", e.target.value)}
-//                 className={iCls}
-//                 style={{ ...iStyle(errors.length), colorScheme: "dark" }}
-//               >
-//                 <option value="">Select Length</option>
-//                 {DIMENSION_OPTIONS.map((v) => <option key={v} value={String(v)}>{v} ft</option>)}
-//               </select>
-//             </div>
-//             <div className="flex flex-col gap-1">
-//               <span className="text-[11px] font-medium" style={{ color: "hsl(var(--muted-foreground))" }}>Width (ft)</span>
-//               <select
-//                 value={form.width}
-//                 onChange={(e) => setField("width", e.target.value)}
-//                 className={iCls}
-//                 style={{ ...iStyle(errors.width), colorScheme: "dark" }}
-//               >
-//                 <option value="">Select Width</option>
-//                 {DIMENSION_OPTIONS.map((v) => <option key={v} value={String(v)}>{v} ft</option>)}
-//               </select>
-//             </div>
-//           </div>
-//         </Field>
-//       )}
-//     </div>
-//   );
-// };
-
-// ─── STEP 2 — Personal Details (UPDATED) ────────────────────────────────────────────────
 const Step2 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof FormData, v: string) => void; errors: FieldErrors }) => {
   const isAstrology  = form.service === "Astrology";
   const isVastu      = form.service === "Vastu";
   const isNumerology = form.service === "Numerology";
-
   const DIMENSION_OPTIONS = Array.from({ length: 200 }, (_, i) => i + 1);
-  // const needsNameGuard = isNumerology || isVastu;
-const needsNameGuard = isAstrology || isNumerology || isVastu; 
-  const dobDisplay = form.dob_day && form.dob_month && form.dob_year 
-    ? `${form.dob_day}-${form.dob_month}-${form.dob_year}` 
-    : "";
+  const needsNameGuard = isAstrology || isNumerology || isVastu;
+  const dobDisplay = form.dob_day && form.dob_month && form.dob_year
+    ? `${form.dob_day}-${form.dob_month}-${form.dob_year}` : "";
 
   return (
     <div className="space-y-5">
@@ -598,18 +489,11 @@ const needsNameGuard = isAstrology || isNumerology || isVastu;
         </p>
       </div>
 
-      {/* Full Name */}
       <Field label="Full Name" icon={<Star size={13} />} error={errors.name} required>
-        <input
-          type="text"
-          value={form.name}
-          onChange={(e) => setField("name", e.target.value)}
-          placeholder="Enter your full name"
-          className={iCls}
-          style={iStyle(errors.name)}
+        <input type="text" value={form.name} onChange={(e) => setField("name", e.target.value)}
+          placeholder="Enter your full name" className={iCls} style={iStyle(errors.name)}
           onKeyDown={needsNameGuard ? nameKeyDownGuard : undefined}
-          onPaste={needsNameGuard ? (e) => e.preventDefault() : undefined}
-        />
+          onPaste={needsNameGuard ? (e) => e.preventDefault() : undefined} />
         {needsNameGuard && (
           <p className="text-[11px] mt-0.5" style={{ color: "hsl(var(--muted-foreground))" }}>
             ℹ️ Only letters are accepted. Copy-paste is disabled for accuracy.
@@ -617,74 +501,36 @@ const needsNameGuard = isAstrology || isNumerology || isVastu;
         )}
       </Field>
 
-      {/* Mobile Number */}
-      <Field
-        label="Mobile Number"
-        icon={<Phone size={13} />}
-        error={errors.mobile}
-        required
-        hint="You'll receive a WhatsApp confirmation on this number"
-      >
+      <Field label="Mobile Number" icon={<Phone size={13} />} error={errors.mobile} required
+        hint="You'll receive a WhatsApp confirmation on this number">
         <div className="flex gap-2">
           <div className="flex items-center px-3 rounded-xl text-sm font-medium shrink-0"
                style={{ background: "hsl(var(--card))", border: "1.5px solid hsl(var(--border))", color: "hsl(var(--muted-foreground))" }}>
             🇮🇳 +91
           </div>
-          <input
-            type="tel"
-            value={form.mobile}
-            maxLength={10}
+          <input type="tel" value={form.mobile} maxLength={10}
             onChange={(e) => setField("mobile", e.target.value.replace(/\D/g, ""))}
-            placeholder="Enter your 10-digit number"
-            className={`${iCls} flex-1`}
-            style={iStyle(errors.mobile)}
-          />
+            placeholder="Enter your 10-digit number" className={`${iCls} flex-1`} style={iStyle(errors.mobile)} />
         </div>
       </Field>
 
-      {/* UNIFIED DOB Dropdowns - For Astrology & Numerology */}
       {(isAstrology || isNumerology) && (
-        // <Field
-        //   label="Date of Birth"
-        //   icon={<Calendar size={13} />}
-        //   error={errors.dob_day || errors.dob_month || errors.dob_year}
-        //   required={false}
-        //   hint={dobDisplay ? `Selected: ${dobDisplay}` : "Select from dropdowns only"}
-        // >
-        <Field
-  label="Date of Birth"
-  icon={<Calendar size={13} />}
-  error={errors.dob_day || errors.dob_month || errors.dob_year}
-  required={true}   // ← change from false to true
-  hint={dobDisplay ? `Selected: ${dobDisplay}` : "Select from dropdowns only"}
->
+        <Field label="Date of Birth" icon={<Calendar size={13} />}
+          error={errors.dob_day || errors.dob_month || errors.dob_year}
+          required hint={dobDisplay ? `Selected: ${dobDisplay}` : "Select from dropdowns only"}>
           <div className="grid grid-cols-3 gap-2">
-            <select
-              value={form.dob_day}
-              onChange={(e) => setField("dob_day", e.target.value)}
-              className={iCls}
-              style={{ ...iStyle(errors.dob_day), colorScheme: "dark" }}
-            >
+            <select value={form.dob_day} onChange={(e) => setField("dob_day", e.target.value)}
+              className={iCls} style={{ ...iStyle(errors.dob_day), colorScheme: "dark" }}>
               <option value="">Day</option>
               {DAYS.map((d) => <option key={d} value={d}>{d}</option>)}
             </select>
-
-            <select
-              value={form.dob_month}
-              onChange={(e) => setField("dob_month", e.target.value)}
-              className={iCls}
-              style={{ ...iStyle(errors.dob_month), colorScheme: "dark" }}
-            >
+            <select value={form.dob_month} onChange={(e) => setField("dob_month", e.target.value)}
+              className={iCls} style={{ ...iStyle(errors.dob_month), colorScheme: "dark" }}>
               <option value="">Month</option>
               {MONTHS.map((m) => <option key={m.val} value={m.val}>{m.label}</option>)}
             </select>
-
-            <select
-              value={form.dob_year}
-              onChange={(e) => setField("dob_year", e.target.value)}
-              className={iCls}
-              style={{ ...iStyle(errors.dob_year), colorScheme: "dark" }}
-            >
+            <select value={form.dob_year} onChange={(e) => setField("dob_year", e.target.value)}
+              className={iCls} style={{ ...iStyle(errors.dob_year), colorScheme: "dark" }}>
               <option value="">Year</option>
               {YEARS.map((y) => <option key={y} value={y}>{y}</option>)}
             </select>
@@ -695,52 +541,29 @@ const needsNameGuard = isAstrology || isNumerology || isVastu;
         </Field>
       )}
 
-      {/* Time of Birth - Astrology only */}
-    {isAstrology && (
-        <Field
-          label="Time of Birth"
-          icon={<Clock size={13} />}
-          error={errors.tob_hour || errors.tob_minute}
-          required
-          hint={
-            form.tob_hour && form.tob_minute
-              ? `Selected: ${form.tob_hour}:${form.tob_minute} ${form.tob_period}`
-              : "Select hour, minute and AM/PM"
-          }
-        >
+      {isAstrology && (
+        <Field label="Time of Birth" icon={<Clock size={13} />}
+          error={errors.tob_hour || errors.tob_minute} required
+          hint={form.tob_hour && form.tob_minute ? `Selected: ${form.tob_hour}:${form.tob_minute} ${form.tob_period}` : "Select hour, minute and AM/PM"}>
           <div className="grid grid-cols-3 gap-2">
-            <select
-              value={form.tob_hour}
-              onChange={(e) => setField("tob_hour", e.target.value)}
-              className={iCls}
-              style={{ ...iStyle(errors.tob_hour), colorScheme: "dark" }}
-            >
+            <select value={form.tob_hour} onChange={(e) => setField("tob_hour", e.target.value)}
+              className={iCls} style={{ ...iStyle(errors.tob_hour), colorScheme: "dark" }}>
               <option value="">Hour</option>
               {HOURS.map((h) => <option key={h} value={h}>{h}</option>)}
             </select>
-            <select
-              value={form.tob_minute}
-              onChange={(e) => setField("tob_minute", e.target.value)}
-              className={iCls}
-              style={{ ...iStyle(errors.tob_minute), colorScheme: "dark" }}
-            >
+            <select value={form.tob_minute} onChange={(e) => setField("tob_minute", e.target.value)}
+              className={iCls} style={{ ...iStyle(errors.tob_minute), colorScheme: "dark" }}>
               <option value="">Min</option>
               {MINUTES.map((m) => <option key={m} value={m}>{m}</option>)}
             </select>
             <div className="flex rounded-xl overflow-hidden" style={{ border: "1.5px solid hsl(var(--border))" }}>
               {(["AM", "PM"] as const).map((p) => (
-                <button
-                  key={p}
-                  type="button"
-                  onClick={() => setField("tob_period", p)}
+                <button key={p} type="button" onClick={() => setField("tob_period", p)}
                   className="flex-1 text-sm font-bold transition-all duration-200"
                   style={{
-                    background: form.tob_period === p
-                      ? "linear-gradient(135deg, hsl(var(--primary)), hsl(35 80% 45%))"
-                      : "hsl(var(--card))",
+                    background: form.tob_period === p ? "linear-gradient(135deg, hsl(var(--primary)), hsl(35 80% 45%))" : "hsl(var(--card))",
                     color: form.tob_period === p ? "#fff" : "hsl(var(--muted-foreground))",
-                  }}
-                >
+                  }}>
                   {p}
                 </button>
               ))}
@@ -749,71 +572,41 @@ const needsNameGuard = isAstrology || isNumerology || isVastu;
         </Field>
       )}
 
-      {/* ── Place of Birth — Astrology only ──
-          CHANGE 5: Neutral placeholder — no personal example value.
-      */}
       {isAstrology && (
-        <Field
-          label="Place of Birth"
-          icon={<MapPin size={13} />}
-          error={errors.pob}
-          required
-          hint="City or town where you were born"
-        >
-          <input
-            type="text"
-            value={form.pob}
-            onChange={(e) => setField("pob", e.target.value)}
-            placeholder="Enter your place of birth"
-            className={iCls}
-            style={iStyle(errors.pob)}
-          />
+        <Field label="Place of Birth" icon={<MapPin size={13} />} error={errors.pob} required hint="City or town where you were born">
+          <input type="text" value={form.pob} onChange={(e) => setField("pob", e.target.value)}
+            placeholder="Enter your place of birth" className={iCls} style={iStyle(errors.pob)} />
         </Field>
       )}
 
-      {/* ── Vastu dimensions — dropdown 1–200 ft ── */}
       {isVastu && (
-        <Field
-          label="Property Dimensions"
-          icon={<Ruler size={13} />}
-          error={errors.length || errors.width}
-          required
-          hint="Select the Length and Width of your property in feet"
-        >
+        <Field label="Property Dimensions" icon={<Ruler size={13} />} error={errors.length || errors.width} required
+          hint="Select the Length and Width of your property in feet">
           <div className="grid grid-cols-2 gap-3">
             <div className="flex flex-col gap-1">
               <span className="text-[11px] font-medium" style={{ color: "hsl(var(--muted-foreground))" }}>Length (ft)</span>
-              <select
-                value={form.length}
-                onChange={(e) => setField("length", e.target.value)}
-                className={iCls}
-                style={{ ...iStyle(errors.length), colorScheme: "dark" }}
-              >
+              <select value={form.length} onChange={(e) => setField("length", e.target.value)}
+                className={iCls} style={{ ...iStyle(errors.length), colorScheme: "dark" }}>
                 <option value="">Select Length</option>
-                {DIMENSION_OPTIONS.map((v) => <option key={v} value={String(v)}>{v} ft</option>)}
+                {Array.from({ length: 200 }, (_, i) => i + 1).map((v) => <option key={v} value={String(v)}>{v} ft</option>)}
               </select>
             </div>
             <div className="flex flex-col gap-1">
               <span className="text-[11px] font-medium" style={{ color: "hsl(var(--muted-foreground))" }}>Width (ft)</span>
-              <select
-                value={form.width}
-                onChange={(e) => setField("width", e.target.value)}
-                className={iCls}
-                style={{ ...iStyle(errors.width), colorScheme: "dark" }}
-              >
+              <select value={form.width} onChange={(e) => setField("width", e.target.value)}
+                className={iCls} style={{ ...iStyle(errors.width), colorScheme: "dark" }}>
                 <option value="">Select Width</option>
-                {DIMENSION_OPTIONS.map((v) => <option key={v} value={String(v)}>{v} ft</option>)}
+                {Array.from({ length: 200 }, (_, i) => i + 1).map((v) => <option key={v} value={String(v)}>{v} ft</option>)}
               </select>
             </div>
           </div>
         </Field>
-        )}
+      )}
     </div>
   );
 };
 
 // ─── STEP 3 — Consultation Slot ───────────────────────────────────────────────
-
 const Step3 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof FormData, v: string) => void; errors: FieldErrors }) => (
   <div className="space-y-5">
     <div>
@@ -823,26 +616,13 @@ const Step3 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof
       <p className="text-xs md:text-sm text-muted-foreground">Pick a date and time that works best for you</p>
     </div>
 
-    <Field
-      label="Preferred Date"
-      icon={<Calendar size={13} />}
-      error={errors.consultDate}
-      required
-      hint={
-        form.consultDate
-          ? `Selected: ${new Date(form.consultDate).toLocaleDateString("en-IN", { weekday: "long", day: "2-digit", month: "long", year: "numeric" })}`
-          : "Available dates: today up to 3 months ahead"
-      }
-    >
-      <input
-        type="date"
-        min={todayStr}
-        max={maxConsultDate}
-        value={form.consultDate}
+    <Field label="Preferred Date" icon={<Calendar size={13} />} error={errors.consultDate} required
+      hint={form.consultDate
+        ? `Selected: ${new Date(form.consultDate).toLocaleDateString("en-IN", { weekday: "long", day: "2-digit", month: "long", year: "numeric" })}`
+        : "Available dates: today up to 3 months ahead"}>
+      <input type="date" min={todayStr} max={maxConsultDate} value={form.consultDate}
         onChange={(e) => setField("consultDate", e.target.value)}
-        className={iCls}
-        style={{ ...iStyle(errors.consultDate), colorScheme: "dark" }}
-      />
+        className={iCls} style={{ ...iStyle(errors.consultDate), colorScheme: "dark" }} />
     </Field>
 
     <Field label="Preferred Time Slot" icon={<Clock size={13} />} error={errors.consultTime} required>
@@ -850,18 +630,14 @@ const Step3 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof
         {TIME_SLOTS.map((slot) => {
           const sel = form.consultTime === slot;
           return (
-            <motion.button
-              key={slot}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
+            <motion.button key={slot} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
               onClick={() => setField("consultTime", slot)}
               className="py-2.5 px-2 rounded-xl text-xs md:text-sm font-semibold border-2 transition-all duration-200"
               style={{
                 background:  sel ? "linear-gradient(135deg, hsl(var(--primary)/0.15), hsl(35 80% 45%/0.1))" : "hsl(var(--card)/0.6)",
                 borderColor: sel ? "hsl(var(--primary))" : "hsl(var(--border))",
                 color:       sel ? "hsl(var(--primary))" : "hsl(var(--card-foreground))",
-              }}
-            >
+              }}>
               {slot}
             </motion.button>
           );
@@ -870,133 +646,32 @@ const Step3 = ({ form, setField, errors }: { form: FormData; setField: (k: keyof
     </Field>
 
     <Field label="Additional Message (Optional)" icon={<Star size={13} />}>
-      <textarea
-        value={form.message}
-        onChange={(e) => setField("message", e.target.value)}
-        placeholder="Any specific questions or concerns you'd like to discuss…"
-        rows={3}
-        className={`${iCls} resize-none`}
-        style={iStyle()}
-      />
+      <textarea value={form.message} onChange={(e) => setField("message", e.target.value)}
+        placeholder="Any specific questions or concerns you'd like to discuss…" rows={3}
+        className={`${iCls} resize-none`} style={iStyle()} />
     </Field>
   </div>
 );
 
 // ─── STEP 4 — Review ─────────────────────────────────────────────────────────
-
-// const Step4 = ({ form }: { form: FormData }) => {
-//   const svc = SERVICES.find((s) => s.id === form.service)!;
-
-//   // Build Numerology DOB display string from dropdowns
-//   const numDobDisplay = form.dob_day && form.dob_month && form.dob_year
-//     ? `${form.dob_day}-${form.dob_month}-${form.dob_year}`
-//     : null;
-
-//   const rows = [
-//     { label: "Service", value: `${svc.emoji} ${svc.label}` },
-//     { label: "Name",    value: form.name },
-//     { label: "Mobile",  value: `+91 ${form.mobile}` },
-//     // Astrology — native DOB (optional, only show if filled)
-//     ...(form.service === "Astrology" && form.dob
-//       ? [{ label: "Date of Birth", value: formatDisplayDate(form.dob) }]
-//       : []),
-//     // Numerology — dropdown DOB (optional, only show if all three parts filled)
-//     ...(form.service === "Numerology" && numDobDisplay
-//       ? [{ label: "Date of Birth", value: numDobDisplay }]
-//       : []),
-//     ...(form.service === "Astrology"
-//       ? [{ label: "Time of Birth",  value: `${form.tob_hour}:${form.tob_minute} ${form.tob_period}` }]
-//       : []),
-//     ...(form.service === "Astrology"
-//       ? [{ label: "Place of Birth", value: form.pob }]
-//       : []),
-//     ...(form.service === "Vastu"
-//       ? [{ label: "Dimensions",     value: `${form.length}ft (L) × ${form.width}ft (W)` }]
-//       : []),
-//     ...(form.consultDate
-//       ? [{ label: "Preferred Date", value: new Date(form.consultDate).toLocaleDateString("en-IN", { day: "2-digit", month: "long", year: "numeric" }) }]
-//       : []),
-//     ...(form.consultTime ? [{ label: "Preferred Time", value: form.consultTime }] : []),
-//     ...(form.message     ? [{ label: "Message",        value: form.message }]     : []),
-//   ];
-
-//   return (
-//     <div className="space-y-5">
-//       <div>
-//         <h3 className="font-serif text-lg md:text-xl font-bold mb-1" style={{ color: "hsl(var(--card-foreground))" }}>
-//           Review Your Inquiry
-//         </h3>
-//         <p className="text-xs md:text-sm text-muted-foreground">Please verify your details before submitting</p>
-//       </div>
-//       <div className="rounded-2xl overflow-hidden" style={{ border: "1.5px solid hsl(var(--border))" }}>
-//         {rows.map((row, i) => (
-//           <motion.div
-//             key={row.label}
-//             initial={{ opacity: 0, x: -8 }}
-//             animate={{ opacity: 1, x: 0 }}
-//             transition={{ delay: i * 0.04 }}
-//             className="flex items-start gap-3 px-4 py-3 border-b last:border-b-0"
-//             style={{
-//               background:  i % 2 === 0 ? "hsl(var(--card)/0.5)" : "hsl(var(--card)/0.2)",
-//               borderColor: "hsl(var(--border))",
-//             }}
-//           >
-//             <span className="text-xs font-semibold w-28 shrink-0 pt-0.5" style={{ color: "hsl(var(--muted-foreground))" }}>
-//               {row.label}
-//             </span>
-//             <span className="text-xs md:text-sm font-medium flex-1" style={{ color: "hsl(var(--card-foreground))" }}>
-//               {row.value}
-//             </span>
-//           </motion.div>
-//         ))}
-//       </div>
-//       <div
-//         className="flex gap-3 p-4 rounded-2xl text-xs text-muted-foreground"
-//         style={{ background: "hsl(var(--primary)/0.07)", border: "1.5px solid hsl(var(--primary)/0.2)" }}
-//       >
-//         <span className="text-base shrink-0">🔒</span>
-//         Your information is confidential and will only be used to provide personalised astrological guidance.
-//       </div>
-//     </div>
-//   );
-// };
-
-// ─── STEP 4 — Review ─────────────────────────────────────────────────────────
 const Step4 = ({ form }: { form: FormData }) => {
   const svc = SERVICES.find((s) => s.id === form.service)!;
-
-  // Unified DOB display
   const dobDisplay = form.dob_day && form.dob_month && form.dob_year
-    ? `${form.dob_day}-${form.dob_month}-${form.dob_year}`
-    : null;
+    ? `${form.dob_day}-${form.dob_month}-${form.dob_year}` : null;
 
   const rows = [
     { label: "Service", value: `${svc.emoji} ${svc.label}` },
     { label: "Name",    value: form.name },
     { label: "Mobile",  value: `+91 ${form.mobile}` },
-
-    // Unified DOB display for both Astrology and Numerology
     ...(dobDisplay ? [{ label: "Date of Birth", value: dobDisplay }] : []),
-
-    // Time of Birth - Astrology only
     ...(form.service === "Astrology" && form.tob_hour && form.tob_minute
-      ? [{ label: "Time of Birth", value: `${form.tob_hour}:${form.tob_minute} ${form.tob_period}` }]
-      : []),
-
-    // Place of Birth - Astrology only
+      ? [{ label: "Time of Birth", value: `${form.tob_hour}:${form.tob_minute} ${form.tob_period}` }] : []),
     ...(form.service === "Astrology" && form.pob
-      ? [{ label: "Place of Birth", value: form.pob }]
-      : []),
-
-    // Vastu Dimensions
+      ? [{ label: "Place of Birth", value: form.pob }] : []),
     ...(form.service === "Vastu" && form.length && form.width
-      ? [{ label: "Dimensions", value: `${form.length}ft (L) × ${form.width}ft (W)` }]
-      : []),
-
-    // Consultation Details
+      ? [{ label: "Dimensions", value: `${form.length}ft (L) × ${form.width}ft (W)` }] : []),
     ...(form.consultDate
-      ? [{ label: "Preferred Date", value: new Date(form.consultDate).toLocaleDateString("en-IN", { day: "2-digit", month: "long", year: "numeric" }) }]
-      : []),
+      ? [{ label: "Preferred Date", value: new Date(form.consultDate).toLocaleDateString("en-IN", { day: "2-digit", month: "long", year: "numeric" }) }] : []),
     ...(form.consultTime ? [{ label: "Preferred Time", value: form.consultTime }] : []),
     ...(form.message ? [{ label: "Message", value: form.message }] : []),
   ];
@@ -1012,53 +687,31 @@ const Step4 = ({ form }: { form: FormData }) => {
 
       <div className="rounded-2xl overflow-hidden" style={{ border: "1.5px solid hsl(var(--border))" }}>
         {rows.map((row, i) => (
-          <motion.div
-            key={row.label}
-            initial={{ opacity: 0, x: -8 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: i * 0.04 }}
+          <motion.div key={row.label} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}
             className="flex items-start gap-3 px-4 py-3 border-b last:border-b-0"
-            style={{
-              background: i % 2 === 0 ? "hsl(var(--card)/0.5)" : "hsl(var(--card)/0.2)",
-              borderColor: "hsl(var(--border))",
-            }}
-          >
-            <span className="text-xs font-semibold w-28 shrink-0 pt-0.5" style={{ color: "hsl(var(--muted-foreground))" }}>
-              {row.label}
-            </span>
-            <span className="text-xs md:text-sm font-medium flex-1" style={{ color: "hsl(var(--card-foreground))" }}>
-              {row.value}
-            </span>
+            style={{ background: i % 2 === 0 ? "hsl(var(--card)/0.5)" : "hsl(var(--card)/0.2)", borderColor: "hsl(var(--border))" }}>
+            <span className="text-xs font-semibold w-28 shrink-0 pt-0.5" style={{ color: "hsl(var(--muted-foreground))" }}>{row.label}</span>
+            <span className="text-xs md:text-sm font-medium flex-1" style={{ color: "hsl(var(--card-foreground))" }}>{row.value}</span>
           </motion.div>
         ))}
       </div>
 
-      <div
-        className="flex gap-3 p-4 rounded-2xl text-xs text-muted-foreground"
-        style={{ background: "hsl(var(--primary)/0.07)", border: "1.5px solid hsl(var(--primary)/0.2)" }}
-      >
+      <div className="flex gap-3 p-4 rounded-2xl text-xs text-muted-foreground"
+        style={{ background: "hsl(var(--primary)/0.07)", border: "1.5px solid hsl(var(--primary)/0.2)" }}>
         <span className="text-base shrink-0">🔒</span>
         Your information is confidential and will only be used to provide personalised astrological guidance.
       </div>
     </div>
   );
 };
-// ─── Success ─────────────────────────────────────────────────────────────────
 
+// ─── Success ─────────────────────────────────────────────────────────────────
 const SuccessScreen = ({ form, onReset }: { form: FormData; onReset: () => void }) => (
-  <motion.div
-    initial={{ opacity: 0, scale: 0.95 }}
-    animate={{ opacity: 1, scale: 1 }}
-    transition={{ duration: 0.4 }}
-    className="text-center py-8 px-2 space-y-6"
-  >
-    <motion.div
-      initial={{ scale: 0 }}
-      animate={{ scale: 1 }}
-      transition={{ type: "spring", stiffness: 180, delay: 0.1 }}
+  <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4 }}
+    className="text-center py-8 px-2 space-y-6">
+    <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 180, delay: 0.1 }}
       className="w-20 h-20 rounded-full mx-auto flex items-center justify-center text-4xl shadow-xl"
-      style={{ background: "linear-gradient(135deg, hsl(var(--primary)), hsl(35 80% 45%))" }}
-    >
+      style={{ background: "linear-gradient(135deg, hsl(var(--primary)), hsl(35 80% 45%))" }}>
       🎉
     </motion.div>
     <div>
@@ -1070,10 +723,8 @@ const SuccessScreen = ({ form, onReset }: { form: FormData; onReset: () => void 
         Your inquiry has been received successfully.
       </p>
     </div>
-    <div
-      className="rounded-2xl p-4 text-sm space-y-3 text-left"
-      style={{ background: "hsl(var(--card))", border: "1.5px solid hsl(var(--border))" }}
-    >
+    <div className="rounded-2xl p-4 text-sm space-y-3 text-left"
+      style={{ background: "hsl(var(--card))", border: "1.5px solid hsl(var(--border))" }}>
       <div className="flex items-start gap-2">
         <span className="text-base shrink-0">💬</span>
         <p className="text-muted-foreground">
@@ -1095,26 +746,18 @@ const SuccessScreen = ({ form, onReset }: { form: FormData; onReset: () => void 
         </div>
       )}
     </div>
-    <a
-      href="https://wa.me/918879731174"
-      target="_blank"
-      rel="noopener noreferrer"
+    <a href="https://wa.me/918879731174" target="_blank" rel="noopener noreferrer"
       className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 hover:opacity-90"
-      style={{ background: "#25D366", color: "#fff" }}
-    >
-      <span className="text-base">💬</span>
-      Chat with us on WhatsApp
+      style={{ background: "#25D366", color: "#fff" }}>
+      <span className="text-base">💬</span> Chat with us on WhatsApp
     </a>
     <div>
-      <Button variant="outline" onClick={onReset} className="rounded-xl text-sm">
-        Submit Another Inquiry
-      </Button>
+      <Button variant="outline" onClick={onReset} className="rounded-xl text-sm">Submit Another Inquiry</Button>
     </div>
   </motion.div>
 );
 
 // ─── Main Form Wrapper ────────────────────────────────────────────────────────
-
 const InquiryForm = () => {
   const [step, setStep]                 = useState(0);
   const [submitted, setSubmit]          = useState(false);
@@ -1122,26 +765,16 @@ const InquiryForm = () => {
   const [submitError, setSubmitError]   = useState<string | null>(null);
   const [form, setForm]                 = useState<FormData>(EMPTY);
   const [errors, setErrors]             = useState<FieldErrors>({});
-
-  // CHANGE 7: Track whether a service change just wiped data so the banner shows
   const [clearedByServiceChange, setClearedByServiceChange] = useState(false);
 
-  // When service switches, wipe ALL fields (including name and mobile) so the
-  // user starts completely fresh for the new service.
-  // CHANGE 7: Full wipe on service change + show confirmation banner.
   const setField = (key: keyof FormData, value: string) => {
     setForm((f) => {
       if (key === "service" && value !== f.service && f.service !== "") {
-        // Service changed while another service was already selected — wipe everything
         setClearedByServiceChange(true);
-        // Auto-hide banner after 4 seconds
         setTimeout(() => setClearedByServiceChange(false), 4000);
         return { ...EMPTY, service: value as Service };
       }
-      if (key === "service") {
-        // First-time service selection — no prior data to wipe, no banner needed
-        return { ...f, service: value as Service };
-      }
+      if (key === "service") return { ...f, service: value as Service };
       return { ...f, [key]: value };
     });
     setErrors((e) => ({ ...e, [key]: "" }));
@@ -1149,72 +782,35 @@ const InquiryForm = () => {
 
   const validate = (): boolean => {
     const e: FieldErrors = {};
-
     if (step === 0) {
       if (!form.service) e.service = "Please select a service to continue.";
     }
-
-    // if (step === 1) {
-    //   // Name validation for ALL services — Astrology, Vastu and Numerology
-    //   if (!form.name.trim()) {
-    //     e.name = "Please enter your full name.";
-    //   } else if (!isValidName(form.name)) {
-    //     e.name = "Name must be at least 2 characters and contain only letters.";
-    //   }
-    //   if (!form.mobile || !/^\d{10}$/.test(form.mobile)) {
-    //     e.mobile = "Enter a valid 10-digit number.";
-    //   }
-    //   // DOB is optional for all services — no required validation
-    //   if (form.service === "Astrology") {
-    //     if (!form.tob_hour)   e.tob_hour   = "Select hour.";
-    //     if (!form.tob_minute) e.tob_minute = "Select minute.";
-    //     if (!form.pob.trim()) e.pob        = "Please enter your place of birth.";
-    //   }
-    //   if (form.service === "Vastu") {
-    //     if (!form.length) e.length = "Please select a length.";
-    //     if (!form.width)  e.width  = "Please select a width.";
-    //   }
-    // }
-
     if (step === 1) {
-  if (!form.name.trim() || !isValidName(form.name)) {
-    e.name = "Please enter a valid full name (min 2 letters only).";
-  }
-  if (!form.mobile || !/^\d{10}$/.test(form.mobile)) {
-    e.mobile = "Enter a valid 10-digit number.";
-  }
-
-  // DOB Validation (Unified)
-  // if ((form.service === "Astrology" || form.service === "Numerology")) {
-  //   if (!form.dob_day || !form.dob_month || !form.dob_year) {
-  //     e.dob_day = "Please select your full Date of Birth.";
-  //   }
-  // }
-
-
-  // DOB Validation (Unified)
-if (form.service === "Astrology" || form.service === "Numerology") {
-  if (!form.dob_day || !form.dob_month || !form.dob_year) {
-    e.dob_day   = "Please select Day.";
-    e.dob_month = "Please select Month.";
-    e.dob_year  = "Please select Year.";
-  }
-}
-  if (form.service === "Astrology") {
-    if (!form.tob_hour) e.tob_hour = "Select hour.";
-    if (!form.tob_minute) e.tob_minute = "Select minute.";
-    if (!form.pob.trim()) e.pob = "Please enter your place of birth.";
-  }
-  if (form.service === "Vastu") {
-    if (!form.length) e.length = "Please select length.";
-    if (!form.width) e.width = "Please select width.";
-  }
-}
+      if (!form.name.trim() || !isValidName(form.name))
+        e.name = "Please enter a valid full name (min 2 letters only).";
+      if (!form.mobile || !/^\d{10}$/.test(form.mobile))
+        e.mobile = "Enter a valid 10-digit number.";
+      if (form.service === "Astrology" || form.service === "Numerology") {
+        if (!form.dob_day || !form.dob_month || !form.dob_year) {
+          e.dob_day   = "Please select Day.";
+          e.dob_month = "Please select Month.";
+          e.dob_year  = "Please select Year.";
+        }
+      }
+      if (form.service === "Astrology") {
+        if (!form.tob_hour) e.tob_hour = "Select hour.";
+        if (!form.tob_minute) e.tob_minute = "Select minute.";
+        if (!form.pob.trim()) e.pob = "Please enter your place of birth.";
+      }
+      if (form.service === "Vastu") {
+        if (!form.length) e.length = "Please select length.";
+        if (!form.width) e.width = "Please select width.";
+      }
+    }
     if (step === 2) {
       if (!form.consultDate) e.consultDate = "Please select a date.";
       if (!form.consultTime) e.consultTime = "Please select a time slot.";
     }
-
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -1228,61 +824,28 @@ if (form.service === "Astrology" || form.service === "Numerology") {
     setSubmitError(null);
     try {
       const tob = form.service === "Astrology" && form.tob_hour && form.tob_minute
-        ? `${form.tob_hour}:${form.tob_minute} ${form.tob_period}`
-        : undefined;
-
-      // Build Numerology DOB from dropdown fields
-      const numDob = form.service === "Numerology" && form.dob_day && form.dob_month && form.dob_year
-        ? `${form.dob_year}-${form.dob_month}-${form.dob_day}`
-        : undefined;
-
-      // const payload = {
-      //   service:     form.service,
-      //   name:        form.name,
-      //   mobile:      form.mobile,
-      //   // DOB: Astrology uses native picker, Numerology uses assembled dropdown value
-      //   dob: form.service === "Astrology"
-      //     ? (form.dob || undefined)
-      //     : numDob,
-      //   tob,
-      //   pob:         form.service === "Astrology" ? form.pob    : undefined,
-      //   length:      form.service === "Vastu"     ? form.length : undefined,
-      //   width:       form.service === "Vastu"     ? form.width  : undefined,
-      //   consultDate: form.consultDate || undefined,
-      //   consultTime: form.consultTime || undefined,
-      //   message:     form.message     || undefined,
-      // };
+        ? `${form.tob_hour}:${form.tob_minute} ${form.tob_period}` : undefined;
       const payload = {
-  service: form.service,
-  name: form.name,
-  mobile: form.mobile,
-  dob: (form.dob_day && form.dob_month && form.dob_year) 
-    ? `${form.dob_year}-${form.dob_month}-${form.dob_day}` 
-    : undefined,
-  tob,
-  pob: form.service === "Astrology" ? form.pob : undefined,
-  length: form.service === "Vastu" ? form.length : undefined,
-  width: form.service === "Vastu" ? form.width : undefined,
-  consultDate: form.consultDate || undefined,
-  consultTime: form.consultTime || undefined,
-  message: form.message || undefined,
-};
-
+        service: form.service, name: form.name, mobile: form.mobile,
+        dob: (form.dob_day && form.dob_month && form.dob_year)
+          ? `${form.dob_year}-${form.dob_month}-${form.dob_day}` : undefined,
+        tob,
+        pob: form.service === "Astrology" ? form.pob : undefined,
+        length: form.service === "Vastu" ? form.length : undefined,
+        width: form.service === "Vastu" ? form.width : undefined,
+        consultDate: form.consultDate || undefined,
+        consultTime: form.consultTime || undefined,
+        message: form.message || undefined,
+      };
       await axios.post(`${API_BASE_URL}/inquiry`, payload);
-
       await sendLeadToCRM({
-        name:  form.name,
-        phone: form.mobile,
-        email: "",
+        name: form.name, phone: form.mobile, email: "",
         source: "Website Inquiry Form",
-        tags: [
-          "Inquiry Form",
-          form.service || "",
+        tags: ["Inquiry Form", form.service || "",
           form.consultDate ? `Preferred Date: ${form.consultDate}` : "",
           form.consultTime ? `Preferred Time: ${form.consultTime}` : "",
         ].filter(Boolean),
       });
-
       setSubmit(true);
     } catch (err) {
       console.error("Inquiry submission error:", err);
@@ -1292,14 +855,9 @@ if (form.service === "Astrology" || form.service === "Numerology") {
     }
   };
 
-  // reset() restores full EMPTY — all previously filled data is cleared
   const reset = () => {
-    setForm(EMPTY);
-    setErrors({});
-    setStep(0);
-    setSubmit(false);
-    setSubmitError(null);
-    setClearedByServiceChange(false);
+    setForm(EMPTY); setErrors({}); setStep(0);
+    setSubmit(false); setSubmitError(null); setClearedByServiceChange(false);
   };
 
   if (submitted) return <SuccessScreen form={form} onReset={reset} />;
@@ -1308,21 +866,10 @@ if (form.service === "Astrology" || form.service === "Numerology") {
     <div>
       <StepBar current={step} />
       <AnimatePresence mode="wait">
-        <motion.div
-          key={step}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.25, ease: "easeInOut" }}
-        >
-          {step === 0 && (
-            <Step1
-              form={form}
-              setField={setField}
-              errors={errors}
-              clearedByServiceChange={clearedByServiceChange}
-            />
-          )}
+        <motion.div key={step}
+          initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: 0.25, ease: "easeInOut" }}>
+          {step === 0 && <Step1 form={form} setField={setField} errors={errors} clearedByServiceChange={clearedByServiceChange} />}
           {step === 1 && <Step2 form={form} setField={setField} errors={errors} />}
           {step === 2 && <Step3 form={form} setField={setField} errors={errors} />}
           {step === 3 && <Step4 form={form} />}
@@ -1330,42 +877,29 @@ if (form.service === "Astrology" || form.service === "Numerology") {
       </AnimatePresence>
 
       {submitError && (
-        <motion.div
-          initial={{ opacity: 0, y: 4 }}
-          animate={{ opacity: 1, y: 0 }}
+        <motion.div initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
           className="mt-4 p-3 rounded-xl text-xs text-center"
-          style={{ background: "hsl(0 72% 51%/0.1)", border: "1.5px solid hsl(0 72% 51%/0.4)", color: "hsl(0 72% 60%)" }}
-        >
+          style={{ background: "hsl(0 72% 51%/0.1)", border: "1.5px solid hsl(0 72% 51%/0.4)", color: "hsl(0 72% 60%)" }}>
           ⚠️ {submitError}
         </motion.div>
       )}
 
       <div className={`flex mt-8 gap-3 ${step > 0 ? "justify-between" : "justify-end"}`}>
         {step > 0 && (
-          <Button
-            variant="outline"
-            onClick={back}
-            disabled={isSubmitting}
-            className="rounded-xl flex items-center gap-1.5 text-sm"
-          >
+          <Button variant="outline" onClick={back} disabled={isSubmitting}
+            className="rounded-xl flex items-center gap-1.5 text-sm">
             <ChevronLeft size={15} /> Back
           </Button>
         )}
         {step < 3 ? (
-          <Button
-            onClick={next}
-            className="rounded-xl flex items-center gap-1.5 text-sm font-semibold px-6"
-            style={{ background: "linear-gradient(135deg, hsl(var(--primary)), hsl(35 80% 45%))" }}
-          >
+          <Button onClick={next} className="rounded-xl flex items-center gap-1.5 text-sm font-semibold px-6"
+            style={{ background: "linear-gradient(135deg, hsl(var(--primary)), hsl(35 80% 45%))" }}>
             Continue <ChevronRight size={15} />
           </Button>
         ) : (
-          <Button
-            onClick={submit}
-            disabled={isSubmitting}
+          <Button onClick={submit} disabled={isSubmitting}
             className="rounded-xl flex items-center gap-1.5 text-sm font-semibold px-6"
-            style={{ background: "linear-gradient(135deg, hsl(var(--primary)), hsl(35 80% 45%))" }}
-          >
+            style={{ background: "linear-gradient(135deg, hsl(var(--primary)), hsl(35 80% 45%))" }}>
             {isSubmitting ? (
               <>
                 <svg className="animate-spin w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -1385,126 +919,341 @@ if (form.service === "Astrology" || form.service === "Numerology") {
 };
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
-
 const Inquiry = () => (
   <>
-  <Helmet>
-  <title>Inquiry - Ask Your Question | Astro Santosh Pandey</title>
-  <meta name="description" content="Send an inquiry to Astro Santosh Pandey. Get personalized guidance on astrology, numerology, vastu, and palmistry." />
-  <link rel="canonical" href="https://astrosantoshpandey.com/inquiry" />
+    <Helmet>
+      <title>Inquiry - Ask Your Question | Astro Santosh Pandey</title>
+      <meta name="description" content="Send an inquiry to Astro Santosh Pandey. Get personalized guidance on astrology, numerology, vastu, and palmistry." />
+      <link rel="canonical" href="https://astrosantoshpandey.com/inquiry" />
+      <script>{`
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1619073566059521');
+        fbq('track', 'PageView');
+      `}</script>
+      <noscript>{`
+        <img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=1619073566059521&ev=PageView&noscript=1" />
+      `}</noscript>
+    </Helmet>
 
-  {/* Meta Pixel Code */}
-  <script>{`
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1619073566059521');
-    fbq('track', 'PageView');
-  `}</script>
-  <noscript>{`
-    <img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1619073566059521&ev=PageView&noscript=1" />
-  `}</noscript>
-</Helmet>
     <Layout>
-      <section className="pt-28 md:pt-32 pb-6 md:pb-8 bg-gradient-hero relative overflow-hidden">
-        <div className="container mx-auto px-4 relative z-10">
+      {/* ══════════════════════════════════════════════════════════════════════
+          HERO — two-column: text (left) + lion logo (right)
+          Mirrors the HeroSection layout from the home page exactly.
+         ══════════════════════════════════════════════════════════════════════ */}
+      <section className="relative w-full overflow-hidden bg-gradient-hero pt-20 md:pt-24 pb-2 md:pb-3">
+
+        {/* ── subtle radial glow overlays (same as home) ── */}
+        <div className="pointer-events-none absolute inset-0 z-0"
+          style={{ background: "radial-gradient(ellipse 80% 55% at 50% 20%, rgba(251,191,36,0.06) 0%, transparent 70%)" }} />
+        <div className="pointer-events-none absolute inset-0 z-0"
+          style={{ background: "radial-gradient(ellipse 50% 70% at -5% 60%, rgba(139,92,246,0.07) 0%, transparent 60%)" }} />
+        <div className="pointer-events-none absolute inset-0 z-0"
+          style={{ background: "radial-gradient(ellipse 40% 60% at 105% 50%, rgba(251,191,36,0.06) 0%, transparent 60%)" }} />
+
+        {/* ── floating zodiac glyphs ── */}
+        {["♈","♉","♊","♋","♌","♍","♎","♏","♐","♑","♒","♓"].map((g, i) => (
+          <motion.span key={i}
+            className="pointer-events-none absolute select-none font-serif"
+            style={{
+              top:      `${6  + ((i * 73) % 82)}%`,
+              left:     `${2  + ((i * 61) % 95)}%`,
+              fontSize: `${28 + ((i * 17) % 28)}px`,
+              color:    `rgba(251,191,36,${0.03 + (i % 3) * 0.015})`,
+            }}
+            animate={{ y: [0, -12, 0], opacity: [0.03, 0.09, 0.03] }}
+            transition={{ duration: 7 + (i % 5), repeat: Infinity, ease: "easeInOut", delay: i * 0.35 }}
+          >{g}</motion.span>
+        ))}
+
+        {/* ── top gold divider ── */}
+        <div className="relative z-10 mx-auto px-4 sm:px-6 lg:px-10" style={{ maxWidth: "90rem" }}>
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-4xl"
-          >
-            <span className="text-primary font-medium text-xs md:text-sm uppercase tracking-wider">Send an Inquiry</span>
-            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mt-3 md:mt-4 mb-4 md:mb-6 leading-tight">
-              Ask Your Question.
-              <span className="text-gradient-gold"> Find Your Path.</span>
-            </h1>
-            <p className="text-muted-foreground text-base md:text-lg max-w-2xl">
-              Share your details and our experts will guide you towards clarity and cosmic alignment.
-            </p>
-          </motion.div>
+            initial={{ scaleX: 0, opacity: 0 }} animate={{ scaleX: 1, opacity: 1 }}
+            transition={{ duration: 1.1, ease: [0.22,1,0.36,1] }}
+            className="h-px origin-center"
+            style={{ background: "linear-gradient(90deg,transparent 0%,rgba(251,191,36,0.12) 15%,rgba(251,191,36,0.6) 50%,rgba(251,191,36,0.12) 85%,transparent 100%)" }}
+          />
         </div>
-      </section>
 
-      <section className="py-8 md:py-14 bg-background" id="inquiry">
-        <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
+        {/* ══════════════════ CONTENT ══════════════════ */}
+        <div className="relative z-10 mx-auto w-full px-4 sm:px-6 lg:px-10 py-3 lg:py-5" style={{ maxWidth: "90rem" }}>
 
+          {/* ── MOBILE layout (< lg) ── */}
+          <div className="flex flex-col items-center gap-3 lg:hidden">
+
+            {/* Logo + shloka — mobile */}
             <motion.div
-              initial={{ opacity: 0, x: -24 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="lg:col-span-2 space-y-6"
+              initial={{ opacity: 0, scale: 0.88 }} animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.85, delay: 0.1, ease: [0.22,1,0.36,1] }}
+              className="flex flex-col items-center gap-1 w-full"
             >
-              <div>
-                <h2 className="font-serif text-xl md:text-2xl font-bold mb-2">
-                  Why Consult <span className="text-gradient-gold">Us?</span>
-                </h2>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Over 25 years of expertise in Vedic sciences. Trusted by thousands across India and abroad.
-                </p>
+              <div className="relative flex items-center justify-center">
+                <div className="pointer-events-none absolute rounded-full blur-2xl"
+                  style={{ width: 160, height: 160, background: "radial-gradient(circle,rgba(251,191,36,0.32) 0%,rgba(251,191,36,0.08) 55%,transparent 100%)" }} />
+                <motion.img src={LOGO} alt="Astro Santosh Pandey"
+                  className="relative z-10 h-auto object-contain"
+                  style={{ width: 130, mixBlendMode: "screen", filter: "brightness(1.1) contrast(1.05) saturate(1.1)" }}
+                  animate={{ y: [-5, 0, -5] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                />
               </div>
-              <div className="space-y-3">
-                {SERVICES.map((s, i) => (
-                  <motion.div
-                    key={s.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.15 + i * 0.07 }}
-                    className="flex items-start gap-3 p-3.5 rounded-xl cosmic-card"
-                  >
-                    <span className="text-xl shrink-0 mt-0.5">{s.emoji}</span>
-                    <div>
-                      <p className="text-sm font-semibold" style={{ color: "hsl(var(--card-foreground))" }}>{s.label}</p>
-                      <p className="text-xs text-muted-foreground mt-0.5">{s.desc}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-              <div
-                className="p-4 rounded-2xl space-y-3"
-                style={{ background: "hsl(var(--card)/0.6)", border: "1.5px solid hsl(var(--border))" }}
-              >
-                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Direct Contact</p>
-                <a
-                  href="tel:+918879731174"
-                  className="flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors"
-                  style={{ color: "hsl(var(--card-foreground))" }}
+              {/* Shloka */}
+              <div className="relative w-full text-center">
+                <div className="absolute -inset-4 bg-gradient-radial from-amber-400/20 via-yellow-400/10 to-transparent blur-2xl animate-pulse pointer-events-none" />
+                <div
+                  className="text-xs font-bold tracking-normal leading-loose text-center relative
+                    bg-[length:200%_auto] bg-gradient-to-r
+                    from-yellow-100 via-amber-200 via-yellow-300 via-amber-300 via-orange-300 to-yellow-100
+                    bg-clip-text text-transparent animate-[shimmer_5s_linear_infinite]
+                    drop-shadow-[0_0_20px_rgba(251,191,36,0.95)]
+                    drop-shadow-[0_0_35px_rgba(245,158,11,0.7)]"
+                  style={{ textShadow: "0 0 5px rgba(255,215,0,0.5),0 0 12px rgba(251,191,36,0.4),0 0 25px rgba(245,158,11,0.3),0 3px 8px rgba(0,0,0,0.3)" }}
                 >
-                  <Phone size={14} style={{ color: "hsl(var(--primary))" }} /> +91 88797 31174
-                </a>
-                <a
-                  href="https://wa.me/918879731174"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors"
-                  style={{ color: "hsl(var(--card-foreground))" }}
-                >
-                  <span className="text-base">💬</span> WhatsApp Us
-                </a>
-                <div className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <MapPin size={14} className="shrink-0 mt-0.5" style={{ color: "hsl(var(--primary))" }} />
-                  Kalbadevi, Princess Street, Marine Lines, Mumbai
+                  <span className="inline-block mr-2 text-[#FFD700] animate-pulse">॥</span>
+                  धर्मो रक्षति रक्षितः
+                  <span className="inline-block ml-2 text-[#FFD700] animate-pulse">॥</span>
                 </div>
               </div>
             </motion.div>
 
+            {/* Headline + subtext — mobile */}
+            <motion.div
+              initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.22,1,0.36,1] }}
+              className="flex flex-col items-start w-full"
+            >
+              <span className="text-primary font-medium text-xs uppercase tracking-wider mb-2">Send an Inquiry</span>
+              <h1 className="font-serif font-bold leading-[1.15] mb-2 text-2xl sm:text-3xl">
+                Ask Your Question.
+                <span className="block bg-clip-text text-transparent"
+                  style={{ backgroundImage: "linear-gradient(130deg,#fef9c3 0%,#fcd34d 28%,#f59e0b 58%,#b45309 100%)" }}>
+                  Find Your Path.
+                </span>
+              </h1>
+              <motion.div
+                initial={{ width: 0, opacity: 0 }} animate={{ width: "3.5rem", opacity: 1 }}
+                transition={{ duration: 0.9, delay: 0.32, ease: [0.22,1,0.36,1] }}
+                className="h-px mb-3 flex-shrink-0"
+                style={{ background: "linear-gradient(90deg,rgba(251,191,36,1) 0%,rgba(251,191,36,0.15) 100%)" }}
+              />
+              <p className="text-sm sm:text-base leading-relaxed" style={{ color: "rgba(255,255,255,0.58)" }}>
+                Share your details and our experts will guide you towards clarity and cosmic alignment.
+              </p>
+            </motion.div>
+          </div>
+          {/* ── END MOBILE ── */}
+
+          {/* ── DESKTOP layout (lg+): text left | logo right ── */}
+          <div className="hidden lg:grid items-center gap-x-10 xl:gap-x-16"
+            style={{ gridTemplateColumns: "1fr auto" }}>
+
+            {/* LEFT — Headline + subtext */}
+            <motion.div
+              initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.15, ease: [0.22,1,0.36,1] }}
+              className="flex flex-col items-start"
+            >
+              <span className="text-primary font-medium text-sm uppercase tracking-wider mb-2">Send an Inquiry</span>
+              <h1
+                className="font-serif font-bold leading-[1.13] mb-3"
+                style={{ fontSize: "clamp(1.5rem, 2.4vw, 2.6rem)" }}
+              >
+                Ask Your Question.
+                <span className="block bg-clip-text text-transparent"
+                  style={{ backgroundImage: "linear-gradient(130deg,#fef9c3 0%,#fcd34d 28%,#f59e0b 58%,#b45309 100%)" }}>
+                  Find Your Path.
+                </span>
+              </h1>
+              <motion.div
+                initial={{ width: 0, opacity: 0 }} animate={{ width: "5rem", opacity: 1 }}
+                transition={{ duration: 0.9, delay: 0.32, ease: [0.22,1,0.36,1] }}
+                className="h-px mb-3 flex-shrink-0"
+                style={{ background: "linear-gradient(90deg,rgba(251,191,36,1) 0%,rgba(251,191,36,0.15) 100%)" }}
+              />
+              <p className="leading-relaxed"
+                style={{ fontSize: "clamp(0.85rem,1.1vw,1.05rem)", color: "rgba(255,255,255,0.58)", maxWidth: "28rem" }}>
+                Share your details and our experts will guide you towards clarity and cosmic alignment.
+              </p>
+            </motion.div>
+
+            {/* RIGHT — Lion logo + shloka */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.88 }} animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.85, delay: 0.1, ease: [0.22,1,0.36,1] }}
+              className="flex flex-col items-center gap-1 justify-center"
+              style={{ minWidth: "clamp(180px, 18vw, 280px)" }}
+            >
+              <div className="relative flex items-center justify-center">
+                {/* glow behind logo */}
+                <div className="pointer-events-none absolute rounded-full blur-2xl"
+                  style={{
+                    width:  "clamp(180px, 18vw, 280px)",
+                    height: "clamp(180px, 18vw, 280px)",
+                    background: "radial-gradient(circle,rgba(251,191,36,0.32) 0%,rgba(251,191,36,0.08) 55%,transparent 100%)",
+                  }} />
+                {/* pulsing rings */}
+                {[
+                  { s:[1,1.18,1], o:[0.4,0,0.4],  delay:0,   color:"rgba(139,92,246,0.25)"  },
+                  { s:[1,1.38,1], o:[0.28,0,0.28], delay:1.1, color:"rgba(251,191,36,0.20)"  },
+                ].map((r,i) => (
+                  <motion.div key={i}
+                    className="absolute rounded-full border pointer-events-none"
+                    animate={{ scale: r.s as number[], opacity: r.o as number[] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: r.delay }}
+                    style={{
+                      width:  "clamp(160px,16vw,260px)",
+                      height: "clamp(160px,16vw,260px)",
+                      borderColor: r.color,
+                    }}
+                  />
+                ))}
+                {/* Logo image */}
+                <motion.img
+                  src={LOGO}
+                  alt="Astro Santosh Pandey"
+                  className="relative z-10 h-auto object-contain"
+                  style={{
+                    width: "clamp(150px,14vw,240px)",
+                    mixBlendMode: "screen",
+                    filter: "brightness(1.1) contrast(1.05) saturate(1.1)",
+                  }}
+                  animate={{ y: [-6, 0, -6] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                />
+              </div>
+
+              {/* Shloka */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.32, ease: [0.22,1,0.36,1] }}
+                className="relative mt-0"
+              >
+                <div className="absolute -inset-4 bg-gradient-radial from-amber-400/20 via-yellow-400/10 to-transparent blur-2xl animate-pulse pointer-events-none" />
+                <div
+                  className="text-xs md:text-sm font-bold tracking-normal leading-loose text-center relative
+                    bg-[length:200%_auto] bg-gradient-to-r
+                    from-yellow-100 via-amber-200 via-yellow-300 via-amber-300 via-orange-300 to-yellow-100
+                    bg-clip-text text-transparent animate-[shimmer_5s_linear_infinite]
+                    drop-shadow-[0_0_20px_rgba(251,191,36,0.95)]
+                    drop-shadow-[0_0_35px_rgba(245,158,11,0.7)]"
+                  style={{ textShadow: "0 0 5px rgba(255,215,0,0.5),0 0 12px rgba(251,191,36,0.4),0 0 25px rgba(245,158,11,0.3),0 3px 8px rgba(0,0,0,0.3)" }}
+                >
+                  <span className="inline-block mr-2 text-[#FFD700] animate-pulse">॥</span>
+                  धर्मो रक्षति रक्षितः
+                  <span className="inline-block ml-2 text-[#FFD700] animate-pulse">॥</span>
+                </div>
+              </motion.div>
+            </motion.div>
+
+          </div>
+          {/* ── END DESKTOP ── */}
+
+        </div>
+
+        {/* ── bottom gold divider ── */}
+        <div className="relative z-10 mx-auto px-4 sm:px-6 lg:px-10" style={{ maxWidth: "90rem" }}>
+          <motion.div
+            initial={{ scaleX: 0, opacity: 0 }} animate={{ scaleX: 1, opacity: 1 }}
+            transition={{ duration: 1.1, delay: 0.5, ease: [0.22,1,0.36,1] }}
+            className="h-px origin-center"
+            style={{ background: "linear-gradient(90deg,transparent 0%,rgba(251,191,36,0.1) 15%,rgba(251,191,36,0.45) 50%,rgba(251,191,36,0.1) 85%,transparent 100%)" }}
+          />
+        </div>
+
+      </section>
+
+      {/* ── Premium Service Notice ────────────────────────────────────────── */}
+      <div className="bg-background border-b border-primary/20">
+        <div className="container mx-auto px-4 py-3">
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
+            className="flex items-start sm:items-center gap-3 max-w-5xl mx-auto px-4 py-3 rounded-2xl"
+            style={{
+              background: "linear-gradient(135deg, hsl(var(--primary)/0.12), hsl(35 80% 45%/0.08))",
+              border: "1.5px solid hsl(var(--primary)/0.35)",
+            }}
+          >
+            <span className="text-xl shrink-0 mt-0.5 sm:mt-0">💎</span>
+            <p className="text-xs sm:text-sm font-medium leading-relaxed" style={{ color: "hsl(var(--card-foreground))" }}>
+              <span className="font-bold text-primary">This is a premium and paid service.</span>
+              {" "}Consultation will be provided only after payment of the applicable fee,
+              {" "}<span className="font-semibold">within 2 working days</span> of confirmation.
+            </p>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* ── Main Content ─────────────────────────────────────────────────── */}
+      <section className="py-8 md:py-12 bg-background" id="inquiry">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
+
+            {/* ── LEFT: Service-wise Pricing ───────────────────────────────── */}
+            <motion.div
+              initial={{ opacity: 0, x: -24 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="lg:col-span-2 space-y-4"
+            >
+              {/* Heading */}
+              <div>
+                <h2 className="font-serif text-xl md:text-2xl font-bold mb-1">
+                  Service <span className="text-gradient-gold">Pricing</span>
+                </h2>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Tap any category to see all services and fees.
+                </p>
+              </div>
+
+              {/* ── 4 individual service accordions ── */}
+              <ServiceWisePricing />
+
+              {/* ── Compact contact strip ── */}
+              <div
+                className="flex flex-col gap-2.5 px-4 py-3 rounded-2xl"
+                style={{ background: "hsl(var(--card)/0.5)", border: "1px solid hsl(var(--border))" }}
+              >
+                <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                  Questions? Reach us directly
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <a href="tel:+918879731174"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium hover:text-primary transition-colors"
+                    style={{ color: "hsl(var(--card-foreground))" }}>
+                    <Phone size={12} style={{ color: "hsl(var(--primary))" }} /> +91 88797 31174
+                  </a>
+                  <a href="https://wa.me/918879731174" target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium hover:text-primary transition-colors"
+                    style={{ color: "hsl(var(--card-foreground))" }}>
+                    <span className="text-sm">💬</span> WhatsApp Us
+                  </a>
+                </div>
+                <p className="text-[10px] text-muted-foreground flex items-center gap-1">
+                  <MapPin size={10} style={{ color: "hsl(var(--primary))", flexShrink: 0 }} />
+                  Kalbadevi, Princess Street, Marine Lines, Mumbai
+                </p>
+              </div>
+            </motion.div>
+
+            {/* ── RIGHT: Form ───────────────────────────────────────────────── */}
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
               className="lg:col-span-3"
             >
-              <div
-                className="cosmic-card rounded-3xl p-5 md:p-8 shadow-2xl"
-                style={{ border: "1.5px solid hsl(var(--border))" }}
-              >
+              <div className="cosmic-card rounded-3xl p-5 md:p-8 shadow-2xl"
+                style={{ border: "1.5px solid hsl(var(--border))" }}>
                 <InquiryForm />
               </div>
             </motion.div>
@@ -1517,4 +1266,3 @@ const Inquiry = () => (
 );
 
 export default Inquiry;
-
