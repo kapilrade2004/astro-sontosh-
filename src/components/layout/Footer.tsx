@@ -59,7 +59,7 @@ const FooterLogo = () => (
         src={hanumanGaneshaLogo}
         alt="Hanuman Ganesha"
         style={{
-          height: "56px",
+          height: "clamp(52px, 6vw, 68px)",
           width: "auto",
           objectFit: "contain",
           display: "block",
@@ -75,14 +75,14 @@ const FooterLogo = () => (
           alignItems: "flex-start",
           justifyContent: "center",
           gap: "3px",
-          height: "56px",        /* match icon height so justify-content works */
+          height: "clamp(52px, 6vw, 68px)",        /* match icon height so justify-content works */
         }}
       >
         <img
           src={LOGO}
           alt="Astro Santosh Pandey"
           style={{
-            height: "36px",
+            height: "clamp(33px, 4vw, 44px)",
             width: "auto",
             objectFit: "contain",
             display: "block",
@@ -92,7 +92,7 @@ const FooterLogo = () => (
         <span
           style={{
             display: "block",        /* block prevents inline baseline shift */
-            fontSize: "11px",
+            fontSize: "clamp(11px, 1.3vw, 14px)",
             fontStyle: "italic",
             fontFamily: "serif",
             color: "#FFD700",
@@ -114,7 +114,7 @@ const FooterLogo = () => (
 export const Footer = () => {
   return (
     <footer className="bg-gradient-cosmic border-t border-border">
-      <div className="container mx-auto px-4 py-16">
+      <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-14 2xl:px-20 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-14">
 
           {/* ── Brand ──────────────────────────────────────────────────────── */}

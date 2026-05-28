@@ -9,14 +9,14 @@ import nameLogoImage from "@/assets/name_logo.png";
 import hanumanGaneshaLogo from "@/assets/hanuman-ganesha_logo.png";
 
 const navItems = [
-  { name: "Home",       path: "/" },
-  { name: "Astrology",  path: "/astrology" },
+  { name: "Home", path: "/" },
+  { name: "Astrology", path: "/astrology" },
   { name: "Numerology", path: "/numerology" },
-  { name: "Vastu",      path: "/vastu" },
-  { name: "Palmistry",  path: "/palmistry" },
-  { name: "Courses",    path: "/courses" },
-  { name: "About",      path: "/about" },
-  { name: "Contact",    path: "/contact" },
+  { name: "Vastu", path: "/vastu" },
+  { name: "Palmistry", path: "/palmistry" },
+  { name: "Courses", path: "/courses" },
+  { name: "About", path: "/about" },
+  { name: "Contact", path: "/contact" },
 ];
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -42,7 +42,7 @@ export const LogoBrand = () => (
       src={hanumanGaneshaLogo}
       alt="Hanuman Ganesha"
       style={{
-        height: "56px",
+        height: "clamp(52px, 6vw, 68px)",
         width: "auto",
         objectFit: "contain",
         display: "block",
@@ -60,14 +60,14 @@ export const LogoBrand = () => (
         gap: "3px",
         /* Give this column an explicit height equal to the icon so that
            justify-content:center works perfectly in every browser / zoom. */
-        height: "56px",
+        height: "clamp(52px, 6vw, 68px)",
       }}
     >
       <img
         src={nameLogoImage}
         alt="Astro Santosh Pandey"
         style={{
-          height: "36px",
+          height: "clamp(33px, 4vw, 44px)",
           width: "auto",
           objectFit: "contain",
           display: "block",
@@ -77,7 +77,7 @@ export const LogoBrand = () => (
       <span
         style={{
           display: "block",          /* block prevents inline baseline shift */
-          fontSize: "9px",
+          fontSize: "clamp(9px, 1.1vw, 12px)",
           fontStyle: "italic",
           color: "#FFD700",
           whiteSpace: "nowrap",
@@ -94,7 +94,7 @@ export const LogoBrand = () => (
 );
 
 export const Header = () => {
-  const [isScrolled, setIsScrolled]             = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
@@ -112,11 +112,10 @@ export const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
           ? "bg-background/95 backdrop-blur-lg shadow-lg border-b border-border"
           : "bg-transparent"
-      }`}
+        }`}
     >
       <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-14 2xl:px-20">
         <nav className="flex items-center justify-between h-20 lg:h-24">
@@ -134,6 +133,7 @@ export const Header = () => {
                 flexDirection: "row",
                 alignItems: "center",   /* vertical centre */
                 gap: "10px",
+                paddingTop: "9px",      /* slight gap from top in header logo */
               }}
             >
               {/* Ganesha / Hanuman icon */}
@@ -141,7 +141,7 @@ export const Header = () => {
                 src={hanumanGaneshaLogo}
                 alt="Hanuman Ganesha"
                 style={{
-                  height: "56px",
+                  height: "clamp(52px, 6vw, 68px)",
                   width: "auto",
                   objectFit: "contain",
                   display: "block",
@@ -157,14 +157,14 @@ export const Header = () => {
                   alignItems: "flex-start",
                   justifyContent: "center",
                   gap: "3px",
-                  height: "56px",      /* match icon height exactly */
+                  height: "clamp(52px, 6vw, 68px)",      /* match icon height exactly */
                 }}
               >
                 <img
                   src={nameLogoImage}
                   alt="Astro Santosh Pandey"
                   style={{
-                    height: "36px",
+                    height: "clamp(33px, 4vw, 44px)",
                     width: "auto",
                     objectFit: "contain",
                     display: "block",
@@ -174,7 +174,7 @@ export const Header = () => {
                 <span
                   style={{
                     display: "block",
-                    fontSize: "9px",
+                    fontSize: "clamp(9px, 1.1vw, 12px)",
                     fontStyle: "italic",
                     color: "#FFD700",
                     whiteSpace: "nowrap",
@@ -196,9 +196,8 @@ export const Header = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`relative text-[11.5px] font-medium transition-colors hover:text-primary whitespace-nowrap ${
-                  location.pathname === item.path ? "text-primary" : "text-foreground/80"
-                }`}
+                className={`relative text-[11.5px] font-medium transition-colors hover:text-primary whitespace-nowrap ${location.pathname === item.path ? "text-primary" : "text-foreground/80"
+                  }`}
               >
                 {item.name}
                 {location.pathname === item.path && (
@@ -234,9 +233,8 @@ export const Header = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`relative text-sm font-medium transition-colors hover:text-primary whitespace-nowrap ${
-                  location.pathname === item.path ? "text-primary" : "text-foreground/80"
-                }`}
+                className={`relative text-sm font-medium transition-colors hover:text-primary whitespace-nowrap ${location.pathname === item.path ? "text-primary" : "text-foreground/80"
+                  }`}
               >
                 {item.name}
                 {location.pathname === item.path && (
@@ -318,9 +316,8 @@ export const Header = () => {
                 >
                   <Link
                     to={item.path}
-                    className={`block py-2.5 text-base font-medium border-b border-border/30 ${
-                      location.pathname === item.path ? "text-primary" : "text-foreground/80"
-                    }`}
+                    className={`block py-2.5 text-base font-medium border-b border-border/30 ${location.pathname === item.path ? "text-primary" : "text-foreground/80"
+                      }`}
                   >
                     {item.name}
                   </Link>
