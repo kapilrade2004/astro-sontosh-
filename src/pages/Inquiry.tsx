@@ -144,10 +144,10 @@ const astrologyData = [
   { service: "Follow-up within 10 days",                        price: "2,100",  duration: "30 min", icon: Repeat   },
   { service: "Follow-up (11–30 days)",                          price: "3,100",  duration: "30 min", icon: Repeat   },
   { service: "Follow-up (post 30 days)",                        price: "5,100",  duration: "30 min", icon: Repeat   },
-  { service: "Name Initial Suggestion (business/personal)",     price: "1,100",  icon: Hash         },
-  { service: "Property Buying Time Check",                      price: "1,100",  icon: Home         },
-  { service: "Gemstone Recommendation",                         price: "2,100",  icon: Gem          },
-  { service: "Premium Kundli",                                  price: "2,100",  icon: Scroll       },
+  // { service: "Name Initial Suggestion (business/personal)",     price: "1,100",  icon: Hash         },
+  // { service: "Property Buying Time Check",                      price: "1,100",  icon: Home         },
+  // { service: "Gemstone Recommendation",                         price: "2,100",  icon: Gem          },
+  // { service: "Premium Kundli",                                  price: "2,100",  icon: Scroll       },
 ];
 
 // Numerology-specific pricing
@@ -156,14 +156,14 @@ const numerologyData = [
   { service: "Follow-up within 10 days",                        price: "1,100",  duration: "30 min", icon: Repeat   },
   { service: "Follow-up (11–30 days)",                          price: "2,100",  duration: "30 min", icon: Repeat   },
   { service: "Follow-up (post 30 days)",                        price: "3,100",  duration: "30 min", icon: Repeat   },
-  { service: "Name Initial Suggestion (business/personal)",     price: "1,100",  icon: Hash         },
-  { service: "Know Your Lucky Days & Colours",                  price: "1,100",  icon: Star         },
+  // { service: "Name Initial Suggestion (business/personal)",     price: "1,100",  icon: Hash         },
+  // { service: "Know Your Lucky Days & Colours",                  price: "1,100",  icon: Star         },
 ];
 
 // Vastu-specific pricing
 const vastuData = [
   { service: "Vastu Exploration Call (Online)",                 price: "5,100",  duration: "30 min", icon: Home     },
-  { service: "Property Buying Time Check",                      price: "1,100",  icon: Home         },
+  // { service: "Property Buying Time Check",                      price: "1,100",  icon: Home         },
 ];
 
 // ─── Pricing Row ──────────────────────────────────────────────────────────────
@@ -1183,12 +1183,26 @@ const Inquiry = () => (
               border: "1.5px solid hsl(var(--primary)/0.35)",
             }}
           >
-            <span className="text-xl shrink-0 mt-0.5 sm:mt-0">💎</span>
+            {/* <span className="text-xl shrink-0 mt-0.5 sm:mt-0">💎</span>
             <p className="text-xs sm:text-sm font-medium leading-relaxed" style={{ color: "hsl(var(--card-foreground))" }}>
               <span className="font-bold text-primary">This is a premium and paid service.</span>
               {" "}Consultation will be provided only after payment of the applicable fee,
               {" "}<span className="font-semibold">within 2 working days</span> of confirmation.
             </p>
+          </motion.div>
+        </div>
+      </div> */}
+
+            <span className="text-xl shrink-0 mt-0.5"></span>
+            <div className="flex flex-col gap-0.5">
+              <p className="text-xs sm:text-sm font-bold text-primary leading-snug">
+                This is a premium and paid service.
+              </p>
+              <p className="text-xs sm:text-sm font-medium leading-snug" style={{ color: "hsl(var(--card-foreground))" }}>
+                Consultation will be provided only after payment of the applicable fee,{" "}
+                <span className="font-semibold">within 2 working days</span> of confirmation.
+              </p>
+            </div>
           </motion.div>
         </div>
       </div>
@@ -1266,3 +1280,5 @@ const Inquiry = () => (
 );
 
 export default Inquiry;
+
+
