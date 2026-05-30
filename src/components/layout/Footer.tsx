@@ -59,7 +59,7 @@ const FooterLogo = () => (
         src={hanumanGaneshaLogo}
         alt="Hanuman Ganesha"
         style={{
-          height: "clamp(52px, 6vw, 68px)",
+          height: "clamp(62px, 7vw, 78px)",
           width: "auto",
           objectFit: "contain",
           display: "block",
@@ -75,14 +75,14 @@ const FooterLogo = () => (
           alignItems: "flex-start",
           justifyContent: "center",
           gap: "3px",
-          height: "clamp(52px, 6vw, 68px)",        /* match icon height so justify-content works */
+          height: "clamp(62px, 7vw, 78px)",        /* match icon height so justify-content works */
         }}
       >
         <img
           src={LOGO}
           alt="Astro Santosh Pandey"
           style={{
-            height: "clamp(33px, 4vw, 44px)",
+            height: "clamp(39px, 4.6vw, 50px)",
             width: "auto",
             objectFit: "contain",
             display: "block",
@@ -92,16 +92,14 @@ const FooterLogo = () => (
         <span
           style={{
             display: "block",        /* block prevents inline baseline shift */
-            fontSize: "clamp(11px, 1.3vw, 14px)",
+            fontSize: "clamp(10.5px, 1.25vw, 13.5px)",
             fontStyle: "italic",
-            fontFamily: "serif",
             color: "#FFD700",
             whiteSpace: "nowrap",
             lineHeight: 1.2,
-            paddingLeft: "4px",
-            letterSpacing: "0.05em",
+            paddingLeft: "2px",
             textShadow:
-              "0 2px 12px rgba(218,165,32,0.7), 0 0 25px rgba(218,165,32,0.5), 0 0 35px rgba(218,165,32,0.3)",
+              "0 0 3px rgba(255,215,0,0.4), 0 0 6px rgba(218,165,32,0.25)",
           }}
         >
           ज्योतिषं सर्वार्थ साधकं

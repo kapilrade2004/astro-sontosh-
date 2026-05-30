@@ -42,7 +42,7 @@ export const LogoBrand = () => (
       src={hanumanGaneshaLogo}
       alt="Hanuman Ganesha"
       style={{
-        height: "clamp(52px, 6vw, 68px)",
+        height: "clamp(62px, 7vw, 78px)",
         width: "auto",
         objectFit: "contain",
         display: "block",
@@ -60,14 +60,14 @@ export const LogoBrand = () => (
         gap: "3px",
         /* Give this column an explicit height equal to the icon so that
            justify-content:center works perfectly in every browser / zoom. */
-        height: "clamp(52px, 6vw, 68px)",
+        height: "clamp(62px, 7vw, 78px)",
       }}
     >
       <img
         src={nameLogoImage}
         alt="Astro Santosh Pandey"
         style={{
-          height: "clamp(33px, 4vw, 44px)",
+          height: "clamp(39px, 4.6vw, 50px)",
           width: "auto",
           objectFit: "contain",
           display: "block",
@@ -77,7 +77,7 @@ export const LogoBrand = () => (
       <span
         style={{
           display: "block",          /* block prevents inline baseline shift */
-          fontSize: "clamp(9px, 1.1vw, 12px)",
+          fontSize: "clamp(10.5px, 1.25vw, 13.5px)",
           fontStyle: "italic",
           color: "#FFD700",
           whiteSpace: "nowrap",
@@ -141,7 +141,7 @@ export const Header = () => {
                 src={hanumanGaneshaLogo}
                 alt="Hanuman Ganesha"
                 style={{
-                  height: "clamp(52px, 6vw, 68px)",
+                  height: "clamp(62px, 7vw, 78px)",
                   width: "auto",
                   objectFit: "contain",
                   display: "block",
@@ -157,14 +157,14 @@ export const Header = () => {
                   alignItems: "flex-start",
                   justifyContent: "center",
                   gap: "3px",
-                  height: "clamp(52px, 6vw, 68px)",      /* match icon height exactly */
+                  height: "clamp(62px, 7vw, 78px)",      /* match icon height exactly */
                 }}
               >
                 <img
                   src={nameLogoImage}
                   alt="Astro Santosh Pandey"
                   style={{
-                    height: "clamp(33px, 4vw, 44px)",
+                    height: "clamp(39px, 4.6vw, 50px)",
                     width: "auto",
                     objectFit: "contain",
                     display: "block",
@@ -174,7 +174,7 @@ export const Header = () => {
                 <span
                   style={{
                     display: "block",
-                    fontSize: "clamp(9px, 1.1vw, 12px)",
+                    fontSize: "clamp(10.5px, 1.25vw, 13.5px)",
                     fontStyle: "italic",
                     color: "#FFD700",
                     whiteSpace: "nowrap",
