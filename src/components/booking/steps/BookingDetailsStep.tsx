@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Calendar } from "@/components/ui/calendar";
-import { format, startOfDay, isAfter } from "date-fns";
+import { format, startOfDay, isAfter, setMonth, setYear, getMonth, getYear } from "date-fns";
 import {
     Select,
     SelectContent,
@@ -25,9 +25,28 @@ interface BookingDetailsStepProps {
 }
 
 // ── Unified label class ───────────────────────────────────────────
-// Matches QuickServiceBookingTab FieldLabel exactly:
-// text-primary/90  font-semibold  text-[11px]  uppercase  tracking-wider
 const labelCls = "text-primary/90 font-semibold text-[11px] uppercase tracking-wider";
+
+// ── Month/Year Navigator selects ──────────────────────────────────
+const navSelectCls = [
+    "flex-1 h-8 px-2 rounded-lg border text-xs font-semibold",
+    "bg-muted text-foreground border-primary/25",
+    "focus:outline-none focus:ring-1 focus:ring-primary/50",
+    "cursor-pointer appearance-none",
+].join(" ");
+
+const MONTHS = [
+    "January","February","March","April","May","June",
+    "July","August","September","October","November","December",
+];
+
+const buildYears = () => {
+    const currentYear = new Date().getFullYear();
+    const years: number[] = [];
+    for (let y = currentYear; y >= 1920; y--) years.push(y);
+    return years;
+};
+const YEARS = buildYears();
 
 export const BookingDetailsStep = ({
     bookingData,
@@ -41,6 +60,10 @@ export const BookingDetailsStep = ({
     const [calendarOpen, setCalendarOpen] = useState(false);
     const [pendingDate, setPendingDate]   = useState<Date | undefined>(
         bookingData.dob ? new Date(bookingData.dob) : undefined
+    );
+    // viewMonth drives which month/year the calendar grid shows
+    const [viewMonth, setViewMonth] = useState<Date>(
+        bookingData.dob ? new Date(bookingData.dob) : new Date()
     );
     const [calendarPos, setCalendarPos] = useState({ top: 0, left: 0, width: 0 });
     const [nameError,   setNameError]   = useState("");
@@ -65,7 +88,7 @@ export const BookingDetailsStep = ({
     const openCalendar = useCallback(() => {
         if (triggerRef.current) {
             const rect           = triggerRef.current.getBoundingClientRect();
-            const calendarHeight = 380;
+            const calendarHeight = 430;
             const spaceBelow     = window.innerHeight - rect.bottom;
             const top            = spaceBelow >= calendarHeight
                 ? rect.bottom + window.scrollY + 4
@@ -77,8 +100,11 @@ export const BookingDetailsStep = ({
                 : Math.min(rect.left + window.scrollX, window.innerWidth + window.scrollX - calWidth - 8);
             setCalendarPos({ top, left, width: calWidth });
         }
+        // Sync viewMonth with current pending or today when opening
+        setViewMonth(pendingDate ?? new Date());
         setCalendarOpen(true);
-    }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pendingDate]);
 
     useEffect(() => {
         if (!calendarOpen) return;
@@ -126,6 +152,16 @@ export const BookingDetailsStep = ({
         updateBookingData({ dob: "" });
     };
 
+    const handleMonthSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const newMonth = parseInt(e.target.value, 10);
+        setViewMonth((prev) => setMonth(prev, newMonth));
+    };
+
+    const handleYearSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const newYear = parseInt(e.target.value, 10);
+        setViewMonth((prev) => setYear(prev, newYear));
+    };
+
     const handleNext = () => {
         const err = validateName(bookingData.name);
         setNameError(err);
@@ -156,9 +192,35 @@ export const BookingDetailsStep = ({
                         }}
                         className="bg-background border border-primary/25 rounded-2xl shadow-2xl overflow-hidden"
                     >
-                        <div className="p-2">
+                        {/* ── Month / Year selects ── */}
+                        <div className="flex items-center gap-2 px-3 pt-3 pb-1">
+                            <select
+                                value={getMonth(viewMonth)}
+                                onChange={handleMonthSelect}
+                                className={navSelectCls}
+                                aria-label="Select month"
+                            >
+                                {MONTHS.map((m, i) => (
+                                    <option key={m} value={i}>{m}</option>
+                                ))}
+                            </select>
+                            <select
+                                value={getYear(viewMonth)}
+                                onChange={handleYearSelect}
+                                className={navSelectCls}
+                                aria-label="Select year"
+                            >
+                                {YEARS.map((y) => (
+                                    <option key={y} value={y}>{y}</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div className="px-2 pb-1">
                             <Calendar
                                 mode="single"
+                                month={viewMonth}
+                                onMonthChange={setViewMonth}
                                 selected={pendingDate}
                                 onSelect={handleDobSelect}
                                 disabled={(date) => isAfter(startOfDay(date), today)}

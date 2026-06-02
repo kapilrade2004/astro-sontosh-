@@ -14,7 +14,7 @@ import {
   MapPin,
 } from "lucide-react";
 import { createPortal } from "react-dom";
-import { format, startOfDay, isAfter } from "date-fns";
+import { format, startOfDay, isAfter, setMonth, setYear, getMonth, getYear } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
@@ -62,6 +62,28 @@ const inputCls = (hasError?: boolean) =>
       : "border-primary/25 hover:border-primary/50 focus:border-primary/60",
   ].join(" ");
 
+// ── Month/Year Navigator selects (shared style) ───────────────────────────────
+const navSelectCls = [
+  "flex-1 h-8 px-2 rounded-lg border text-xs font-semibold",
+  "bg-white/10 text-white border-primary/30",
+  "focus:outline-none focus:ring-1 focus:ring-primary/60",
+  "cursor-pointer appearance-none",
+  "[&>option]:bg-[#1a1535] [&>option]:text-white",
+].join(" ");
+
+const MONTHS = [
+  "January","February","March","April","May","June",
+  "July","August","September","October","November","December",
+];
+
+const buildYears = () => {
+  const currentYear = new Date().getFullYear();
+  const years: number[] = [];
+  for (let y = currentYear; y >= 1920; y--) years.push(y);
+  return years;
+};
+const YEARS = buildYears();
+
 // ── DOB Picker ────────────────────────────────────────────────────────────────
 const DobPicker = ({
   value,
@@ -77,13 +99,17 @@ const DobPicker = ({
   const [pending, setPending] = useState<Date | undefined>(
     value ? new Date(value) : undefined
   );
+  // viewMonth drives which month/year the calendar grid shows
+  const [viewMonth, setViewMonth] = useState<Date>(
+    value ? new Date(value) : new Date()
+  );
   const [pos, setPos] = useState({ top: 0, left: 0, width: 0 });
   const triggerRef = useRef<HTMLButtonElement>(null);
 
   const openCal = () => {
     if (triggerRef.current) {
       const r = triggerRef.current.getBoundingClientRect();
-      const calH = 380;
+      const calH = 430;
       const below = window.innerHeight - r.bottom;
       const top =
         below >= calH
@@ -96,6 +122,8 @@ const DobPicker = ({
       );
       setPos({ top, left, width: w });
     }
+    // Sync viewMonth with current pending or today
+    setViewMonth(pending ?? new Date());
     setOpen(true);
   };
 
@@ -116,6 +144,16 @@ const DobPicker = ({
     if (!pending) return;
     onChange(format(pending, "yyyy-MM-dd"));
     setOpen(false);
+  };
+
+  const handleMonthSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newMonth = parseInt(e.target.value, 10);
+    setViewMonth((prev) => setMonth(prev, newMonth));
+  };
+
+  const handleYearSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newYear = parseInt(e.target.value, 10);
+    setViewMonth((prev) => setYear(prev, newYear));
   };
 
   return (
@@ -184,9 +222,35 @@ const DobPicker = ({
                   }}
                   className="bg-[#1a1535] border border-primary/30 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] overflow-hidden"
                 >
-                  <div className="p-3">
+                  {/* ── Month / Year selects ── */}
+                  <div className="flex items-center gap-2 px-3 pt-3 pb-1">
+                    <select
+                      value={getMonth(viewMonth)}
+                      onChange={handleMonthSelect}
+                      className={navSelectCls}
+                      aria-label="Select month"
+                    >
+                      {MONTHS.map((m, i) => (
+                        <option key={m} value={i}>{m}</option>
+                      ))}
+                    </select>
+                    <select
+                      value={getYear(viewMonth)}
+                      onChange={handleYearSelect}
+                      className={navSelectCls}
+                      aria-label="Select year"
+                    >
+                      {YEARS.map((y) => (
+                        <option key={y} value={y}>{y}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="px-3 pb-1">
                     <Calendar
                       mode="single"
+                      month={viewMonth}
+                      onMonthChange={setViewMonth}
                       selected={pending}
                       onSelect={(d) => {
                         if (!d || isAfter(startOfDay(d), today)) return;
@@ -242,7 +306,6 @@ const TimePicker = ({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const minuteScrollRef = useRef<HTMLDivElement>(null);
 
-  // Sync internal state when `value` changes externally
   useEffect(() => {
     if (!value) {
       setSelHour(null);
@@ -250,7 +313,6 @@ const TimePicker = ({
       setSelAmPm("AM");
       return;
     }
-    // parse "HH:MM AM/PM"
     const match = value.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
     if (match) {
       setSelHour(parseInt(match[1], 10));
@@ -259,7 +321,6 @@ const TimePicker = ({
     }
   }, [value]);
 
-  // Close on outside click
   useEffect(() => {
     if (!open) return;
     const handler = (e: MouseEvent) => {
@@ -271,11 +332,10 @@ const TimePicker = ({
     return () => document.removeEventListener("mousedown", handler);
   }, [open]);
 
-  // Scroll selected minute into view when picker opens
   useEffect(() => {
     if (!open || !minuteScrollRef.current) return;
     const idx = parseInt(selMin, 10);
-    const itemH = 34; // approximate px per minute row
+    const itemH = 34;
     minuteScrollRef.current.scrollTop = Math.max(0, idx * itemH - itemH * 2);
   }, [open]);
 
@@ -304,7 +364,6 @@ const TimePicker = ({
 
   return (
     <div className="relative" ref={wrapperRef}>
-      {/* Trigger button */}
       <button
         type="button"
         onClick={() => setOpen((p) => !p)}
@@ -341,7 +400,6 @@ const TimePicker = ({
         </div>
       </button>
 
-      {/* Picker panel */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -357,10 +415,7 @@ const TimePicker = ({
               "shadow-[0_24px_60px_rgba(0,0,0,0.7),0_0_0_1px_rgba(212,175,55,0.08)]",
             ].join(" ")}
           >
-            {/* Top shimmer */}
             <div className="h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
-
-            {/* Column headers */}
             <div className="grid grid-cols-3 px-4 pt-3 pb-1.5 gap-2">
               {["Hour", "Minute", "AM / PM"].map((h) => (
                 <div
@@ -371,11 +426,7 @@ const TimePicker = ({
                 </div>
               ))}
             </div>
-
-            {/* Columns body */}
             <div className="grid grid-cols-3 gap-2 px-3 pb-3">
-
-              {/* ── Hour grid ── */}
               <div className="grid grid-cols-3 gap-1 content-start">
                 {hours.map((h) => {
                   const active = selHour === h;
@@ -396,8 +447,6 @@ const TimePicker = ({
                   );
                 })}
               </div>
-
-              {/* ── Minute scroll ── */}
               <div
                 ref={minuteScrollRef}
                 className={[
@@ -428,8 +477,6 @@ const TimePicker = ({
                   );
                 })}
               </div>
-
-              {/* ── AM / PM ── */}
               <div className="flex flex-col gap-2 pt-0.5">
                 {(["AM", "PM"] as const).map((period) => {
                   const active = selAmPm === period;
@@ -451,8 +498,6 @@ const TimePicker = ({
                 })}
               </div>
             </div>
-
-            {/* Footer */}
             <div className="flex items-center justify-between px-3 pb-3 pt-1 border-t border-primary/15 bg-primary/5">
               <div className="flex items-center gap-1.5 text-[10px] text-white/35">
                 <Clock className="w-3 h-3 text-primary/40 shrink-0" />
@@ -473,8 +518,6 @@ const TimePicker = ({
                 tap OK to confirm →
               </button>
             </div>
-
-            {/* Bottom shimmer */}
             <div className="h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
           </motion.div>
         )}
@@ -513,7 +556,6 @@ const ServiceDropdown = ({
 
   return (
     <div className="relative" ref={dropdownRef}>
-      {/* Trigger */}
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
@@ -548,7 +590,6 @@ const ServiceDropdown = ({
         />
       </button>
 
-      {/* Price pill when closed */}
       {selectedService && !isOpen && (
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
@@ -561,7 +602,6 @@ const ServiceDropdown = ({
         </motion.div>
       )}
 
-      {/* Dropdown panel */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -596,7 +636,6 @@ const ServiceDropdown = ({
 
               return (
                 <div key={cat.id}>
-                  {/* Category header */}
                   <div
                     className={[
                       "px-3.5 py-2 flex items-center gap-2 border-b",
@@ -611,7 +650,6 @@ const ServiceDropdown = ({
                     <div className={["ml-auto w-1.5 h-1.5 rounded-full opacity-70", cfg.dot].join(" ")} />
                   </div>
 
-                  {/* Services in category */}
                   {catServices.map((service) => {
                     const isSelected = service.id === value;
                     return (
@@ -756,7 +794,6 @@ export const QuickServiceBookingTab = ({
     if (svc && !svc.requiresBirthTime) update("timeOfBirth", "");
   };
 
-  // ── Validation ────────────────────────────────────────────────────────────
   const validate = () => {
     const e: Record<string, string> = {};
 
@@ -847,7 +884,6 @@ export const QuickServiceBookingTab = ({
 
       {/* ── Row 1: Name / Email / DOB ─────────────────────────── */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4" {...formRowProps}>
-        {/* Full Name */}
         <div className="space-y-1.5">
           <FieldLabel required>Full Name</FieldLabel>
           <input
@@ -863,7 +899,6 @@ export const QuickServiceBookingTab = ({
           <FieldError msg={errors.fullName} />
         </div>
 
-        {/* Email */}
         <div className="space-y-1.5">
           <FieldLabel optional="optional">Email Address</FieldLabel>
           <input
@@ -876,7 +911,6 @@ export const QuickServiceBookingTab = ({
           <FieldError msg={errors.email} />
         </div>
 
-        {/* DOB */}
         <div className="space-y-1.5">
           <FieldLabel
             required={!!selectedService?.requiresDOB}
@@ -894,7 +928,6 @@ export const QuickServiceBookingTab = ({
 
       {/* ── Row 2: Phone / Service ────────────────────────────── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" {...formRowProps}>
-        {/* Phone */}
         <div className="space-y-1.5">
           <FieldLabel required>Mobile Number</FieldLabel>
           <div className="flex">
@@ -913,7 +946,6 @@ export const QuickServiceBookingTab = ({
           <FieldError msg={errors.phone} />
         </div>
 
-        {/* Service */}
         <div className="space-y-1.5">
           <FieldLabel required>Quick Service</FieldLabel>
           <ServiceDropdown
@@ -926,7 +958,6 @@ export const QuickServiceBookingTab = ({
 
       {/* ── Row 3: Place of Birth / Time of Birth ─────────────── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" {...formRowProps}>
-        {/* Place of Birth */}
         <div className="space-y-1.5">
           <FieldLabel required>
             <MapPin className="w-3 h-3 mr-0.5" />
@@ -942,7 +973,6 @@ export const QuickServiceBookingTab = ({
           <FieldError msg={errors.placeOfBirth} />
         </div>
 
-        {/* ✅ Time of Birth — custom TimePicker replaces plain text input */}
         <div className="space-y-1.5">
           <FieldLabel optional="if known">Time of Birth</FieldLabel>
           <TimePicker
