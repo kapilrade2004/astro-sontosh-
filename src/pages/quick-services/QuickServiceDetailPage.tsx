@@ -92,6 +92,21 @@ const SectionBlock = ({
 };
 
 // ── DOB Picker ────────────────────────────────────────────────────────────────
+const MONTH_NAMES = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
 const DobPicker = ({
   value,
   onChange,
@@ -102,29 +117,46 @@ const DobPicker = ({
   error?: string;
 }) => {
   const today = startOfDay(new Date());
+  const currentYear = today.getFullYear();
+  // Reasonable lower bound for a date-of-birth field
+  const minYear = 1920;
+
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState<Date | undefined>(
     value ? new Date(value) : undefined
   );
+  // The month/year currently being displayed in the calendar grid
+  const [viewMonth, setViewMonth] = useState<Date>(
+    value ? new Date(value) : new Date(currentYear - 25, 0, 1)
+  );
   const [pos, setPos] = useState({ top: 0, left: 0, width: 0 });
   const triggerRef = useRef<HTMLButtonElement>(null);
+
+  // Descending so recent years are easy to reach, but full range back to minYear
+  const years = Array.from(
+    { length: currentYear - minYear + 1 },
+    (_, i) => currentYear - i
+  );
 
   const openCal = () => {
     if (triggerRef.current) {
       const r = triggerRef.current.getBoundingClientRect();
-      const calH = 360;
+      const calH = 430; // accounts for the added month/year dropdown row
       const below = window.innerHeight - r.bottom;
       const top =
         below >= calH
           ? r.bottom + window.scrollY + 4
-          : r.top + window.scrollY - calH - 4;
-      const w = Math.min(300, window.innerWidth - 32);
+          : Math.max(8, r.top + window.scrollY - calH - 4);
+      const w = Math.min(320, window.innerWidth - 32);
       const left = Math.min(
-        r.left + window.scrollX,
+        Math.max(8, r.left + window.scrollX),
         window.innerWidth + window.scrollX - w - 8
       );
       setPos({ top, left, width: w });
     }
+    setViewMonth(
+      value ? new Date(value) : pending || new Date(currentYear - 25, 0, 1)
+    );
     setOpen(true);
   };
 
@@ -145,6 +177,22 @@ const DobPicker = ({
     if (!pending) return;
     onChange(format(pending, "yyyy-MM-dd"));
     setOpen(false);
+  };
+
+  const handleMonthSelect = (monthIndex: number) => {
+    setViewMonth((prev) => {
+      const next = new Date(prev);
+      next.setMonth(monthIndex);
+      return next;
+    });
+  };
+
+  const handleYearSelect = (year: number) => {
+    setViewMonth((prev) => {
+      const next = new Date(prev);
+      next.setFullYear(year);
+      return next;
+    });
   };
 
   return (
@@ -194,13 +242,42 @@ const DobPicker = ({
                     top: pos.top,
                     left: pos.left,
                     width: pos.width,
+                    maxWidth: "calc(100vw - 16px)",
                     zIndex: 999,
                   }}
                   className="bg-background border border-primary/25 rounded-2xl shadow-2xl overflow-hidden"
                 >
-                  <div className="p-2">
+                  <div className="p-3 space-y-2">
+                    {/* Month / Year quick-jump selectors */}
+                    <div className="flex gap-2">
+                      <select
+                        value={viewMonth.getMonth()}
+                        onChange={(e) => handleMonthSelect(Number(e.target.value))}
+                        className="flex-1 min-w-0 h-9 px-2 rounded-md border border-primary/20 bg-background text-xs sm:text-sm font-medium text-foreground focus:outline-none focus:border-primary/60 cursor-pointer"
+                      >
+                        {MONTH_NAMES.map((m, i) => (
+                          <option key={m} value={i}>
+                            {m}
+                          </option>
+                        ))}
+                      </select>
+                      <select
+                        value={viewMonth.getFullYear()}
+                        onChange={(e) => handleYearSelect(Number(e.target.value))}
+                        className="w-24 shrink-0 h-9 px-2 rounded-md border border-primary/20 bg-background text-xs sm:text-sm font-medium text-foreground focus:outline-none focus:border-primary/60 cursor-pointer"
+                      >
+                        {years.map((y) => (
+                          <option key={y} value={y}>
+                            {y}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
                     <Calendar
                       mode="single"
+                      month={viewMonth}
+                      onMonthChange={setViewMonth}
                       selected={pending}
                       onSelect={(d) => {
                         if (!d || isAfter(startOfDay(d), today)) return;
@@ -228,7 +305,7 @@ const DobPicker = ({
                       onClick={confirm}
                     >
                       <CheckCircle2 className="w-3.5 h-3.5 mr-1" />
-                      {pending ? `Confirm ${format(pending, "dd MMM")}` : "Pick a date"}
+                      {pending ? `Confirm ${format(pending, "dd MMM yyyy")}` : "Pick a date"}
                     </Button>
                   </div>
                 </motion.div>
