@@ -22,6 +22,7 @@ import Pricing from "./pages/Pricing";
 const queryClient = new QueryClient();
 import { QuickServicesPage } from "@/pages/quick-services/QuickServicesPage";
 import { QuickServiceDetailPage } from "@/pages/quick-services/QuickServiceDetailPage";
+import ConsultationLanding from "./pages/ConsultationLanding";
 
 const App = () => (
   <HelmetProvider>
@@ -36,6 +37,7 @@ const App = () => (
             <Route path="/astrology" element={<Astrology />} />
             <Route path="/numerology" element={<Numerology />} />
             <Route path="/vastu" element={<Vastu />} />
+            <Route path="/consultation" element={<ConsultationLanding />} />
             <Route path="/palmistry" element={<Palmistry />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
