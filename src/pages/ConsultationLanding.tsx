@@ -151,9 +151,9 @@ const pricingPlans = [
   },
   {
     id: "complete",
-    name: "Complete Life Analysis",
+    name: "Detailed Kundli Analysis",
     price: "₹11,000",
-    features: ["60 Minutes Consultation", "Detailed Kundli Analysis", "Career + Marriage + Finance Review", "Priority Support"],
+    features: ["60 Minutes Consultation", "Full Birth Chart Reading", "Career + Marriage + Finance Review", "Priority Support"],
     popular: false,
   },
 ];
@@ -170,13 +170,13 @@ const paymentMethods = [
 const consultationTypeOptions = [
   "Basic Consultation",
   "Premium Consultation",
-  "Complete Life Analysis",
+  "Detailed Kundli Analysis",
 ];
 
 const PLAN_AMOUNTS: Record<string, number> = {
   "Basic Consultation": 1100,
   "Premium Consultation": 2100,
-  "Complete Life Analysis": 11000,
+  "Detailed Kundli Analysis": 11000,
 };
 
 const testimonials = [
