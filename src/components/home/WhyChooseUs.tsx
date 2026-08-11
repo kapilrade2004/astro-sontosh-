@@ -1,53 +1,52 @@
 import { motion } from "framer-motion";
-import { Target, Award, Clock, Heart, Shield, Zap } from "lucide-react";
+import { Sparkles, Crown, HeartHandshake, Hourglass, ShieldCheck, Flame, Sun, BookOpen, CheckCircle2 } from "lucide-react";
 
 const features = [
   {
-    icon: Target,
+    icon: Sparkles,
     title: "Pinpoint Accuracy",
     description: "Over 95% prediction accuracy backed by years of research and practice in Vedic sciences.",
   },
   {
-    icon: Award,
+    icon: Crown,
     title: "Years of Dedicated Astrological Practice",
     description: "Trusted by clients for reliable horoscope analysis and meaningful astrological guidance.",
   },
   {
-    icon: Heart,
+    icon: HeartHandshake,
     title: "Personalized Solutions",
     description: "Every remedy and prediction is tailored specifically to your unique birth chart and circumstances.",
   },
   {
-    icon: Clock,
+    icon: Hourglass,
     title: "Timely Predictions",
     description: "Precise timing of events including marriage, career changes, and major life transitions.",
   },
   {
-    icon: Shield,
+    icon: ShieldCheck,
     title: "Confidential Service",
     description: "Your personal information and consultations are kept strictly private and secure.",
   },
   {
-    icon: Zap,
+    icon: Flame,
     title: "Proven Results",
     description: "Multiple testimonials from clients who experienced real transformation in their lives.",
   },
   {
-    icon: Target,
+    icon: Sun,
     title: "Solution-Focused Vedic Astrology",
     description: "Expert Vedic astrology consultations focused on practical solutions, effective remedies, and positive life outcomes — not problem amplification.",
   },
   {
-    icon: Award,
+    icon: BookOpen,
     title: "Wisdom-Based & Ethical Astrology",
     description: "Authentic astrology guidance based on wisdom and logic, promoting clarity and confidence without fear-based predictions.",
   },
   {
-    icon: Heart,
+    icon: CheckCircle2,
     title: "Trusted Astrologer with Integrity",
     description: "Astrology services delivered with complete integrity, respect, and transparency, ensuring unbiased and ethical guidance for every client.",
   },
-
 ];
 
 const containerVariants = {
@@ -79,11 +78,11 @@ export const WhyChooseUs = () => {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <span className="text-primary font-medium text-sm uppercase tracking-wider">Why Choose Us</span>
+          <span className="text-amber-300 font-semibold text-sm uppercase tracking-wider">Why Choose Us</span>
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold mt-4 mb-6">
-            Your Journey to <span className="text-gradient-gold">Clarity & Success</span> Starts Here
+            Your Journey to <span className="text-gradient-gold">Clarity &amp; Success</span> Starts Here
           </h2>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-foreground/80 text-lg leading-relaxed">
             We combine ancient wisdom with modern understanding to provide you with
             the most accurate and actionable guidance for your life path.
           </p>
@@ -100,13 +99,13 @@ export const WhyChooseUs = () => {
             <motion.div
               key={index}
               variants={itemVariants}
-              className="cosmic-card p-8 group hover:scale-[1.02] transition-transform duration-300"
+              className="cosmic-card p-8 group hover:scale-[1.02] hover:glow-gold transition-all duration-300"
             >
-              <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
-                <feature.icon className="w-7 h-7 text-primary" />
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/25 via-yellow-400/20 to-amber-900/40 border border-amber-400/35 shadow-[0_0_18px_rgba(251,191,36,0.2)] flex items-center justify-center mb-6 group-hover:scale-110 group-hover:border-amber-400/60 transition-all duration-300">
+                <feature.icon className="w-8 h-8 text-amber-300 filter drop-shadow-[0_0_10px_rgba(251,191,36,0.7)]" strokeWidth={2.2} />
               </div>
-              <h3 className="font-serif text-xl font-semibold mb-3">{feature.title}</h3>
-              <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+              <h3 className="font-serif text-xl font-bold mb-3 text-foreground group-hover:text-amber-300 transition-colors">{feature.title}</h3>
+              <p className="text-foreground/80 text-base leading-relaxed">{feature.description}</p>
             </motion.div>
           ))}
         </motion.div>
@@ -114,3 +113,4 @@ export const WhyChooseUs = () => {
     </section>
   );
 };
+

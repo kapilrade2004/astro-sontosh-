@@ -419,8 +419,8 @@ import { Layout } from "@/components/layout/Layout";
 
 import { Button } from "@/components/ui/button";
 import {
-  BookOpen, Heart, Star,
-  ArrowRight, CheckCircle, Sparkles, Users
+  BookOpen, HeartHandshake, Sparkles, ShieldCheck,
+  ArrowRight, CheckCircle2, Users
 } from "lucide-react";
 import CertificationsShowcase from "@/components/home/CertificationsShowcase";
 import AboutImg from "@/assets/AboutImg.jpeg";
@@ -429,12 +429,12 @@ import LOGO from "@/assets/logo by yash.png";
 
 const values = [
   {
-    icon: Star,
+    icon: Sparkles,
     title: "Accuracy",
     description: "We pride ourselves on precise predictions backed by deep knowledge and years of practice.",
   },
   {
-    icon: Heart,
+    icon: HeartHandshake,
     title: "Compassion",
     description: "Every consultation is handled with empathy, understanding, and genuine care for your well-being.",
   },
@@ -444,7 +444,7 @@ const values = [
     description: "We follow traditional Vedic methods while adapting to modern needs, never compromising on authenticity.",
   },
   {
-    icon: Users,
+    icon: ShieldCheck,
     title: "Confidentiality",
     description: "Your personal information and consultations are kept strictly private and secure.",
   },
@@ -671,35 +671,35 @@ const About = () => {
                     </p>
                     <ul className="space-y-3">
                       <li className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+                        <CheckCircle2 className="w-5.5 h-5.5 text-amber-400 filter drop-shadow-[0_0_6px_rgba(251,191,36,0.5)] mt-0.5 shrink-0" strokeWidth={2.2} />
                         <span>Vedic Astrology & Ancient Jyotish Principles</span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+                        <CheckCircle2 className="w-5.5 h-5.5 text-amber-400 filter drop-shadow-[0_0_6px_rgba(251,191,36,0.5)] mt-0.5 shrink-0" strokeWidth={2.2} />
                         <span>Detailed Janam Kundali / Birth Chart Analysis</span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+                        <CheckCircle2 className="w-5.5 h-5.5 text-amber-400 filter drop-shadow-[0_0_6px_rgba(251,191,36,0.5)] mt-0.5 shrink-0" strokeWidth={2.2} />
                         <span>Planetary Position & Dasha Interpretation</span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+                        <CheckCircle2 className="w-5.5 h-5.5 text-amber-400 filter drop-shadow-[0_0_6px_rgba(251,191,36,0.5)] mt-0.5 shrink-0" strokeWidth={2.2} />
                         <span>Soul Blueprint & Karmic Wisdom Reading</span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+                        <CheckCircle2 className="w-5.5 h-5.5 text-amber-400 filter drop-shadow-[0_0_6px_rgba(251,191,36,0.5)] mt-0.5 shrink-0" strokeWidth={2.2} />
                         <span>Palmistry & Hand Reading Insights</span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+                        <CheckCircle2 className="w-5.5 h-5.5 text-amber-400 filter drop-shadow-[0_0_6px_rgba(251,191,36,0.5)] mt-0.5 shrink-0" strokeWidth={2.2} />
                         <span>Vastu Shastra Guidance for Home & Business</span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+                        <CheckCircle2 className="w-5.5 h-5.5 text-amber-400 filter drop-shadow-[0_0_6px_rgba(251,191,36,0.5)] mt-0.5 shrink-0" strokeWidth={2.2} />
                         <span>Spiritual Remedies & Positive Energy Practices</span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+                        <CheckCircle2 className="w-5.5 h-5.5 text-amber-400 filter drop-shadow-[0_0_6px_rgba(251,191,36,0.5)] mt-0.5 shrink-0" strokeWidth={2.2} />
                         <span>Personalized Life Guidance Based on Individual Needs</span>
                       </li>
                     </ul>
@@ -711,35 +711,35 @@ const About = () => {
                     </p>
                     <ul className="space-y-3">
                       <li className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+                        <CheckCircle2 className="w-5.5 h-5.5 text-amber-400 filter drop-shadow-[0_0_6px_rgba(251,191,36,0.5)] mt-0.5 shrink-0" strokeWidth={2.2} />
                         <span>Career Astrology & Professional Growth</span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+                        <CheckCircle2 className="w-5.5 h-5.5 text-amber-400 filter drop-shadow-[0_0_6px_rgba(251,191,36,0.5)] mt-0.5 shrink-0" strokeWidth={2.2} />
                         <span>Business Success & Financial Decisions</span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+                        <CheckCircle2 className="w-5.5 h-5.5 text-amber-400 filter drop-shadow-[0_0_6px_rgba(251,191,36,0.5)] mt-0.5 shrink-0" strokeWidth={2.2} />
                         <span>Marriage Astrology & Kundali Matching</span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+                        <CheckCircle2 className="w-5.5 h-5.5 text-amber-400 filter drop-shadow-[0_0_6px_rgba(251,191,36,0.5)] mt-0.5 shrink-0" strokeWidth={2.2} />
                         <span>Love & Relationship Compatibility</span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+                        <CheckCircle2 className="w-5.5 h-5.5 text-amber-400 filter drop-shadow-[0_0_6px_rgba(251,191,36,0.5)] mt-0.5 shrink-0" strokeWidth={2.2} />
                         <span>Family Harmony & Personal Relationships</span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+                        <CheckCircle2 className="w-5.5 h-5.5 text-amber-400 filter drop-shadow-[0_0_6px_rgba(251,191,36,0.5)] mt-0.5 shrink-0" strokeWidth={2.2} />
                         <span>Health & Emotional Well-being Guidance</span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+                        <CheckCircle2 className="w-5.5 h-5.5 text-amber-400 filter drop-shadow-[0_0_6px_rgba(251,191,36,0.5)] mt-0.5 shrink-0" strokeWidth={2.2} />
                         <span>Education & Future Planning</span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+                        <CheckCircle2 className="w-5.5 h-5.5 text-amber-400 filter drop-shadow-[0_0_6px_rgba(251,191,36,0.5)] mt-0.5 shrink-0" strokeWidth={2.2} />
                         <span>Spiritual Growth & Self-Discovery</span>
                       </li>
                     </ul>
@@ -862,13 +862,13 @@ const About = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="cosmic-card p-6 text-center group hover:scale-105 transition-transform"
+                  className="cosmic-card p-6 text-center group hover:scale-105 hover:glow-gold transition-all duration-300"
                 >
-                  <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                    <value.icon className="w-7 h-7 text-primary" />
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/25 via-yellow-400/20 to-amber-900/40 border border-amber-400/35 shadow-[0_0_16px_rgba(251,191,36,0.2)] flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:border-amber-400/60 transition-all duration-300">
+                    <value.icon className="w-8 h-8 text-amber-300 filter drop-shadow-[0_0_8px_rgba(251,191,36,0.6)]" strokeWidth={2.2} />
                   </div>
-                  <h3 className="font-serif text-xl font-semibold mb-2">{value.title}</h3>
-                  <p className="text-muted-foreground text-sm">{value.description}</p>
+                  <h3 className="font-serif text-xl font-bold mb-2 text-foreground group-hover:text-amber-300 transition-colors">{value.title}</h3>
+                  <p className="text-foreground/80 text-sm sm:text-base leading-relaxed">{value.description}</p>
                 </motion.div>
               ))}
             </div>
