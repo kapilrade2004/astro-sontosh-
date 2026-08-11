@@ -77,14 +77,14 @@ const trustBadges = [
 
 const services = [
   {
-    icon: LoveIcon,
-    title: "Love & Relationship Consultation",
-    features: ["Relationship Guidance", "Family Issue Insight", "Love Situation Guidance", "Compatibility Check"],
-  },
-  {
     icon: MarriageIcon,
-    title: "Marriage Consultation",
-    features: ["Marriage Timing", "Delayed Marriage", "Kundli Matching", "Marital Issues", "Domestic Harmony & Well-being"],
+    title: "Love, Marriage & Domestic Harmony",
+    features: [
+      "Relationship & Compatibility Guidance",
+      "Marriage Timing & Kundli Matching",
+      "Marital Issues & Conflict Resolution",
+      "Domestic Harmony & Family Well-being",
+    ],
   },
   {
     icon: CareerIcon,
@@ -1005,38 +1005,38 @@ const ConsultationLanding = () => {
         </div>
 
         {/* ── Services ── */}
-        <section className="py-8 md:py-12 bg-background relative overflow-hidden">
-          <div className="pointer-events-none absolute top-0 right-0 w-96 h-96 rounded-full bg-primary/5 blur-[120px]" />
+        <section className="py-6 md:py-9 bg-background relative overflow-hidden">
+          <div className="pointer-events-none absolute top-0 right-0 w-80 h-80 rounded-full bg-primary/5 blur-[100px]" />
           <div className="container mx-auto px-4 relative">
             <motion.h2
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center font-serif text-xl sm:text-2xl md:text-3xl font-bold mb-6 md:mb-8"
+              className="text-center font-serif text-xl sm:text-2xl md:text-3xl font-bold mb-5 md:mb-6"
             >
               OUR ASTROLOGY <span className="text-gradient-gold">CONSULTATION SERVICES</span>
             </motion.h2>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-3.5">
               {services.map((service, index) => (
                 <motion.div
                   key={service.title}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: (index % 3) * 0.06 }}
-                  className="cosmic-card p-4 sm:p-4.5 group hover:-translate-y-1 hover:glow-gold transition-all duration-300 flex flex-col justify-between"
+                  transition={{ delay: (index % 4) * 0.05 }}
+                  className="cosmic-card p-3.5 sm:p-4 group hover:-translate-y-1 hover:glow-gold transition-all duration-300 flex flex-col justify-between"
                 >
                   <div>
-                    <div className="mb-2.5 inline-block">
-                      <service.icon className="w-10 h-10 sm:w-11 sm:h-11 drop-shadow-[0_2px_8px_rgba(251,191,36,0.4)] transition-transform duration-300 group-hover:scale-105" />
+                    <div className="mb-2 inline-block">
+                      <service.icon className="w-9 h-9 sm:w-10 sm:h-10 drop-shadow-[0_2px_8px_rgba(251,191,36,0.4)] transition-transform duration-300 group-hover:scale-105" />
                     </div>
-                    <h3 className="font-serif text-base sm:text-lg font-bold mb-2 text-foreground group-hover:text-amber-300 transition-colors leading-snug">
+                    <h3 className="font-serif text-sm sm:text-base font-bold mb-1.5 text-foreground group-hover:text-amber-300 transition-colors leading-snug">
                       {service.title}
                     </h3>
-                    <ul className="space-y-1 sm:space-y-1.5">
+                    <ul className="space-y-1">
                       {service.features.map((f) => (
-                        <li key={f} className="flex items-start gap-1.5 text-xs sm:text-[13px] text-foreground/80 leading-snug">
+                        <li key={f} className="flex items-start gap-1.5 text-xs text-foreground/80 leading-snug">
                           <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5 filter drop-shadow-[0_0_4px_rgba(251,191,36,0.4)]" strokeWidth={2.2} />
                           <span>{f}</span>
                         </li>
