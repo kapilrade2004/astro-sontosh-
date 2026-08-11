@@ -25,6 +25,7 @@ import {
   NumerologyIcon, AkashikIcon, UpiIcon,
 } from "./ConsultationIcons";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
+import { sendLeadToCRM } from "@/lib/sendLeadToCRM";
 
 /* ─────────────────────────────────────────────────────────────────────────
 
@@ -655,7 +656,7 @@ const ConsultationLanding = () => {
   const [isBookingSuccess, setIsBookingSuccess] = useState(false);
 
   // ── Callback form state ─────────────────────────────────────────────
-  const [callbackData, setCallbackData] = useState({ fullName: "", mobile: "", whatsapp: "" });
+  const [callbackData, setCallbackData] = useState({ fullName: "", mobile: "", email: "" });
   const [callbackErrors, setCallbackErrors] = useState<Record<string, string>>({});
   const [isSubmittingCallback, setIsSubmittingCallback] = useState(false);
   const [isCallbackSuccess, setIsCallbackSuccess] = useState(false);
@@ -830,11 +831,17 @@ const ConsultationLanding = () => {
     setCallbackErrors((prev) => ({ ...prev, fullName: validateName(value) }));
   };
 
+  const handleCallbackEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setCallbackData((prev) => ({ ...prev, email: value }));
+    setCallbackErrors((prev) => ({ ...prev, email: validateEmail(value) }));
+  };
+
   const validateCallbackAll = (): boolean => {
     const errors = {
       fullName: validateName(callbackData.fullName),
       mobile: validatePhone(callbackData.mobile),
-      whatsapp: validatePhone(callbackData.whatsapp),
+      email: validateEmail(callbackData.email),
     };
     setCallbackErrors(errors);
     return Object.values(errors).every((e) => !e);
@@ -845,23 +852,39 @@ const ConsultationLanding = () => {
     if (!validateCallbackAll()) return;
     setIsSubmittingCallback(true);
     try {
+      // Send lead to CRM & email notification engine
+      await sendLeadToCRM({
+        name: callbackData.fullName,
+        phone: callbackData.mobile,
+        email: callbackData.email,
+        source: "Free Callback Request",
+        tags: ["callback-request", "landing-page"],
+      });
+
       const response = await fetch(`${apiBaseUrl}/callback-request`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...callbackData,
+          fullName: callbackData.fullName,
+          mobile: callbackData.mobile,
+          email: callbackData.email,
           source: "Free Callback Request",
           landingPageUrl: window.location.href,
         }),
       });
-      if (!response.ok) throw new Error("Server error");
+
+      if (!response.ok) {
+        console.warn("Backend callback route returned error status, but CRM lead email was dispatched.");
+      }
+
       setIsCallbackSuccess(true);
       setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 3500);
-    } catch {
+    } catch (err) {
+      console.error("Callback submission error:", err);
       toast({
         variant: "destructive",
         title: "Submission Failed",
-        description: "Something went wrong. Please try again or contact us on WhatsApp.",
+        description: "Something went wrong. Please try again or contact us directly.",
       });
     } finally {
       setIsSubmittingCallback(false);
@@ -1381,10 +1404,17 @@ const ConsultationLanding = () => {
                   </div>
                   <div className="space-y-1">
                     <div className="relative">
-                      <MessageCircle className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary/60" />
-                      <input name="whatsapp" value={callbackData.whatsapp} onChange={handleCallbackChange} maxLength={10} placeholder="WhatsApp Number *" className={inputCls(callbackErrors.whatsapp)} />
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary/60" />
+                      <input
+                        type="email"
+                        name="email"
+                        value={callbackData.email}
+                        onChange={handleCallbackEmailChange}
+                        placeholder="Enter Your Email *"
+                        className={inputCls(callbackErrors.email)}
+                      />
                     </div>
-                    {callbackErrors.whatsapp && <p className="text-red-500 text-[11px]">{callbackErrors.whatsapp}</p>}
+                    {callbackErrors.email && <p className="text-red-500 text-[11px]">{callbackErrors.email}</p>}
                   </div>
                   <Button type="submit" className="w-full glow-gold" disabled={isSubmittingCallback}>
                     {isSubmittingCallback ? "Sending..." : (
