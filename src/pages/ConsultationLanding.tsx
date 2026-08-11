@@ -941,7 +941,7 @@ const ConsultationLanding = () => {
 
                 <div className="flex items-center gap-2 mb-5">
                   <StarRow />
-                  <span className="text-sm text-muted-foreground">Trusted by Clients Across India</span>
+                  <span className="text-sm text-muted-foreground">Trusted by Clients Across the World</span>
                 </div>
 
                 <div className="flex flex-wrap gap-3">
