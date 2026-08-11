@@ -215,3 +215,27 @@ export const AkashikIcon = (props: IconProps) => (
     </Badge>
   </svg>
 );
+
+// 9. Official UPI Logo Component — crisp NPCI dual-arrow geometry & official UPI branding
+export const UpiIcon = (props: IconProps) => (
+  <svg viewBox="0 0 90 40" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <g transform="translate(2, 6)">
+      {/* Green arrow */}
+      <path d="M0 26L11 2H20L9 26H0Z" fill="#008844" />
+      {/* Orange arrow */}
+      <path d="M11 26L22 2H31L20 26H11Z" fill="#FF6600" />
+    </g>
+    <text
+      x="38"
+      y="28"
+      fill="#F4CE6B"
+      fontFamily="system-ui, -apple-system, sans-serif"
+      fontWeight="900"
+      fontSize="25"
+      fontStyle="italic"
+      letterSpacing="0.5"
+    >
+      UPI
+    </text>
+  </svg>
+);

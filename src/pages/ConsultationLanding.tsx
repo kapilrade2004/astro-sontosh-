@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/select";
 import {
   KundliIcon, LoveIcon, MarriageIcon, CareerIcon, FinanceIcon, VastuIcon, PalmIcon,
-  NumerologyIcon, AkashikIcon,
+  NumerologyIcon, AkashikIcon, UpiIcon,
 } from "./ConsultationIcons";
 
 /* ─────────────────────────────────────────────────────────────────────────
@@ -157,7 +157,7 @@ const pricingPlans = [
 ];
 
 const paymentMethods = [
-  { icon: Smartphone, label: "UPI" },
+  { icon: UpiIcon, label: "UPI" },
   { icon: CreditCard, label: "Card Payment" },
   { icon: Wallet, label: "Wallets" },
   { icon: Landmark, label: "Net Banking" },
@@ -1118,29 +1118,38 @@ const ConsultationLanding = () => {
                 ))}
               </div>
 
-              <div className="cosmic-card p-5">
-                <p className="text-center text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+              <div className="cosmic-card p-5 sm:p-6">
+                <p className="text-center text-xs sm:text-sm font-bold uppercase tracking-wider text-amber-300/90 mb-3.5">
                   Payment Options
                 </p>
-                <div className="grid grid-cols-2 gap-2.5">
+                <div className="grid grid-cols-2 gap-3">
                   {paymentMethods.map((m) => (
-                    <div key={m.label} className="flex flex-col items-center gap-1.5 py-3 rounded-lg bg-muted/20 border border-primary/10">
-                      <m.icon className="w-5 h-5 text-primary" />
-                      <span className="text-xs text-muted-foreground">{m.label}</span>
+                    <div
+                      key={m.label}
+                      className="flex flex-col items-center justify-center gap-2 py-3.5 px-2 rounded-xl bg-gradient-to-br from-amber-500/10 via-background to-amber-950/20 border border-amber-400/25 hover:border-amber-400/50 hover:bg-amber-400/10 transition-all duration-300 group shadow-sm"
+                    >
+                      {m.label === "UPI" ? (
+                        <m.icon className="h-6 w-auto drop-shadow-[0_2px_6px_rgba(251,191,36,0.3)] transition-transform duration-300 group-hover:scale-105" />
+                      ) : (
+                        <m.icon className="w-5.5 h-5.5 text-amber-300 filter drop-shadow-[0_0_6px_rgba(251,191,36,0.5)] transition-transform duration-300 group-hover:scale-105" strokeWidth={2.2} />
+                      )}
+                      <span className="text-sm sm:text-base font-bold text-foreground group-hover:text-amber-300 transition-colors">
+                        {m.label}
+                      </span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="text-center">
-                <Button size="lg" className="w-full glow-gold mb-3" onClick={scrollToBooking}>
-                  <Lock className="w-4 h-4 mr-2" />
+              <div className="text-center space-y-2.5">
+                <Button size="lg" className="w-full text-base sm:text-lg font-bold py-6 sm:py-6.5 glow-gold shadow-lg" onClick={scrollToBooking}>
+                  <Lock className="w-5 h-5 mr-2.5 text-amber-300 filter drop-shadow-[0_0_4px_rgba(251,191,36,0.6)]" strokeWidth={2.2} />
                   Pay &amp; Book Consultation
                 </Button>
-                <p className="flex items-center justify-center gap-1.5 text-xs text-primary font-medium mb-1">
-                  <Shield className="w-3.5 h-3.5" /> Secure Payment
+                <p className="flex items-center justify-center gap-2 text-sm sm:text-base text-amber-300 font-bold">
+                  <Shield className="w-4 h-4 text-amber-400 filter drop-shadow-[0_0_4px_rgba(251,191,36,0.5)]" strokeWidth={2.2} /> Secure Payment
                 </p>
-                <p className="text-xs text-muted-foreground">100% Secure &amp; Encrypted</p>
+                <p className="text-xs sm:text-sm font-semibold text-foreground/80">100% Secure &amp; Encrypted</p>
               </div>
             </div>
           </div>
