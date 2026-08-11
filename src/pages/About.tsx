@@ -423,6 +423,7 @@ import {
   ArrowRight, CheckCircle2, Users
 } from "lucide-react";
 import CertificationsShowcase from "@/components/home/CertificationsShowcase";
+import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import AboutImg from "@/assets/AboutImg.jpeg";
 import LOGO from "@/assets/logo by yash.png";
 
@@ -878,6 +879,9 @@ const About = () => {
         <section>
           <CertificationsShowcase />
         </section>
+
+        {/* Testimonials Review Section from Home */}
+        <TestimonialsSection />
 
         {/* CTA Section */}
         <section className="py-20 bg-background">

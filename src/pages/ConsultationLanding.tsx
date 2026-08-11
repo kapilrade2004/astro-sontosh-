@@ -24,6 +24,7 @@ import {
   KundliIcon, LoveIcon, MarriageIcon, CareerIcon, FinanceIcon, VastuIcon, PalmIcon,
   NumerologyIcon, AkashikIcon, UpiIcon,
 } from "./ConsultationIcons";
+import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 
 /* ─────────────────────────────────────────────────────────────────────────
 
@@ -1338,68 +1339,8 @@ const ConsultationLanding = () => {
           </div>
         </section>
 
-        {/* ── Testimonials ── */}
-        <section className="py-12 md:py-16 bg-gradient-cosmic">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center max-w-2xl mx-auto mb-10"
-            >
-              <h2 className="font-serif text-2xl md:text-3xl font-bold mb-2">
-                Stories of <span className="text-gradient-gold">Transformation</span>
-              </h2>
-              <p className="text-muted-foreground text-sm">
-                Hear from clients who experienced real changes in their lives through our guidance and remedies.
-              </p>
-            </motion.div>
-
-            <div className="flex items-center justify-center gap-4 max-w-5xl mx-auto">
-              <button
-                onClick={showPrev}
-                aria-label="Previous testimonial"
-                className="hidden sm:flex w-10 h-10 rounded-full border border-primary/30 items-center justify-center text-primary hover:bg-primary/10 transition-colors shrink-0"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-
-              <div className="grid sm:grid-cols-3 gap-6 flex-1">
-                <AnimatePresence mode="wait">
-                  {[0, 1, 2].map((offset) => {
-                    const t = testimonials[(testimonialIndex + offset) % testimonials.length];
-                    return (
-                      <motion.div
-                        key={`${t.name}-${offset}`}
-                        initial={{ opacity: 0, y: 15 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: offset * 0.08 }}
-                        className="cosmic-card p-6"
-                      >
-                        <div className="flex items-start gap-3 mb-3">
-                          <InitialsAvatar name={t.name} />
-                          <div>
-                            <StarRow />
-                          </div>
-                        </div>
-                        <p className="text-sm text-muted-foreground italic mb-4">"{t.quote}"</p>
-                        <p className="font-serif font-semibold text-sm">— {t.name}</p>
-                      </motion.div>
-                    );
-                  })}
-                </AnimatePresence>
-              </div>
-
-              <button
-                onClick={showNext}
-                aria-label="Next testimonial"
-                className="hidden sm:flex w-10 h-10 rounded-full border border-primary/30 items-center justify-center text-primary hover:bg-primary/10 transition-colors shrink-0"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-        </section>
+        {/* ── Testimonials (Home Page Review Section) ── */}
+        <TestimonialsSection />
 
         {/* ── Callback + Limited Slots ── */}
         <section className="py-12 md:py-16 bg-background">
