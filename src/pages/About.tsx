@@ -424,6 +424,8 @@ import {
 } from "lucide-react";
 import CertificationsShowcase from "@/components/home/CertificationsShowcase";
 import AboutImg from "@/assets/AboutImg.jpeg";
+import LOGO from "@/assets/logo by yash.png";
+
 
 const values = [
   {
@@ -504,16 +506,23 @@ const About = () => {
                   </div>
                 </motion.div>
 
-                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mt-4 mb-6">
-                  Guiding Lives Through
-                  <span className="text-gradient-gold"> Ancient Wisdom & Modern Understanding</span>
+                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mt-4 mb-6 flex flex-col items-start gap-3">
+                  <span className="inline-flex items-center gap-3">
+                    <img
+                      src={LOGO}
+                      alt="Lion Emblem"
+                      className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 object-contain inline-block flex-shrink-0 filter drop-shadow-[0_0_15px_rgba(251,191,36,0.65)] mix-blend-screen"
+                    />
+                    <span>Guiding Lives Through</span>
+                  </span>
+                  <span className="text-gradient-gold"> Ancient Wisdom &amp; Modern Understanding</span>
                 </h1>
                 <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mb-8">
                   Personalized guidance through Vedic Astrology, Akashik Record Reading, Numerology, Vastu, and Palmistry to help individuals gain clarity, confidence, and positivity in life.
                 </p>
               </motion.div>
 
-              {/* Right: Client Photo — white bg removed with screen blend */}
+              {/* Right: Client Photo — circular frame */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -522,23 +531,21 @@ const About = () => {
               >
                 <div className="relative">
                   {/* Outer animated glow */}
-                  <div className="absolute -inset-6 rounded-3xl bg-gradient-to-br from-amber-400/35 via-yellow-500/20 to-purple-900/30 blur-3xl animate-pulse pointer-events-none" />
+                  <div className="absolute -inset-6 rounded-full bg-gradient-to-br from-amber-400/35 via-yellow-500/20 to-purple-900/30 blur-3xl animate-pulse pointer-events-none" />
 
-                  {/* ── Image frame ── */}
+                  {/* ── Circular Image frame ── */}
                   <div
-                    className="relative rounded-2xl overflow-hidden w-72 lg:w-80 xl:w-96"
+                    className="relative rounded-full overflow-hidden w-64 h-64 sm:w-80 sm:h-80 xl:w-96 xl:h-96 border-4 border-amber-400/50 shadow-[0_0_40px_rgba(251,191,36,0.35)]"
                     style={{
-                      /* Pure black bg — screen blend makes black invisible,
-                         so only the person shows through cleanly */
+                      /* Pure black bg — screen blend makes black invisible */
                       background: "#000000",
                     }}
                   >
-                    {/* Photo with screen blend — white bg disappears,
-                        person remains fully visible and bright */}
+                    {/* Photo with screen blend */}
                     <img
                       src={AboutImg}
                       alt="Astro Santosh Pandey"
-                      className="relative z-10 w-full h-auto object-cover object-top block"
+                      className="relative z-10 w-full h-full object-cover object-top block"
                       style={{
                         mixBlendMode: "screen",
                         filter: "brightness(0.92) contrast(1.1) saturate(1.1)",
