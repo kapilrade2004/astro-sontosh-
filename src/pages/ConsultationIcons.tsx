@@ -58,7 +58,7 @@ export const KundliIcon = (props: IconProps) => (
   </svg>
 );
 
-// 2. Love & Marriage — two silhouettes inside a heart
+// 2. Love & Relationship — two silhouettes inside a heart
 export const LoveIcon = (props: IconProps) => (
   <svg viewBox="0 0 120 120" {...props}>
     <Badge id="love" from="#ff6f91" to="#8a1441">
@@ -72,6 +72,18 @@ export const LoveIcon = (props: IconProps) => (
       <circle cx="52" cy="46" r="6" fill="#FFE3EC" />
       <path d="M72 52 q-3 -10 -11 -10 q-3 0 -4 3" fill="none" stroke="#FFC94A" strokeWidth="2.2" strokeLinecap="round" />
       <circle cx="68" cy="46" r="6" fill="#FFC94A" />
+    </Badge>
+  </svg>
+);
+
+// 2b. Marriage Consultation — interlocking wedding rings with gold jewel accent
+export const MarriageIcon = (props: IconProps) => (
+  <svg viewBox="0 0 120 120" {...props}>
+    <Badge id="marriage" from="#e63956" to="#6b0a1d">
+      <circle cx="48" cy="62" r="19" fill="none" stroke="#F4CE6B" strokeWidth="2.5" />
+      <circle cx="72" cy="62" r="19" fill="none" stroke="#FFC94A" strokeWidth="2.5" />
+      <polygon points="48,36 52,41 48,46 44,41" fill="#FFF" />
+      <Sparkle x={72} y={38} s={5} />
     </Badge>
   </svg>
 );

@@ -21,7 +21,7 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import {
-  KundliIcon, LoveIcon, CareerIcon, FinanceIcon, VastuIcon, PalmIcon,
+  KundliIcon, LoveIcon, MarriageIcon, CareerIcon, FinanceIcon, VastuIcon, PalmIcon,
   NumerologyIcon, AkashikIcon,
 } from "./ConsultationIcons";
 
@@ -82,7 +82,7 @@ const services = [
     features: ["Relationship Guidance", "Family Issue Insight", "Love Situation Guidance", "Compatibility Check"],
   },
   {
-    icon: LoveIcon,
+    icon: MarriageIcon,
     title: "Marriage Consultation",
     features: ["Marriage Timing", "Delayed Marriage", "Kundli Matching", "Marital Issues", "Domestic Harmony & Well-being"],
   },
@@ -1005,38 +1005,44 @@ const ConsultationLanding = () => {
         </div>
 
         {/* ── Services ── */}
-        <section className="py-12 md:py-16 bg-background relative overflow-hidden">
+        <section className="py-8 md:py-12 bg-background relative overflow-hidden">
           <div className="pointer-events-none absolute top-0 right-0 w-96 h-96 rounded-full bg-primary/5 blur-[120px]" />
           <div className="container mx-auto px-4 relative">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center font-serif text-2xl md:text-3xl font-bold mb-10"
+              className="text-center font-serif text-xl sm:text-2xl md:text-3xl font-bold mb-6 md:mb-8"
             >
               OUR ASTROLOGY <span className="text-gradient-gold">CONSULTATION SERVICES</span>
             </motion.h2>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
               {services.map((service, index) => (
                 <motion.div
                   key={service.title}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: (index % 3) * 0.08 }}
-                  className="cosmic-card p-5 hover:-translate-y-1 transition-transform duration-300"
+                  transition={{ delay: (index % 3) * 0.06 }}
+                  className="cosmic-card p-4 sm:p-4.5 group hover:-translate-y-1 hover:glow-gold transition-all duration-300 flex flex-col justify-between"
                 >
-                  <service.icon className="w-14 h-14 mb-4 drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)]" />
-                  <h3 className="font-serif text-lg font-semibold mb-3">{service.title}</h3>
-                  <ul className="space-y-1.5">
-                    {service.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2 text-sm text-muted-foreground">
-                        <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
+                  <div>
+                    <div className="mb-2.5 inline-block">
+                      <service.icon className="w-10 h-10 sm:w-11 sm:h-11 drop-shadow-[0_2px_8px_rgba(251,191,36,0.4)] transition-transform duration-300 group-hover:scale-105" />
+                    </div>
+                    <h3 className="font-serif text-base sm:text-lg font-bold mb-2 text-foreground group-hover:text-amber-300 transition-colors leading-snug">
+                      {service.title}
+                    </h3>
+                    <ul className="space-y-1 sm:space-y-1.5">
+                      {service.features.map((f) => (
+                        <li key={f} className="flex items-start gap-1.5 text-xs sm:text-[13px] text-foreground/80 leading-snug">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5 filter drop-shadow-[0_0_4px_rgba(251,191,36,0.4)]" strokeWidth={2.2} />
+                          <span>{f}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </motion.div>
               ))}
             </div>
