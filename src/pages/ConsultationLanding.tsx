@@ -957,13 +957,29 @@ const ConsultationLanding = () => {
                   </Button>
                 </div>
 
-                <a
-                  href="tel:+918879731174"
-                  className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors mt-4"
-                >
-                  <Phone className="w-3.5 h-3.5 text-primary" />
-                  Or call us directly: +91 88797 31174
-                </a>
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm mt-4">
+                  <a
+                    href="tel:+918879731174"
+                    className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-amber-300 transition-colors"
+                  >
+                    <Phone className="w-4 h-4 text-amber-400 shrink-0 filter drop-shadow-[0_0_6px_rgba(251,191,36,0.5)]" />
+                    <span>Or call us directly:</span>
+                    <span className="font-bold text-amber-300 hover:underline tracking-wide">+91 88797 31174</span>
+                  </a>
+
+                  <span className="hidden sm:inline text-white/30">•</span>
+
+                  <a
+                    href="https://mail.google.com/mail/?view=cm&fs=1&to=connect@astrosantoshpandey.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-amber-300 transition-colors"
+                  >
+                    <Mail className="w-4 h-4 text-amber-400 shrink-0 filter drop-shadow-[0_0_6px_rgba(251,191,36,0.5)]" />
+                    <span>Email:</span>
+                    <span className="font-semibold text-amber-200 hover:underline">connect@astrosantoshpandey.com</span>
+                  </a>
+                </div>
               </motion.div>
             </div>
           </div>
