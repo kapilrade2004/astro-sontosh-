@@ -57,7 +57,7 @@ const testimonials = [
     location: "Bangalore, India",
     rating: 5,
     image: KUHELI,
-    text: "2023 onwards I had been facing personal challenges related to my husband’s health/career and deterioration in my neuro diverse child. This in turn took a toll on my mental and physical wellbeing. Despite being a self-driven person and doing my best, I couldn’t get a hold of the situation.  That’s when Universe connected me to Santoshji. His precision on reading all our charts gave us clarity on ‘Whys’. Add on was his non-judgmental demeanor that made me feel completely supported and heard. Thereafter his intuitive approach and predictions helped me to navigate through the challenges. The remedies were customized to ensure that it wasn’t too overwhelming for a person like me with limited spiritual aptitude.  I will lifelong be indebted to him for the equivocal support extended at a time when I could see no ray of hope. I would highly recommend him to anyone who is unable to bowl the googly that life throws upon. Thanks to him, the science behind the stars feel accessible and real🙏",
+    text: "Santosh Ji’s guidance was precise, supportive, and easy to understand. His insights helped me look at my challenges with a more positive perspective.",
     service: "Child Astrology, Health Astrology, Career Astrology",
   },
   {
