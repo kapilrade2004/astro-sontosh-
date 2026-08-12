@@ -23,7 +23,7 @@ const testimonials = [
     location: "Virar,Maharashtra",
     rating: 5,
     image: ANKITAPRAB, // Add your image path here
-    text: "Astrologer Santosh Ji gave me truly great guidance at a time when I was very confused. His advice was accurate, practical, and deeply reassuring. The remedies he suggested were simple yet very effective, and they helped me see my situation with much more clarity.What I appreciated the most was his calm approach and honest guidance—he didn’t create fear, only solutions. After speaking with him, I felt mentally lighter and more confident about my decisions.I genuinely recommend Santosh Ji to anyone who is facing personal or life-related problems and needs clear, trustworthy guidance. 🙏✨",
+    text: "Santosh Ji provided clear and accurate guidance. His advice was practical, reassuring, and helped me make better decisions. Truly recommended!",
     service: "Astrology",
   },
   {
