@@ -39,7 +39,7 @@ const testimonials = [
     location: "Mumbai, India",
     rating: 5,
     image: sonaldevi,
-    text: "Radhe Radhe!I consulted Astrologer Santosh Ji at a time when I was seeking clarity for both my health and career. His guidance regarding my diabetes and skin concerns was compassionate, practical, and spiritually uplifting. The remedies suggested were simple yet powerful, and I personally experienced positive results.As I continued my journey with him for career guidance, his insights brought clarity to real-life challenges and helped me take confident, well-aligned decisions. His wisdom and thoughtful approach created a deep sense of trust and inner balance.I express my sincere gratitude to Astrologer Santosh Ji for his divine guidance. I highly recommend him to anyone seeking authentic solutions, clarity, and direction to unlock the right path in life with divine blessings and astrological remedies.",
+    text: "I really appreciated Santosh Ji’s thoughtful guidance. His calm approach gave me clarity and a positive direction when I needed it most.",
     service: "Vastu Consultation",
   },
 
