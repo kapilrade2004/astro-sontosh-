@@ -31,7 +31,7 @@ const testimonials = [
     location: "Mumbai, India",
     rating: 5,
     image: NANCYJOSHI, // Add your image path here
-    text: "I truly appreciated the depth and clarity of this astrologer Santosh Pandey.  He took the time to understand my concerns and explained everything in a calm, thoughtful manner. The insights felt accurate and meaningful, not rushed or generic. What stood out most was the practical guidance, which helped me see my situation from a more balanced and positive perspective. I left the session feeling reassured and more confident about my next steps. Highly recommended for anyone seeking genuine and mindful guidance.",
+    text: "A very insightful and positive consultation. Santosh Ji explained everything patiently and gave guidance that was easy to understand and follow.",
     service: "Career Astrology",
   },
   {
