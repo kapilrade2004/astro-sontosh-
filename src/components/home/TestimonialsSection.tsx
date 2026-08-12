@@ -49,7 +49,7 @@ const testimonials = [
     location: "Kolkata, India",
     rating: 5,
     image: SUMITRA,
-    text: "I’m an ITSM professional working in MNC . My belief system is based on my experiences. I used to be disturbed at some point in time due to my personal life, affecting my professional commitment. I realised that I needed help.I consulted Astro Santosh Pandey, who performed a deep analysis of my birth chat aligned with recent planetary dynamics, to offer precise remedies that has healed me. I am greatful to his services.",
+    text: "Santosh Ji provided thoughtful guidance with a practical approach. His insights helped me gain clarity and bring a more positive balance to my personal and professional life.",
     service: "Palmistry",
   },
   {
@@ -65,7 +65,7 @@ const testimonials = [
     location: "India",
     rating: 5,
     image: "/path-to-anisha.jpg",
-    text: "Consulting with Astro Santosh Pandeyji has truly been a blessing in my life. I feel honoured to express my heartfelt gratitude for his invaluable guidance and insights. Understanding the details of my Kundli through a factual and logical approach has provided me with a profound perspective on life. His explanations guided me to tackle challenges with a positive mindset, and the remedies provided significantly mitigated these challenges, leading to an overall improvement in my life’s journey. I now consider his guidance as my lifetime go-to resource. Hari Om Namah Shivaay 🙏",
+    text: "The Kundli analysis was clear, detailed, and easy to understand. Santosh Ji’s guidance gave me a better perspective and helped me move forward with confidence.",
     service: "Kundli Analysis",
   },
   {
