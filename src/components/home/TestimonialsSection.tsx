@@ -73,7 +73,7 @@ const testimonials = [
     location: "Chandrapur, Maharashtra",
     rating: 5,
     image: "/path-to-laxmi.jpg",
-    text: "I am deeply grateful to Santosh Pandey ji for the guidance and learning I received. This experience was not limited to a consultation; it was a genuine process of understanding and transformation. My horoscope was analyzed with exceptional depth, clarity, and accuracy, and the remedies suggested were practical and truly effective. What sets him apart is his ability to teach astrology logically, with clear reasoning behind every prediction and remedy. This guidance has helped me both personally and professionally, and I highly recommend him to anyone seeking authentic astrology and meaningful results.",
+    text: "A wonderful experience with clear and meaningful guidance. Santosh Ji explained things very well and gave practical insights that I truly appreciated.",
     service: "Astrology & Horoscope Analysis",
   },
 
