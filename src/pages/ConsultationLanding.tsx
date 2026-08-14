@@ -1054,7 +1054,7 @@ const ConsultationLanding = () => {
               OUR ASTROLOGY <span className="text-gradient-gold">CONSULTATION SERVICES</span>
             </motion.h2>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
               {services.map((service, index) => (
                 <motion.div
                   key={service.title}
@@ -1062,19 +1062,19 @@ const ConsultationLanding = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: (index % 4) * 0.05 }}
-                  className="cosmic-card p-3.5 group hover:-translate-y-1 hover:glow-gold transition-all duration-300 flex flex-col justify-between"
+                  className="cosmic-card p-2.5 sm:p-3.5 group hover:-translate-y-1 hover:glow-gold transition-all duration-300 flex flex-col justify-between"
                 >
                   <div>
-                    <div className="mb-1.5 inline-block">
-                      <service.icon className="w-8 h-8 sm:w-9 sm:h-9 drop-shadow-[0_2px_8px_rgba(251,191,36,0.4)] transition-transform duration-300 group-hover:scale-105" />
+                    <div className="mb-1 inline-block">
+                      <service.icon className="w-6 h-6 sm:w-8 sm:h-8 drop-shadow-[0_2px_8px_rgba(251,191,36,0.4)] transition-transform duration-300 group-hover:scale-105" />
                     </div>
-                    <h3 className="font-serif text-xs sm:text-sm font-bold mb-1 text-foreground group-hover:text-amber-300 transition-colors leading-snug">
+                    <h3 className="font-serif text-[11px] sm:text-xs md:text-sm font-bold mb-1 text-foreground group-hover:text-amber-300 transition-colors leading-snug">
                       {service.title}
                     </h3>
                     <ul className="space-y-0.5">
                       {service.features.map((f) => (
-                        <li key={f} className="flex items-start gap-1 text-[11px] sm:text-xs text-foreground/80 leading-tight">
-                          <CheckCircle2 className="w-3 h-3 text-amber-400 shrink-0 mt-0.5 filter drop-shadow-[0_0_4px_rgba(251,191,36,0.4)]" strokeWidth={2.2} />
+                        <li key={f} className="flex items-start gap-1 text-[10px] sm:text-[11px] md:text-xs text-foreground/80 leading-tight">
+                          <CheckCircle2 className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-amber-400 shrink-0 mt-0.5 filter drop-shadow-[0_0_4px_rgba(251,191,36,0.4)]" strokeWidth={2.2} />
                           <span>{f}</span>
                         </li>
                       ))}
