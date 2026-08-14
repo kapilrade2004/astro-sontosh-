@@ -18,6 +18,7 @@ import {
   ArrowRight, CheckCircle,
   PenTool, TrendingUp, Users, Building, Award
 } from "lucide-react";
+import astrologyImg from "../assets/Astrology.jpeg";
 import RudrakshaImg from "@/assets/Rudraksha-icon-PNG.png";
 
 const RudrakshaIcon = ({ className }: { className?: string }) => (
@@ -180,7 +181,7 @@ const ZodiacWheel = ({ size = "lg" }: { size?: "sm" | "lg" }) => {
         }}
       >
         <motion.img
-          src="/src/assets/Astrology.jpeg"
+          src={astrologyImg}
           alt="Vedic Astrology Zodiac Wheel - Nakshatra Chart"
           className={imgClass}
           style={{ filter: "brightness(1.0) contrast(1.05) saturate(1.1)" }}

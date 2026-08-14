@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { X } from "lucide-react";
+import numerologyImg from "../assets/Numerology.jpeg";
 
 
 const services = [
@@ -108,7 +109,7 @@ const NumerologyImage = ({ size = "lg" }: { size?: "sm" | "lg" }) => {
       <div className="absolute -inset-6 rounded-2xl bg-gradient-to-br from-purple-500/25 via-amber-400/20 to-purple-800/20 blur-3xl animate-pulse pointer-events-none" />
       <div className="relative rounded-2xl overflow-hidden shadow-2xl">
         <img
-          src="/src/assets/Numerology.jpeg"
+          src={numerologyImg}
           alt="Numerology - Sacred Numbers & Zodiac"
           className={imgClass}
           style={{ filter: "brightness(1.0) contrast(1.05) saturate(1.08)" }}

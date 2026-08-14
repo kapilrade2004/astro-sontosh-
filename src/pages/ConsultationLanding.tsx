@@ -26,6 +26,7 @@ import {
 } from "./ConsultationIcons";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { sendLeadToCRM } from "@/lib/sendLeadToCRM";
+import astrologyImg from "@/assets/Astrology.jpeg";
 
 /* ─────────────────────────────────────────────────────────────────────────
 
@@ -926,7 +927,7 @@ const ConsultationLanding = () => {
                 <div className="cosmic-card w-full max-w-[280px] sm:max-w-xs aspect-square flex items-center justify-center overflow-hidden relative">
                   <div className="absolute inset-0 bg-gradient-radial from-primary/15 via-transparent to-transparent" />
                   <motion.img
-                    src="/src/assets/Astrology.jpeg"
+                    src={astrologyImg}
                     alt="Vedic Astrology Zodiac Wheel"
                     className="w-4/5 h-4/5 object-cover rounded-full"
                     animate={{ rotate: 360 }}

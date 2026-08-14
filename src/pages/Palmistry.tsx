@@ -16,6 +16,7 @@ import {
   ArrowRight, CheckCircle, Shield, Sparkles, HeartPulse, Wallet,
   Users, Sun, Calendar, Target, MapPin, Phone, X
 } from "lucide-react";
+import palmistryImg from "../assets/Palmistry.jpeg";
 
 const palmLines = [
   {
@@ -239,7 +240,7 @@ const PalmistryImage = ({
           }}
         >
           <img
-            src="/src/assets/Palmistry.jpeg"
+            src={palmistryImg}
             alt="Palmistry - Sacred Hand Reading Chart"
             className={imgClass}
             style={{ filter: "brightness(1.05) contrast(1.05) saturate(1.1)" }}
