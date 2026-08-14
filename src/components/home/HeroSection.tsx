@@ -3,6 +3,8 @@ import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { CosmicBackground } from "@/components/ui/CosmicBackground";
 import LOGO from "@/assets/logo by yash.png";
+import HeroImg from "@/assets/HeroImg.jpeg";
+
 
 /* ── animation presets ─────────────────────────────────────── */
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -293,7 +295,14 @@ export const HeroSection = () => {
               {...fadeLeft(0.15)}
               className="font-serif font-bold leading-[1.15] mb-4 text-3xl sm:text-4xl"
             >
-              Transform Your Life{" "}
+              <span className="inline-flex items-center gap-2.5 sm:gap-3">
+                <img
+                  src={LOGO}
+                  alt="Lion Emblem"
+                  className="w-10 h-10 sm:w-12 sm:h-12 object-contain inline-block flex-shrink-0 filter drop-shadow-[0_0_12px_rgba(251,191,36,0.65)] mix-blend-screen"
+                />
+                <span>Transform Your Life</span>
+              </span>{" "}
               <span className="block" style={{ color: "rgba(255,255,255,0.92)" }}>With Expert</span>
               <span className="block bg-clip-text text-transparent"
                 style={{ backgroundImage: "linear-gradient(130deg, #fef9c3 0%, #fcd34d 28%, #f59e0b 58%, #b45309 100%)" }}>
@@ -316,12 +325,32 @@ export const HeroSection = () => {
 
             <motion.p
               {...fadeLeft(0.38)}
-              className="leading-relaxed text-sm sm:text-base"
+              className="leading-relaxed text-sm sm:text-base mb-4"
               style={{ color: "rgba(255,255,255,0.58)" }}
             >
               Accurate predictions, personalised remedies, and life-changing
               solutions for career, marriage, finance, health &amp; peace.
             </motion.p>
+
+            {/* Client Photo in Circular Frame (Mobile) */}
+            <motion.div {...fadeUp(0.45)} className="flex items-center gap-3 mt-1">
+              <div className="relative group flex-shrink-0">
+                <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 blur-sm opacity-85 group-hover:opacity-100 transition duration-500 animate-pulse" />
+                <div className="relative w-14 h-14 rounded-full p-0.5 bg-gradient-to-tr from-amber-400 via-yellow-200 to-amber-600 shadow-[0_0_18px_rgba(251,191,36,0.45)]">
+                  <div className="w-full h-full rounded-full overflow-hidden bg-black/90 border border-amber-300/70">
+                    <img
+                      src={HeroImg}
+                      alt="Astro Santosh Pandey"
+                      className="w-full h-full object-cover object-top filter brightness-105 contrast-105"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col justify-center">
+                <span className="text-xs font-bold text-amber-200 tracking-wide font-serif">Astro Santosh Pandey</span>
+                <span className="text-[11px] text-white/65">Vedic Astrologer &amp; Life Consultant</span>
+              </div>
+            </motion.div>
           </motion.div>
 
           {/* MOBILE — Video: centered */}
@@ -350,7 +379,14 @@ export const HeroSection = () => {
               className="font-serif font-bold leading-[1.13] mb-5 lg:mb-6"
               style={{ fontSize: "clamp(1.6rem, 3vw, 3.2rem)" }}
             >
-              Transform Your Life{" "}
+              <span className="inline-flex items-center gap-3 lg:gap-4">
+                <img
+                  src={LOGO}
+                  alt="Lion Emblem"
+                  className="w-10 h-10 lg:w-14 lg:h-14 object-contain inline-block flex-shrink-0 filter drop-shadow-[0_0_15px_rgba(251,191,36,0.65)] mix-blend-screen"
+                />
+                <span>Transform Your Life</span>
+              </span>{" "}
               <span className="block" style={{ color: "rgba(255,255,255,0.92)" }}>With Expert</span>
               <span className="block bg-clip-text text-transparent"
                 style={{ backgroundImage: "linear-gradient(130deg, #fef9c3 0%, #fcd34d 28%, #f59e0b 58%, #b45309 100%)" }}>
@@ -373,7 +409,7 @@ export const HeroSection = () => {
 
             <motion.p
               {...fadeLeft(0.38)}
-              className="leading-relaxed"
+              className="leading-relaxed mb-4"
               style={{
                 fontSize: "clamp(0.85rem, 1.1vw, 1.05rem)",
                 color: "rgba(255,255,255,0.58)",
@@ -384,7 +420,25 @@ export const HeroSection = () => {
               solutions for career, marriage, finance, health &amp; peace.
             </motion.p>
 
-            <motion.div {...fadeUp(0.48)} className="mt-7 lg:mt-9 flex flex-wrap gap-3" />
+            {/* Client Photo in Circular Frame (Desktop) */}
+            <motion.div {...fadeUp(0.48)} className="mt-4 flex items-center gap-4">
+              <div className="relative group flex-shrink-0">
+                <div className="absolute -inset-1.5 rounded-full bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 blur-md opacity-85 group-hover:opacity-100 transition duration-500 animate-pulse" />
+                <div className="relative w-16 h-16 lg:w-20 lg:h-20 rounded-full p-0.5 bg-gradient-to-tr from-amber-400 via-yellow-200 to-amber-600 shadow-[0_0_22px_rgba(251,191,36,0.5)]">
+                  <div className="w-full h-full rounded-full overflow-hidden bg-black/90 border-2 border-amber-300/70">
+                    <img
+                      src={HeroImg}
+                      alt="Astro Santosh Pandey"
+                      className="w-full h-full object-cover object-top filter brightness-105 contrast-105"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col justify-center">
+                <span className="text-sm font-bold text-amber-200 tracking-wide font-serif">Astro Santosh Pandey</span>
+                <span className="text-xs text-white/65">Vedic Astrologer &amp; Life Consultant</span>
+              </div>
+            </motion.div>
           </div>
 
           {/* COL 2 — Video (CENTER) ← swapped here */}

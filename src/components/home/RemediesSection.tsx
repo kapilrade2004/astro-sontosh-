@@ -1,7 +1,7 @@
 
 
 import { motion } from "framer-motion";
-import { Gem, Sparkles, Flame, BookOpen, Sun, Shield, Leaf } from "lucide-react";
+import { Gem, Sparkles, Flame, BookOpen, Sun, ShieldCheck, Leaf } from "lucide-react";
 import RudrakshaImg from "@/assets/Rudraksha-icon-PNG.png";
 
 const RudrakshaIcon = ({ className }: { className?: string }) => (
@@ -40,7 +40,7 @@ const remedies = [
     description: "Personalized daily practices aligned with your horoscope for optimal health and success.",
   },
   {
-    icon: Shield,
+    icon: ShieldCheck,
     title: "Protective Measures",
     description: "Yantras, talismans, and protective methods to ward off negative energies.",
   },
@@ -62,11 +62,11 @@ export const RemediesSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <span className="text-primary font-medium text-sm uppercase tracking-wider">Remedies & Healing</span>
+          <span className="text-amber-300 font-semibold text-sm uppercase tracking-wider">Remedies &amp; Healing</span>
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold mt-4 mb-6">
             Powerful <span className="text-gradient-gold">Customised Remedies</span>
           </h2>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-foreground/80 text-lg leading-relaxed">
             Every remedy is carefully selected and personalized based on your unique 
             birth chart and current planetary positions for maximum effectiveness.
           </p>
@@ -80,21 +80,21 @@ export const RemediesSection = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.05 }}
-              className="cosmic-card p-6 text-center group hover:scale-[1.05] transition-transform duration-300"
+              className="cosmic-card p-6 text-center group hover:scale-[1.05] hover:glow-gold transition-all duration-300"
             >
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/25 via-yellow-400/20 to-amber-900/40 border border-amber-400/35 shadow-[0_0_16px_rgba(251,191,36,0.2)] flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:border-amber-400/60 transition-all duration-300">
                 {remedy.icon === "rudraksha" ? (
-                  <RudrakshaIcon className="w-6 h-6 text-primary" />
+                  <RudrakshaIcon className="w-8 h-8 text-amber-300 filter drop-shadow-[0_0_8px_rgba(251,191,36,0.6)]" />
                 ) : (
-                  <remedy.icon className="w-6 h-6 text-primary" />
+                  <remedy.icon className="w-8 h-8 text-amber-300 filter drop-shadow-[0_0_8px_rgba(251,191,36,0.6)]" strokeWidth={2.2} />
                 )}
               </div>
-              <h3 className="font-serif text-base font-semibold mb-2">{remedy.title}</h3>
-              <p className="text-muted-foreground text-xs leading-relaxed">{remedy.description}</p>
+              <h3 className="font-serif text-lg font-bold mb-2 text-foreground group-hover:text-amber-300 transition-colors">{remedy.title}</h3>
+              <p className="text-foreground/80 text-xs sm:text-sm leading-relaxed">{remedy.description}</p>
             </motion.div>
           ))}
         </div>
       </div>
     </section>
   );
-};
+};

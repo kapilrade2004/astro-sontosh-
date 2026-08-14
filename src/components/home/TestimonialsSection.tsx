@@ -23,7 +23,7 @@ const testimonials = [
     location: "Virar,Maharashtra",
     rating: 5,
     image: ANKITAPRAB, // Add your image path here
-    text: "Astrologer Santosh Ji gave me truly great guidance at a time when I was very confused. His advice was accurate, practical, and deeply reassuring. The remedies he suggested were simple yet very effective, and they helped me see my situation with much more clarity.What I appreciated the most was his calm approach and honest guidance—he didn’t create fear, only solutions. After speaking with him, I felt mentally lighter and more confident about my decisions.I genuinely recommend Santosh Ji to anyone who is facing personal or life-related problems and needs clear, trustworthy guidance. 🙏✨",
+    text: "Santosh Ji provided clear and accurate guidance. His advice was practical, reassuring, and helped me make better decisions. Truly recommended!",
     service: "Astrology",
   },
   {
@@ -31,7 +31,7 @@ const testimonials = [
     location: "Mumbai, India",
     rating: 5,
     image: NANCYJOSHI, // Add your image path here
-    text: "I truly appreciated the depth and clarity of this astrologer Santosh Pandey.  He took the time to understand my concerns and explained everything in a calm, thoughtful manner. The insights felt accurate and meaningful, not rushed or generic. What stood out most was the practical guidance, which helped me see my situation from a more balanced and positive perspective. I left the session feeling reassured and more confident about my next steps. Highly recommended for anyone seeking genuine and mindful guidance.",
+    text: "A very insightful and positive consultation. Santosh Ji explained everything patiently and gave guidance that was easy to understand and follow.",
     service: "Career Astrology",
   },
   {
@@ -39,7 +39,7 @@ const testimonials = [
     location: "Mumbai, India",
     rating: 5,
     image: sonaldevi,
-    text: "Radhe Radhe!I consulted Astrologer Santosh Ji at a time when I was seeking clarity for both my health and career. His guidance regarding my diabetes and skin concerns was compassionate, practical, and spiritually uplifting. The remedies suggested were simple yet powerful, and I personally experienced positive results.As I continued my journey with him for career guidance, his insights brought clarity to real-life challenges and helped me take confident, well-aligned decisions. His wisdom and thoughtful approach created a deep sense of trust and inner balance.I express my sincere gratitude to Astrologer Santosh Ji for his divine guidance. I highly recommend him to anyone seeking authentic solutions, clarity, and direction to unlock the right path in life with divine blessings and astrological remedies.",
+    text: "I really appreciated Santosh Ji’s thoughtful guidance. His calm approach gave me clarity and a positive direction when I needed it most.",
     service: "Vastu Consultation",
   },
 
@@ -49,7 +49,7 @@ const testimonials = [
     location: "Kolkata, India",
     rating: 5,
     image: SUMITRA,
-    text: "I’m an ITSM professional working in MNC . My belief system is based on my experiences. I used to be disturbed at some point in time due to my personal life, affecting my professional commitment. I realised that I needed help.I consulted Astro Santosh Pandey, who performed a deep analysis of my birth chat aligned with recent planetary dynamics, to offer precise remedies that has healed me. I am greatful to his services.",
+    text: "Santosh Ji provided thoughtful guidance with a practical approach. His insights helped me gain clarity and bring a more positive balance to my personal and professional life.",
     service: "Palmistry",
   },
   {
@@ -57,7 +57,7 @@ const testimonials = [
     location: "Bangalore, India",
     rating: 5,
     image: KUHELI,
-    text: "2023 onwards I had been facing personal challenges related to my husband’s health/career and deterioration in my neuro diverse child. This in turn took a toll on my mental and physical wellbeing. Despite being a self-driven person and doing my best, I couldn’t get a hold of the situation.  That’s when Universe connected me to Santoshji. His precision on reading all our charts gave us clarity on ‘Whys’. Add on was his non-judgmental demeanor that made me feel completely supported and heard. Thereafter his intuitive approach and predictions helped me to navigate through the challenges. The remedies were customized to ensure that it wasn’t too overwhelming for a person like me with limited spiritual aptitude.  I will lifelong be indebted to him for the equivocal support extended at a time when I could see no ray of hope. I would highly recommend him to anyone who is unable to bowl the googly that life throws upon. Thanks to him, the science behind the stars feel accessible and real🙏",
+    text: "Santosh Ji’s guidance was precise, supportive, and easy to understand. His insights helped me look at my challenges with a more positive perspective.",
     service: "Child Astrology, Health Astrology, Career Astrology",
   },
   {
@@ -65,7 +65,7 @@ const testimonials = [
     location: "India",
     rating: 5,
     image: "/path-to-anisha.jpg",
-    text: "Consulting with Astro Santosh Pandeyji has truly been a blessing in my life. I feel honoured to express my heartfelt gratitude for his invaluable guidance and insights. Understanding the details of my Kundli through a factual and logical approach has provided me with a profound perspective on life. His explanations guided me to tackle challenges with a positive mindset, and the remedies provided significantly mitigated these challenges, leading to an overall improvement in my life’s journey. I now consider his guidance as my lifetime go-to resource. Hari Om Namah Shivaay 🙏",
+    text: "The Kundli analysis was clear, detailed, and easy to understand. Santosh Ji’s guidance gave me a better perspective and helped me move forward with confidence.",
     service: "Kundli Analysis",
   },
   {
@@ -73,7 +73,7 @@ const testimonials = [
     location: "Chandrapur, Maharashtra",
     rating: 5,
     image: "/path-to-laxmi.jpg",
-    text: "I am deeply grateful to Santosh Pandey ji for the guidance and learning I received. This experience was not limited to a consultation; it was a genuine process of understanding and transformation. My horoscope was analyzed with exceptional depth, clarity, and accuracy, and the remedies suggested were practical and truly effective. What sets him apart is his ability to teach astrology logically, with clear reasoning behind every prediction and remedy. This guidance has helped me both personally and professionally, and I highly recommend him to anyone seeking authentic astrology and meaningful results.",
+    text: "A wonderful experience with clear and meaningful guidance. Santosh Ji explained things very well and gave practical insights that I truly appreciated.",
     service: "Astrology & Horoscope Analysis",
   },
 

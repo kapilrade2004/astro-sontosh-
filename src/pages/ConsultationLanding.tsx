@@ -21,9 +21,11 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import {
-  KundliIcon, LoveIcon, CareerIcon, FinanceIcon, VastuIcon, PalmIcon,
-  NumerologyIcon, AkashikIcon,
+  KundliIcon, LoveIcon, MarriageIcon, CareerIcon, FinanceIcon, VastuIcon, PalmIcon,
+  NumerologyIcon, AkashikIcon, UpiIcon,
 } from "./ConsultationIcons";
+import { TestimonialsSection } from "@/components/home/TestimonialsSection";
+import { sendLeadToCRM } from "@/lib/sendLeadToCRM";
 
 /* ─────────────────────────────────────────────────────────────────────────
 
@@ -77,14 +79,14 @@ const trustBadges = [
 
 const services = [
   {
-    icon: LoveIcon,
-    title: "Love & Relationship Consultation",
-    features: ["Relationship Guidance", "Family Issue Insight", "Love Situation Guidance", "Compatibility Check"],
-  },
-  {
-    icon: LoveIcon,
-    title: "Marriage Consultation",
-    features: ["Marriage Timing", "Delayed Marriage", "Kundli Matching", "Marital Issues", "Domestic Harmony & Well-being"],
+    icon: MarriageIcon,
+    title: "Love, Marriage & Domestic Harmony",
+    features: [
+      "Relationship & Compatibility Guidance",
+      "Marriage Timing & Kundli Matching",
+      "Marital Issues & Conflict Resolution",
+      "Domestic Harmony & Family Well-being",
+    ],
   },
   {
     icon: CareerIcon,
@@ -149,15 +151,15 @@ const pricingPlans = [
   },
   {
     id: "complete",
-    name: "Complete Life Analysis",
+    name: "Detailed Kundli Analysis",
     price: "₹11,000",
-    features: ["60 Minutes Consultation", "Detailed Kundli Analysis", "Career + Marriage + Finance Review", "Priority Support"],
+    features: ["60 Minutes Consultation", "Full Birth Chart Reading", "Career + Marriage + Finance Review", "Priority Support"],
     popular: false,
   },
 ];
 
 const paymentMethods = [
-  { icon: Smartphone, label: "UPI" },
+  { icon: UpiIcon, label: "UPI" },
   { icon: CreditCard, label: "Card Payment" },
   { icon: Wallet, label: "Wallets" },
   { icon: Landmark, label: "Net Banking" },
@@ -168,13 +170,13 @@ const paymentMethods = [
 const consultationTypeOptions = [
   "Basic Consultation",
   "Premium Consultation",
-  "Complete Life Analysis",
+  "Detailed Kundli Analysis",
 ];
 
 const PLAN_AMOUNTS: Record<string, number> = {
   "Basic Consultation": 1100,
   "Premium Consultation": 2100,
-  "Complete Life Analysis": 11000,
+  "Detailed Kundli Analysis": 11000,
 };
 
 const testimonials = [
@@ -654,7 +656,7 @@ const ConsultationLanding = () => {
   const [isBookingSuccess, setIsBookingSuccess] = useState(false);
 
   // ── Callback form state ─────────────────────────────────────────────
-  const [callbackData, setCallbackData] = useState({ fullName: "", mobile: "", whatsapp: "" });
+  const [callbackData, setCallbackData] = useState({ fullName: "", mobile: "", email: "" });
   const [callbackErrors, setCallbackErrors] = useState<Record<string, string>>({});
   const [isSubmittingCallback, setIsSubmittingCallback] = useState(false);
   const [isCallbackSuccess, setIsCallbackSuccess] = useState(false);
@@ -829,11 +831,17 @@ const ConsultationLanding = () => {
     setCallbackErrors((prev) => ({ ...prev, fullName: validateName(value) }));
   };
 
+  const handleCallbackEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setCallbackData((prev) => ({ ...prev, email: value }));
+    setCallbackErrors((prev) => ({ ...prev, email: validateEmail(value) }));
+  };
+
   const validateCallbackAll = (): boolean => {
     const errors = {
       fullName: validateName(callbackData.fullName),
       mobile: validatePhone(callbackData.mobile),
-      whatsapp: validatePhone(callbackData.whatsapp),
+      email: validateEmail(callbackData.email),
     };
     setCallbackErrors(errors);
     return Object.values(errors).every((e) => !e);
@@ -844,23 +852,39 @@ const ConsultationLanding = () => {
     if (!validateCallbackAll()) return;
     setIsSubmittingCallback(true);
     try {
+      // Send lead to CRM & email notification engine
+      await sendLeadToCRM({
+        name: callbackData.fullName,
+        phone: callbackData.mobile,
+        email: callbackData.email,
+        source: "Free Callback Request",
+        tags: ["callback-request", "landing-page"],
+      });
+
       const response = await fetch(`${apiBaseUrl}/callback-request`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...callbackData,
+          fullName: callbackData.fullName,
+          mobile: callbackData.mobile,
+          email: callbackData.email,
           source: "Free Callback Request",
           landingPageUrl: window.location.href,
         }),
       });
-      if (!response.ok) throw new Error("Server error");
+
+      if (!response.ok) {
+        console.warn("Backend callback route returned error status, but CRM lead email was dispatched.");
+      }
+
       setIsCallbackSuccess(true);
       setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 3500);
-    } catch {
+    } catch (err) {
+      console.error("Callback submission error:", err);
       toast({
         variant: "destructive",
         title: "Submission Failed",
-        description: "Something went wrong. Please try again or contact us on WhatsApp.",
+        description: "Something went wrong. Please try again or contact us directly.",
       });
     } finally {
       setIsSubmittingCallback(false);
@@ -884,14 +908,14 @@ const ConsultationLanding = () => {
 
       <Layout>
         {/* ── Hero ── */}
-        <section className="pt-28 pb-8 md:pb-10 bg-gradient-hero relative overflow-hidden">
+        <section className="pt-24 pb-6 md:pb-8 bg-gradient-hero relative overflow-hidden">
           {/* Ambient colour accents behind the hero for a more vibrant feel */}
           <div className="pointer-events-none absolute -top-24 -left-24 w-72 h-72 rounded-full bg-rose-500/20 blur-[90px]" />
           <div className="pointer-events-none absolute top-10 -right-16 w-80 h-80 rounded-full bg-violet-500/20 blur-[100px]" />
           <div className="pointer-events-none absolute bottom-0 left-1/3 w-64 h-64 rounded-full bg-amber-400/10 blur-[90px]" />
 
           <div className="container mx-auto px-4 relative z-10">
-            <div className="grid lg:grid-cols-2 gap-10 items-center">
+            <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-center">
               {/* Zodiac visual */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -899,7 +923,7 @@ const ConsultationLanding = () => {
                 transition={{ duration: 0.7 }}
                 className="order-2 lg:order-1 flex justify-center"
               >
-                <div className="cosmic-card w-full max-w-sm aspect-square flex items-center justify-center overflow-hidden relative">
+                <div className="cosmic-card w-full max-w-[280px] sm:max-w-xs aspect-square flex items-center justify-center overflow-hidden relative">
                   <div className="absolute inset-0 bg-gradient-radial from-primary/15 via-transparent to-transparent" />
                   <motion.img
                     src="/src/assets/Astrology.jpeg"
@@ -918,38 +942,36 @@ const ConsultationLanding = () => {
                 transition={{ duration: 0.6 }}
                 className="order-1 lg:order-2"
               >
-                <p className="text-foreground/90 text-lg mb-1">Get Accurate</p>
-                <h1 className="font-serif text-4xl sm:text-5xl font-bold mb-2">
+                <p className="text-foreground/90 text-base mb-0.5">Get Accurate</p>
+                <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mb-1">
                   <span className="text-gradient-gold">ASTROLOGY GUIDANCE</span>
                 </h1>
-                <p className="text-2xl sm:text-3xl font-serif font-semibold mb-2">For Your Life Problems</p>
-                <p className="text-muted-foreground mb-5">
+                <p className="text-xl sm:text-2xl font-serif font-semibold mb-1.5">For Your Life Problems</p>
+                <p className="text-muted-foreground text-sm mb-4">
                   Personalized Consultation by <span className="text-primary font-medium">Astro Santosh Pandey</span>
                 </p>
 
-                {/* 8 service badges — custom icons matching the client's
-                    reference art (circular gradient badge + gold ring),
-                    each reading instantly as the outcome it solves */}
-                <div className="grid grid-cols-4 gap-3 mb-5">
+                {/* 8 service badges */}
+                <div className="grid grid-cols-4 gap-2.5 mb-4">
                   {heroServices.map((s) => (
-                    <div key={s.label} className="flex flex-col items-center text-center gap-1.5">
-                      <s.icon className="w-12 h-12 drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)]" />
+                    <div key={s.label} className="flex flex-col items-center text-center gap-1">
+                      <s.icon className="w-10 h-10 sm:w-11 sm:h-11 drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)]" />
                       <span className="text-[10px] text-muted-foreground leading-tight">{s.label}</span>
                     </div>
                   ))}
                 </div>
 
-                <div className="flex items-center gap-2 mb-5">
+                <div className="flex items-center gap-2 mb-4">
                   <StarRow />
-                  <span className="text-sm text-muted-foreground">Trusted by Clients Across India</span>
+                  <span className="text-xs sm:text-sm text-muted-foreground">Trusted by Clients Across the World</span>
                 </div>
 
-                <div className="flex flex-wrap gap-3">
-                  <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold" onClick={scrollToBooking}>
+                <div className="flex flex-wrap gap-2.5">
+                  <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold h-10 px-5 text-sm" onClick={scrollToBooking}>
                     <Calendar className="w-4 h-4 mr-2" />
                     Book Consultation Now
                   </Button>
-                  <Button size="lg" variant="outline" className="border-[#25D366] text-[#25D366] hover:bg-[#25D366]/10" asChild>
+                  <Button size="lg" variant="outline" className="border-[#25D366] text-[#25D366] hover:bg-[#25D366]/10 h-10 px-5 text-sm" asChild>
                     <a href="https://wa.me/+918879731174" target="_blank" rel="noopener noreferrer">
                       <MessageCircle className="w-4 h-4 mr-2" />
                       Chat on WhatsApp
@@ -957,24 +979,40 @@ const ConsultationLanding = () => {
                   </Button>
                 </div>
 
-                <a
-                  href="tel:+918879731174"
-                  className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors mt-4"
-                >
-                  <Phone className="w-3.5 h-3.5 text-primary" />
-                  Or call us directly: +91 88797 31174
-                </a>
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs sm:text-sm mt-3">
+                  <a
+                    href="tel:+918879731174"
+                    className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-amber-300 transition-colors"
+                  >
+                    <Phone className="w-3.5 h-3.5 text-amber-400 shrink-0 filter drop-shadow-[0_0_6px_rgba(251,191,36,0.5)]" />
+                    <span>Or call us directly:</span>
+                    <span className="font-bold text-amber-300 hover:underline tracking-wide">+91 88797 31174</span>
+                  </a>
+
+                  <span className="hidden sm:inline text-white/30">•</span>
+
+                  <a
+                    href="https://mail.google.com/mail/?view=cm&fs=1&to=connect@astrosantoshpandey.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-amber-300 transition-colors"
+                  >
+                    <Mail className="w-3.5 h-3.5 text-amber-400 shrink-0 filter drop-shadow-[0_0_6px_rgba(251,191,36,0.5)]" />
+                    <span>Email:</span>
+                    <span className="font-semibold text-amber-200 hover:underline">connect@astrosantoshpandey.com</span>
+                  </a>
+                </div>
               </motion.div>
             </div>
           </div>
         </section>
 
         {/* ── Confidence strip (merged trust badges + trust strip) ── */}
-        <div className="bg-cosmic-navy border-y border-primary/20 py-3">
-          <div className="container mx-auto px-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs sm:text-sm">
+        <div className="bg-cosmic-navy border-y border-primary/20 py-2.5">
+          <div className="container mx-auto px-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-xs">
             {trustBadges.map((b) => (
               <span key={b} className="flex items-center gap-1.5 text-foreground/90">
-                <CheckCircle2 className="w-4 h-4 text-primary" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-primary" />
                 {b}
               </span>
             ))}
@@ -989,38 +1027,44 @@ const ConsultationLanding = () => {
         </div>
 
         {/* ── Services ── */}
-        <section className="py-12 md:py-16 bg-background relative overflow-hidden">
-          <div className="pointer-events-none absolute top-0 right-0 w-96 h-96 rounded-full bg-primary/5 blur-[120px]" />
+        <section className="py-6 md:py-8 bg-background relative overflow-hidden">
+          <div className="pointer-events-none absolute top-0 right-0 w-80 h-80 rounded-full bg-primary/5 blur-[100px]" />
           <div className="container mx-auto px-4 relative">
             <motion.h2
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center font-serif text-2xl md:text-3xl font-bold mb-10"
+              className="text-center font-serif text-xl sm:text-2xl md:text-3xl font-bold mb-4 md:mb-5"
             >
               OUR ASTROLOGY <span className="text-gradient-gold">CONSULTATION SERVICES</span>
             </motion.h2>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
               {services.map((service, index) => (
                 <motion.div
                   key={service.title}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: (index % 3) * 0.08 }}
-                  className="cosmic-card p-5 hover:-translate-y-1 transition-transform duration-300"
+                  transition={{ delay: (index % 4) * 0.05 }}
+                  className="cosmic-card p-3.5 group hover:-translate-y-1 hover:glow-gold transition-all duration-300 flex flex-col justify-between"
                 >
-                  <service.icon className="w-14 h-14 mb-4 drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)]" />
-                  <h3 className="font-serif text-lg font-semibold mb-3">{service.title}</h3>
-                  <ul className="space-y-1.5">
-                    {service.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2 text-sm text-muted-foreground">
-                        <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
+                  <div>
+                    <div className="mb-1.5 inline-block">
+                      <service.icon className="w-8 h-8 sm:w-9 sm:h-9 drop-shadow-[0_2px_8px_rgba(251,191,36,0.4)] transition-transform duration-300 group-hover:scale-105" />
+                    </div>
+                    <h3 className="font-serif text-xs sm:text-sm font-bold mb-1 text-foreground group-hover:text-amber-300 transition-colors leading-snug">
+                      {service.title}
+                    </h3>
+                    <ul className="space-y-0.5">
+                      {service.features.map((f) => (
+                        <li key={f} className="flex items-start gap-1 text-[11px] sm:text-xs text-foreground/80 leading-tight">
+                          <CheckCircle2 className="w-3 h-3 text-amber-400 shrink-0 mt-0.5 filter drop-shadow-[0_0_4px_rgba(251,191,36,0.4)]" strokeWidth={2.2} />
+                          <span>{f}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -1028,19 +1072,19 @@ const ConsultationLanding = () => {
         </section>
 
         {/* ── Pricing (merged with Secure Your Slot) ── */}
-        <section className="py-12 md:py-16 bg-gradient-cosmic relative overflow-hidden">
+        <section className="py-7 md:py-10 bg-gradient-cosmic relative overflow-hidden">
           <div className="pointer-events-none absolute -bottom-20 -left-20 w-72 h-72 rounded-full bg-emerald-500/10 blur-[100px]" />
           <div className="container mx-auto px-4 relative">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center font-serif text-2xl md:text-3xl font-bold mb-10"
+              className="text-center font-serif text-xl sm:text-2xl md:text-3xl font-bold mb-6"
             >
               CHOOSE YOUR <span className="text-gradient-gold">CONSULTATION</span>
             </motion.h2>
 
-            <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto items-start">
+            <div className="grid lg:grid-cols-3 gap-5 max-w-6xl mx-auto items-start">
               {pricingPlans.map((plan, index) => (
                 <motion.div
                   key={plan.id}
@@ -1048,27 +1092,27 @@ const ConsultationLanding = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className={`cosmic-card p-7 flex flex-col relative ${plan.popular ? "border-primary/60 ring-2 ring-primary/30 lg:-translate-y-3" : ""}`}
+                  className={`cosmic-card p-5 sm:p-6 flex flex-col relative ${plan.popular ? "border-primary/60 ring-2 ring-primary/30 lg:-translate-y-2" : ""}`}
                 >
                   {plan.popular && (
-                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-bold px-4 py-1 rounded-full flex items-center gap-1">
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[10px] font-bold px-3 py-0.5 rounded-full flex items-center gap-1">
                       <Star className="w-3 h-3 fill-current" /> MOST POPULAR
                     </span>
                   )}
-                  <h3 className="font-serif text-lg font-bold text-center mb-3 mt-2">{plan.name}</h3>
-                  <div className="text-center mb-6">
-                    <span className="text-4xl font-bold text-gradient-gold">{plan.price}</span>
+                  <h3 className="font-serif text-base font-bold text-center mb-2 mt-1">{plan.name}</h3>
+                  <div className="text-center mb-4">
+                    <span className="text-3xl font-bold text-gradient-gold">{plan.price}</span>
                   </div>
-                  <ul className="space-y-2.5 mb-7 flex-1">
+                  <ul className="space-y-2 mb-5 flex-1">
                     {plan.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2 text-sm text-muted-foreground">
-                        <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                      <li key={f} className="flex items-start gap-1.5 text-xs text-muted-foreground">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
                         {f}
                       </li>
                     ))}
                   </ul>
                   <Button
-                    className={plan.popular ? "glow-gold w-full" : "w-full"}
+                    className={plan.popular ? "glow-gold w-full h-10 text-xs sm:text-sm" : "w-full h-10 text-xs sm:text-sm"}
                     variant={plan.popular ? "default" : "outline"}
                     onClick={() => {
                       setBookingData((prev) => ({ ...prev, consultationType: plan.name }));
@@ -1076,7 +1120,7 @@ const ConsultationLanding = () => {
                       scrollToBooking();
                     }}
                   >
-                    <Calendar className="w-4 h-4 mr-2" />
+                    <Calendar className="w-4 h-4 mr-1.5" />
                     Book Now
                   </Button>
                 </motion.div>
@@ -1084,76 +1128,85 @@ const ConsultationLanding = () => {
             </div>
 
             {/* How it works + payment options + secure CTA, condensed into one row under the plans */}
-            <div className="mt-10 max-w-6xl mx-auto grid md:grid-cols-3 gap-6 items-center">
-              <div className="flex flex-col gap-4">
+            <div className="mt-7 max-w-6xl mx-auto grid md:grid-cols-3 gap-5 items-center">
+              <div className="flex flex-col gap-2.5">
                 {enrollSteps.map((step) => (
-                  <div key={step.num} className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-primary/15 border-2 border-primary flex items-center justify-center text-primary text-sm font-bold shrink-0">
+                  <div key={step.num} className="flex items-center gap-2.5">
+                    <div className="w-7 h-7 rounded-full bg-primary/15 border-2 border-primary flex items-center justify-center text-primary text-xs font-bold shrink-0">
                       {step.num}
                     </div>
-                    <span className="text-sm font-medium">{step.title}</span>
+                    <span className="text-xs sm:text-sm font-medium">{step.title}</span>
                   </div>
                 ))}
               </div>
 
-              <div className="cosmic-card p-5">
-                <p className="text-center text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+              <div className="cosmic-card p-4">
+                <p className="text-center text-[11px] sm:text-xs font-bold uppercase tracking-wider text-amber-300/90 mb-2.5">
                   Payment Options
                 </p>
-                <div className="grid grid-cols-2 gap-2.5">
+                <div className="grid grid-cols-2 gap-2">
                   {paymentMethods.map((m) => (
-                    <div key={m.label} className="flex flex-col items-center gap-1.5 py-3 rounded-lg bg-muted/20 border border-primary/10">
-                      <m.icon className="w-5 h-5 text-primary" />
-                      <span className="text-xs text-muted-foreground">{m.label}</span>
+                    <div
+                      key={m.label}
+                      className="flex flex-col items-center justify-center gap-1 py-2 px-1.5 rounded-xl bg-gradient-to-br from-amber-500/10 via-background to-amber-950/20 border border-amber-400/25 hover:border-amber-400/50 hover:bg-amber-400/10 transition-all duration-300 group shadow-sm"
+                    >
+                      {m.label === "UPI" ? (
+                        <m.icon className="h-5 w-auto drop-shadow-[0_2px_6px_rgba(251,191,36,0.3)] transition-transform duration-300 group-hover:scale-105" />
+                      ) : (
+                        <m.icon className="w-4.5 h-4.5 text-amber-300 filter drop-shadow-[0_0_6px_rgba(251,191,36,0.5)] transition-transform duration-300 group-hover:scale-105" strokeWidth={2.2} />
+                      )}
+                      <span className="text-xs font-bold text-foreground group-hover:text-amber-300 transition-colors">
+                        {m.label}
+                      </span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="text-center">
-                <Button size="lg" className="w-full glow-gold mb-3" onClick={scrollToBooking}>
-                  <Lock className="w-4 h-4 mr-2" />
+              <div className="text-center space-y-1.5">
+                <Button size="lg" className="w-full text-sm sm:text-base font-bold py-5 glow-gold shadow-lg" onClick={scrollToBooking}>
+                  <Lock className="w-4 h-4 mr-2 text-amber-300 filter drop-shadow-[0_0_4px_rgba(251,191,36,0.6)]" strokeWidth={2.2} />
                   Pay &amp; Book Consultation
                 </Button>
-                <p className="flex items-center justify-center gap-1.5 text-xs text-primary font-medium mb-1">
-                  <Shield className="w-3.5 h-3.5" /> Secure Payment
+                <p className="flex items-center justify-center gap-1.5 text-xs sm:text-sm text-amber-300 font-bold">
+                  <Shield className="w-3.5 h-3.5 text-amber-400 filter drop-shadow-[0_0_4px_rgba(251,191,36,0.5)]" strokeWidth={2.2} /> Secure Payment
                 </p>
-                <p className="text-xs text-muted-foreground">100% Secure &amp; Encrypted</p>
+                <p className="text-[11px] sm:text-xs font-semibold text-foreground/80">100% Secure &amp; Encrypted</p>
               </div>
             </div>
           </div>
         </section>
 
         {/* ── Booking Form ── */}
-        <section id="booking-form" className="py-12 md:py-16 bg-background scroll-mt-4">
+        <section id="booking-form" className="py-7 md:py-10 bg-background scroll-mt-4">
           <div className="container mx-auto px-4">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center font-serif text-2xl md:text-3xl font-bold mb-8"
+              className="text-center font-serif text-xl sm:text-2xl md:text-3xl font-bold mb-5"
             >
               BOOK YOUR <span className="text-gradient-gold">CONSULTATION</span>
             </motion.h2>
 
-            <div className="cosmic-card p-6 md:p-10 max-w-4xl mx-auto">
+            <div className="cosmic-card p-5 sm:p-7 md:p-8 max-w-4xl mx-auto">
               {isBookingSuccess ? (
-                <div className="flex flex-col items-center justify-center text-center py-10 space-y-5">
-                  <div className="w-16 h-16 rounded-full bg-primary/15 border-2 border-primary/40 flex items-center justify-center">
-                    <CheckCircle2 className="h-8 w-8 text-primary" />
+                <div className="flex flex-col items-center justify-center text-center py-6 space-y-3">
+                  <div className="w-12 h-12 rounded-full bg-primary/15 border-2 border-primary/40 flex items-center justify-center">
+                    <CheckCircle2 className="h-6 w-6 text-primary" />
                   </div>
-                  <div className="space-y-2">
-                    <h3 className="font-serif text-xl font-bold">Thank you!</h3>
-                    <p className="text-muted-foreground text-sm max-w-md">
+                  <div className="space-y-1">
+                    <h3 className="font-serif text-lg font-bold">Thank you!</h3>
+                    <p className="text-muted-foreground text-xs max-w-md">
                       Your consultation request has been received successfully. Our team will contact you shortly.
                     </p>
                   </div>
                 </div>
               ) : (
-                <form onSubmit={handleBookingSubmit} className="grid md:grid-cols-3 gap-x-6 gap-y-5">
+                <form onSubmit={handleBookingSubmit} className="grid md:grid-cols-3 gap-x-5 gap-y-3.5">
                   {/* Full Name */}
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
                       Full Name <span className="text-destructive">*</span>
                     </label>
                     <div className="relative">
@@ -1165,7 +1218,7 @@ const ConsultationLanding = () => {
 
                   {/* Phone */}
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
                       Phone Number <span className="text-destructive">*</span>
                     </label>
                     <div className="relative">
@@ -1177,7 +1230,7 @@ const ConsultationLanding = () => {
 
                   {/* WhatsApp */}
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
                       WhatsApp Number <span className="text-destructive">*</span>
                     </label>
                     <div className="relative">
@@ -1189,7 +1242,7 @@ const ConsultationLanding = () => {
 
                   {/* Email */}
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
                       Email Address <span className="text-destructive">*</span>
                     </label>
                     <div className="relative">
@@ -1201,7 +1254,7 @@ const ConsultationLanding = () => {
 
                   {/* DOB */}
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
                       Date of Birth <span className="text-destructive">*</span>
                     </label>
                     <DobPicker
@@ -1217,7 +1270,7 @@ const ConsultationLanding = () => {
 
                   {/* Time of Birth */}
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
                       Time of Birth <span className="text-destructive">*</span>
                     </label>
                     <TimePicker
@@ -1232,7 +1285,7 @@ const ConsultationLanding = () => {
 
                   {/* Place of Birth */}
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
                       Place of Birth <span className="text-destructive">*</span>
                     </label>
                     <div className="relative">
@@ -1244,7 +1297,7 @@ const ConsultationLanding = () => {
 
                   {/* Consultation Type */}
                   <div className="space-y-1 md:col-span-2">
-                    <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
                       Consultation Type <span className="text-destructive">*</span>
                     </label>
                     <Select
@@ -1269,12 +1322,12 @@ const ConsultationLanding = () => {
 
                   {/* Message */}
                   <div className="space-y-1 md:col-span-3">
-                    <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
                       Message / Problem Description <span className="text-destructive">*</span>
                     </label>
                     <textarea
                       name="message"
-                      rows={4}
+                      rows={3}
                       value={bookingData.message}
                       onChange={handleBookingChange}
                       placeholder="Briefly describe your question or concern"
@@ -1286,8 +1339,8 @@ const ConsultationLanding = () => {
                   </div>
 
                   {/* Submit */}
-                  <div className="md:col-span-3 flex flex-col items-center gap-3 pt-2">
-                    <Button type="submit" size="lg" className="w-full md:w-auto px-12 glow-gold" disabled={isSubmittingBooking}>
+                  <div className="md:col-span-3 flex flex-col items-center gap-2 pt-1">
+                    <Button type="submit" size="lg" className="w-full md:w-auto px-10 h-11 text-sm glow-gold" disabled={isSubmittingBooking}>
                       {isSubmittingBooking ? (
                         <span className="flex items-center gap-2">
                           <span className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
@@ -1297,7 +1350,7 @@ const ConsultationLanding = () => {
                         "Book Now"
                       )}
                     </Button>
-                    <p className="text-xs text-muted-foreground text-center">
+                    <p className="text-[11px] text-muted-foreground text-center">
                       Our team will contact you soon! · Your information is safe with us.
                     </p>
                   </div>
@@ -1307,92 +1360,32 @@ const ConsultationLanding = () => {
           </div>
         </section>
 
-        {/* ── Testimonials ── */}
-        <section className="py-12 md:py-16 bg-gradient-cosmic">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center max-w-2xl mx-auto mb-10"
-            >
-              <h2 className="font-serif text-2xl md:text-3xl font-bold mb-2">
-                Stories of <span className="text-gradient-gold">Transformation</span>
-              </h2>
-              <p className="text-muted-foreground text-sm">
-                Hear from clients who experienced real changes in their lives through our guidance and remedies.
-              </p>
-            </motion.div>
-
-            <div className="flex items-center justify-center gap-4 max-w-5xl mx-auto">
-              <button
-                onClick={showPrev}
-                aria-label="Previous testimonial"
-                className="hidden sm:flex w-10 h-10 rounded-full border border-primary/30 items-center justify-center text-primary hover:bg-primary/10 transition-colors shrink-0"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-
-              <div className="grid sm:grid-cols-3 gap-6 flex-1">
-                <AnimatePresence mode="wait">
-                  {[0, 1, 2].map((offset) => {
-                    const t = testimonials[(testimonialIndex + offset) % testimonials.length];
-                    return (
-                      <motion.div
-                        key={`${t.name}-${offset}`}
-                        initial={{ opacity: 0, y: 15 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: offset * 0.08 }}
-                        className="cosmic-card p-6"
-                      >
-                        <div className="flex items-start gap-3 mb-3">
-                          <InitialsAvatar name={t.name} />
-                          <div>
-                            <StarRow />
-                          </div>
-                        </div>
-                        <p className="text-sm text-muted-foreground italic mb-4">"{t.quote}"</p>
-                        <p className="font-serif font-semibold text-sm">— {t.name}</p>
-                      </motion.div>
-                    );
-                  })}
-                </AnimatePresence>
-              </div>
-
-              <button
-                onClick={showNext}
-                aria-label="Next testimonial"
-                className="hidden sm:flex w-10 h-10 rounded-full border border-primary/30 items-center justify-center text-primary hover:bg-primary/10 transition-colors shrink-0"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-        </section>
+        {/* ── Testimonials (Home Page Review Section) ── */}
+        <TestimonialsSection />
 
         {/* ── Callback + Limited Slots ── */}
-        <section className="py-12 md:py-16 bg-background">
+        <section className="py-7 md:py-10 bg-background">
           <div className="container mx-auto px-4">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center font-serif text-2xl md:text-3xl font-bold mb-7"
+              className="text-center font-serif text-xl sm:text-2xl md:text-3xl font-bold mb-5"
             >
               STILL HAVE QUESTIONS? <span className="text-gradient-gold">GET A FREE CALLBACK</span>
             </motion.h2>
 
-            <div className="cosmic-card p-6 md:p-8 max-w-4xl mx-auto">
+            <div className="cosmic-card p-5 md:p-6 max-w-4xl mx-auto">
               {isCallbackSuccess ? (
-                <div className="flex flex-col items-center justify-center text-center py-6 space-y-3">
-                  <CheckCircle2 className="h-8 w-8 text-primary" />
-                  <p className="font-serif text-lg font-bold">Thank you!</p>
-                  <p className="text-muted-foreground text-sm max-w-md">
+                <div className="flex flex-col items-center justify-center text-center py-4 space-y-2">
+                  <CheckCircle2 className="h-6 w-6 text-primary" />
+                  <p className="font-serif text-base font-bold">Thank you!</p>
+                  <p className="text-muted-foreground text-xs max-w-md">
                     Your callback request has been received successfully. Our team will contact you shortly.
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleCallbackSubmit} className="grid sm:grid-cols-4 gap-4 items-start">
+                <form onSubmit={handleCallbackSubmit} className="grid sm:grid-cols-4 gap-3 items-start">
                   <div className="space-y-1">
                     <div className="relative">
                       <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary/60" />
@@ -1409,15 +1402,22 @@ const ConsultationLanding = () => {
                   </div>
                   <div className="space-y-1">
                     <div className="relative">
-                      <MessageCircle className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary/60" />
-                      <input name="whatsapp" value={callbackData.whatsapp} onChange={handleCallbackChange} maxLength={10} placeholder="WhatsApp Number *" className={inputCls(callbackErrors.whatsapp)} />
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary/60" />
+                      <input
+                        type="email"
+                        name="email"
+                        value={callbackData.email}
+                        onChange={handleCallbackEmailChange}
+                        placeholder="Enter Your Email *"
+                        className={inputCls(callbackErrors.email)}
+                      />
                     </div>
-                    {callbackErrors.whatsapp && <p className="text-red-500 text-[11px]">{callbackErrors.whatsapp}</p>}
+                    {callbackErrors.email && <p className="text-red-500 text-[11px]">{callbackErrors.email}</p>}
                   </div>
-                  <Button type="submit" className="w-full glow-gold" disabled={isSubmittingCallback}>
+                  <Button type="submit" className="w-full glow-gold h-10 text-xs sm:text-sm font-bold" disabled={isSubmittingCallback}>
                     {isSubmittingCallback ? "Sending..." : (
                       <>
-                        <Phone className="w-4 h-4 mr-2" /> REQUEST CALLBACK
+                        <Phone className="w-3.5 h-3.5 mr-1.5" /> REQUEST CALLBACK
                       </>
                     )}
                   </Button>
@@ -1426,15 +1426,15 @@ const ConsultationLanding = () => {
             </div>
 
             {/* Limited slots banner */}
-            <div className="max-w-4xl mx-auto mt-7 rounded-full bg-primary/10 border border-primary/30 px-6 py-3 flex items-center justify-center gap-2 text-center">
+            <div className="max-w-4xl mx-auto mt-5 rounded-full bg-primary/10 border border-primary/30 px-5 py-2.5 flex items-center justify-center gap-2 text-center">
               <Zap className="w-4 h-4 text-primary shrink-0" />
-              <span className="text-sm font-semibold text-primary">
+              <span className="text-xs sm:text-sm font-semibold text-primary">
                 Limited Daily Consultation Slots Available —{" "}
                 <button onClick={scrollToBooking} className="underline underline-offset-2">Book Now!</button>
               </span>
             </div>
 
-            <p className="text-center text-sm text-muted-foreground italic mt-7 max-w-2xl mx-auto">
+            <p className="text-center text-xs sm:text-sm text-muted-foreground italic mt-5 max-w-2xl mx-auto">
               "True astrology is not only about predicting the future; it is about understanding yourself,
               your karma, and making better choices with awareness."
             </p>
@@ -1442,20 +1442,20 @@ const ConsultationLanding = () => {
         </section>
 
         {/* ── Final CTA ── */}
-        <section className="py-12 bg-cosmic-navy border-t border-primary/20">
+        <section className="py-8 md:py-10 bg-cosmic-navy border-t border-primary/20">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="font-serif text-xl md:text-2xl font-bold mb-1">GET ANSWERS TO YOUR LIFE QUESTIONS TODAY</h2>
-            <p className="text-muted-foreground text-sm mb-6">
-              Book Your Personal Consultation With <span className="text-primary">Astro Santosh Pandey</span>
+            <h2 className="font-serif text-lg sm:text-xl md:text-2xl font-bold mb-1">GET ANSWERS TO YOUR LIFE QUESTIONS TODAY</h2>
+            <p className="text-muted-foreground text-xs sm:text-sm mb-4">
+              Book Your Personal Consultation With <span className="text-primary font-medium">Astro Santosh Pandey</span>
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <Button size="lg" className="bg-[#25D366] hover:bg-[#25D366]/90 text-white" asChild>
+            <div className="flex flex-wrap items-center justify-center gap-2.5">
+              <Button size="lg" className="bg-[#25D366] hover:bg-[#25D366]/90 text-white h-10 text-xs sm:text-sm px-5" asChild>
                 <a href="https://wa.me/+918879731174" target="_blank" rel="noopener noreferrer">
-                  <MessageCircle className="w-4 h-4 mr-2" /> WHATSAPP NOW
+                  <MessageCircle className="w-4 h-4 mr-1.5" /> WHATSAPP NOW
                 </a>
               </Button>
-              <Button size="lg" className="glow-gold" onClick={scrollToBooking}>
-                <Calendar className="w-4 h-4 mr-2" /> BOOK CONSULTATION
+              <Button size="lg" className="glow-gold h-10 text-xs sm:text-sm px-5" onClick={scrollToBooking}>
+                <Calendar className="w-4 h-4 mr-1.5" /> BOOK CONSULTATION
               </Button>
             </div>
           </div>
