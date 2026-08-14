@@ -922,17 +922,31 @@ const ConsultationLanding = () => {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.7 }}
-                className="order-2 lg:order-1 flex justify-center"
+                className="order-2 lg:order-1 flex justify-center relative my-4 lg:my-0"
               >
-                <div className="cosmic-card w-full max-w-[280px] sm:max-w-xs aspect-square flex items-center justify-center overflow-hidden relative">
-                  <div className="absolute inset-0 bg-gradient-radial from-primary/15 via-transparent to-transparent" />
-                  <motion.img
-                    src={astrologyImg}
-                    alt="Vedic Astrology Zodiac Wheel"
-                    className="w-4/5 h-4/5 object-cover rounded-full"
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-                  />
+                <div className="relative w-full max-w-[280px] sm:max-w-xs aspect-square">
+                  {/* Outer glow */}
+                  <div className="absolute -inset-4 rounded-full bg-gradient-to-br from-amber-400/30 via-yellow-300/15 to-transparent blur-3xl animate-pulse pointer-events-none" />
+                  {/* Inner glow */}
+                  <div className="absolute -inset-2 rounded-full bg-gradient-to-r from-amber-400/20 via-yellow-500/10 to-amber-400/20 blur-xl pointer-events-none" />
+
+                  {/* Circular image */}
+                  <div
+                    className="relative w-full h-full rounded-full overflow-hidden shadow-2xl"
+                    style={{
+                      boxShadow:
+                        "0 0 50px rgba(251,191,36,0.3), 0 0 100px rgba(218,165,32,0.15), 0 0 0 2px rgba(251,191,36,0.4)",
+                    }}
+                  >
+                    <motion.img
+                      src={astrologyImg}
+                      alt="Vedic Astrology Zodiac Wheel - Nakshatra Chart"
+                      className="w-full h-full object-cover rounded-full"
+                      style={{ filter: "brightness(1.0) contrast(1.05) saturate(1.1)" }}
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+                    />
+                  </div>
                 </div>
               </motion.div>
 
