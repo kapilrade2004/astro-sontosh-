@@ -114,27 +114,27 @@ export const TestimonialsSection = () => {
   }, []);
 
   return (
-    <section className="py-24 bg-gradient-cosmic relative overflow-hidden">
+    <section className="py-10 md:py-16 bg-gradient-cosmic relative overflow-hidden">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-16"
+          className="text-center max-w-3xl mx-auto mb-6 md:mb-10"
         >
-          <span className="text-primary font-medium text-sm uppercase tracking-wider">Testimonials</span>
-          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold mt-4 mb-6">
+          <span className="text-primary font-medium text-xs sm:text-sm uppercase tracking-wider">Testimonials</span>
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mt-2 mb-3">
             Stories of <span className="text-gradient-gold">Transformation</span>
           </h2>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-muted-foreground text-sm sm:text-base">
             Hear from our clients who experienced real changes in their lives
             through our guidance and remedies.
           </p>
         </motion.div>
 
         <div className="max-w-4xl mx-auto relative">
-          <div className="cosmic-card p-8 md:p-12 min-h-[320px] flex items-center">
+          <div className="cosmic-card p-4 sm:p-7 md:p-10 min-h-[220px] flex items-center">
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
                 key={currentIndex}
@@ -146,9 +146,9 @@ export const TestimonialsSection = () => {
                 transition={{ duration: 0.4 }}
                 className="w-full"
               >
-                <div className="flex flex-col items-center mb-6">
+                <div className="flex flex-col items-center mb-3 sm:mb-4">
                   {/* Profile Image */}
-                  <div className="relative w-40 h-40 rounded-full overflow-hidden mb-4 ring-2 ring-primary/20">
+                  <div className="relative w-20 h-20 sm:w-28 sm:h-28 rounded-full overflow-hidden mb-3 ring-2 ring-primary/20">
                     {testimonials[currentIndex].image ? (
                       <img
                         src={testimonials[currentIndex].image}
@@ -162,34 +162,34 @@ export const TestimonialsSection = () => {
                       />
                     ) : null}
                     <div className={`absolute inset-0 flex items-center justify-center bg-primary/10 ${testimonials[currentIndex].image ? 'hidden' : ''} fallback-icon`}>
-                      <User className="w-10 h-10 text-primary/50" />
+                      <User className="w-8 h-8 sm:w-10 sm:h-10 text-primary/50" />
                     </div>
                   </div>
 
                   {/* <Quote className="w-10 h-10 text-primary/30" /> */}
                 </div>
 
-                <p className="text-lg md:text-xl text-foreground/90 leading-relaxed mb-8 italic text-center">
+                <p className="text-sm sm:text-base md:text-lg text-foreground/90 leading-relaxed mb-4 sm:mb-6 italic text-center">
                   "{testimonials[currentIndex].text}"
                 </p>
 
-                <div className="flex items-center justify-between flex-wrap gap-4">
+                <div className="flex items-center justify-between flex-wrap gap-3">
                   <div>
-                    <div className="font-serif text-xl font-semibold text-foreground">
+                    <div className="font-serif text-base sm:text-lg font-semibold text-foreground">
                       {testimonials[currentIndex].name}
                     </div>
-                    <div className="text-muted-foreground text-sm">
+                    <div className="text-muted-foreground text-xs sm:text-sm">
                       {testimonials[currentIndex].location}
                     </div>
                   </div>
 
                   <div className="text-right">
-                    <div className="flex gap-1 mb-1 justify-end">
+                    <div className="flex gap-1 mb-0.5 justify-end">
                       {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-primary text-primary" />
+                        <Star key={i} className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-primary text-primary" />
                       ))}
                     </div>
-                    <div className="text-primary text-sm font-medium">
+                    <div className="text-primary text-xs sm:text-sm font-medium">
                       {testimonials[currentIndex].service}
                     </div>
                   </div>
@@ -199,7 +199,7 @@ export const TestimonialsSection = () => {
           </div>
 
           {/* Navigation */}
-          <div className="flex items-center justify-center gap-4 mt-8">
+          <div className="flex items-center justify-center gap-4 mt-4 sm:mt-6">
             <button
               onClick={prevSlide}
               className="w-12 h-12 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors"
