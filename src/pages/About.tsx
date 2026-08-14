@@ -8,7 +8,7 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import {
   BookOpen, HeartHandshake, Sparkles, ShieldCheck,
-  ArrowRight, CheckCircle2, Users
+  ArrowRight, CheckCircle, CheckCircle2, Users
 } from "lucide-react";
 import CertificationsShowcase from "@/components/home/CertificationsShowcase";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
