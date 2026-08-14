@@ -95,23 +95,18 @@ const About = () => {
                   </div>
                 </motion.div>
 
-                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mt-4 mb-6 flex flex-col items-start gap-3">
-                  <span className="inline-flex items-center gap-3">
-                    <img
-                      src={LOGO}
-                      alt="Lion Emblem"
-                      className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 object-contain inline-block flex-shrink-0 filter drop-shadow-[0_0_15px_rgba(251,191,36,0.65)] mix-blend-screen"
-                    />
-                    <span>Guiding Lives Through</span>
+                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mt-4 mb-6 leading-tight">
+                  Guiding Lives Through{" "}
+                  <span className="text-gradient-gold block">
+                    Ancient Wisdom &amp; Modern Understanding
                   </span>
-                  <span className="text-gradient-gold"> Ancient Wisdom &amp; Modern Understanding</span>
                 </h1>
                 <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mb-8">
                   Personalized guidance through Vedic Astrology, Akashik Record Reading, Numerology, Vastu, and Palmistry to help individuals gain clarity, confidence, and positivity in life.
                 </p>
               </motion.div>
 
-              {/* Right: Client Photo — circular frame */}
+              {/* Right: Client Photo — rounded rectangular card matching screenshot */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -120,62 +115,27 @@ const About = () => {
               >
                 <div className="relative">
                   {/* Outer animated glow */}
-                  <div className="absolute -inset-6 rounded-full bg-gradient-to-br from-amber-400/35 via-yellow-500/20 to-purple-900/30 blur-3xl animate-pulse pointer-events-none" />
+                  <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-amber-400/35 via-yellow-500/20 to-purple-900/30 blur-3xl animate-pulse pointer-events-none" />
 
-                  {/* ── Circular Image frame ── */}
+                  {/* ── Card Image frame matching live screenshot ── */}
                   <div
-                    className="relative rounded-full overflow-hidden w-64 h-64 sm:w-80 sm:h-80 xl:w-96 xl:h-96 border-4 border-amber-400/50 shadow-[0_0_40px_rgba(251,191,36,0.35)]"
-                    style={{
-                      /* Pure black bg — screen blend makes black invisible */
-                      background: "#000000",
-                    }}
+                    className="relative rounded-3xl overflow-hidden w-72 sm:w-80 lg:w-[350px] xl:w-[380px] aspect-[3/4] border-2 border-amber-400/60 shadow-[0_0_35px_rgba(251,191,36,0.3)] bg-card"
                   >
-                    {/* Photo with screen blend */}
                     <img
                       src={AboutImg}
                       alt="Astro Santosh Pandey"
                       className="relative z-10 w-full h-full object-cover object-top block"
-                      style={{
-                        filter: "brightness(1.0) contrast(1.05) saturate(1.1)",
-                      }}
                     />
 
-                    {/* Gold top glow — adds warm theme colour at top */}
+                    {/* Gold top subtle gradient glow */}
                     <div
-                      className="absolute top-0 left-0 right-0 z-20 h-32 pointer-events-none"
+                      className="absolute top-0 left-0 right-0 z-20 h-28 pointer-events-none"
                       style={{
                         background:
-                          "radial-gradient(ellipse at 50% 0%, rgba(251,191,36,0.22) 0%, transparent 70%)",
-                      }}
-                    />
-
-                    {/* Bottom fade into page */}
-                    <div
-                      className="absolute bottom-0 left-0 right-0 z-20 h-20 pointer-events-none"
-                      style={{
-                        background:
-                          "linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%)",
-                      }}
-                    />
-
-                    {/* Subtle purple tint overlay for theme cohesion */}
-                    <div
-                      className="absolute inset-0 z-20 pointer-events-none"
-                      style={{
-                        background:
-                          "radial-gradient(ellipse at 50% 110%, rgba(100,50,180,0.18) 0%, transparent 65%)",
+                          "linear-gradient(to bottom, rgba(251,191,36,0.15) 0%, transparent 100%)",
                       }}
                     />
                   </div>
-
-                  {/* Gold border ring */}
-                  <div
-                    className="absolute inset-0 rounded-2xl pointer-events-none"
-                    style={{
-                      boxShadow:
-                        "inset 0 0 0 1.5px rgba(251,191,36,0.45), 0 0 30px rgba(251,191,36,0.25), 0 0 70px rgba(218,165,32,0.12)",
-                    }}
-                  />
                 </div>
               </motion.div>
 
