@@ -1065,8 +1065,8 @@ const ConsultationLanding = () => {
                   className="cosmic-card p-2 sm:p-3.5 group hover:-translate-y-1 hover:glow-gold transition-all duration-300 flex flex-col justify-between"
                 >
                   <div>
-                    <div className="mb-0.5 inline-block">
-                      <service.icon className="w-5.5 h-5.5 sm:w-8 sm:h-8 drop-shadow-[0_2px_8px_rgba(251,191,36,0.4)] transition-transform duration-300 group-hover:scale-105" />
+                    <div className="mb-1 inline-block">
+                      <service.icon className="w-8 h-8 sm:w-9 sm:h-9 drop-shadow-[0_2px_8px_rgba(251,191,36,0.4)] transition-transform duration-300 group-hover:scale-105" />
                     </div>
                     <h3 className="font-serif text-[10.5px] sm:text-xs md:text-sm font-bold mb-0.5 text-foreground group-hover:text-amber-300 transition-colors leading-snug">
                       {service.title}
