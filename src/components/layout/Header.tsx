@@ -395,8 +395,8 @@ const servicesOptions = [
 const mainNavItems = [
   { name: "Home", path: "/" },
   { name: "Courses", path: "/courses" },
-  { name: "Consultation", path: "/consultation" },
-  { name: "About", path: "/about" },
+  { name: "Instant Guidance", path: "/consultation" },
+  { name: "About Us", path: "/about" },
   { name: "Contact", path: "/contact" },
 ];
 
