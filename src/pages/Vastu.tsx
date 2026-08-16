@@ -21,6 +21,7 @@ import waterImg from "../assets/water.jpeg";
 import fireImg from "../assets/fire.jpeg";
 import airImg from "../assets/air.jpeg";
 import spaceImg from "../assets/space.jpeg";
+import vastuImg from "../assets/vastu.jpeg";
 
 const services = [
   {
@@ -114,7 +115,7 @@ const VastuImage = ({ size = "lg" }: { size?: "sm" | "lg" }) => {
       {/* Image container */}
       <div className="relative rounded-2xl overflow-hidden shadow-2xl">
         <img
-          src="/src/assets/vastu.jpeg"
+          src={vastuImg}
           alt="Vastu Shastra - Sacred Architecture"
           className={imgClass}
           style={{ filter: "brightness(0.95) contrast(1.05) saturate(1.1)" }}
