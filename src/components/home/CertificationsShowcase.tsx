@@ -26,6 +26,7 @@ import MCHA2 from "@/assets/Mastery.jpeg"
 import AdVA from "@/assets/Advance_Vedic.jpg"
 import MCIPA from "@/assets/Master_in_Palmistry.png"
 import MA from "@/assets/Master_Astrology.png"
+import AR from "@/assets/Akashik Records.jpg"
 const certifications = [
   {
     id: 1,
@@ -179,6 +180,12 @@ const certifications = [
   verified: true,
 },
 
+{
+  id:25,
+  title: "Akashik Records",
+  image: AR,
+  verified: true,
+}
 ];
 
 export default function CertificationsShowcase() {
