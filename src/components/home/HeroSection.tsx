@@ -284,14 +284,7 @@ export const HeroSection = () => {
               {...fadeLeft(0.15)}
               className="font-serif font-bold leading-[1.15] mb-4 text-3xl sm:text-4xl"
             >
-              <span className="inline-flex items-center gap-2.5 sm:gap-3">
-                <img
-                  src={LOGO}
-                  alt="Lion Emblem"
-                  className="w-10 h-10 sm:w-12 sm:h-12 object-contain inline-block flex-shrink-0 filter drop-shadow-[0_0_12px_rgba(251,191,36,0.65)] mix-blend-screen"
-                />
-                <span>Transform Your Life</span>
-              </span>{" "}
+              <span>Transform Your Life</span>{" "}
               <span className="block" style={{ color: "rgba(255,255,255,0.92)" }}>With Expert</span>
               <span className="block bg-clip-text text-transparent"
                 style={{ backgroundImage: "linear-gradient(130deg, #fef9c3 0%, #fcd34d 28%, #f59e0b 58%, #b45309 100%)" }}>
@@ -368,14 +361,7 @@ export const HeroSection = () => {
               className="font-serif font-bold leading-[1.13] mb-5 lg:mb-6"
               style={{ fontSize: "clamp(1.6rem, 3vw, 3.2rem)" }}
             >
-              <span className="inline-flex items-center gap-3 lg:gap-4">
-                <img
-                  src={LOGO}
-                  alt="Lion Emblem"
-                  className="w-10 h-10 lg:w-14 lg:h-14 object-contain inline-block flex-shrink-0 filter drop-shadow-[0_0_15px_rgba(251,191,36,0.65)] mix-blend-screen"
-                />
-                <span>Transform Your Life</span>
-              </span>{" "}
+              <span>Transform Your Life</span>{" "}
               <span className="block" style={{ color: "rgba(255,255,255,0.92)" }}>With Expert</span>
               <span className="block bg-clip-text text-transparent"
                 style={{ backgroundImage: "linear-gradient(130deg, #fef9c3 0%, #fcd34d 28%, #f59e0b 58%, #b45309 100%)" }}>
