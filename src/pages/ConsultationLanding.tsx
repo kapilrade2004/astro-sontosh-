@@ -27,7 +27,7 @@ import {
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { sendLeadToCRM } from "@/lib/sendLeadToCRM";
 import lionLogo from "@/assets/logo by yash.png";
-import clientPhoto from "@/assets/client-photo.png";
+import clientPhoto from "@/assets/HeroImg.jpeg";
 
 /* ─────────────────────────────────────────────────────────────────────────
 
@@ -944,16 +944,14 @@ const ConsultationLanding = () => {
                   </div>
                 </div>
 
-                {/* 2. New Client Photo Side-by-Side */}
-                <div className="relative w-36 sm:w-44 lg:w-48 aspect-[3/4] rounded-2xl overflow-hidden border-2 border-amber-400/40 shadow-[0_0_30px_rgba(251,191,36,0.3)] bg-gradient-to-b from-amber-950/40 via-background/80 to-background shrink-0 group">
-                  <img
-                    src={clientPhoto}
-                    alt="Astro Santosh Pandey"
-                    className="w-full h-full object-cover object-top filter brightness-105 contrast-105 group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80 pointer-events-none" />
-                  <div className="absolute bottom-2 inset-x-2 py-1 px-2 rounded-lg bg-background/80 border border-amber-400/30 backdrop-blur-sm text-center">
-                    <p className="text-[11px] font-bold font-serif text-amber-300">Astro Santosh Pandey</p>
+                {/* 2. Client Photo with Homepage Zodiac Background & Gold Ring Border */}
+                <div className="relative w-36 sm:w-44 lg:w-48 aspect-square rounded-full p-1 bg-gradient-to-tr from-amber-400 via-yellow-200 to-amber-600 shadow-[0_0_30px_rgba(251,191,36,0.5)] shrink-0 group">
+                  <div className="w-full h-full rounded-full overflow-hidden border-2 border-amber-300/70 bg-black/90 relative">
+                    <img
+                      src={clientPhoto}
+                      alt="Astro Santosh Pandey"
+                      className="w-full h-full object-cover object-top filter brightness-105 contrast-105 group-hover:scale-105 transition-transform duration-500"
+                    />
                   </div>
                 </div>
               </motion.div>
