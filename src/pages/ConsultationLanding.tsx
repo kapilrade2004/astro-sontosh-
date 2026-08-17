@@ -965,12 +965,12 @@ const ConsultationLanding = () => {
                 transition={{ duration: 0.6 }}
                 className="order-1 lg:order-2"
               >
-                <p className="text-foreground/90 text-sm sm:text-base mb-0.5">Get Accurate</p>
-                <h1 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold mb-1">
+                <p className="text-foreground/90 text-sm sm:text-base mb-2 font-medium tracking-wide">Get Accurate</p>
+                <h1 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold mb-3 leading-snug sm:leading-tight tracking-wide">
                   <span className="text-gradient-gold">ASTROLOGY GUIDANCE</span>
                 </h1>
-                <p className="text-lg sm:text-2xl font-serif font-semibold mb-1">For Your Life Problems</p>
-                <p className="text-muted-foreground text-xs sm:text-sm mb-3">
+                <p className="text-lg sm:text-2xl font-serif font-semibold mb-2.5 leading-snug">For Your Life Problems</p>
+                <p className="text-muted-foreground text-xs sm:text-sm mb-4 leading-relaxed">
                   Personalized Consultation by <span className="text-primary font-medium">Astro Santosh Pandey</span>
                 </p>
 
