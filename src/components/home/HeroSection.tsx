@@ -229,22 +229,11 @@ export const HeroSection = () => {
         </motion.span>
       ))}
 
-      {/* ── top gold divider ── */}
-      <div className="relative z-10 mx-auto px-6 lg:px-10 mt-5 lg:mt-7" style={{ maxWidth: "90rem" }}>
-        <motion.div
-          initial={{ scaleX: 0, opacity: 0 }}
-          animate={{ scaleX: 1, opacity: 1 }}
-          transition={{ duration: 1.1, ease }}
-          className="h-px origin-center"
-          style={{ background: "linear-gradient(90deg, transparent 0%, rgba(251,191,36,0.12) 15%, rgba(251,191,36,0.6) 50%, rgba(251,191,36,0.12) 85%, transparent 100%)" }}
-        />
-      </div>
-
       {/* ══════════════════════════════════════════════════════
           MAIN CONTENT
          ══════════════════════════════════════════════════════ */}
       <div
-        className="relative z-10 mx-auto w-full px-4 sm:px-6 lg:px-10 py-6 lg:py-12"
+        className="relative z-10 mx-auto w-full px-4 sm:px-6 lg:px-10 pt-2 lg:pt-3 pb-6 lg:pb-12"
         style={{ maxWidth: "90rem" }}
       >
 

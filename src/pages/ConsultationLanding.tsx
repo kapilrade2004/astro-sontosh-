@@ -26,7 +26,8 @@ import {
 } from "./ConsultationIcons";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { sendLeadToCRM } from "@/lib/sendLeadToCRM";
-import astrologyImg from "@/assets/Astrology.jpeg";
+import lionLogo from "@/assets/logo by yash.png";
+import clientPhoto from "@/assets/client-photo.png";
 
 /* ─────────────────────────────────────────────────────────────────────────
 
@@ -917,35 +918,42 @@ const ConsultationLanding = () => {
 
           <div className="container mx-auto px-4 relative z-10">
             <div className="grid lg:grid-cols-2 gap-4 lg:gap-8 items-center">
-              {/* Zodiac visual */}
+              {/* Visuals: Static Golden Lion Logo + Client Photo Side-by-Side */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.7 }}
-                className="order-2 lg:order-1 flex justify-center relative my-2 lg:my-0"
+                className="order-2 lg:order-1 flex items-center justify-center gap-4 sm:gap-6 relative my-3 lg:my-0"
               >
-                <div className="relative w-full max-w-[240px] sm:max-w-xs aspect-square">
-                  {/* Outer glow */}
-                  <div className="absolute -inset-4 rounded-full bg-gradient-to-br from-amber-400/30 via-yellow-300/15 to-transparent blur-3xl animate-pulse pointer-events-none" />
-                  {/* Inner glow */}
-                  <div className="absolute -inset-2 rounded-full bg-gradient-to-r from-amber-400/20 via-yellow-500/10 to-amber-400/20 blur-xl pointer-events-none" />
-
-                  {/* Circular image */}
-                  <div
-                    className="relative w-full h-full rounded-full overflow-hidden shadow-2xl"
-                    style={{
-                      boxShadow:
-                        "0 0 50px rgba(251,191,36,0.3), 0 0 100px rgba(218,165,32,0.15), 0 0 0 2px rgba(251,191,36,0.4)",
-                    }}
-                  >
-                    <motion.img
-                      src={astrologyImg}
-                      alt="Vedic Astrology Zodiac Wheel - Nakshatra Chart"
-                      className="w-full h-full object-cover rounded-full"
-                      style={{ filter: "brightness(1.0) contrast(1.05) saturate(1.1)" }}
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+                {/* 1. Static Golden Lion Emblem Logo + Sanskrit Shloka underneath */}
+                <div className="flex flex-col items-center gap-2 shrink-0">
+                  <div className="relative w-36 sm:w-44 lg:w-48 aspect-square flex items-center justify-center">
+                    <div className="absolute -inset-4 rounded-full bg-gradient-to-br from-amber-400/30 via-yellow-300/15 to-transparent blur-2xl animate-pulse pointer-events-none" />
+                    <img
+                      src={lionLogo}
+                      alt="Golden Lion Emblem Logo"
+                      className="w-full h-full object-contain filter brightness-110 contrast-105"
+                      style={{ mixBlendMode: "screen" }}
                     />
+                  </div>
+                  {/* Sanskrit Shloka under lion logo */}
+                  <div className="text-xs sm:text-sm font-bold tracking-wide text-center relative text-amber-300 drop-shadow-[0_0_12px_rgba(251,191,36,0.85)] font-serif">
+                    <span className="inline-block mr-1.5 text-[#FFD700] animate-pulse">॥</span>
+                    धर्मो रक्षति रक्षितः
+                    <span className="inline-block ml-1.5 text-[#FFD700] animate-pulse">॥</span>
+                  </div>
+                </div>
+
+                {/* 2. New Client Photo Side-by-Side */}
+                <div className="relative w-36 sm:w-44 lg:w-48 aspect-[3/4] rounded-2xl overflow-hidden border-2 border-amber-400/40 shadow-[0_0_30px_rgba(251,191,36,0.3)] bg-gradient-to-b from-amber-950/40 via-background/80 to-background shrink-0 group">
+                  <img
+                    src={clientPhoto}
+                    alt="Astro Santosh Pandey"
+                    className="w-full h-full object-cover object-top filter brightness-105 contrast-105 group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80 pointer-events-none" />
+                  <div className="absolute bottom-2 inset-x-2 py-1 px-2 rounded-lg bg-background/80 border border-amber-400/30 backdrop-blur-sm text-center">
+                    <p className="text-[11px] font-bold font-serif text-amber-300">Astro Santosh Pandey</p>
                   </div>
                 </div>
               </motion.div>
