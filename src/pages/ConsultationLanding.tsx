@@ -910,7 +910,7 @@ const ConsultationLanding = () => {
 
       <Layout>
         {/* ── Hero ── */}
-        <section className="pt-16 sm:pt-20 pb-4 md:pb-6 bg-gradient-hero relative overflow-hidden">
+        <section className="pt-28 sm:pt-20 pb-4 md:pb-6 bg-gradient-hero relative overflow-hidden">
           {/* Ambient colour accents behind the hero for a more vibrant feel */}
           <div className="pointer-events-none absolute -top-24 -left-24 w-72 h-72 rounded-full bg-rose-500/20 blur-[90px]" />
           <div className="pointer-events-none absolute top-10 -right-16 w-80 h-80 rounded-full bg-violet-500/20 blur-[100px]" />
