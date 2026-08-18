@@ -140,21 +140,21 @@ const pricingPlans = [
   {
     id: "basic",
     name: "Basic Consultation",
-    price: "₹1,100",
+    price: "₹2,100",
     features: ["15 Minutes Consultation", "One Major Question", "Personalized Guidance"],
     popular: false,
   },
   {
     id: "premium",
     name: "Premium Consultation",
-    price: "₹2,100",
+    price: "₹5,100",
     features: ["30 Minutes Consultation", "Multiple Questions", "Detailed Analysis", "Remedies Guidance"],
     popular: true,
   },
   {
     id: "complete",
     name: "Detailed Kundli Analysis",
-    price: "₹11,000",
+    price: "₹21,000",
     features: ["60 Minutes Consultation", "Full Birth Chart Reading", "Career + Marriage + Finance Review", "Priority Support"],
     popular: false,
   },
@@ -176,9 +176,9 @@ const consultationTypeOptions = [
 ];
 
 const PLAN_AMOUNTS: Record<string, number> = {
-  "Basic Consultation": 1100,
-  "Premium Consultation": 2100,
-  "Detailed Kundli Analysis": 11000,
+  "Basic Consultation": 2100,
+  "Premium Consultation": 5100,
+  "Detailed Kundli Analysis": 21000,
 };
 
 const testimonials = [
@@ -923,11 +923,11 @@ const ConsultationLanding = () => {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.7 }}
-                className="order-2 lg:order-1 flex items-center justify-center gap-4 sm:gap-6 relative my-3 lg:my-0"
+                className="order-2 lg:order-1 flex items-center justify-center lg:justify-start gap-4 sm:gap-6 relative my-3 lg:my-0 lg:ml-3"
               >
                 {/* 1. Static Golden Lion Emblem Logo + Sanskrit Shloka underneath */}
                 <div className="flex flex-col items-center gap-2 shrink-0">
-                  <div className="relative w-36 sm:w-44 lg:w-48 aspect-square flex items-center justify-center">
+                  <div className="relative w-48 sm:w-56 lg:w-64 aspect-square flex items-center justify-center">
                     <div className="absolute -inset-4 rounded-full bg-gradient-to-br from-amber-400/30 via-yellow-300/15 to-transparent blur-2xl animate-pulse pointer-events-none" />
                     <img
                       src={lionLogo}
@@ -945,7 +945,7 @@ const ConsultationLanding = () => {
                 </div>
 
                 {/* 2. Client Photo in Rectangular Form */}
-                <div className="relative w-36 sm:w-44 lg:w-48 aspect-[3/4] rounded-2xl overflow-hidden border-2 border-amber-400/50 shadow-[0_0_30px_rgba(251,191,36,0.35)] bg-gradient-to-b from-amber-950/40 via-background/80 to-background shrink-0 group">
+                <div className="relative w-40 sm:w-48 lg:w-56 aspect-[3/4] rounded-2xl overflow-hidden border-2 border-amber-400/50 shadow-[0_0_30px_rgba(251,191,36,0.35)] bg-gradient-to-b from-amber-950/40 via-background/80 to-background shrink-0 group">
                   <img
                     src={clientPhoto}
                     alt="Astro Santosh Pandey"
