@@ -104,36 +104,36 @@ const EMPTY: FormData = {
 // ─── Per-service pricing datasets ────────────────────────────────────────────
 
 // Quick / Micro services — all 25 services matching quickServices.ts exactly
-// Sorted by price tier: ₹500 → ₹1,100 → ₹2,100
+// Sorted by price tier: ₹1,100 → ₹2,100 → ₹3,100
 const quickServicesData = [
-  // ── ₹500 tier ──────────────────────────────────────────────────────────────
-  { service: "Daily Ritual Suggestion (Simple Routine)",        price: "500",   icon: Moon,          tier: "₹500"   },
-  { service: "Go Ahead or Wait Decision Guidance",              price: "500",   icon: Compass,       tier: "₹500"   },
-  { service: "Right Time Check (Shubh Time for Any Decision)",  price: "500",   icon: Clock,         tier: "₹500"   },
   // ── ₹1,100 tier ────────────────────────────────────────────────────────────
-  { service: "Ask 1 Question (Yes/No + Reason)",                price: "1,100", icon: MessageCircle, tier: "₹1,100" },
-  { service: "Relationship Guidance",                           price: "1,100", icon: Heart,         tier: "₹1,100" },
-  { service: "Family Issue Insight",                            price: "1,100", icon: Heart,         tier: "₹1,100" },
-  { service: "Love Situation Guidance",                         price: "1,100", icon: Heart,         tier: "₹1,100" },
-  { service: "Opportunity Check (Anything good coming soon?)",  price: "1,100", icon: TrendingUp,    tier: "₹1,100" },
-  { service: "Sleep / Stress Related Insight",                  price: "1,100", icon: Moon,          tier: "₹1,100" },
-  { service: "Strength Insight (Hidden Strengths)",             price: "1,100", icon: Brain,         tier: "₹1,100" },
-  { service: "Name Initial Suggestion (for business/personal)", price: "1,100", icon: Hash,          tier: "₹1,100" }, // ✅ added
-  { service: "Property Buying Time Check",                      price: "1,100", icon: Home,          tier: "₹1,100" }, // ✅ added
-  { service: "Muhurat – Auspicious Timing",                     price: "1,100", icon: Star,          tier: "₹1,100" },
-  { service: "Know Your Lucky Days & Colours",                  price: "1,100", icon: Star,          tier: "₹1,100" },
-  { service: "Rudraksha / Crystal Recommendation",              price: "1,100", icon: Gem,           tier: "₹1,100" },
-  { service: "Tattoo Recommendation",                           price: "1,100", icon: Zap,           tier: "₹1,100" },
-  { service: "New Born Baby Name Recommendation",               price: "1,100", icon: Baby,          tier: "₹1,100" },
+  { service: "Daily Ritual Suggestion (Simple Routine)",        price: "1,100", icon: Moon,          tier: "₹1,100" },
+  { service: "Go Ahead or Wait Decision Guidance",              price: "1,100", icon: Compass,       tier: "₹1,100" },
+  { service: "Right Time Check (Shubh Time for Any Decision)",  price: "1,100", icon: Clock,         tier: "₹1,100" },
   // ── ₹2,100 tier ────────────────────────────────────────────────────────────
-  { service: "Compatibility Check",                             price: "2,100", icon: Heart,         tier: "₹2,100" },
-  { service: "Job Change Decision Guidance",                    price: "2,100", icon: Briefcase,     tier: "₹2,100" },
-  { service: "Money Flow Guidance",                             price: "2,100", icon: DollarSign,    tier: "₹2,100" },
-  { service: "Career Guidance",                                 price: "2,100", icon: Briefcase,     tier: "₹2,100" },
-  { service: "Travel / Relocation Decision Check",              price: "2,100", icon: Plane,         tier: "₹2,100" },
-  { service: "Gemstone Recommendation",                         price: "2,100", icon: Gem,           tier: "₹2,100" }, // ✅ added
-  { service: "Lifestyle & Behavioural Recommendation",          price: "2,100", icon: Heart,         tier: "₹2,100" },
-  { service: "Premium Kundli",                                  price: "2,100", icon: Scroll,        tier: "₹2,100" }, // ✅ added
+  { service: "Ask 1 Question (Yes/No + Reason)",                price: "2,100", icon: MessageCircle, tier: "₹2,100" },
+  { service: "Relationship Guidance",                           price: "2,100", icon: Heart,         tier: "₹2,100" },
+  { service: "Family Issue Insight",                            price: "2,100", icon: Heart,         tier: "₹2,100" },
+  { service: "Love Situation Guidance",                         price: "2,100", icon: Heart,         tier: "₹2,100" },
+  { service: "Opportunity Check (Anything good coming soon?)",  price: "2,100", icon: TrendingUp,    tier: "₹2,100" },
+  { service: "Sleep / Stress Related Insight",                  price: "2,100", icon: Moon,          tier: "₹2,100" },
+  { service: "Strength Insight (Hidden Strengths)",             price: "2,100", icon: Brain,         tier: "₹2,100" },
+  { service: "Name Initial Suggestion (for business/personal)", price: "2,100", icon: Hash,          tier: "₹2,100" },
+  { service: "Property Buying Time Check",                      price: "2,100", icon: Home,          tier: "₹2,100" },
+  { service: "Muhurat – Auspicious Timing",                     price: "2,100", icon: Star,          tier: "₹2,100" },
+  { service: "Know Your Lucky Days & Colours",                  price: "2,100", icon: Star,          tier: "₹2,100" },
+  { service: "Rudraksha / Crystal Recommendation",              price: "2,100", icon: Gem,           tier: "₹2,100" },
+  { service: "Tattoo Recommendation",                           price: "2,100", icon: Zap,           tier: "₹2,100" },
+  { service: "New Born Baby Name Recommendation",               price: "2,100", icon: Baby,          tier: "₹2,100" },
+  // ── ₹3,100 tier ────────────────────────────────────────────────────────────
+  { service: "Compatibility Check",                             price: "3,100", icon: Heart,         tier: "₹3,100" },
+  { service: "Job Change Decision Guidance",                    price: "3,100", icon: Briefcase,     tier: "₹3,100" },
+  { service: "Money Flow Guidance",                             price: "3,100", icon: DollarSign,    tier: "₹3,100" },
+  { service: "Career Guidance",                                 price: "3,100", icon: Briefcase,     tier: "₹3,100" },
+  { service: "Travel / Relocation Decision Check",              price: "3,100", icon: Plane,         tier: "₹3,100" },
+  { service: "Gemstone Recommendation",                         price: "3,100", icon: Gem,           tier: "₹3,100" },
+  { service: "Lifestyle & Behavioural Recommendation",          price: "3,100", icon: Heart,         tier: "₹3,100" },
+  { service: "Premium Kundli",                                  price: "3,100", icon: Scroll,        tier: "₹3,100" },
 ];
 
 // Astrology-specific pricing

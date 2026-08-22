@@ -44,7 +44,7 @@ export const quickServices: QuickService[] = [
     title: "Relationship  Guidance",
     shortDescription:
       "Understand the cosmic root of recurring conflicts in your relationship and receive targeted guidance to restore harmony.",
-    price: 2100,
+    price: 3100,
     deliveryTime: "6 hrs",
     category: "love-relationships",
     icon: Heart,
@@ -82,7 +82,7 @@ export const quickServices: QuickService[] = [
     title: " Family Issue Insight",
     shortDescription:
       "Get quick astrological insight into a pressing family issue and clarity on the best path forward.",
-    price: 2100,
+    price: 3100,
     deliveryTime: "6 hrs",
     category: "love-relationships",
     icon: Heart,
@@ -120,7 +120,7 @@ export const quickServices: QuickService[] = [
     title: "Love Situation Guidance",
     shortDescription:
       "Find out the likely direction of your current romantic situation — is it heading towards commitment, separation, or a turning point?",
-    price: 2100,
+    price: 3100,
     deliveryTime: "6 hrs",
     category: "love-relationships",
     icon: Heart,
@@ -198,7 +198,7 @@ export const quickServices: QuickService[] = [
     title: "Opportunity Check (Anything good coming soon?)",
     shortDescription:
       "Find out if a positive planetary window is opening for you in the near future — career, money, or life in general.",
-    price: 2100,
+    price: 3100,
     deliveryTime: "6 hrs",
     category: "career-money",
     icon: TrendingUp,
@@ -352,7 +352,7 @@ export const quickServices: QuickService[] = [
     title: "Ask 1 Question (Yes/No + Reason)",
     shortDescription:
       "Get a direct Yes/No astrological answer with the reason behind it for your most pressing question.",
-    price: 2100,
+    price: 3100,
     deliveryTime: "6 hrs",
     category: "instant-decisions",
     icon: MessageCircle,
@@ -466,7 +466,7 @@ export const quickServices: QuickService[] = [
     title: "Muhurat – Auspicious Timing",
     shortDescription:
       "Find the most powerful cosmic window for buying jewellery, vehicles, property, and other major purchases.",
-    price: 2100,
+    price: 3100,
     deliveryTime: "6 hrs",
     category: "instant-decisions",
     icon: Star,
@@ -504,7 +504,7 @@ export const quickServices: QuickService[] = [
     title: "Property Buying Time Check",
     shortDescription:
       "Is now the right time to buy property? Get an astrological verdict on timing for your real estate decision.",
-    price: 2100,
+    price: 3100,
     deliveryTime: "6 hrs",
     category: "instant-decisions",
     icon: Home,
@@ -619,7 +619,7 @@ export const quickServices: QuickService[] = [
     title: " Sleep / Stress Related Insight",
     shortDescription:
       "Understand the planetary root of your sleep issues or stress and receive targeted remedies for relief.",
-    price: 2100,
+    price: 3100,
     deliveryTime: "6 hrs",
     category: "personal-insights",
     icon: Moon,
@@ -656,7 +656,7 @@ export const quickServices: QuickService[] = [
     title: "Strength Insight (Hidden Strengths)",
     shortDescription:
       "Discover the hidden strengths, talents, and natural gifts written in your birth chart that you may not be fully using.",
-    price: 2100,
+    price: 3100,
     deliveryTime: "6 hrs",
     category: "personal-insights",
     icon: Brain,
@@ -693,7 +693,7 @@ export const quickServices: QuickService[] = [
     title: "Name Initial Suggestion (for business/personal)",
     shortDescription:
       "Get an astrologically aligned name initial or letter that supports your planetary energy for business or personal use.",
-    price: 2100,
+    price: 3100,
     deliveryTime: "6 hrs",
     category: "personal-insights",
     icon: Hash,
@@ -730,7 +730,7 @@ export const quickServices: QuickService[] = [
     title: " Know Your Lucky Days & Colours",
     shortDescription:
       "Discover your personally auspicious days, colours, and numbers to maximise success in daily life.",
-    price: 2100,
+    price: 3100,
     deliveryTime: "6 hrs",
     category: "personal-insights",
     icon: Star,
@@ -767,7 +767,7 @@ export const quickServices: QuickService[] = [
     title: "Rudraksha / Crystal Recommendation",
     shortDescription:
       "Find the specific Rudraksha bead or healing crystal that resonates with your planetary energy.",
-    price: 2100,
+    price: 3100,
     deliveryTime: "6 hrs",
     category: "personal-insights",
     icon: Gem,
@@ -802,7 +802,7 @@ export const quickServices: QuickService[] = [
     title: "New Born Baby Name Recommendation",
     shortDescription:
       "Get an astrologically and numerologically aligned name for your newborn — a name that supports their cosmic destiny from day one.",
-    price: 2100,
+    price: 3100,
     deliveryTime: "24 hrs",
     category: "personal-insights",
     icon: Baby,
@@ -915,7 +915,7 @@ export const quickServices: QuickService[] = [
     title: "Tattoo Recommendation",
     shortDescription:
       "Choose a tattoo that carries the right energy for your chart — symbol, placement, and timing.",
-    price: 2100,
+    price: 3100,
     deliveryTime: "6 hrs",
     category: "personal-insights",
     icon: Zap,
