@@ -51,21 +51,21 @@ const microPricingData = [
 
 // ── New Consultation pricing ──────────────────────────────────────
 const newPricingData = [
-    { service: "Astrology (Exact Birth Time Known)",     price: "11,000", duration: "30 min", icon: Sparkles },
-    { service: "Astrology (Exact Birth Time NOT Known)", price: "15,000", duration: "60 min", icon: Sparkles },
-    { service: "Astrology (In-Person Mumbai)",           price: "15,000", duration: "60 min", icon: Sparkles },
-    { service: "Numerology",                             price: "3,100",  duration: "30 min", icon: Hash     },
-    { service: "Vastu (Exploration Call)",               price: "5,100",  duration: "30 min", icon: Home     },
+    { service: "Astrology (Exact Birth Time Known)",     price: "21,000", duration: "30 min", icon: Sparkles },
+    { service: "Astrology (Exact Birth Time NOT Known)", price: "31,000", duration: "60 min", icon: Sparkles },
+    { service: "Astrology (In-Person Mumbai)",           price: "31,000", duration: "60 min", icon: Sparkles },
+    { service: "Numerology",                             price: "5,100",  duration: "30 min", icon: Hash     },
+    { service: "Vastu (Exploration Call)",               price: "11,000", duration: "30 min", icon: Home     },
 ];
 
 // ── Repeat / Follow-up Consultation pricing ───────────────────────
 const repeatPricingData = [
-    { service: "Astrology Follow-up (within 10 days)",  price: "2,100", duration: "30 min", icon: Repeat },
-    { service: "Astrology Follow-up (11–30 days)",      price: "3,100", duration: "30 min", icon: Repeat },
-    { service: "Astrology Follow-up (post 30 days)",    price: "5,100", duration: "30 min", icon: Repeat },
-    { service: "Numerology Follow-up (within 10 days)", price: "1,100", duration: "30 min", icon: User   },
-    { service: "Numerology Follow-up (11–30 days)",     price: "2,100", duration: "30 min", icon: User   },
-    { service: "Numerology Follow-up (post 30 days)",   price: "3,100", duration: "30 min", icon: User   },
+    { service: "Astrology Follow-up (within 10 days)",  price: "3,100",  duration: "30 min", icon: Repeat },
+    { service: "Astrology Follow-up (11–30 days)",      price: "5,100",  duration: "30 min", icon: Repeat },
+    { service: "Astrology Follow-up (post 30 days)",    price: "11,000", duration: "30 min", icon: Repeat },
+    { service: "Numerology Follow-up (within 10 days)", price: "1,100",  duration: "30 min", icon: User   },
+    { service: "Numerology Follow-up (11–30 days)",     price: "2,100",  duration: "30 min", icon: User   },
+    { service: "Numerology Follow-up (post 30 days)",   price: "3,100",  duration: "30 min", icon: User   },
 ];
 
 // ── Pricing Row ───────────────────────────────────────────────────

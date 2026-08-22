@@ -138,12 +138,12 @@ const quickServicesData = [
 
 // Astrology-specific pricing
 const astrologyData = [
-  { service: "New Consultation (Exact Birth Time Known)",       price: "11,000", duration: "30 min", icon: Sparkles },
-  { service: "New Consultation (Exact Birth Time NOT Known)",   price: "15,000", duration: "60 min", icon: Sparkles },
-  { service: "In-Person Consultation (Mumbai Only)",            price: "15,000", duration: "60 min", icon: Sparkles },
-  { service: "Follow-up within 10 days",                        price: "2,100",  duration: "30 min", icon: Repeat   },
-  { service: "Follow-up (11–30 days)",                          price: "3,100",  duration: "30 min", icon: Repeat   },
-  { service: "Follow-up (post 30 days)",                        price: "5,100",  duration: "30 min", icon: Repeat   },
+  { service: "New Consultation (Exact Birth Time Known)",       price: "21,000", duration: "30 min", icon: Sparkles },
+  { service: "New Consultation (Exact Birth Time NOT Known)",   price: "31,000", duration: "60 min", icon: Sparkles },
+  { service: "In-Person Consultation (Mumbai Only)",            price: "31,000", duration: "60 min", icon: Sparkles },
+  { service: "Follow-up within 10 days",                        price: "3,100",  duration: "30 min", icon: Repeat   },
+  { service: "Follow-up (11–30 days)",                          price: "5,100",  duration: "30 min", icon: Repeat   },
+  { service: "Follow-up (post 30 days)",                        price: "11,000", duration: "30 min", icon: Repeat   },
   // { service: "Name Initial Suggestion (business/personal)",     price: "1,100",  icon: Hash         },
   // { service: "Property Buying Time Check",                      price: "1,100",  icon: Home         },
   // { service: "Gemstone Recommendation",                         price: "2,100",  icon: Gem          },
@@ -152,7 +152,7 @@ const astrologyData = [
 
 // Numerology-specific pricing
 const numerologyData = [
-  { service: "New Consultation",                                price: "3,100",  duration: "30 min", icon: Hash     },
+  { service: "New Consultation",                                price: "5,100",  duration: "30 min", icon: Hash     },
   { service: "Follow-up within 10 days",                        price: "1,100",  duration: "30 min", icon: Repeat   },
   { service: "Follow-up (11–30 days)",                          price: "2,100",  duration: "30 min", icon: Repeat   },
   { service: "Follow-up (post 30 days)",                        price: "3,100",  duration: "30 min", icon: Repeat   },
@@ -162,7 +162,7 @@ const numerologyData = [
 
 // Vastu-specific pricing
 const vastuData = [
-  { service: "Vastu Exploration Call (Online)",                 price: "5,100",  duration: "30 min", icon: Home     },
+  { service: "Vastu Exploration Call (Online)",                 price: "11,000", duration: "30 min", icon: Home     },
   // { service: "Property Buying Time Check",                      price: "1,100",  icon: Home         },
 ];
 
